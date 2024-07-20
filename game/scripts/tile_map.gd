@@ -1,8 +1,6 @@
 extends TileMap
 
-
 @onready var debounce_timer = $DebounceTimer
-
 
 const BACKGROUND_PIECE_COLOR = Vector2i(0,0)
 const FOREGROUND_PIECE_COLOR = Vector2i(1,0)
@@ -49,8 +47,9 @@ var next_piece_atlas : Vector2i
 # layer variables. The below two seem to be
 # based on the order of layers in the right
 # sidebar.
-var board_layer : int = 0
-var active_layer : int = 1
+const BACKGROUND_LAYER := 0
+const BOARD_LAYER := 1
+const ACTIVE_LAYER := 2
  
 func move_piece(direction):
 	if can_move(direction):
@@ -61,25 +60,24 @@ func move_piece(direction):
 
 func draw_piece(piece, position):
 	for i in piece:
-		set_cell(active_layer, position + i, tile_id, FOREGROUND_PIECE_COLOR)
+		set_cell(ACTIVE_LAYER, position + i, tile_id, FOREGROUND_PIECE_COLOR)
 
 func is_free(position):
-	return get_cell_source_id(board_layer, position) == -1
+
+	return get_cell_source_id(BACKGROUND_LAYER, position) == -1
 
 func can_move(direction):
-	var can_move = true
 	for i in active_piece:
 		if not(is_free(i + current_position + direction)):
-			can_move = false
-	return can_move
+			return false
+	return true
 	
 func can_rotate():
-	var can_rotate = true
 	var temporary_rotation_index = (current_rotation_index + 1) % SHAPES[0].size()
 	for i in piece_type[temporary_rotation_index]:
 		if not is_free(i + current_position):
-			can_rotate = false
-	return can_rotate
+			return false
+	return true
 
 func rotate_piece():
 	if can_rotate():
@@ -91,12 +89,12 @@ func rotate_piece():
 
 func clear_piece():
 	for i in active_piece:
-		erase_cell(active_layer, current_position + i)
+		erase_cell(ACTIVE_LAYER, current_position + i)
 
 func place_piece():
 	for i in active_piece:
-		erase_cell(active_layer, current_position + i)
-		set_cell(board_layer, current_position + i, tile_id, BACKGROUND_PIECE_COLOR)
+		erase_cell(ACTIVE_LAYER, current_position + i)
+		set_cell(BOARD_LAYER, current_position + i, tile_id, BACKGROUND_PIECE_COLOR)
 		
 	start_debounce()	
 
@@ -132,7 +130,6 @@ func start_debounce():
 
 
 func _on_debounce_timer_timeout():
-	print("i get calleds")
 	can_process_input = true
 
 
