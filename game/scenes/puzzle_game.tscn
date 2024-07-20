@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://3pfbxmsopl2r"]
+[gd_scene load_steps=6 format=3 uid="uid://3pfbxmsopl2r"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_mji26"]
 [ext_resource type="Script" path="res://scripts/tile_map.gd" id="2_ddkmh"]
+[ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/hud.tscn" id="3_hasai"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
 texture = ExtResource("1_mji26")
@@ -18,13 +19,14 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
 [node name="Game" type="Node2D"]
+position = Vector2(576, 64)
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ntj6q")
 rendering_quadrant_size = 32
 format = 2
 layer_0/name = "background"
-layer_0/tile_data = PackedInt32Array(0, 131072, 0, 65536, 131072, 0, 262144, 131072, 0, 327680, 131072, 0, 393216, 131072, 0, 458752, 131072, 0, 524288, 131072, 0, 589824, 131072, 0, 655360, 131072, 0, 1, 131072, 0, 655361, 131072, 0, 2, 131072, 0, 655362, 131072, 0, 3, 131072, 0, 655363, 131072, 0, 4, 131072, 0, 655364, 131072, 0, 5, 131072, 0, 655365, 131072, 0, 6, 131072, 0, 655366, 131072, 0, 7, 131072, 0, 655367, 131072, 0, 8, 131072, 0, 655368, 131072, 0, 9, 131072, 0, 655369, 131072, 0, 10, 131072, 0, 65546, 131072, 0, 131082, 131072, 0, 196618, 131072, 0, 262154, 131072, 0, 327690, 131072, 0, 393226, 131072, 0, 458762, 131072, 0, 524298, 131072, 0, 589834, 131072, 0, 655370, 131072, 0, 131072, 131072, 0, 196608, 131072, 0)
+layer_0/tile_data = PackedInt32Array(0, 131072, 0, 65536, 131072, 0, 262144, 131072, 0, 327680, 131072, 0, 393216, 131072, 0, 458752, 131072, 0, 524288, 131072, 0, 589824, 131072, 0, 655360, 131072, 0, 1, 131072, 0, 2, 131072, 0, 3, 131072, 0, 4, 131072, 0, 5, 131072, 0, 6, 131072, 0, 7, 131072, 0, 8, 131072, 0, 9, 131072, 0, 10, 131072, 0, 131072, 131072, 0, 196608, 131072, 0, 720896, 131072, 0, 720897, 131072, 0, 720898, 131072, 0, 720899, 131072, 0, 720900, 131072, 0, 720901, 131072, 0, 720902, 131072, 0, 720903, 131072, 0, 720904, 131072, 0, 720905, 131072, 0, 720906, 131072, 0, 720907, 131072, 0, 655371, 131072, 0, 589835, 131072, 0, 524299, 131072, 0, 458763, 131072, 0, 393227, 131072, 0, 327691, 131072, 0, 262155, 131072, 0, 196619, 131072, 0, 131083, 131072, 0, 65547, 131072, 0, 11, 131072, 0)
 layer_1/name = "board"
 layer_1/tile_data = PackedInt32Array()
 layer_2/name = "piece"
@@ -37,6 +39,8 @@ one_shot = true
 
 [node name="PlacePieceTimer" type="Timer" parent="TileMap"]
 one_shot = true
+
+[node name="HUD" parent="TileMap" instance=ExtResource("3_hasai")]
 
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
