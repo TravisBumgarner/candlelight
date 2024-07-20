@@ -49,7 +49,7 @@ var next_piece_atlas : Vector2i
 # sidebar.
 const BACKGROUND_LAYER := 0
 const BOARD_LAYER := 1
-const ACTIVE_LAYER := 2
+const PIECE_LAYER := 2
  
 func move_piece(direction):
 	if can_move(direction):
@@ -60,10 +60,9 @@ func move_piece(direction):
 
 func draw_piece(piece, position):
 	for i in piece:
-		set_cell(ACTIVE_LAYER, position + i, tile_id, FOREGROUND_PIECE_COLOR)
+		set_cell(PIECE_LAYER, position + i, tile_id, FOREGROUND_PIECE_COLOR)
 
 func is_free(position):
-
 	return get_cell_source_id(BACKGROUND_LAYER, position) == -1
 
 func can_move(direction):
@@ -89,11 +88,11 @@ func rotate_piece():
 
 func clear_piece():
 	for i in active_piece:
-		erase_cell(ACTIVE_LAYER, current_position + i)
+		erase_cell(PIECE_LAYER, current_position + i)
 
 func place_piece():
 	for i in active_piece:
-		erase_cell(ACTIVE_LAYER, current_position + i)
+		erase_cell(PIECE_LAYER, current_position + i)
 		set_cell(BOARD_LAYER, current_position + i, tile_id, BACKGROUND_PIECE_COLOR)
 		
 	start_debounce()	
