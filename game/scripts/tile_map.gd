@@ -22,7 +22,7 @@ const r := [r_0, r_90, r_180, r_270]
 const SHAPES := [l, r]
 
 # For debouncing layer input
-var debounce_delay = 0.1 # Time in seconds
+var debounce_delay = 0.05 # Time in seconds
 var can_process_input = true
 
 #grid variables
