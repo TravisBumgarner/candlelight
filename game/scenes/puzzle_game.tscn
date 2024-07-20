@@ -25,3 +25,8 @@ layer_1/name = "active"
 layer_1/tile_data = PackedInt32Array()
 script = ExtResource("2_ddkmh")
 metadata/_edit_lock_ = true
+
+[node name="DebounceTimer" type="Timer" parent="TileMap"]
+one_shot = true
+
+[connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
