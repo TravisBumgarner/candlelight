@@ -8,6 +8,10 @@ texture = ExtResource("1_mji26")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_ntj6q"]
 tile_size = Vector2i(32, 32)
@@ -20,7 +24,7 @@ tile_set = SubResource("TileSet_ntj6q")
 rendering_quadrant_size = 32
 format = 2
 layer_0/name = "background"
-layer_0/tile_data = PackedInt32Array(0, 0, 0, 65536, 0, 0, 262144, 0, 0, 327680, 0, 0, 393216, 0, 0, 458752, 0, 0, 524288, 0, 0, 589824, 0, 0, 655360, 0, 0, 1, 0, 0, 655361, 0, 0, 2, 0, 0, 655362, 0, 0, 3, 0, 0, 655363, 0, 0, 4, 0, 0, 655364, 0, 0, 5, 0, 0, 655365, 0, 0, 6, 0, 0, 655366, 0, 0, 7, 0, 0, 655367, 0, 0, 8, 0, 0, 655368, 0, 0, 9, 0, 0, 655369, 0, 0, 10, 0, 0, 65546, 0, 0, 131082, 0, 0, 196618, 0, 0, 262154, 0, 0, 327690, 0, 0, 393226, 0, 0, 458762, 0, 0, 524298, 0, 0, 589834, 0, 0, 655370, 0, 0, 131072, 0, 0, 196608, 0, 0)
+layer_0/tile_data = PackedInt32Array(0, 131072, 0, 65536, 131072, 0, 262144, 131072, 0, 327680, 131072, 0, 393216, 131072, 0, 458752, 131072, 0, 524288, 131072, 0, 589824, 131072, 0, 655360, 131072, 0, 1, 131072, 0, 655361, 131072, 0, 2, 131072, 0, 655362, 131072, 0, 3, 131072, 0, 655363, 131072, 0, 4, 131072, 0, 655364, 131072, 0, 5, 131072, 0, 655365, 131072, 0, 6, 131072, 0, 655366, 131072, 0, 7, 131072, 0, 655367, 131072, 0, 8, 131072, 0, 655368, 131072, 0, 9, 131072, 0, 655369, 131072, 0, 10, 131072, 0, 65546, 131072, 0, 131082, 131072, 0, 196618, 131072, 0, 262154, 131072, 0, 327690, 131072, 0, 393226, 131072, 0, 458762, 131072, 0, 524298, 131072, 0, 589834, 131072, 0, 655370, 131072, 0, 131072, 131072, 0, 196608, 131072, 0)
 layer_1/name = "board"
 layer_1/tile_data = PackedInt32Array()
 layer_2/name = "piece"
@@ -31,4 +35,8 @@ metadata/_edit_lock_ = true
 [node name="DebounceTimer" type="Timer" parent="TileMap"]
 one_shot = true
 
+[node name="PlacePieceTimer" type="Timer" parent="TileMap"]
+one_shot = true
+
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
