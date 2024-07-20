@@ -1,6 +1,7 @@
 extends TileMap
 
 @onready var debounce_timer = $DebounceTimer
+@onready var place_piece_timer = $PlacePieceTimer
 
 const BACKGROUND_PIECE_COLOR = Vector2i(0,0)
 const FOREGROUND_PIECE_COLOR = Vector2i(1,0)
@@ -22,8 +23,11 @@ const r := [r_0, r_90, r_180, r_270]
 const SHAPES := [l, r]
 
 # For debouncing layer input
-var debounce_delay = 0.05 # Time in seconds
+const DEBOUNCE_TIMER = 0.05 # Time in seconds
 var can_process_input = true
+
+# for waiting on piece placement
+const PLACE_PIECE_TIMER = 0.5
 
 #grid variables
 const ROWS := 9
@@ -94,8 +98,8 @@ func place_piece():
 	for i in active_piece:
 		erase_cell(PIECE_LAYER, current_position + i)
 		set_cell(BOARD_LAYER, current_position + i, tile_id, BACKGROUND_PIECE_COLOR)
-		
-	start_debounce()	
+	
+	start_place_piece_timer()
 
 func _process(delta):
 	if can_process_input:
@@ -111,7 +115,6 @@ func _process(delta):
 			rotate_piece()	
 		if Input.is_action_pressed("PLACE"):
 			place_piece()
-			create_piece()
 
 func pick_piece():
 # This is where the random piece generation will go.
@@ -125,11 +128,18 @@ func create_piece():
 
 func start_debounce():
 	can_process_input = false
-	debounce_timer.start(debounce_delay)
-
+	debounce_timer.start(DEBOUNCE_TIMER)
+	
+func start_place_piece_timer():
+	can_process_input = false
+	place_piece_timer.start(PLACE_PIECE_TIMER)
 
 func _on_debounce_timer_timeout():
 	can_process_input = true
+
+func _on_place_piece_timer_timeout():
+	can_process_input = true
+	create_piece()
 
 
 func new_game():
@@ -137,6 +147,7 @@ func new_game():
 	create_piece()
 
 func _ready():
-
 	new_game()
+
+
 
