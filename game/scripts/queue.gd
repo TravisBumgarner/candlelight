@@ -1,17 +1,17 @@
 extends Node2D
 class_name Queue
 
-const Consts = preload("res://scripts/consts.gd")
-const Utils = preload("res://scripts/utils.gd")
-const Shapes = preload("res://scripts/shapes.gd")
+#const Consts = preload("res://scripts/consts.gd")
+#const Utils = preload("res://scripts/utils.gd")
+#const Shapes = preload("res://scripts/shapes.gd")
 
 var utils: Utils
 const QUEUE_SIZE := 3
 var pieces_queue = []
 var canvas
 
-func _init(canvas):
-	self.canvas = canvas
+func _init(main):
+	self.canvas = main
 	fill_queue()
 	utils = Utils.new()
 
