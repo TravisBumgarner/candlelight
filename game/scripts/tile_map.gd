@@ -200,7 +200,7 @@ func _process(delta):
 			rotate_piece()	
 		if Input.is_action_pressed("PLACE"):
 			draw_piece_on_background()
-			var result = find_shapes()
+			var result = foobar()
 			print(result)
 
 
@@ -226,33 +226,6 @@ func is_within_bounds(position: Vector2i):
 	return position.x >= 0 and position.x < HEIGHT and position.y >= 0 and position.y < WIDTH
 
 
-func find_shapes():
-	var shapes = []
-
-	for x in range(WIDTH):
-		for y in range(HEIGHT):
-			var position = Vector2i(x, y)
-			if matches_target_gem(position): #and not matches_avoid_gem(position):
-				shapes.append(position)
-
-	return shapes
-
-func matches_target_gem(position):
-	for offset in target_gem:
-		var target_pos = position + offset
-		if not is_within_bounds(target_pos):
-			return false
-		if get_cell_atlas_coords(BOARD_LAYER, target_pos) != FOREGROUND_PIECE_COLOR:
-			return false
-	return true
-
-#func matches_avoid_gem(position):
-	#for offset in avoid_gem:
-		#var avoid_pos = position + offset
-		#if is_within_bounds(avoid_pos) and get_cell_atlas_coords(BACKGROUND_LAYER, avoid_pos) == FOREGROUND_PIECE_COLOR:
-			#return true
-	#return false
-
 
 func _on_debounce_timer_timeout():
 	can_process_input = true
@@ -274,6 +247,53 @@ func get_next_from_queue():
 	var next_piece = pieces_queue.pop_front()
 	fill_queue()
 	return next_piece
+
+
+var visited = []
+func foobar():
+	visited.resize(10)
+	for i in range(10):
+		visited[i] = []
+		visited[i].resize(10)
+
+	var shapes = find_shapes()
+	print(shapes)
+	
+
+func find_shapes():
+	var shapes = []
+	for x in range(10):
+		for y in range(10):
+			var color = get_cell_atlas_coords(BOARD_LAYER, Vector2i(x,y))
+			if  color != Vector2i(-1, -1) and not visited[x][y]:
+				var shape = []
+				flood_fill(Vector2i(x, y), color, shape)
+				if shape.size() > 0:
+					shapes.append(shape)
+	return shapes
+
+func flood_fill(pos, desired_color, shape):
+	var stack = [pos]
+
+	while stack.size() > 0:
+		var current = stack.pop_back()
+		var x = current.x
+		var y = current.y
+
+		if x < 0 or x >= 10 or y < 0 or y >= 10:
+			continue
+			
+		var current_color = get_cell_atlas_coords(BOARD_LAYER, Vector2i(x,y))
+		if visited[x][y] or current_color != desired_color:
+			continue
+
+		visited[x][y] = true
+		shape.append(current)
+
+		stack.append(Vector2i(x + 1, y))
+		stack.append(Vector2i(x - 1, y))
+		stack.append(Vector2i(x, y + 1))
+		stack.append(Vector2i(x, y - 1))
 
 
 func new_game():
