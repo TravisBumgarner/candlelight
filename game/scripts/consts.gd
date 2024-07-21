@@ -20,3 +20,10 @@ const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
 const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
 const AVOID_GEM_ORIGIN = Vector2i(-9, 8)
 const AVOID_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
+
+#grid variables
+const HEIGHT := 10
+const WIDTH := 10
+
+# I should leanr what this is.
+const TILE_ID := 0

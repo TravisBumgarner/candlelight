@@ -1,4 +1,4 @@
-extends TileMapGame
+extends TileMap
 
 class_name Utils
 
