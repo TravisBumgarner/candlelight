@@ -142,10 +142,10 @@ func erase_piece():
 		erase_cell(PIECE_LAYER, current_absolute_position + point)
 
 
-func erase_area(start: Vector2i, end: Vector2i):
+func erase_area(start: Vector2i, end: Vector2i, layer: int):
 	for x in range(start.x, end.x + 1):
 		for y in range(start.y, end.y + 1):
-			erase_cell(PIECE_LAYER, Vector2i(x,y))
+			erase_cell(layer, Vector2i(x,y))
 
 
 func draw_queue():
@@ -164,7 +164,6 @@ func draw_target_gem():
 func draw_avoid_gem():
 	for point in avoid_gem:
 		set_cell(BACKGROUND_LAYER, AVOID_GEM_ORIGIN + point, tile_id, FOREGROUND_PIECE_COLOR)
-
 
 
 func draw_piece_on_background():
@@ -229,7 +228,7 @@ func _on_debounce_timer_timeout():
 func _on_place_piece_on_background_timer_timeout():
 	can_process_input = true
 	create_piece()
-	erase_area(QUEUE_PREVIEW_ORIGIN, QUEUE_PREVIEW_END)
+	erase_area(QUEUE_PREVIEW_ORIGIN, QUEUE_PREVIEW_END, BACKGROUND_LAYER)
 	draw_queue()
 
 
