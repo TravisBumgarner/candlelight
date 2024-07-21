@@ -6,11 +6,8 @@ const Utils = preload("res://scripts/utils.gd")
 const Shapes = preload("res://scripts/shapes.gd")
 
 var utils: Utils
-
 const QUEUE_SIZE := 3
 var pieces_queue = []
-# Called when the node enters the scene tree for the first time.
-
 var canvas
 
 func _init(canvas):
@@ -23,11 +20,13 @@ func draw_queue( tile_id):
 	var y_offset = Vector2i(0, 0)
 	for piece in pieces_queue:
 		for point in piece.preview.shape:
-			self.canvas.set_cell(Consts.BACKGROUND_LAYER, Consts.QUEUE_PREVIEW_ORIGIN + point + y_offset, tile_id, Consts.FOREGROUND_PIECE_COLOR) 
+			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + point + y_offset, tile_id, Consts.Sprite.Foreground) 
 		y_offset += Vector2i(0, piece.preview.height + 1)
 
+
 func erase_queue():
-	utils.erase_area(self.canvas, Consts.QUEUE_PREVIEW_ORIGIN, Consts.QUEUE_PREVIEW_END, Consts.BACKGROUND_LAYER)
+	utils.erase_area(self.canvas, Consts.QUEUE_PREVIEW_ORIGIN, Consts.QUEUE_PREVIEW_END, Consts.Layer.Background)
+
 
 func fill_queue():
 	while pieces_queue.size() <= QUEUE_SIZE:

@@ -31,21 +31,22 @@ func get_current_piece_rotation():
 
 func draw_piece():
 	for relative_position in self.get_current_piece_rotation():
-		var background_tile = self.canvas.get_cell_atlas_coords(Consts.BOARD_LAYER, self.current_absolute_position + relative_position)
+		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
-		if(background_tile == null):
-			tile_style = Consts.BACKGROUND_PIECE_COLOR
-		elif(background_tile == Consts.BACKGROUND_PIECE_COLOR):
-			tile_style = Consts.FOREGROUND_PIECE_COLOR
-		elif(background_tile == Consts.FOREGROUND_PIECE_COLOR):
-			tile_style = Consts.BACKGROUND_PIECE_COLOR
+		if(background_tile == null):	
+			
+			tile_style = Consts.Sprite.Background
+		elif(background_tile == Consts.Sprite.Background):
+			tile_style = Consts.Sprite.Foreground
+		elif(background_tile == Consts.Sprite.Foreground):
+			tile_style = Consts.Sprite.Background
 	
-		self.canvas.set_cell(Consts.PIECE_LAYER, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
+		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
 
 
 func is_free(position):
-	return self.canvas.get_cell_source_id(Consts.BACKGROUND_LAYER, position) == -1
+	return self.canvas.get_cell_source_id(Consts.Layer.Background, position) == -1
 
 
 func can_move(direction):
@@ -73,23 +74,23 @@ func rotate_piece():
 
 func erase_piece():
 	for point in self.get_current_piece_rotation():
-		self.canvas.erase_cell(Consts.PIECE_LAYER, current_absolute_position + point)
+		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + point)
 
 
 func draw_piece_on_background():
 	pass
 	for relative_position in self.get_current_piece_rotation():
-		var background_tile = self.canvas.get_cell_atlas_coords(Consts.BOARD_LAYER, self.current_absolute_position + relative_position)
+		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
 		if(background_tile == null):
-			tile_style = Consts.BACKGROUND_PIECE_COLOR
-		elif(background_tile == Consts.BACKGROUND_PIECE_COLOR):
-			tile_style = Consts.FOREGROUND_PIECE_COLOR
-		elif(background_tile == Consts.FOREGROUND_PIECE_COLOR):
-			tile_style = Consts.BACKGROUND_PIECE_COLOR
-		self.canvas.erase_cell(Consts.PIECE_LAYER, current_absolute_position + relative_position)
-		self.canvas.set_cell(Consts.BOARD_LAYER, current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
+			tile_style = Consts.Sprite.Background
+		elif(background_tile == Consts.Sprite.Background):
+			tile_style = Consts.Sprite.Foreground
+		elif(background_tile == Consts.Sprite.Foreground):
+			tile_style = Consts.Sprite.Background
+		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + relative_position)
+		self.canvas.set_cell(Consts.Layer.Board, current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
 	
 
 func is_within_bounds(position: Vector2i):

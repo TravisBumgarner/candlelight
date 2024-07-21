@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://c6jidt0j7dtmu"]
 
-[ext_resource type="Script" path="res://scripts/menus/main_menu.gd" id="1_cj5jq"]
-[ext_resource type="Texture2D" uid="uid://7l3y80e8ltro" path="res://assets/homescreen.png" id="2_yad7k"]
+[ext_resource type="Script" path="res://scripts/menus/main_menu.gd" id="1_6a50f"]
+[ext_resource type="Texture2D" uid="uid://7l3y80e8ltro" path="res://assets/homescreen.png" id="2_jgwuj"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -12,12 +12,12 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_cj5jq")
+script = ExtResource("1_6a50f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-512, -256)
 scale = Vector2(2.064, 2.08)
-texture = ExtResource("2_yad7k")
+texture = ExtResource("2_jgwuj")
 centered = false
 metadata/_edit_lock_ = true
 

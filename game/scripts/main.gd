@@ -17,22 +17,22 @@ func _process(delta):
 		if Input.is_action_pressed("MOVE_DOWN"):
 			current_piece.move_piece(Vector2i.DOWN)
 			start_debounce()
-		if Input.is_action_pressed("MOVE_UP"):
+		elif Input.is_action_pressed("MOVE_UP"):
 			current_piece.move_piece(Vector2i.UP)
 			start_debounce()
-		if Input.is_action_pressed("MOVE_RIGHT"):
+		elif Input.is_action_pressed("MOVE_RIGHT"):
 			current_piece.move_piece(Vector2i.RIGHT)
 			start_debounce()
-		if Input.is_action_pressed("MOVE_LEFT"):
+		elif Input.is_action_pressed("MOVE_LEFT"):
 			current_piece.move_piece(Vector2i.LEFT)
 			start_debounce()
-		if Input.is_action_pressed("ROTATE"):
+		elif Input.is_action_pressed("ROTATE"):
 			current_piece.rotate_piece()
 			start_debounce()
-		if Input.is_action_pressed("PLACE"):
+		elif Input.is_action_pressed("PLACE"):
 			current_piece.draw_piece_on_background()
-			start_place_piece_on_background_timer()
 			start_debounce()
+			start_place_piece_on_background_timer()
 			var gems = gemsManager.find_gems()
 			if(gems.size() > 0):
 				level_complete(gems)
@@ -61,7 +61,8 @@ func _on_place_piece_on_background_timer_timeout():
 	can_process_input = true
 	var next_piece = queue.get_next_from_queue()
 	current_piece = Piece.new(self, next_piece)
-	
+
+
 func new_game():
 	gemsManager.draw_target_gem()
 	gemsManager.draw_avoid_gem()

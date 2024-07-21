@@ -3,6 +3,12 @@ class_name GemsManager
 
 const Consts = preload("res://scripts/consts.gd")
 
+const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
+const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
+
+const AVOID_GEM_ORIGIN = Vector2i(-9, 8)
+const AVOID_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
+
 # This needs rethinking
 # Target gems are drawn in a space from (0,0) -> (WIDTH, HEIGHT)
 # this allows for conversions later on assuming overlap.
@@ -23,17 +29,17 @@ func _process(delta):
 
 func draw_gem(gem):
 	for absolute_position in gem:
-		self.canvas.set_cell(Consts.BOARD_LAYER, absolute_position, Consts.TILE_ID, Consts.GEM_COLOR)
+		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.TILE_ID, Consts.Sprite.Gem)
 
 
 func draw_target_gem():
 	for point in target_gem:
-		self.canvas.set_cell(Consts.BACKGROUND_LAYER, Consts.TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.FOREGROUND_PIECE_COLOR)
+		self.canvas.set_cell(Consts.Layer.Background, TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		self.canvas.set_cell(Consts.BACKGROUND_LAYER, Consts.AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.FOREGROUND_PIECE_COLOR)
+		self.canvas.set_cell(Consts.Layer.Background, AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
 
 
 func is_target_gem(shape):
@@ -55,8 +61,8 @@ func find_gems():
 		visited[i] = []
 		visited[i].resize(10)
 
-	#var dark_shapes = find_shapes(Consts.BACKGROUND_PIECE_COLOR)
-	var light_shapes = find_shapes(Consts.FOREGROUND_PIECE_COLOR)
+	#var dark_shapes = find_shapes(Consts.Sprite.Background)
+	var light_shapes = find_shapes(Consts.Sprite.Foreground)
 	
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
@@ -89,7 +95,7 @@ func find_shapes(desired_color: Vector2i):
 	var shapes = []
 	for x in range(10):
 		for y in range(10):
-			var color = self.canvas.get_cell_atlas_coords(Consts.BOARD_LAYER, Vector2i(x,y))
+			var color = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, Vector2i(x,y))
 			if  color == desired_color and not visited[x][y]:
 				var shape = []
 				flood_fill(Vector2i(x, y), desired_color, shape)
@@ -108,7 +114,7 @@ func flood_fill(pos, desired_color, shape):
 		if x < 0 or x >= 10 or y < 0 or y >= 10:
 			continue
 			
-		var current_color = self.canvas.get_cell_atlas_coords(Consts.BOARD_LAYER, Vector2i(x,y))
+		var current_color = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, Vector2i(x,y))
 		if visited[x][y] or current_color != desired_color:
 			continue
 
