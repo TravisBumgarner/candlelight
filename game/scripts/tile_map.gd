@@ -5,6 +5,7 @@ extends TileMap
 
 const BACKGROUND_PIECE_COLOR = Vector2i(0,0)
 const FOREGROUND_PIECE_COLOR = Vector2i(1,0)
+const GEM_COLOR = Vector2i(3,0)
 
 # Assumes a 3x3 Grid for the shape rotation.
 # We'll want to programatically generate these later. 
@@ -36,8 +37,7 @@ const r:= {
 	"preview": r_preview
 }
 
-#const SHAPES := [l, r]
-const SHAPES := [l]
+const SHAPES := [l, r]
 
 # This needs rethinking
 # Target gems are drawn in a space from (0,0) -> (WIDTH, HEIGHT)
@@ -202,9 +202,19 @@ func _process(delta):
 			rotate_piece()	
 		if Input.is_action_pressed("PLACE"):
 			draw_piece_on_background()
-			var result = find_gems()
-			print(result)
+			var gems = find_gems()
+			if(gems.size() > 0):
+				level_complete(gems)
 
+func draw_gem(gem):
+	for absolute_position in gem:
+		set_cell(BOARD_LAYER, absolute_position, tile_id, GEM_COLOR)
+
+
+func level_complete(gems):
+	for gem in gems:
+		draw_gem(gem)
+	
 
 func create_piece():
 	current_absolute_position = START_POSITION
