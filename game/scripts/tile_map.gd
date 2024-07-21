@@ -95,8 +95,17 @@ func move_piece(direction):
 
 func draw_piece(piece, absolute_position):
 	for relative_position in piece:
-		var has_background_tile = get_cell_tile_data(BOARD_LAYER, absolute_position + relative_position)
-		var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
+		var background_tile = get_cell_atlas_coords(BOARD_LAYER, current_absolute_position + relative_position)
+		var tile_style: Vector2i
+		print(background_tile)
+		
+		if(background_tile == null):
+			tile_style = BACKGROUND_PIECE_COLOR
+		elif(background_tile == BACKGROUND_PIECE_COLOR):
+			tile_style = FOREGROUND_PIECE_COLOR
+		elif(background_tile == FOREGROUND_PIECE_COLOR):
+			tile_style = BACKGROUND_PIECE_COLOR
+	
 		set_cell(PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
 
 
@@ -158,19 +167,24 @@ func draw_avoid_gem():
 
 
 
-func place_piece():
+func draw_piece_on_background():
 			#var has_background_tile = get_cell_tile_data(BOARD_LAYER, absolute_position + relative_position)
 		#var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
 		#set_cell(PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
 	
-	for point in active_piece:
-		var has_background_tile = get_cell_tile_data(BOARD_LAYER, current_absolute_position + point)
+	for relative_position in active_piece:
+		var background_tile = get_cell_atlas_coords(BOARD_LAYER, current_absolute_position + relative_position)
+		var tile_style: Vector2i
+		print(background_tile)
 		
-		var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
-		print(tile_style)
-		
-		erase_cell(PIECE_LAYER, current_absolute_position + point)
-		set_cell(BOARD_LAYER, current_absolute_position + point, tile_id, tile_style)
+		if(background_tile == null):
+			tile_style = BACKGROUND_PIECE_COLOR
+		elif(background_tile == BACKGROUND_PIECE_COLOR):
+			tile_style = FOREGROUND_PIECE_COLOR
+		elif(background_tile == FOREGROUND_PIECE_COLOR):
+			tile_style = BACKGROUND_PIECE_COLOR
+		erase_cell(PIECE_LAYER, current_absolute_position + relative_position)
+		set_cell(BOARD_LAYER, current_absolute_position + relative_position, tile_id, tile_style)
 	start_place_piece_on_background_timer()
 
 
@@ -187,7 +201,7 @@ func _process(delta):
 		if Input.is_action_pressed("ROTATE"):
 			rotate_piece()	
 		if Input.is_action_pressed("PLACE"):
-			place_piece()
+			draw_piece_on_background()
 
 
 func create_piece():
