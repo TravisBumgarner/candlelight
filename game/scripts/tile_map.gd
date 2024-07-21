@@ -36,10 +36,11 @@ const r:= {
 	"preview": r_preview
 }
 
-const SHAPES := [l, r]
+#const SHAPES := [l, r]
+const SHAPES := [l]
 
 # This needs rethinking
-const target_gem := [Vector2i(1, 1)]
+const target_gem := [Vector2i(0, 0), Vector2i(0, 1)]
 const avoid_gem := [Vector2i(0, 1), Vector2i(1, 1)]
 
 # For debouncing layer input
@@ -50,8 +51,8 @@ var can_process_input = true
 const PLACE_PIECE_ON_BACKGROUND_TIMER = 0.5
 
 #grid variables
-const ROWS := 10
-const COLS := 10
+const HEIGHT := 10
+const WIDTH := 10
 
 #game piece variables
 var piece_type
@@ -62,7 +63,7 @@ const MAX_ROTATION_INDEX := 3
 var active_piece : Array
 
 # movement variables
-const START_POSITION := Vector2i(round(ROWS/2), round(COLS/2))
+const START_POSITION := Vector2i(round(HEIGHT/2), round(WIDTH/2))
 var current_absolute_position : Vector2i
 
 #tilemap variables
@@ -97,7 +98,6 @@ func draw_piece(piece, absolute_position):
 	for relative_position in piece:
 		var background_tile = get_cell_atlas_coords(BOARD_LAYER, current_absolute_position + relative_position)
 		var tile_style: Vector2i
-		print(background_tile)
 		
 		if(background_tile == null):
 			tile_style = BACKGROUND_PIECE_COLOR
@@ -174,7 +174,6 @@ func draw_piece_on_background():
 	for relative_position in active_piece:
 		var background_tile = get_cell_atlas_coords(BOARD_LAYER, current_absolute_position + relative_position)
 		var tile_style: Vector2i
-		print(background_tile)
 		
 		if(background_tile == null):
 			tile_style = BACKGROUND_PIECE_COLOR
@@ -201,6 +200,8 @@ func _process(delta):
 			rotate_piece()	
 		if Input.is_action_pressed("PLACE"):
 			draw_piece_on_background()
+			var result = find_shapes()
+			print(result)
 
 
 func create_piece():
@@ -219,6 +220,38 @@ func start_debounce():
 func start_place_piece_on_background_timer():
 	can_process_input = false
 	place_piece_on_background_timer.start(PLACE_PIECE_ON_BACKGROUND_TIMER)
+
+
+func is_within_bounds(position: Vector2i):
+	return position.x >= 0 and position.x < HEIGHT and position.y >= 0 and position.y < WIDTH
+
+
+func find_shapes():
+	var shapes = []
+
+	for x in range(WIDTH):
+		for y in range(HEIGHT):
+			var position = Vector2i(x, y)
+			if matches_target_gem(position): #and not matches_avoid_gem(position):
+				shapes.append(position)
+
+	return shapes
+
+func matches_target_gem(position):
+	for offset in target_gem:
+		var target_pos = position + offset
+		if not is_within_bounds(target_pos):
+			return false
+		if get_cell_atlas_coords(BOARD_LAYER, target_pos) != FOREGROUND_PIECE_COLOR:
+			return false
+	return true
+
+#func matches_avoid_gem(position):
+	#for offset in avoid_gem:
+		#var avoid_pos = position + offset
+		#if is_within_bounds(avoid_pos) and get_cell_atlas_coords(BACKGROUND_LAYER, avoid_pos) == FOREGROUND_PIECE_COLOR:
+			#return true
+	#return false
 
 
 func _on_debounce_timer_timeout():
