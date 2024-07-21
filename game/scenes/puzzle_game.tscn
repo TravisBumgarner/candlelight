@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://3pfbxmsopl2r"]
+[gd_scene load_steps=8 format=3 uid="uid://3pfbxmsopl2r"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_mji26"]
 [ext_resource type="Script" path="res://scripts/main.gd" id="2_ddkmh"]
 [ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/hud.tscn" id="3_hasai"]
+[ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="4_a7ts2"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
 texture = ExtResource("1_mji26")
@@ -20,6 +23,24 @@ sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
 [node name="Game" type="Node2D"]
 position = Vector2(576, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-64, 192)
+scale = Vector2(2.048, 2.048)
+texture = ExtResource("4_a7ts2")
+
+[node name="Dark Overlay" type="Panel" parent="."]
+offset_left = -576.0
+offset_top = -64.0
+offset_right = 448.0
+offset_bottom = 448.0
+
+[node name="Light Overlay" type="Panel" parent="."]
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 368.0
+offset_bottom = 368.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vurfj")
 
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ntj6q")
