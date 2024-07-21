@@ -27,3 +27,6 @@ const WIDTH := 10
 
 # I should leanr what this is.
 const TILE_ID := 0
+
+const PLACE_PIECE_ON_BACKGROUND_TIMER = 0.5
+const DEBOUNCE_TIMER = 0.1 # Time in seconds
