@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://3pfbxmsopl2r"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_mji26"]
-[ext_resource type="Script" path="res://scripts/tile_map.gd" id="2_ddkmh"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="2_ddkmh"]
 [ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/hud.tscn" id="3_hasai"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
