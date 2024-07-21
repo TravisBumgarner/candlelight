@@ -1,7 +1,7 @@
 extends Node2D
 class_name GemsManager
 
-const Consts = preload("res://scripts/consts.gd")
+#const Consts = preload("res://scripts/consts.gd")
 
 const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
 const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
@@ -17,14 +17,8 @@ const avoid_gem := [Vector2i(0, 1), Vector2i(1, 1)]
 
 var canvas
 
-func _init(canvas):
-	self.canvas = canvas
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
+func _init(main):
+	self.canvas = main
 
 
 func draw_gem(gem):
@@ -77,14 +71,17 @@ func absolute_to_relative_shape(shape):
 
 
 func arrays_equal(arr1, arr2) -> bool:
-	if arr1.size() != arr2.size():
+	var arr1_copy = arr1.duplicate()
+	var arr2_copy = arr2.duplicate()
+	
+	if arr1_copy.size() != arr2_copy.size():
 		return false
 
-	arr1.sort()
-	arr2.sort()
+	arr1_copy.sort()
+	arr2_copy.sort()
 
 	for i in range(arr1.size()):
-		if arr1[i] != arr2[i]:
+		if arr1_copy[i] != arr2_copy[i]:
 			return false
 	return true
 

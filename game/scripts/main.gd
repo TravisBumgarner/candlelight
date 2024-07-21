@@ -2,17 +2,17 @@ extends TileMap
 
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_background_timer = $PlacePieceOnBackgroundTimer
-const shapes = preload("res://scripts/shapes.gd")
-const Piece = preload("res://scripts/piece.gd")
-const Consts = preload("res://scripts/consts.gd")
-const GemsManager = preload("res://scripts/gems_manager.gd")
+#const shapes = preload("res://scripts/shapes.gd")
+#const Piece = preload("res://scripts/piece.gd")
+#const Consts = preload("res://scripts/consts.gd")
+##const GemsManager = preload("res://scripts/gems_manager.gd")
 
 var current_piece: Piece
 var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
 
-func _process(delta):
+func _process(_delta):
 	if can_process_input:
 		if Input.is_action_pressed("MOVE_DOWN"):
 			current_piece.move_piece(Vector2i.DOWN)

@@ -2,9 +2,9 @@
 extends Node2D
 class_name Piece
 
-const Utils = preload("res://scripts/utils.gd")
-const Shapes = preload("res://scripts/shapes.gd")
-const Consts = preload("res://scripts/consts.gd")
+#const Utils = preload("res://scripts/utils.gd")
+#const Shapes = preload("res://scripts/shapes.gd")
+#const Consts = preload("res://scripts/consts.gd")
 
 var canvas
 var piece_type
@@ -12,11 +12,11 @@ var rotation_index
 var current_absolute_position
 
 # Constructor
-func _init(canvas, piece_type):
-	self.canvas = canvas
-	self.piece_type = piece_type
+func _init(main, new_piece_type):
+	self.canvas = main
+	self.piece_type = new_piece_type
 	self.rotation_index = 0
-	self.current_absolute_position = Vector2i(round(Consts.HEIGHT/2), round(Consts.WIDTH/2))
+	self.current_absolute_position = Vector2i(round(Consts.HEIGHT / 2.0), round(Consts.WIDTH / 2.0))
 	self.draw_piece()
 
 func move_piece(direction):
@@ -45,8 +45,8 @@ func draw_piece():
 		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
 
 
-func is_free(position):
-	return self.canvas.get_cell_source_id(Consts.Layer.Background, position) == -1
+func is_free(direction):
+	return self.canvas.get_cell_source_id(Consts.Layer.Background, direction) == -1
 
 
 func can_move(direction):
@@ -93,5 +93,5 @@ func draw_piece_on_background():
 		self.canvas.set_cell(Consts.Layer.Board, current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
 	
 
-func is_within_bounds(position: Vector2i):
-	return position.x >= 0 and position.x < Consts.HEIGHT and position.y >= 0 and position.y < Consts.WIDTH
+func is_within_bounds(direction: Vector2i):
+	return direction.x >= 0 and direction.x < Consts.HEIGHT and direction.y >= 0 and direction.y < Consts.WIDTH

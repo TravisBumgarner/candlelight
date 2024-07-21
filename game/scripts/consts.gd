@@ -1,4 +1,5 @@
 extends Node
+class_name Consts
 
 const QUEUE_PREVIEW_ORIGIN = Vector2i(-17, 2)
 const QUEUE_PREVIEW_END = QUEUE_PREVIEW_ORIGIN + Vector2i(7, 12)
