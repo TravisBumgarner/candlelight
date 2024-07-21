@@ -1,7 +1,7 @@
 extends TileMap
 
 @onready var debounce_timer = $DebounceTimer
-@onready var place_piece_timer = $PlacePieceTimer
+@onready var place_piece_on_background_timer = $PlacePieceOnBackgroundTimer
 
 const BACKGROUND_PIECE_COLOR = Vector2i(0,0)
 const FOREGROUND_PIECE_COLOR = Vector2i(1,0)
@@ -43,11 +43,11 @@ const target_gem := [Vector2i(1, 1)]
 const avoid_gem := [Vector2i(0, 1), Vector2i(1, 1)]
 
 # For debouncing layer input
-const DEBOUNCE_TIMER = 0.05 # Time in seconds
+const DEBOUNCE_TIMER = 0.1 # Time in seconds
 var can_process_input = true
 
 # for waiting on piece placement
-const PLACE_PIECE_TIMER = 0.5
+const PLACE_PIECE_ON_BACKGROUND_TIMER = 0.5
 
 #grid variables
 const ROWS := 10
@@ -63,7 +63,7 @@ var active_piece : Array
 
 # movement variables
 const START_POSITION := Vector2i(round(ROWS/2), round(COLS/2))
-var current_position : Vector2i
+var current_absolute_position : Vector2i
 
 #tilemap variables
 var tile_id := 0
@@ -88,14 +88,16 @@ const PIECE_LAYER := 2
 func move_piece(direction):
 	if can_move(direction):
 		erase_piece()
-		current_position += direction
-		draw_piece(active_piece, current_position)
+		current_absolute_position += direction
+		draw_piece(active_piece, current_absolute_position)
 		start_debounce()
 
 
-func draw_piece(piece, position):
-	for point in piece:
-		set_cell(PIECE_LAYER, position + point, tile_id, FOREGROUND_PIECE_COLOR)
+func draw_piece(piece, absolute_position):
+	for relative_position in piece:
+		var has_background_tile = get_cell_tile_data(BOARD_LAYER, absolute_position + relative_position)
+		var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
+		set_cell(PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
 
 
 func is_free(position):
@@ -104,15 +106,15 @@ func is_free(position):
 
 func can_move(direction):
 	for point in active_piece:
-		if not(is_free(point + current_position + direction)):
+		if not(is_free(point + current_absolute_position + direction)):
 			return false
 	return true
 
 
 func can_rotate():
 	var temporary_rotation_index = (current_rotation_index + 1) % SHAPES[0].size()
-	for point in piece_type[temporary_rotation_index]:
-		if not is_free(point + current_position):
+	for point in piece_type.rotations[temporary_rotation_index]:
+		if not is_free(point + current_absolute_position):
 			return false
 	return true
 
@@ -121,14 +123,14 @@ func rotate_piece():
 	if can_rotate():
 		erase_piece()
 		current_rotation_index = (current_rotation_index + 1) % SHAPES[0].size()
-		active_piece = piece_type[current_rotation_index]
-		draw_piece(active_piece, current_position)
+		active_piece = piece_type.rotations[current_rotation_index]
+		draw_piece(active_piece, current_absolute_position)
 		start_debounce()
 
 
 func erase_piece():
 	for point in active_piece:
-		erase_cell(PIECE_LAYER, current_position + point)
+		erase_cell(PIECE_LAYER, current_absolute_position + point)
 
 
 func erase_area(start: Vector2i, end: Vector2i):
@@ -157,10 +159,19 @@ func draw_avoid_gem():
 
 
 func place_piece():
+			#var has_background_tile = get_cell_tile_data(BOARD_LAYER, absolute_position + relative_position)
+		#var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
+		#set_cell(PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
+	
 	for point in active_piece:
-		erase_cell(PIECE_LAYER, current_position + point)
-		set_cell(BOARD_LAYER, current_position + point, tile_id, BACKGROUND_PIECE_COLOR)
-	start_place_piece_timer()
+		var has_background_tile = get_cell_tile_data(BOARD_LAYER, current_absolute_position + point)
+		
+		var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
+		print(tile_style)
+		
+		erase_cell(PIECE_LAYER, current_absolute_position + point)
+		set_cell(BOARD_LAYER, current_absolute_position + point, tile_id, tile_style)
+	start_place_piece_on_background_timer()
 
 
 func _process(delta):
@@ -180,11 +191,11 @@ func _process(delta):
 
 
 func create_piece():
-	current_position = START_POSITION
+	current_absolute_position = START_POSITION
 	piece_type = get_next_from_queue()
 	active_piece = piece_type.rotations[current_rotation_index]
 	draw_queue()
-	draw_piece(active_piece, current_position)
+	draw_piece(active_piece, current_absolute_position)
 
 
 func start_debounce():
@@ -192,16 +203,16 @@ func start_debounce():
 	debounce_timer.start(DEBOUNCE_TIMER)
 
 
-func start_place_piece_timer():
+func start_place_piece_on_background_timer():
 	can_process_input = false
-	place_piece_timer.start(PLACE_PIECE_TIMER)
+	place_piece_on_background_timer.start(PLACE_PIECE_ON_BACKGROUND_TIMER)
 
 
 func _on_debounce_timer_timeout():
 	can_process_input = true
 
 
-func _on_place_piece_timer_timeout():
+func _on_place_piece_on_background_timer_timeout():
 	can_process_input = true
 	create_piece()
 	erase_area(QUEUE_PREVIEW_ORIGIN, QUEUE_PREVIEW_END)
@@ -229,7 +240,5 @@ func new_game():
 
 func _ready():
 	new_game()
-
-
 
 
