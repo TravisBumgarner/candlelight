@@ -1,43 +1,18 @@
 extends TileMap
 
+class_name TileMapGame
+
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_background_timer = $PlacePieceOnBackgroundTimer
+const shapes = preload("res://scripts/shapes.gd")
+const Piece = preload("res://scripts/piece.gd")
+const consts = preload("res://scripts/consts.gd")
 
-const BACKGROUND_PIECE_COLOR = Vector2i(0,0)
-const FOREGROUND_PIECE_COLOR = Vector2i(1,0)
-const GEM_COLOR = Vector2i(3,0)
 
-# Assumes a 3x3 Grid for the shape rotation.
-# We'll want to programatically generate these later. 
-const PIECE_SIDE_LENGTH = 3
+var current_piece_foo: Piece
+var queue: Queue
 
-const l_0 := [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
-const l_90 := [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
-const l_180 := [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
-const l_270 := [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
-const l_preview = {
-	"shape": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2,0)],
-	"height": 1
-}
-const l := {
-	"rotations": [l_0, l_90, l_180, l_270],
-	"preview": l_preview
-}
 
-const r_0 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const r_90 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const r_180 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const r_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const r_preview = {
-	"shape": [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)],
-	"height": 2
-} 
-const r:= {
-	"rotations":[r_0, r_90, r_180, r_270],
-	"preview": r_preview
-}
-
-const SHAPES := [l, r]
 
 # This needs rethinking
 # Target gems are drawn in a space from (0,0) -> (WIDTH, HEIGHT)
@@ -58,8 +33,6 @@ const WIDTH := 10
 
 #game piece variables
 var piece_type
-var pieces_queue := []
-const QUEUE_SIZE := 4
 var current_rotation_index : int = 0
 const MAX_ROTATION_INDEX := 3
 var active_piece : Array
@@ -73,19 +46,6 @@ var tile_id := 0
 
 # HUD variables 
 
-const QUEUE_PREVIEW_ORIGIN = Vector2i(-17, 2)
-const QUEUE_PREVIEW_END = QUEUE_PREVIEW_ORIGIN + Vector2i(7, 12)
-const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
-const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
-const AVOID_GEM_ORIGIN = Vector2i(-9, 8)
-const AVOID_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
-
-# layer variables. The below two seem to be
-# based on the order of layers in the right
-# sidebar.
-const BACKGROUND_LAYER := 0
-const BOARD_LAYER := 1
-const PIECE_LAYER := 2
  
 
 func move_piece(direction):
@@ -98,21 +58,21 @@ func move_piece(direction):
 
 func draw_piece(piece, absolute_position):
 	for relative_position in piece:
-		var background_tile = get_cell_atlas_coords(BOARD_LAYER, current_absolute_position + relative_position)
+		var background_tile = get_cell_atlas_coords(consts.BOARD_LAYER, current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
 		if(background_tile == null):
-			tile_style = BACKGROUND_PIECE_COLOR
-		elif(background_tile == BACKGROUND_PIECE_COLOR):
-			tile_style = FOREGROUND_PIECE_COLOR
-		elif(background_tile == FOREGROUND_PIECE_COLOR):
-			tile_style = BACKGROUND_PIECE_COLOR
+			tile_style = consts.BACKGROUND_PIECE_COLOR
+		elif(background_tile == consts.BACKGROUND_PIECE_COLOR):
+			tile_style = consts.FOREGROUND_PIECE_COLOR
+		elif(background_tile == consts.FOREGROUND_PIECE_COLOR):
+			tile_style = consts.BACKGROUND_PIECE_COLOR
 	
-		set_cell(PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
+		set_cell(consts.PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
 
 
 func is_free(position):
-	return get_cell_source_id(BACKGROUND_LAYER, position) == -1
+	return get_cell_source_id(consts.BACKGROUND_LAYER, position) == -1
 
 
 func can_move(direction):
@@ -123,7 +83,7 @@ func can_move(direction):
 
 
 func can_rotate():
-	var temporary_rotation_index = (current_rotation_index + 1) % SHAPES[0].size()
+	var temporary_rotation_index = (current_rotation_index + 1) % shapes.SHAPES[0].size()
 	for point in piece_type.rotations[temporary_rotation_index]:
 		if not is_free(point + current_absolute_position):
 			return false
@@ -133,7 +93,7 @@ func can_rotate():
 func rotate_piece():
 	if can_rotate():
 		erase_piece()
-		current_rotation_index = (current_rotation_index + 1) % SHAPES[0].size()
+		current_rotation_index = (current_rotation_index + 1) % shapes.SHAPES[0].size()
 		active_piece = piece_type.rotations[current_rotation_index]
 		draw_piece(active_piece, current_absolute_position)
 		start_debounce()
@@ -141,50 +101,37 @@ func rotate_piece():
 
 func erase_piece():
 	for point in active_piece:
-		erase_cell(PIECE_LAYER, current_absolute_position + point)
+		erase_cell(consts.PIECE_LAYER, current_absolute_position + point)
 
-
-func erase_area(start: Vector2i, end: Vector2i, layer: int):
-	for x in range(start.x, end.x + 1):
-		for y in range(start.y, end.y + 1):
-			erase_cell(layer, Vector2i(x,y))
-
-
-func draw_queue():
-	var y_offset = Vector2i(0, 0)
-	for piece in pieces_queue:
-		for point in piece.preview.shape:
-			set_cell(BACKGROUND_LAYER, QUEUE_PREVIEW_ORIGIN + point + y_offset, tile_id, FOREGROUND_PIECE_COLOR) 
-		y_offset += Vector2i(0, piece.preview.height + 1)
 
 
 func draw_target_gem():
 	for point in target_gem:
-		set_cell(BACKGROUND_LAYER, TARGET_GEM_ORIGIN + point, tile_id, FOREGROUND_PIECE_COLOR)
+		set_cell(consts.BACKGROUND_LAYER, consts.TARGET_GEM_ORIGIN + point, tile_id, consts.FOREGROUND_PIECE_COLOR)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		set_cell(BACKGROUND_LAYER, AVOID_GEM_ORIGIN + point, tile_id, FOREGROUND_PIECE_COLOR)
+		set_cell(consts.BACKGROUND_LAYER, consts.AVOID_GEM_ORIGIN + point, tile_id, consts.FOREGROUND_PIECE_COLOR)
 
 
 func draw_piece_on_background():
 			#var has_background_tile = get_cell_tile_data(BOARD_LAYER, absolute_position + relative_position)
-		#var tile_style = FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
-		#set_cell(PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
+		#var tile_style = consts.FOREGROUND_PIECE_COLOR if has_background_tile else BACKGROUND_PIECE_COLOR
+		#set_cell(consts.PIECE_LAYER, absolute_position + relative_position, tile_id, tile_style)
 	
 	for relative_position in active_piece:
-		var background_tile = get_cell_atlas_coords(BOARD_LAYER, current_absolute_position + relative_position)
+		var background_tile = get_cell_atlas_coords(consts.BOARD_LAYER, current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
 		if(background_tile == null):
-			tile_style = BACKGROUND_PIECE_COLOR
-		elif(background_tile == BACKGROUND_PIECE_COLOR):
-			tile_style = FOREGROUND_PIECE_COLOR
-		elif(background_tile == FOREGROUND_PIECE_COLOR):
-			tile_style = BACKGROUND_PIECE_COLOR
-		erase_cell(PIECE_LAYER, current_absolute_position + relative_position)
-		set_cell(BOARD_LAYER, current_absolute_position + relative_position, tile_id, tile_style)
+			tile_style = consts.BACKGROUND_PIECE_COLOR
+		elif(background_tile == consts.BACKGROUND_PIECE_COLOR):
+			tile_style = consts.FOREGROUND_PIECE_COLOR
+		elif(background_tile == consts.FOREGROUND_PIECE_COLOR):
+			tile_style = consts.BACKGROUND_PIECE_COLOR
+		erase_cell(consts.PIECE_LAYER, current_absolute_position + relative_position)
+		set_cell(consts.BOARD_LAYER, current_absolute_position + relative_position, tile_id, tile_style)
 	start_place_piece_on_background_timer()
 
 
@@ -208,7 +155,7 @@ func _process(delta):
 
 func draw_gem(gem):
 	for absolute_position in gem:
-		set_cell(BOARD_LAYER, absolute_position, tile_id, GEM_COLOR)
+		set_cell(consts.BOARD_LAYER, absolute_position, tile_id, consts.GEM_COLOR)
 
 
 func level_complete(gems):
@@ -218,9 +165,9 @@ func level_complete(gems):
 
 func create_piece():
 	current_absolute_position = START_POSITION
-	piece_type = get_next_from_queue()
+	piece_type = queue.get_next_from_queue()
 	active_piece = piece_type.rotations[current_rotation_index]
-	draw_queue()
+	queue.draw_queue(self, tile_id)
 	draw_piece(active_piece, current_absolute_position)
 
 
@@ -246,20 +193,9 @@ func _on_debounce_timer_timeout():
 func _on_place_piece_on_background_timer_timeout():
 	can_process_input = true
 	create_piece()
-	erase_area(QUEUE_PREVIEW_ORIGIN, QUEUE_PREVIEW_END, BACKGROUND_LAYER)
-	draw_queue()
-
-
-func fill_queue():
-	while pieces_queue.size() < QUEUE_SIZE:
-		pieces_queue.append(SHAPES.pick_random())
-
-
-func get_next_from_queue():
-	var next_piece = pieces_queue.pop_front()
-	fill_queue()
-	return next_piece
-
+	
+	queue.erase_queue(self)
+	queue.draw_queue(self, tile_id)
 
 var visited = []
 func find_gems():
@@ -269,8 +205,8 @@ func find_gems():
 		visited[i] = []
 		visited[i].resize(10)
 
-	#var dark_shapes = find_shapes(BACKGROUND_PIECE_COLOR)
-	var light_shapes = find_shapes(FOREGROUND_PIECE_COLOR)
+	#var dark_shapes = find_shapes(consts.BACKGROUND_PIECE_COLOR)
+	var light_shapes = find_shapes(consts.FOREGROUND_PIECE_COLOR)
 	
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
@@ -311,7 +247,7 @@ func find_shapes(desired_color: Vector2i):
 	var shapes = []
 	for x in range(10):
 		for y in range(10):
-			var color = get_cell_atlas_coords(BOARD_LAYER, Vector2i(x,y))
+			var color = get_cell_atlas_coords(consts.BOARD_LAYER, Vector2i(x,y))
 			if  color == desired_color and not visited[x][y]:
 				var shape = []
 				flood_fill(Vector2i(x, y), desired_color, shape)
@@ -330,7 +266,7 @@ func flood_fill(pos, desired_color, shape):
 		if x < 0 or x >= 10 or y < 0 or y >= 10:
 			continue
 			
-		var current_color = get_cell_atlas_coords(BOARD_LAYER, Vector2i(x,y))
+		var current_color = get_cell_atlas_coords(consts.BOARD_LAYER, Vector2i(x,y))
 		if visited[x][y] or current_color != desired_color:
 			continue
 
@@ -344,14 +280,16 @@ func flood_fill(pos, desired_color, shape):
 
 
 func new_game():
-	fill_queue()
 	draw_target_gem()
 	draw_avoid_gem()
-	piece_type = get_next_from_queue()
+	piece_type = queue.get_next_from_queue()
 	create_piece()
 
 
 func _ready():
+	queue = Queue.new()
 	new_game()
+	
+	
 
 
