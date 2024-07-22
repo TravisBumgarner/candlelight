@@ -44,8 +44,6 @@ func draw_piece():
 		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
 
 
-
-
 func can_move(direction):
 	for point in self.get_current_piece_rotation():
 		if not(Utils.is_cell_free(self.canvas, point + self.current_absolute_position + direction)):

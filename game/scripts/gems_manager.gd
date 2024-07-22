@@ -1,17 +1,6 @@
 extends Node2D
 class_name GemsManager
 
-#const Consts = preload("res://scripts/consts.gd")
-
-const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
-const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
-
-const AVOID_GEM_ORIGIN = Vector2i(-9, 8)
-const AVOID_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
-
-# This needs rethinking
-# Target gems are drawn in a space from (0,0) -> (WIDTH, HEIGHT)
-# this allows for conversions later on assuming overlap.
 var target_gem: Array
 const avoid_gem := [Vector2i(0, 1), Vector2i(1, 1)]
 
@@ -65,12 +54,23 @@ func generate_puzzle_mode_gem(size: int):
 		points.append(new_neighbor)
 	return Utils.move_cells_to_origin(points)
 
+
+func erase_target_gem():
+	Utils.erase_area(self.canvas, Consts.TARGET_GEM_ORIGIN, Consts.TARGET_GEM_END, Consts.Layer.Board)
+
+
+func erase_avoid_gem():
+	Utils.erase_area(self.canvas, Consts.AVOID_GEM_ORIGIN, Consts.AVOID_GEM_END, Consts.Layer.Board)
+
+
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
 		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.TILE_ID, Consts.Sprite.Gem)
 
 
 func update_target_gem(level: int):
+	self.erase_target_gem()
+	self.erase_avoid_gem()
 	var size = self.level_to_speed_mode_gem_size(level)
 	target_gem = self.generate_puzzle_mode_gem(size)
 	self.draw_target_gem()
@@ -78,12 +78,12 @@ func update_target_gem(level: int):
 
 func draw_target_gem():
 	for point in target_gem:
-		self.canvas.set_cell(Consts.Layer.Board, TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		self.canvas.set_cell(Consts.Layer.Board, AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
 
 
 func is_target_gem(shape):
@@ -107,7 +107,7 @@ func find_gems():
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
-	
+		
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)
@@ -128,13 +128,6 @@ func arrays_equal(arr1, arr2) -> bool:
 		if arr1_copy[i] != arr2_copy[i]:
 			return false
 	return true
-
-
-
-
-
-
-
 
 
 func find_shapes(desired_color: Vector2i):

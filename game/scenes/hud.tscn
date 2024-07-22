@@ -10,6 +10,7 @@ offset_right = 224.0
 offset_bottom = 480.0
 
 [node name="Panel2" type="Panel" parent="."]
+visible = false
 offset_top = 32.0
 offset_right = 224.0
 offset_bottom = 64.0
@@ -22,6 +23,7 @@ text = "Queue"
 horizontal_alignment = 1
 
 [node name="Level" type="Label" parent="."]
+visible = false
 offset_top = 32.0
 offset_right = 224.0
 offset_bottom = 55.0
@@ -50,6 +52,7 @@ offset_right = 480.0
 offset_bottom = 480.0
 
 [node name="Label4" type="Label" parent="."]
+visible = false
 offset_left = 256.0
 offset_top = 256.0
 offset_right = 480.0
@@ -58,6 +61,7 @@ text = "Avoid Gem"
 horizontal_alignment = 1
 
 [node name="Label2" type="Label" parent="."]
+visible = false
 offset_right = 224.0
 offset_bottom = 23.0
 text = "Level"

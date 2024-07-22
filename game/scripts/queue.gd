@@ -1,11 +1,7 @@
 extends Node2D
 class_name Queue
 
-#const Consts = preload("res://scripts/consts.gd")
-#const Utils = preload("res://scripts/utils.gd")
-#const Shapes = preload("res://scripts/shapes.gd")
 
-var utils: Utils
 const QUEUE_SIZE := 3
 var pieces_queue = []
 var canvas
@@ -13,7 +9,6 @@ var canvas
 func _init(main):
 	self.canvas = main
 	fill_queue()
-	utils = Utils.new()
 
 
 func draw_queue( tile_id):
@@ -25,7 +20,7 @@ func draw_queue( tile_id):
 
 
 func erase_queue():
-	utils.erase_area(self.canvas, Consts.QUEUE_PREVIEW_ORIGIN, Consts.QUEUE_PREVIEW_END, Consts.Layer.Background)
+	Utils.erase_area(self.canvas, Consts.QUEUE_PREVIEW_ORIGIN, Consts.QUEUE_PREVIEW_END, Consts.Layer.Background)
 
 
 func fill_queue():
