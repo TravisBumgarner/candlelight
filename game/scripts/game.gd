@@ -3,6 +3,11 @@ extends TileMap
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
+@onready var _1_gem = $"../Sounds/1Gem"
+@onready var _2_gems = $"../Sounds/2 Gems"
+@onready var _3_gems = $"../Sounds/3 Gems"
+@onready var failure = $"../Sounds/Failure"
+
 
 var current_piece: Piece
 var queue: Queue
@@ -42,6 +47,17 @@ func _process(_delta):
 
 func level_complete(gems):
 	can_process_input = false
+		
+	var total_gems = gems.size()
+	
+	if total_gems == 1:
+		_1_gem.play()
+	if total_gems == 2:
+		_2_gems.play()
+	if total_gems > 2:
+		_3_gems.play()
+		
+	
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
 	level_complete_timer.start(Consts.LEVEL_COMPLETE_TIMER)
