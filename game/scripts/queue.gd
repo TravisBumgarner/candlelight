@@ -20,7 +20,7 @@ func draw_queue( tile_id):
 	var y_offset = Vector2i(0, 0)
 	for piece in pieces_queue:
 		for point in piece.preview.shape:
-			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + point + y_offset, tile_id, Consts.Sprite.Foreground) 
+			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + point + y_offset, tile_id, Consts.Sprite.Midground) 
 		y_offset += Vector2i(0, piece.preview.height + 1)
 
 
