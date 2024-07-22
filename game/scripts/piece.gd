@@ -2,10 +2,6 @@
 extends Node2D
 class_name Piece
 
-#const Utils = preload("res://scripts/utils.gd")
-#const Shapes = preload("res://scripts/shapes.gd")
-#const Consts = preload("res://scripts/consts.gd")
-
 var canvas
 var piece_type
 var rotation_index
@@ -44,13 +40,11 @@ func draw_piece():
 		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
 
 
-func is_free(direction):
-	return self.canvas.get_cell_source_id(Consts.Layer.Background, direction) == -1
 
 
 func can_move(direction):
 	for point in self.get_current_piece_rotation():
-		if not(self.is_free(point + self.current_absolute_position + direction)):
+		if not(Utils.is_cell_free(self.canvas, point + self.current_absolute_position + direction)):
 			return false
 	return true
 
@@ -59,7 +53,7 @@ func can_rotate():
 	pass
 	var temporary_rotation_index = (self.rotation_index + 1) % Shapes.SHAPES[0].size()
 	for point in piece_type.rotations[temporary_rotation_index]:
-		if not self.is_free(point + current_absolute_position):
+		if not Utils.is_cell_free(self.canvas, point + current_absolute_position):
 			return false
 	return true
 
@@ -76,7 +70,7 @@ func erase_piece():
 		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + point)
 
 
-func draw_piece_on_background():
+func draw_piece_on_board():
 	pass
 	for relative_position in self.get_current_piece_rotation():
 		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)

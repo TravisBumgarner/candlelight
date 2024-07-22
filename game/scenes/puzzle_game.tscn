@@ -28,14 +28,17 @@ position = Vector2(576, 64)
 position = Vector2(-64, 192)
 scale = Vector2(2.048, 2.048)
 texture = ExtResource("4_a7ts2")
+metadata/_edit_lock_ = true
 
 [node name="Dark Overlay" type="Panel" parent="."]
+visible = false
 offset_left = -576.0
 offset_top = -64.0
 offset_right = 448.0
 offset_bottom = 448.0
 
 [node name="Light Overlay" type="Panel" parent="."]
+visible = false
 offset_left = 16.0
 offset_top = 16.0
 offset_right = 368.0
@@ -43,6 +46,7 @@ offset_bottom = 368.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_vurfj")
 
 [node name="TileMap" type="TileMap" parent="."]
+visibility_layer = 7
 tile_set = SubResource("TileSet_ntj6q")
 rendering_quadrant_size = 32
 format = 2
@@ -60,11 +64,24 @@ metadata/_edit_lock_ = true
 [node name="DebounceTimer" type="Timer" parent="TileMap"]
 one_shot = true
 
-[node name="PlacePieceOnBackgroundTimer" type="Timer" parent="TileMap"]
+[node name="PlacePieceOnBoardTimer" type="Timer" parent="TileMap"]
 one_shot = true
 
-[node name="HUD" parent="TileMap" instance=ExtResource("3_hasai")]
+[node name="LevelCompleteTimer" type="Timer" parent="TileMap"]
+one_shot = true
+
+[node name="Level" type="Label" parent="."]
+offset_left = 176.0
+offset_top = 400.0
+offset_right = 216.0
+offset_bottom = 423.0
+text = "1"
+
+[node name="HUD" parent="." instance=ExtResource("3_hasai")]
 
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBackgroundTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBackgroundTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]

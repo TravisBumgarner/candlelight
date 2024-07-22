@@ -1,16 +1,16 @@
 extends TileMap
 
+@onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
-@onready var place_piece_on_background_timer = $PlacePieceOnBackgroundTimer
-#const shapes = preload("res://scripts/shapes.gd")
-#const Piece = preload("res://scripts/piece.gd")
-#const Consts = preload("res://scripts/consts.gd")
-##const GemsManager = preload("res://scripts/gems_manager.gd")
+@onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
 
 var current_piece: Piece
 var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
+var level = 1
+@onready var level_label = $"../Level"
+
 
 func _process(_delta):
 	if can_process_input:
@@ -30,41 +30,51 @@ func _process(_delta):
 			current_piece.rotate_piece()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
-			current_piece.draw_piece_on_background()
-			start_debounce()
-			start_place_piece_on_background_timer()
+			current_piece.draw_piece_on_board()
+			
 			var gems = gemsManager.find_gems()
 			if(gems.size() > 0):
 				level_complete(gems)
+				return
+			start_place_piece_on_board_timer()
+
 
 
 func level_complete(gems):
+	can_process_input = false
 	for gem in gems:
-		gemsManager.draw_gem(gem)
-
+		gemsManager.draw_gem_on_board(gem)
+	level_complete_timer.start(Consts.LEVEL_COMPLETE_TIMER)
 
 func start_debounce():
 	can_process_input = false
 	debounce_timer.start(Consts.DEBOUNCE_TIMER)
 
 
-func start_place_piece_on_background_timer():
+func start_place_piece_on_board_timer():
 	can_process_input = false
-	place_piece_on_background_timer.start(Consts.PLACE_PIECE_ON_BACKGROUND_TIMER)
+	place_piece_on_board_timer.start(Consts.PLACE_PIECE_ON_BOARD_TIMER)
 
 
 func _on_debounce_timer_timeout():
 	can_process_input = true
 
 
-func _on_place_piece_on_background_timer_timeout():
+func _on_place_piece_on_board_timer_timeout():
 	can_process_input = true
-	var next_piece = queue.get_next_from_queue()
-	current_piece = Piece.new(self, next_piece)
+	current_piece = Piece.new(self, queue.get_next_from_queue())
+
+func _on_level_complete_timer_timeout():
+	level += 1
+	level_label.text = str(level)
+	Utils.erase_area(self, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
+	gemsManager.update_target_gem(level)
+	can_process_input = true
+	current_piece = Piece.new(self, queue.get_next_from_queue())
 
 
 func new_game():
-	gemsManager.draw_target_gem()
+	gemsManager.update_target_gem(level)
 	gemsManager.draw_avoid_gem()
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
@@ -73,7 +83,9 @@ func _ready():
 	queue = Queue.new(self)
 	gemsManager = GemsManager.new(self)
 	new_game()
-	
-	
+
+
+
+
 
 
