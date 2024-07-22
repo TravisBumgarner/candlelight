@@ -1,0 +1,17 @@
+{
+  "name": "candlelight",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:TravisBumgarner/candlelight.git",
+  "author": "Travis Bumgarner <travis.bumgarner@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf ./html && rm -rf ./dist && mkdir ./html && cd game && godot --export-release \"Web\" ../html/index.html",
+    "serve": "node serve.js",
+    "zip": "mkdir ./dist && zip -r ./dist/candlelight.zip html",
+    "send-it": "yarn build && yarn zip && rm -rf ./html"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

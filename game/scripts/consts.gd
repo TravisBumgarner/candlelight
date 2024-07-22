@@ -13,6 +13,7 @@ enum Layer {
 const Sprite = {
 	Background = Vector2i(0,0),
 	Foreground = Vector2i(1,0),
+	Midground = Vector2i(2,0),
 	Gem =  Vector2i(3,0)
 }
 
