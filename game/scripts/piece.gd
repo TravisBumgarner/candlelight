@@ -2,9 +2,6 @@
 extends Node2D
 class_name Piece
 
-
-
-
 var canvas
 var piece_type
 var rotation_index
@@ -17,6 +14,7 @@ func _init(main, new_piece_type):
 	self.rotation_index = 0
 	self.current_absolute_position = Vector2i(round(Consts.HEIGHT / 2.0), round(Consts.WIDTH / 2.0))
 	self.draw_piece()
+
 
 func move_piece(direction, sound_movement, sound_nonmovement):
 	if can_move(direction):
