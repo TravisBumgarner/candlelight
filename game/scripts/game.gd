@@ -15,7 +15,7 @@ var current_piece: Piece
 var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
-var level = 10
+var level = 1
 @onready var level_label = $"../Level"
 
 
@@ -99,8 +99,7 @@ func _ready():
 	queue = Queue.new(self)
 	gemsManager = GemsManager.new(self)
 	new_game()
-	
-	print(self.get_path())
+
 
 
 

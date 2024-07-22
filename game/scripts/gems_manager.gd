@@ -122,7 +122,6 @@ func find_gems():
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
 		
-	print(light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)
