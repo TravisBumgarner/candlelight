@@ -4,6 +4,12 @@ class_name Consts
 const QUEUE_PREVIEW_ORIGIN = Vector2i(-17, 2)
 const QUEUE_PREVIEW_END = QUEUE_PREVIEW_ORIGIN + Vector2i(7, 12)
 
+const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
+const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i(Consts.MAX_GEM_WIDTH, Consts.MAX_GEM_HEIGHT)
+
+const AVOID_GEM_ORIGIN = Vector2i(-9, 9)
+const AVOID_GEM_END = AVOID_GEM_ORIGIN + Vector2i(Consts.MAX_GEM_WIDTH, Consts.MAX_GEM_HEIGHT)
+
 enum Layer {
 	Background = 0,
 	Board = 1,

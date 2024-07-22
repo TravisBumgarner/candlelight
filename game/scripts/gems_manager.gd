@@ -40,6 +40,9 @@ func level_to_speed_mode_gem_size(level: int) -> int:
 
 
 func generate_puzzle_mode_gem(size: int):
+	self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN, Consts.TILE_ID, Consts.Sprite.Gem)
+	
+	
 	var current_point = Vector2i(randi_range(0, Consts.MAX_GEM_WIDTH), randi_range(0, Consts.MAX_GEM_HEIGHT))
 	var points = [current_point]
 	
@@ -65,12 +68,23 @@ func generate_puzzle_mode_gem(size: int):
 		points.append(new_neighbor)
 	return Utils.move_cells_to_origin(points)
 
+
+func erase_target_gem():
+	Utils.erase_area(self.canvas, Consts.TARGET_GEM_ORIGIN, Consts.TARGET_GEM_END, Consts.Layer.Board)
+
+
+func erase_avoid_gem():
+	Utils.erase_area(self.canvas, Consts.AVOID_GEM_ORIGIN, Consts.AVOID_GEM_END, Consts.Layer.Board)
+
+
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
 		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.TILE_ID, Consts.Sprite.Gem)
 
 
 func update_target_gem(level: int):
+	self.erase_target_gem()
+	self.erase_avoid_gem()
 	var size = self.level_to_speed_mode_gem_size(level)
 	target_gem = self.generate_puzzle_mode_gem(size)
 	self.draw_target_gem()
@@ -107,7 +121,8 @@ func find_gems():
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
-	
+		
+	print(light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)
@@ -128,13 +143,6 @@ func arrays_equal(arr1, arr2) -> bool:
 		if arr1_copy[i] != arr2_copy[i]:
 			return false
 	return true
-
-
-
-
-
-
-
 
 
 func find_shapes(desired_color: Vector2i):

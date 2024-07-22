@@ -1,5 +1,7 @@
 extends TileMap
 
+class_name Game
+
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
@@ -13,7 +15,7 @@ var current_piece: Piece
 var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
-var level = 1
+var level = 10
 @onready var level_label = $"../Level"
 
 
@@ -97,6 +99,8 @@ func _ready():
 	queue = Queue.new(self)
 	gemsManager = GemsManager.new(self)
 	new_game()
+	
+	print(self.get_path())
 
 
 

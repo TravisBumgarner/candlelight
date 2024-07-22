@@ -1,5 +1,5 @@
 # Piece.gd
-extends Node2D
+extends Game
 class_name Piece
 
 var canvas
@@ -42,8 +42,6 @@ func draw_piece():
 			tile_style = Consts.Sprite.Background
 	
 		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
-
-
 
 
 func can_move(direction):
