@@ -1,17 +1,6 @@
 extends Node2D
 class_name GemsManager
 
-#const Consts = preload("res://scripts/consts.gd")
-
-const TARGET_GEM_ORIGIN = Vector2i(-9, 0)
-const TARGET_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
-
-const AVOID_GEM_ORIGIN = Vector2i(-9, 8)
-const AVOID_GEM_END = TARGET_GEM_ORIGIN + Vector2i()
-
-# This needs rethinking
-# Target gems are drawn in a space from (0,0) -> (WIDTH, HEIGHT)
-# this allows for conversions later on assuming overlap.
 var target_gem: Array
 const avoid_gem := [Vector2i(0, 1), Vector2i(1, 1)]
 
@@ -40,9 +29,6 @@ func level_to_speed_mode_gem_size(level: int) -> int:
 
 
 func generate_puzzle_mode_gem(size: int):
-	self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN, Consts.TILE_ID, Consts.Sprite.Gem)
-	
-	
 	var current_point = Vector2i(randi_range(0, Consts.MAX_GEM_WIDTH), randi_range(0, Consts.MAX_GEM_HEIGHT))
 	var points = [current_point]
 	
@@ -92,12 +78,12 @@ func update_target_gem(level: int):
 
 func draw_target_gem():
 	for point in target_gem:
-		self.canvas.set_cell(Consts.Layer.Board, TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		self.canvas.set_cell(Consts.Layer.Board, AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
 
 
 func is_target_gem(shape):

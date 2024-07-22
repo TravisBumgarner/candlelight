@@ -1,7 +1,5 @@
 extends TileMap
 
-class_name Game
-
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
@@ -17,7 +15,6 @@ var can_process_input = true
 var gemsManager: GemsManager
 var level = 1
 @onready var level_label = $"../Level"
-
 
 func _process(_delta):
 	if can_process_input:
@@ -46,7 +43,6 @@ func _process(_delta):
 			start_place_piece_on_board_timer()
 
 
-
 func level_complete(gems):
 	can_process_input = false
 		
@@ -61,6 +57,7 @@ func level_complete(gems):
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
 	level_complete_timer.start(Consts.LEVEL_COMPLETE_TIMER)
+
 
 func start_debounce():
 	can_process_input = false
@@ -80,6 +77,7 @@ func _on_place_piece_on_board_timer_timeout():
 	can_process_input = true
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
+
 func _on_level_complete_timer_timeout():
 	level += 1
 	level_label.text = str(level)
@@ -91,7 +89,7 @@ func _on_level_complete_timer_timeout():
 
 func new_game():
 	gemsManager.update_target_gem(level)
-	gemsManager.draw_avoid_gem()
+	#gemsManager.draw_avoid_gem()
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
 
@@ -99,10 +97,3 @@ func _ready():
 	queue = Queue.new(self)
 	gemsManager = GemsManager.new(self)
 	new_game()
-
-
-
-
-
-
-

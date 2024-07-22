@@ -1,5 +1,5 @@
 # Piece.gd
-extends Game
+extends Node2D
 class_name Piece
 
 var canvas
