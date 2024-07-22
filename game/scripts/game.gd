@@ -3,11 +3,11 @@ extends TileMap
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
-@onready var _1_gem = $"../Sounds/1Gem"
-@onready var _2_gems = $"../Sounds/2 Gems"
-@onready var _3_gems = $"../Sounds/3 Gems"
-@onready var failure = $"../Sounds/Failure"
 
+@onready var sound_one_gem = $"../Sounds/one_gem"
+@onready var sound_two_gems = $"../Sounds/two_gems"
+@onready var sound_movement = $"../Sounds/movement"
+@onready var sound_nonmovement = $"../Sounds/nonmovement"
 
 var current_piece: Piece
 var queue: Queue
@@ -20,19 +20,19 @@ var level = 1
 func _process(_delta):
 	if can_process_input:
 		if Input.is_action_pressed("MOVE_DOWN"):
-			current_piece.move_piece(Vector2i.DOWN)
+			current_piece.move_piece(Vector2i.DOWN, sound_movement, sound_nonmovement)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_UP"):
-			current_piece.move_piece(Vector2i.UP)
+			current_piece.move_piece(Vector2i.UP, sound_movement, sound_nonmovement)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_RIGHT"):
-			current_piece.move_piece(Vector2i.RIGHT)
+			current_piece.move_piece(Vector2i.RIGHT, sound_movement, sound_nonmovement)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_LEFT"):
-			current_piece.move_piece(Vector2i.LEFT)
+			current_piece.move_piece(Vector2i.LEFT, sound_movement, sound_nonmovement)
 			start_debounce()
 		elif Input.is_action_pressed("ROTATE"):
-			current_piece.rotate_piece()
+			current_piece.rotate_piece(sound_movement, sound_nonmovement)
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
 			current_piece.draw_piece_on_board()
@@ -51,11 +51,9 @@ func level_complete(gems):
 	var total_gems = gems.size()
 	
 	if total_gems == 1:
-		_1_gem.play()
-	if total_gems == 2:
-		_2_gems.play()
-	if total_gems > 2:
-		_3_gems.play()
+		sound_one_gem.play()
+	if total_gems >= 2:
+		sound_two_gems.play()
 		
 	
 	for gem in gems:

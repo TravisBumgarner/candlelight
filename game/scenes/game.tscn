@@ -6,8 +6,8 @@
 [ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/hud.tscn" id="4_ge00g"]
 [ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="5_sl1om"]
 [ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="6_fhyd6"]
-[ext_resource type="AudioStream" uid="uid://bv068jelp5dwv" path="res://assets/sounds/3gems.wav" id="7_tepq5"]
-[ext_resource type="AudioStream" uid="uid://dtdssp6vw4bnm" path="res://assets/sounds/failure.wav" id="8_fld8u"]
+[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="7_htgu6"]
+[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="8_erdsv"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
@@ -85,21 +85,21 @@ text = "1"
 
 [node name="Sounds" type="Node" parent="."]
 
-[node name="1Gem" type="AudioStreamPlayer" parent="Sounds"]
+[node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("5_sl1om")
 
-[node name="2 Gems" type="AudioStreamPlayer" parent="Sounds"]
+[node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("6_fhyd6")
 
-[node name="3 Gems" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("7_tepq5")
+[node name="movement" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_htgu6")
 
-[node name="Failure" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("8_fld8u")
+[node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_erdsv")
 
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
 [connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
