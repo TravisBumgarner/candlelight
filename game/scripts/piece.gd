@@ -34,9 +34,8 @@ func draw_piece():
 		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
-		if(background_tile == null):	
-			
-			tile_style = Consts.Sprite.Background
+		if(background_tile == Vector2i(-1,-1)):	
+			tile_style = Consts.Sprite.Midground
 		elif(background_tile == Consts.Sprite.Background):
 			tile_style = Consts.Sprite.Foreground
 		elif(background_tile == Consts.Sprite.Foreground):
