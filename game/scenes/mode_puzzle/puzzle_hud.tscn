@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://btqjm3ripnoej"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="PuzzleHUD" type="CanvasLayer"]
 
 [node name="QueuePanel" type="Panel" parent="."]
 visible = false
@@ -41,7 +41,7 @@ offset_bottom = 224.0
 offset_left = 256.0
 offset_right = 480.0
 offset_bottom = 23.0
-text = "To Create"
+text = "Target Gem"
 horizontal_alignment = 1
 
 [node name="AvoidGemPanel" type="Panel" parent="."]
