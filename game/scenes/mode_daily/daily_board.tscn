@@ -62,6 +62,7 @@ one_shot = true
 [node name="LevelCompleteTimer" type="Timer" parent="."]
 one_shot = true
 
+[connection signal="experiment_completed" from="." to="." method="_on_experiment_completed"]
 [connection signal="timeout" from="DebounceTimer" to="." method="_on_debounce_timer_timeout"]
 [connection signal="timeout" from="PlacePieceOnBoardTimer" to="." method="_on_place_piece_on_board_timer_timeout"]
 [connection signal="timeout" from="LevelCompleteTimer" to="." method="_on_level_complete_timer_timeout"]

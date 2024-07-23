@@ -11,3 +11,5 @@
 [node name="DailyBoard" parent="." instance=ExtResource("1_qg4hi")]
 
 [node name="DailyHUD" parent="." instance=ExtResource("2_uxm8u")]
+
+[connection signal="experiment_completed" from="DailyBoard" to="DailyHUD" method="_on_daily_board_experiment_completed"]

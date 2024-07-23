@@ -4,7 +4,6 @@ extends Node2D
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
 @onready var tile_map = $TileMap
 
-
 var current_piece: Piece
 var queue: Queue
 var can_process_input = true
