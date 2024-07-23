@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
+@onready var tile_map = $TileMap
+
 
 var current_piece: Piece
 var queue: Queue
@@ -63,23 +65,23 @@ func _on_debounce_timer_timeout():
 
 func _on_place_piece_on_board_timer_timeout():
 	can_process_input = true
-	current_piece = Piece.new(self, queue.get_next_from_queue())
+	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func _on_level_complete_timer_timeout():
-	Utils.erase_area(self, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
+	Utils.erase_area(tile_map, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
 	can_process_input = true
-	current_piece = Piece.new(self, queue.get_next_from_queue())
+	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func new_game():
 	print('new game')
 	gemsManager.daily_mode_set_target_gem()
-	current_piece = Piece.new(self, queue.get_next_from_queue())
+	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func _ready():
 	print('daily')
-	queue = Queue.new(self)
-	gemsManager = GemsManager.new(self)
+	queue = Queue.new(tile_map)
+	gemsManager = GemsManager.new(tile_map)
 	new_game()

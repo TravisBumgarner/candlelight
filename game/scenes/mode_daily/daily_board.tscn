@@ -21,6 +21,7 @@ sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
 [node name="DailyBoard" type="Node2D"]
 position = Vector2(576, 64)
+script = ExtResource("2_fsqbm")
 
 [node name="Dark Overlay" type="Panel" parent="."]
 visible = false
@@ -50,21 +51,17 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "piece"
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
-script = ExtResource("2_fsqbm")
 metadata/_edit_lock_ = true
 
-[node name="DebounceTimer" type="Timer" parent="TileMap"]
+[node name="DebounceTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="PlacePieceOnBoardTimer" type="Timer" parent="TileMap"]
+[node name="PlacePieceOnBoardTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="LevelCompleteTimer" type="Timer" parent="TileMap"]
+[node name="LevelCompleteTimer" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
+[connection signal="timeout" from="DebounceTimer" to="." method="_on_debounce_timer_timeout"]
+[connection signal="timeout" from="PlacePieceOnBoardTimer" to="." method="_on_place_piece_on_board_timer_timeout"]
+[connection signal="timeout" from="LevelCompleteTimer" to="." method="_on_level_complete_timer_timeout"]
