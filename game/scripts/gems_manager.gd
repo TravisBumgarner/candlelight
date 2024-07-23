@@ -28,14 +28,18 @@ func puzzle_mode_level_to_gem_size(level: int) -> int:
 		return 8  # Assuming you want a default value for levels 60 and above
 
 
-func daily_mode_generate_gem(size: int):
-	var current_point = Vector2i(randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_WIDTH), randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_HEIGHT))
+func daily_mode_generate_gem(game_key: int):
+	var RNG = RandomNumberGenerator.new()
+	RNG.seed = game_key
+	var size = 5 # todo update
+
+	var current_point = Vector2i(RNG.randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_WIDTH), RNG.randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_HEIGHT))
 	var points = [current_point]
 	
 	var potential_neighbors = Utils.get_neighboring_cells_on_board(current_point)
 	while points.size() < size:
 		var new_neighbor = null
-		potential_neighbors.shuffle()
+		DailyUtils.shuffle_rng_array(RNG, potential_neighbors)
 		
 		var potential_neighbor = potential_neighbors.pop_front()
 		while potential_neighbors.size() > 0:
@@ -103,10 +107,10 @@ func puzzle_mode_set_target_gem(level: int):
 	self.draw_target_gem()
 
 
-func daily_mode_set_target_gem():
+func daily_mode_set_target_gem(game_key):
 	
 	self.erase_target_gem()
-	self.daily_mode_generate_gem(6)
+	self.daily_mode_generate_gem(game_key)
 	self.draw_target_gem()
 
 func draw_target_gem():

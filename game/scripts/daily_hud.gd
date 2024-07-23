@@ -10,7 +10,7 @@ var game_key = ""
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
-	game_key_label.text = game_key
+	game_key_label.text = str(game_key)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
