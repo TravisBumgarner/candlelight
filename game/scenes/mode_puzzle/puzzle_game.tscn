@@ -1,13 +1,13 @@
 [gd_scene load_steps=4 format=3 uid="uid://ebrsgm7rurl8"]
 
 [ext_resource type="PackedScene" uid="uid://b606kullqga4c" path="res://scenes/GlobalUI.tscn" id="1_hebcj"]
-[ext_resource type="PackedScene" uid="uid://nfvtipru81jd" path="res://scenes/mode_daily/daily_board.tscn" id="1_u6cf8"]
-[ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/mode_daily/daily_hud.tscn" id="2_0grpo"]
+[ext_resource type="PackedScene" uid="uid://q1ejs4pnnjm1" path="res://scenes/mode_puzzle/puzzle_board.tscn" id="2_1mhny"]
+[ext_resource type="PackedScene" uid="uid://btqjm3ripnoej" path="res://scenes/mode_puzzle/puzzle_hud.tscn" id="3_s4vh2"]
 
 [node name="PuzzleGame" type="Node2D"]
 
 [node name="GlobalUi" parent="." instance=ExtResource("1_hebcj")]
 
-[node name="PuzzleBoard" parent="." instance=ExtResource("1_u6cf8")]
+[node name="PuzzleBoard" parent="." instance=ExtResource("2_1mhny")]
 
-[node name="HUD" parent="." instance=ExtResource("2_0grpo")]
+[node name="PuzzleHUD" parent="." instance=ExtResource("3_s4vh2")]

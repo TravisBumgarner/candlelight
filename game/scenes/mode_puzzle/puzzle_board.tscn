@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://q1ejs4pnnjm1"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_k6xr5"]
-[ext_resource type="Script" path="res://scripts/game.gd" id="2_rtkuq"]
+[ext_resource type="Script" path="res://scripts/game-puzzle.gd" id="2_ne2b2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
@@ -50,7 +50,7 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "piece"
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
-script = ExtResource("2_rtkuq")
+script = ExtResource("2_ne2b2")
 metadata/_edit_lock_ = true
 
 [node name="DebounceTimer" type="Timer" parent="TileMap"]
@@ -70,8 +70,8 @@ offset_bottom = 423.0
 text = "1"
 
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
 [connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]

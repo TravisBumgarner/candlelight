@@ -91,6 +91,7 @@ func new_game():
 
 
 func _ready():
+	print('puzzle')
 	queue = Queue.new(self)
 	gemsManager = GemsManager.new(self)
 	new_game()
