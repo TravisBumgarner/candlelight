@@ -1,4 +1,4 @@
-extends TileMap
+extends Node2D
 
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
@@ -8,6 +8,8 @@ extends TileMap
 @onready var sound_two_gems = $"../Sounds/two_gems"
 @onready var sound_movement = $"../Sounds/movement"
 @onready var sound_nonmovement = $"../Sounds/nonmovement"
+
+signal target_gem_updated
 
 var current_piece: Piece
 var queue: Queue
@@ -97,8 +99,6 @@ func _ready():
 	queue = Queue.new(self)
 	gemsManager = GemsManager.new(self)
 	new_game()
-	
-
 
 
 func _on_button_pressed():

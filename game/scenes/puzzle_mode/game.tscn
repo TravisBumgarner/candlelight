@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bbj3gn6br3v7j"]
 
-[ext_resource type="PackedScene" uid="uid://nfvtipru81jd" path="res://scenes/puzzle_board.tscn" id="1_re357"]
-[ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/hud.tscn" id="2_gwrts"]
+[ext_resource type="PackedScene" uid="uid://nfvtipru81jd" path="res://scenes/puzzle_mode/board.tscn" id="1_re357"]
+[ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/puzzle_mode/hud.tscn" id="2_gwrts"]
 
 [node name="PuzzleGame" type="Node2D"]
 
