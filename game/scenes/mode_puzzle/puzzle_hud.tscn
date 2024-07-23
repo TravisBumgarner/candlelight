@@ -1,6 +1,6 @@
-[gd_scene format=3 uid="uid://1h4gxu55jfq4"]
+[gd_scene format=3 uid="uid://btqjm3ripnoej"]
 
-[node name="HUD" type="CanvasLayer"]
+[node name="PuzzleHUD" type="CanvasLayer"]
 
 [node name="QueuePanel" type="Panel" parent="."]
 visible = false

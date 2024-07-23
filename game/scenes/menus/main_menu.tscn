@@ -46,8 +46,7 @@ offset_bottom = 88.0
 
 [node name="Puzzle Mode" type="Button" parent="Daily Challenge"]
 layout_mode = 2
-disabled = true
-text = "Daily (Soon)"
+text = "Daily"
 
 [node name="Label" type="Label" parent="Daily Challenge"]
 layout_mode = 2
