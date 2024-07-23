@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3 uid="uid://q1ejs4pnnjm1"]
+
+[ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="1_88uki"]
+[ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="2_gnsjl"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="3_kgf2d"]
+[ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="4_txv02"]
+[ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="5_6l4un"]
+[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="6_rot1y"]
+[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="7_6dajj"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
+texture = ExtResource("2_gnsjl")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ntj6q"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_gfvpd")
+
+[node name="PuzzleGame" type="Node2D"]
+position = Vector2(576, 64)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-64, 192)
+scale = Vector2(2.048, 2.048)
+texture = ExtResource("1_88uki")
+metadata/_edit_lock_ = true
+
+[node name="Dark Overlay" type="Panel" parent="."]
+visible = false
+offset_left = -576.0
+offset_top = -64.0
+offset_right = 448.0
+offset_bottom = 448.0
+
+[node name="Light Overlay" type="Panel" parent="."]
+visible = false
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 368.0
+offset_bottom = 368.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_vurfj")
+
+[node name="TileMap" type="TileMap" parent="."]
+visibility_layer = 7
+tile_set = SubResource("TileSet_ntj6q")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "background"
+layer_0/tile_data = PackedInt32Array(0, 131072, 0, 65536, 131072, 0, 262144, 131072, 0, 327680, 131072, 0, 393216, 131072, 0, 458752, 131072, 0, 524288, 131072, 0, 589824, 131072, 0, 655360, 131072, 0, 1, 131072, 0, 2, 131072, 0, 3, 131072, 0, 4, 131072, 0, 5, 131072, 0, 6, 131072, 0, 7, 131072, 0, 8, 131072, 0, 9, 131072, 0, 10, 131072, 0, 131072, 131072, 0, 196608, 131072, 0, 720896, 131072, 0, 720897, 131072, 0, 720898, 131072, 0, 720899, 131072, 0, 720900, 131072, 0, 720901, 131072, 0, 720902, 131072, 0, 720903, 131072, 0, 720904, 131072, 0, 720905, 131072, 0, 720906, 131072, 0, 720907, 131072, 0, 655371, 131072, 0, 589835, 131072, 0, 524299, 131072, 0, 458763, 131072, 0, 393227, 131072, 0, 327691, 131072, 0, 262155, 131072, 0, 196619, 131072, 0, 131083, 131072, 0, 65547, 131072, 0, 11, 131072, 0)
+layer_1/name = "board"
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "piece"
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()
+script = ExtResource("3_kgf2d")
+metadata/_edit_lock_ = true
+
+[node name="DebounceTimer" type="Timer" parent="TileMap"]
+one_shot = true
+
+[node name="PlacePieceOnBoardTimer" type="Timer" parent="TileMap"]
+one_shot = true
+
+[node name="LevelCompleteTimer" type="Timer" parent="TileMap"]
+one_shot = true
+
+[node name="Level" type="Label" parent="."]
+offset_left = 176.0
+offset_top = 400.0
+offset_right = 216.0
+offset_bottom = 423.0
+text = "1"
+
+[node name="Sounds" type="Node" parent="."]
+
+[node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("4_txv02")
+
+[node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_6l4un")
+
+[node name="movement" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("6_rot1y")
+
+[node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_6dajj")
+
+[node name="Button" type="Button" parent="."]
+offset_left = -560.0
+offset_top = 400.0
+offset_right = -464.0
+offset_bottom = 431.0
+text = "Main Menu"
+
+[connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
+[connection signal="pressed" from="Button" to="TileMap" method="_on_button_pressed"]
