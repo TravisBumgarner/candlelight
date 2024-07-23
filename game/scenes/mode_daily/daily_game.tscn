@@ -13,3 +13,4 @@
 [node name="DailyHUD" parent="." instance=ExtResource("2_uxm8u")]
 
 [connection signal="experiment_completed" from="DailyBoard" to="DailyHUD" method="_on_daily_board_experiment_completed"]
+[connection signal="game_key_set" from="DailyBoard" to="DailyHUD" method="_on_daily_board_game_key_set"]

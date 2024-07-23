@@ -104,6 +104,7 @@ func puzzle_mode_set_target_gem(level: int):
 
 
 func daily_mode_set_target_gem():
+	
 	self.erase_target_gem()
 	self.daily_mode_generate_gem(6)
 	self.draw_target_gem()

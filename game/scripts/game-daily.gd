@@ -6,11 +6,13 @@ extends Node2D
 
 var current_piece: Piece
 var queue: Queue
+var game_key: String
 var can_process_input = true
 var gemsManager: GemsManager
 @onready var level_label = $"../Level"
 
 signal experiment_completed
+signal game_key_set
 
 func _process(_delta):
 	if can_process_input:
@@ -74,7 +76,8 @@ func _on_level_complete_timer_timeout():
 
 
 func new_game():
-	print('new game')
+	game_key = DailyUtils.generate_key()
+	emit_signal('game_key_set', game_key)
 	gemsManager.daily_mode_set_target_gem()
 	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
