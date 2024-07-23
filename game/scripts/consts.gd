@@ -27,8 +27,14 @@ const Sprite = {
 const HEIGHT := 10
 const WIDTH := 10
 
-const MAX_GEM_WIDTH := 3
-const MAX_GEM_HEIGHT := 3
+const PUZZLE_MODE_MAX_GEM_WIDTH := 3
+const PUZZLE_MODE_MAX_GEM_HEIGHT := 3
+
+const DAILY_MODE_MAX_GEM_WIDTH := 6
+const DAILY_MODE_MAX_GEM_HEIGHT := 6
+
+const MAX_GEM_WIDTH = max(PUZZLE_MODE_MAX_GEM_WIDTH, DAILY_MODE_MAX_GEM_WIDTH)
+const MAX_GEM_HEIGHT = max(PUZZLE_MODE_MAX_GEM_HEIGHT, DAILY_MODE_MAX_GEM_HEIGHT)
 
 # I should leanr what this is.
 const TILE_ID := 0

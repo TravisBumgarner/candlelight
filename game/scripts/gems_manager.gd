@@ -9,7 +9,7 @@ var canvas
 func _init(main):
 	self.canvas = main
 
-func level_to_speed_mode_gem_size(level: int) -> int:
+func puzzle_mode_level_to_gem_size(level: int) -> int:
 	if level < 3:
 		return 1
 	elif level < 6:
@@ -28,8 +28,8 @@ func level_to_speed_mode_gem_size(level: int) -> int:
 		return 8  # Assuming you want a default value for levels 60 and above
 
 
-func generate_puzzle_mode_gem(size: int):
-	var current_point = Vector2i(randi_range(0, Consts.MAX_GEM_WIDTH), randi_range(0, Consts.MAX_GEM_HEIGHT))
+func daily_mode_generate_gem(size: int):
+	var current_point = Vector2i(randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_WIDTH), randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_HEIGHT))
 	var points = [current_point]
 	
 	var potential_neighbors = Utils.get_neighboring_cells_on_board(current_point)
@@ -52,7 +52,34 @@ func generate_puzzle_mode_gem(size: int):
 		
 		potential_neighbors = Utils.get_neighboring_cells_on_board(new_neighbor)
 		points.append(new_neighbor)
-	return Utils.move_cells_to_origin(points)
+	self.target_gem = Utils.move_cells_to_origin(points)
+
+
+func puzzle_mode_generate_gem(size: int):
+	var current_point = Vector2i(randi_range(0, Consts.DAILY_MODE_MAX_GEM_WIDTH), randi_range(0, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
+	var points = [current_point]
+	
+	var potential_neighbors = Utils.get_neighboring_cells_on_board(current_point)
+	while points.size() < size:
+		var new_neighbor = null
+		potential_neighbors.shuffle()
+		
+		var potential_neighbor = potential_neighbors.pop_front()
+		while potential_neighbors.size() > 0:
+			if potential_neighbor not in points:
+				new_neighbor = potential_neighbor
+				break
+			potential_neighbor = potential_neighbors.pop_front()
+		
+		# It's possible to end up in an infinite loop should the shape spiral in on itself.
+		# I believe This is only possible for gem sizes >= 9 cells. For now, we'll just
+		# break early to prevent the infinite loop.
+		if new_neighbor == null:
+			break
+		
+		potential_neighbors = Utils.get_neighboring_cells_on_board(new_neighbor)
+		points.append(new_neighbor)
+	self.target_gem = Utils.move_cells_to_origin(points)
 
 
 func erase_target_gem():
@@ -68,13 +95,18 @@ func draw_gem_on_board(gem):
 		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.TILE_ID, Consts.Sprite.Gem)
 
 
-func update_target_gem(level: int):
+func puzzle_mode_set_target_gem(level: int):
 	self.erase_target_gem()
 	self.erase_avoid_gem()
-	var size = self.level_to_speed_mode_gem_size(level)
-	target_gem = self.generate_puzzle_mode_gem(size)
+	var size = self.puzzle_mode_level_to_gem_size(level)
+	self.puzzle_mode_generate_gem(size)
 	self.draw_target_gem()
-	
+
+
+func daily_mode_set_target_gem():
+	self.erase_target_gem()
+	self.daily_mode_generate_gem(6)
+	self.draw_target_gem()
 
 func draw_target_gem():
 	for point in target_gem:
@@ -94,7 +126,6 @@ func is_target_gem(shape):
 	
 	var are_equal = arrays_equal(relative_shape, target_gem)
 	return are_equal
-
 
 
 var visited = []

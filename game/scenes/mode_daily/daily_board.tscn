@@ -62,16 +62,9 @@ one_shot = true
 [node name="LevelCompleteTimer" type="Timer" parent="TileMap"]
 one_shot = true
 
-[node name="Level" type="Label" parent="."]
-offset_left = 176.0
-offset_top = 400.0
-offset_right = 216.0
-offset_bottom = 423.0
-text = "1"
-
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
+[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
 [connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
+[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]

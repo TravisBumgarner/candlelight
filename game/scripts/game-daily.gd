@@ -1,17 +1,15 @@
 extends Node2D
 
-@onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
-
-signal target_gem_updated
 
 var current_piece: Piece
 var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
-var level = 1
 @onready var level_label = $"../Level"
+
+signal experiment_completed
 
 func _process(_delta):
 	if can_process_input:
@@ -31,29 +29,22 @@ func _process(_delta):
 			current_piece.rotate_piece()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
+			emit_signal('experiment_completed')
 			current_piece.draw_piece_on_board()
 			
 			var gems = gemsManager.find_gems()
 			if(gems.size() > 0):
-				level_complete(gems)
+				daily_complete(gems)
 				return
 			start_place_piece_on_board_timer()
 
 
-func level_complete(gems):
+func daily_complete(gems):
 	can_process_input = false
-		
-	var total_gems = gems.size()
-	
-	if total_gems == 1:
-		SoundManager.play("one_gem")
-	if total_gems >= 2:
-		SoundManager.play("two_gems")
-		
+	SoundManager.play("two_gems")	
 	
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
-	level_complete_timer.start(Consts.LEVEL_COMPLETE_TIMER)
 
 
 func start_debounce():
@@ -76,16 +67,14 @@ func _on_place_piece_on_board_timer_timeout():
 
 
 func _on_level_complete_timer_timeout():
-	level += 1
-	level_label.text = str(level)
 	Utils.erase_area(self, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
-	gemsManager.update_target_gem(level)
 	can_process_input = true
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
 
 func new_game():
-	gemsManager.update_target_gem(level)
+	print('new game')
+	gemsManager.daily_mode_set_target_gem()
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
 

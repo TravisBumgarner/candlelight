@@ -79,14 +79,13 @@ func _on_level_complete_timer_timeout():
 	level += 1
 	level_label.text = str(level)
 	Utils.erase_area(self, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
-	gemsManager.update_target_gem(level)
+	gemsManager.puzzle_mode_set_target_gem(level)
 	can_process_input = true
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
 
 func new_game():
-	gemsManager.update_target_gem(level)
-	#gemsManager.draw_avoid_gem()
+	gemsManager.puzzle_mode_set_target_gem(level)
 	current_piece = Piece.new(self, queue.get_next_from_queue())
 
 
