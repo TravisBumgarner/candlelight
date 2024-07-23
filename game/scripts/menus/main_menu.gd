@@ -2,7 +2,7 @@ extends Control
 
 func _process(_delta):
 	# Comment out the next line to show the main menu.
-	#get_tree().change_scene_to_file('res://scenes/game.tscn')
+	get_tree().change_scene_to_file('res://scenes/puzzle_game.tscn')
 	pass
 
 

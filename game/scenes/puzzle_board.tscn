@@ -1,18 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://3pfbxmsopl2r"]
+[gd_scene load_steps=11 format=3 uid="uid://nfvtipru81jd"]
 
-[ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="1_lkvdh"]
-[ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="2_r5sca"]
-[ext_resource type="Script" path="res://scripts/game.gd" id="3_lslrb"]
-[ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/hud.tscn" id="4_ge00g"]
-[ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="5_sl1om"]
-[ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="6_fhyd6"]
-[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="7_htgu6"]
-[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="8_erdsv"]
+[ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="1_fcdq1"]
+[ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="2_7e24i"]
+[ext_resource type="Script" path="res://scripts/game.gd" id="3_v7jtx"]
+[ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="5_mttom"]
+[ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="6_uaqqn"]
+[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="7_b0ura"]
+[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="8_mv87v"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
-texture = ExtResource("2_r5sca")
+texture = ExtResource("2_7e24i")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -25,13 +24,13 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
-[node name="Game" type="Node2D"]
+[node name="PuzzleGame" type="Node2D"]
 position = Vector2(576, 64)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(-64, 192)
 scale = Vector2(2.048, 2.048)
-texture = ExtResource("1_lkvdh")
+texture = ExtResource("1_fcdq1")
 metadata/_edit_lock_ = true
 
 [node name="Dark Overlay" type="Panel" parent="."]
@@ -62,7 +61,7 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "piece"
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
-script = ExtResource("3_lslrb")
+script = ExtResource("3_v7jtx")
 metadata/_edit_lock_ = true
 
 [node name="DebounceTimer" type="Timer" parent="TileMap"]
@@ -81,21 +80,19 @@ offset_right = 216.0
 offset_bottom = 423.0
 text = "1"
 
-[node name="HUD" parent="." instance=ExtResource("4_ge00g")]
-
 [node name="Sounds" type="Node" parent="."]
 
 [node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("5_sl1om")
+stream = ExtResource("5_mttom")
 
 [node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_fhyd6")
+stream = ExtResource("6_uaqqn")
 
 [node name="movement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("7_htgu6")
+stream = ExtResource("7_b0ura")
 
 [node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("8_erdsv")
+stream = ExtResource("8_mv87v")
 
 [node name="Button" type="Button" parent="."]
 offset_left = -560.0
