@@ -4,11 +4,6 @@ extends Node2D
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
 
-@onready var sound_one_gem = $"../Sounds/one_gem"
-@onready var sound_two_gems = $"../Sounds/two_gems"
-@onready var sound_movement = $"../Sounds/movement"
-@onready var sound_nonmovement = $"../Sounds/nonmovement"
-
 signal target_gem_updated
 
 var current_piece: Piece
@@ -21,19 +16,19 @@ var level = 1
 func _process(_delta):
 	if can_process_input:
 		if Input.is_action_pressed("MOVE_DOWN"):
-			current_piece.move_piece(Vector2i.DOWN, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.DOWN)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_UP"):
-			current_piece.move_piece(Vector2i.UP, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.UP)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_RIGHT"):
-			current_piece.move_piece(Vector2i.RIGHT, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.RIGHT)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_LEFT"):
-			current_piece.move_piece(Vector2i.LEFT, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.LEFT)
 			start_debounce()
 		elif Input.is_action_pressed("ROTATE"):
-			current_piece.rotate_piece(sound_movement, sound_nonmovement)
+			current_piece.rotate_piece()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
 			current_piece.draw_piece_on_board()
@@ -51,9 +46,9 @@ func level_complete(gems):
 	var total_gems = gems.size()
 	
 	if total_gems == 1:
-		sound_one_gem.play()
+		SoundManager.play("one_gem")
 	if total_gems >= 2:
-		sound_two_gems.play()
+		SoundManager.play("two_gems")
 		
 	
 	for gem in gems:

@@ -1,11 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://q1ejs4pnnjm1"]
+[gd_scene load_steps=6 format=3 uid="uid://q1ejs4pnnjm1"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_k6xr5"]
 [ext_resource type="Script" path="res://scripts/game.gd" id="2_rtkuq"]
-[ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="3_1dwtp"]
-[ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="4_1avjq"]
-[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="5_iky5h"]
-[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="6_frdik"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
@@ -72,20 +68,6 @@ offset_top = 400.0
 offset_right = 216.0
 offset_bottom = 423.0
 text = "1"
-
-[node name="Sounds" type="Node" parent="."]
-
-[node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("3_1dwtp")
-
-[node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("4_1avjq")
-
-[node name="movement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("5_iky5h")
-
-[node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_frdik")
 
 [connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
 [connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]

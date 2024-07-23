@@ -1,6 +1,5 @@
 extends TileMap
 
-class_name Utils
 
 static func erase_area(canvas, start: Vector2i, end: Vector2i, layer: int):
 	for x in range(start.x, end.x + 1):

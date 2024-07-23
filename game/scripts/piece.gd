@@ -16,14 +16,14 @@ func _init(main, new_piece_type):
 	self.draw_piece()
 
 
-func move_piece(direction, sound_movement, sound_nonmovement):
+func move_piece(direction):
 	if can_move(direction):
-		sound_movement.play()
+		SoundManager.play("movement")
 		erase_piece()
 		self.current_absolute_position += direction
 		draw_piece()
 	else:
-		sound_nonmovement.play()
+		SoundManager.play("nonmovement")
 		
 
 func get_current_piece_rotation():
@@ -60,14 +60,14 @@ func can_rotate():
 	return true
 
 
-func rotate_piece(sound_movement, sound_nonmovement):
+func rotate_piece():
 	if self.can_rotate():
-		sound_movement.play()
+		SoundManager.play("movement")
 		self.erase_piece()
 		self.rotation_index = (self.rotation_index + 1) % Shapes.SHAPES[0].size()
 		self.draw_piece()
 	else:
-		sound_nonmovement.play()
+		SoundManager.play("nonmovement")
 
 
 func erase_piece():
