@@ -96,7 +96,7 @@ func erase_avoid_gem():
 
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
-		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.TILE_ID, Consts.Sprite.Gem)
+		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.GEMS_TILE_ID, Consts.Sprite.Gem)
 
 
 func puzzle_mode_set_target_gem(level: int):
@@ -115,12 +115,12 @@ func daily_mode_set_target_gem(game_key):
 
 func draw_target_gem():
 	for point in target_gem:
-		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.Foreground)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.Foreground)
 
 
 func is_target_gem(shape):

@@ -15,3 +15,6 @@ func append(tile_map, player):
 		player = player
 	}
 	history.append(record)
+	
+func size():
+	return history.size()

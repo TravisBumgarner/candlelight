@@ -30,7 +30,7 @@ func draw_queue():
 	for queue_index in range(0, VISIBLE_QUEUE_SIZE):
 		var piece = self.queue[queue_index]
 		for vector in piece.preview.vectors:
-			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + vector + y_offset, Consts.TILE_ID, Consts.Sprite.Midground) 
+			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + vector + y_offset, Consts.GEMS_TILE_ID, Consts.Sprite.Midground) 
 		y_offset += Vector2i(0, piece.preview.height + 1)
 
 

@@ -1,12 +1,12 @@
 extends Node
 
-static func erase_area(canvas, start: Vector2i, end: Vector2i, layer: int):
+static func erase_area(tile_map, start: Vector2i, end: Vector2i, layer: int):
 	for x in range(start.x, end.x + 1):
 		for y in range(start.y, end.y + 1):
-			canvas.erase_cell(layer, Vector2i(x,y))
+			tile_map.erase_cell(layer, Vector2i(x,y))
 
-static func is_cell_free(canvas, cell):
-	return canvas.get_cell_source_id(Consts.Layer.Background, cell) == -1
+static func is_cell_free(tile_map, cell):
+	return tile_map.get_cell_source_id(Consts.Layer.Background, cell) == -1
 
 static func is_cell_on_board(cell: Vector2i):
 	if cell.x < 0 or cell.x >= Consts.GRID.WIDTH or cell.y < 0 or cell.y >= Consts.GRID.HEIGHT:
@@ -59,12 +59,12 @@ func rng_array_item(rng: RandomNumberGenerator, arr: Array):
 	return arr[rng.randi() % arr.size()]
 
 
-func get_atlas_coords_array(canvas):
+func get_atlas_coords_array(tile_map):
 	var tile_map_array = []
 	for x in range(Consts.GRID.WIDTH):
 		tile_map_array.append([])
 		for y in range(Consts.GRID.HEIGHT):
-			var tile_id = canvas.get_cell_atlas_coords(Consts.Layer.Board, Vector2i(x, y))
+			var tile_id = tile_map.get_cell_atlas_coords(Consts.Layer.Board, Vector2i(x, y))
 			tile_map_array[x].append(tile_id)
 	
 	return tile_map_array

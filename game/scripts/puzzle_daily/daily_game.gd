@@ -34,23 +34,4 @@ func new_game():
 
 func _ready():
 	new_game()
-	
-func draw_tiles(atlas_coords):
-	for x in range(Consts.GRID.WIDTH):
-		for y in range(Consts.GRID.HEIGHT):
-			var tile_style = atlas_coords[x][y]
-			self.tile_map.erase_cell(Consts.Layer.Board, Vector2i(x,y))
-			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.TILE_ID, tile_style)
 
-
-func _on_undo_pressed():
-	var record = history.pop_back()
-	if record == null:
-		return
-	self.queue.undo(player.piece_type)
-
-	player.erase_piece()
-	
-	player = record.player
-	player.draw_piece()
-	self.draw_tiles(record.atlas_coords_array)
