@@ -111,7 +111,6 @@ func puzzle_mode_set_target_gem(level: int):
 func daily_mode_set_target_gem(game_key):
 	self.erase_target_gem()
 	self.daily_mode_generate_gem(game_key)
-	print('target', target_gem)
 	self.draw_target_gem()
 
 func draw_target_gem():
@@ -144,7 +143,6 @@ func find_gems():
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
-	print('light', light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)

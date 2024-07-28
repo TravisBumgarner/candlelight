@@ -7,7 +7,7 @@ signal experiment_completed
 signal game_key_set
 
 # Function called from BaseGame when level completes.
-func daily_complete(gems):
+func level_complete(gems):
 	can_process_input = false
 	SoundManager.play("two_gems")	
 	
