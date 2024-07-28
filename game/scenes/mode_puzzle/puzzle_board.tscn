@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://q1ejs4pnnjm1"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_k6xr5"]
-[ext_resource type="Script" path="res://scripts/game-puzzle.gd" id="2_ne2b2"]
+[ext_resource type="Script" path="res://scripts/puzzle_puzzle/puzzle_game.gd" id="2_ne2b2"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
