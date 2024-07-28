@@ -82,7 +82,7 @@ func puzzle_mode_generate_gem(size: int):
 		if new_neighbor == null:
 			break
 		
-		potential_neighbors = Utils.get_neighboring_cells_on_board(new_neighbor)
+		potential_neighbors = Utils.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
 		points.append(new_neighbor)
 	self.target_gem = Utils.move_cells_to_origin(points)
 
@@ -125,12 +125,9 @@ func draw_avoid_gem():
 
 func is_target_gem(shape):
 	if(shape.size() != target_gem.size()):
-		print('\t different size')
 		return false
 		
 	var relative_shape = Utils.move_cells_to_origin(shape)
-	print('\t relative', relative_shape)
-	print('\t target_gem', target_gem)
 	
 	var are_equal = arrays_equal(relative_shape, target_gem)
 	return are_equal
@@ -146,7 +143,6 @@ func find_gems():
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
-	print('light', light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)
@@ -196,5 +192,5 @@ func flood_fill(pos, desired_color, shape):
 		visited[x][y] = true
 		shape.append(current)
 
-		var potential_neighbors = Utils.get_valid_neighbors(Vector2i(x,y), Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
+		var potential_neighbors = Utils.get_valid_neighbors(Vector2i(x,y), Vector2i(0,0), Vector2i(Consts.GRID.WIDTH, Consts.GRID.HEIGHT))
 		stack.append_array(potential_neighbors)
