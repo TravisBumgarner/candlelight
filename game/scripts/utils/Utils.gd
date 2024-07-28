@@ -1,5 +1,4 @@
-extends TileMap
-
+extends Node
 
 static func erase_area(canvas, start: Vector2i, end: Vector2i, layer: int):
 	for x in range(start.x, end.x + 1):
@@ -33,3 +32,29 @@ static func move_cells_to_origin(cells: Array):
 	var min_y = cells.map(func(cell): return cell.y).min()
 	
 	return cells.map(func(cell): return Vector2i(cell.x - min_x, cell.y - min_y))
+
+
+
+func generate_key_from_date():
+	var today_format_string = "%s-%s-%s"
+	var today := Time.get_date_dict_from_system()
+	var today_string = today_format_string % [today.year, today.month, today.day] 
+	# This might be terrible. Please forgive me lol.
+	return int(str(hash(today_string)).substr(0, 6))
+
+
+func swap(i : int, j : int, a : Array) -> Array:
+	var t = a[i]
+	a[i] = a[j]
+	a[j] = t
+	return a
+
+func shuffle_rng_array(rng: RandomNumberGenerator, arr: Array):
+	for i in range(arr.size()):
+		var j = rng.randi_range(0, arr.size() - 1)
+		swap(i, j, arr)
+		
+		
+func rng_array_item(rng: RandomNumberGenerator, arr: Array):
+	return arr[rng.randi() % arr.size()]
+

@@ -76,14 +76,14 @@ func _on_level_complete_timer_timeout():
 
 
 func new_game():
-	game_key = DailyUtils.generate_key()
+	game_key = Utils.generate_key_from_date()
+	queue = Queue.new(tile_map, game_key)
+	gemsManager = GemsManager.new(tile_map)
+	
 	emit_signal('game_key_set', game_key)
 	gemsManager.daily_mode_set_target_gem(game_key)
 	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func _ready():
-	print('daily')
-	queue = Queue.new(tile_map)
-	gemsManager = GemsManager.new(tile_map)
 	new_game()

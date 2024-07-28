@@ -19,7 +19,6 @@ config/icon="res://icon.svg"
 
 SoundManager="*res://scripts/SoundManager.gd"
 Utils="*res://scripts/utils/Utils.gd"
-DailyUtils="*res://scripts/utils/DailyUtils.gd"
 
 [display]
 

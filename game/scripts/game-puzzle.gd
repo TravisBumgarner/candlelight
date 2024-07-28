@@ -87,12 +87,12 @@ func _on_level_complete_timer_timeout():
 
 
 func new_game():
+	# Seed isn't curren't really needed.
+	queue = Queue.new(tile_map, null)
+	gemsManager = GemsManager.new(tile_map)
 	gemsManager.puzzle_mode_set_target_gem(level)
 	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func _ready():
-	print('puzzle')
-	queue = Queue.new(tile_map)
-	gemsManager = GemsManager.new(tile_map)
 	new_game()

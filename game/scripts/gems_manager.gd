@@ -39,7 +39,7 @@ func daily_mode_generate_gem(game_key: int):
 	var potential_neighbors = Utils.get_neighboring_cells_on_board(current_point)
 	while points.size() < size:
 		var new_neighbor = null
-		DailyUtils.shuffle_rng_array(RNG, potential_neighbors)
+		Utils.shuffle_rng_array(RNG, potential_neighbors)
 		
 		var potential_neighbor = potential_neighbors.pop_front()
 		while potential_neighbors.size() > 0:

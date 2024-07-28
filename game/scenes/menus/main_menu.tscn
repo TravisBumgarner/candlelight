@@ -151,5 +151,5 @@ Place Piece - Spacebar"
 [connection signal="pressed" from="Speed Mode/Speed Button" to="." method="_on_speed_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_speed_mode_pressed"]
-[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_speed_mode_pressed"]
+[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
