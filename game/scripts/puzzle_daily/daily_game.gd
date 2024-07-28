@@ -34,4 +34,14 @@ func new_game():
 
 func _ready():
 	new_game()
+	
+func draw_tiles(atlas_coords):
+	for x in range(Consts.GRID.WIDTH):
+		for y in range(Consts.GRID.HEIGHT):
+			var tile_style = atlas_coords[x][y]
+			self.tile_map.erase_cell(Consts.Layer.Board, Vector2i(x,y))
+			#if tile_style != Vector2i(-1, -1):
+			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.GEMS_TILE_ID, tile_style)
+
+
 

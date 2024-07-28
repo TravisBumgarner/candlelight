@@ -20,7 +20,6 @@ func _process(delta):
 
 func _on_daily_board_experiment_completed():
 	counter += 1
-	print(game_key_label)
 	experiments_count.text = str(counter)
 
 func _on_daily_board_game_key_set(value):

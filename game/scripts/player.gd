@@ -12,7 +12,7 @@ func _init(main, new_piece_type):
 	self.canvas = main
 	self.piece_type = new_piece_type
 	self.rotation_index = 0
-	self.current_absolute_position = Vector2i(round(Consts.GRID.HEIGHT / 2.0), round(Consts.GRID.WIDTH / 2.0))
+	self.current_absolute_position = Vector2i(round(Consts.GRID.HEIGHT / 2.0 - 1), round(Consts.GRID.WIDTH / 2.0 - 1))
 	self.draw_piece()
 
 
@@ -30,10 +30,8 @@ func get_current_piece_rotation():
 	return self.piece_type.rotations[self.rotation_index]
 
 func draw_piece():
-	print('draw piece')
 	for relative_position in self.get_current_piece_rotation():
 		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
-		print(background_tile)
 		var tile_style: Vector2i
 		
 		if(background_tile == Vector2i(-1,-1)):	
@@ -73,7 +71,6 @@ func rotate_piece():
 
 
 func erase_piece():
-	print('erase piece')
 	for point in self.get_current_piece_rotation():
 		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + point)
 
@@ -83,8 +80,6 @@ func draw_piece_on_board():
 		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
-		print('draw_piece_on_board', relative_position, background_tile)
-		
 		if(background_tile == Consts.Sprite.Background):
 			tile_style = Consts.Sprite.Foreground
 		elif(background_tile == Consts.Sprite.Foreground):
@@ -93,7 +88,6 @@ func draw_piece_on_board():
 			# Handles both null and (-1, -1) for tile. Depending on undo.
 			# There's something off here I don't fully understand.
 			tile_style = Consts.Sprite.Background
-		print('tilestyle', tile_style)
 		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + relative_position)
 		self.canvas.set_cell(Consts.Layer.Board, current_absolute_position + relative_position, Consts.GEMS_TILE_ID, tile_style)
 	

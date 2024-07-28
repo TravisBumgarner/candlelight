@@ -38,6 +38,7 @@ func _process(_delta):
 			self.undo()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
+			start_debounce()
 			emit_signal('experiment_completed')
 			history.append(tile_map, player)
 			player.draw_piece_on_board()
@@ -61,20 +62,8 @@ func start_place_piece_on_board_timer():
 	can_process_input = false
 	place_piece_on_board_timer.start(Consts.PLACE_PIECE_ON_BOARD_TIMER)
 
-	
-func draw_tiles(atlas_coords):
-	print('draw tiles callasdasded')
-	for x in range(Consts.GRID.WIDTH):
-		for y in range(Consts.GRID.HEIGHT):
-			var tile_style = atlas_coords[x][y]
-			self.tile_map.erase_cell(Consts.Layer.Board, Vector2i(x,y))
-			#if tile_style != Vector2i(-1, -1):
-			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.GEMS_TILE_ID, tile_style)
-
-
 
 func undo():
-	print('undo pressed')
 	var record = history.pop_back()
 	if record == null:
 		return
@@ -82,7 +71,13 @@ func undo():
 	player.erase_piece()
 	player = record.player
 	player.draw_piece()
-	self.draw_tiles(record.atlas_coords_array)
+	
+	for x in range(Consts.GRID.WIDTH):
+		for y in range(Consts.GRID.HEIGHT):
+			var tile_style = record.atlas_coords_array[x][y]
+			self.tile_map.erase_cell(Consts.Layer.Board, Vector2i(x,y))
+			#if tile_style != Vector2i(-1, -1):
+			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.GEMS_TILE_ID, tile_style)
 
 
 func _on_debounce_timer_timeout():

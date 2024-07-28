@@ -9,6 +9,7 @@
 [node name="GlobalUi" parent="." instance=ExtResource("1_ns53u")]
 
 [node name="DailyBoard" parent="." instance=ExtResource("1_qg4hi")]
+position = Vector2(608, 96)
 
 [node name="DailyHUD" parent="." instance=ExtResource("2_uxm8u")]
 
