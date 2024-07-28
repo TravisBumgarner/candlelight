@@ -125,9 +125,12 @@ func draw_avoid_gem():
 
 func is_target_gem(shape):
 	if(shape.size() != target_gem.size()):
+		print('\t different size')
 		return false
 		
 	var relative_shape = Utils.move_cells_to_origin(shape)
+	print('\t relative', relative_shape)
+	print('\t target_gem', target_gem)
 	
 	var are_equal = arrays_equal(relative_shape, target_gem)
 	return are_equal
@@ -143,6 +146,7 @@ func find_gems():
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
+	print('light', light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)

@@ -20,7 +20,7 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
 [node name="PuzzleBoard" type="Node2D"]
-position = Vector2(608, 96)
+position = Vector2(576, 64)
 script = ExtResource("2_ne2b2")
 
 [node name="Dark Overlay" type="Panel" parent="."]
