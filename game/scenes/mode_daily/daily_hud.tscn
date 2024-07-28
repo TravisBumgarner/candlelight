@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://1h4gxu55jfq4"]
 
-[ext_resource type="Script" path="res://scripts/daily_hud.gd" id="1_nut10"]
+[ext_resource type="Script" path="res://scripts/puzzle_daily/daily_hud.gd" id="1_nut10"]
 
 [node name="DailyHUD" type="CanvasLayer"]
 script = ExtResource("1_nut10")
