@@ -1,11 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://nfvtipru81jd"]
+[gd_scene load_steps=6 format=3 uid="uid://nfvtipru81jd"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_fq2y0"]
-[ext_resource type="Script" path="res://scripts/game.gd" id="2_fsqbm"]
-[ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="3_xlb4m"]
-[ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="4_p0o8h"]
-[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="5_sqrdo"]
-[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="6_w8fa0"]
+[ext_resource type="Script" path="res://scripts/game-daily.gd" id="2_fsqbm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
@@ -25,6 +21,7 @@ sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
 [node name="DailyBoard" type="Node2D"]
 position = Vector2(576, 64)
+script = ExtResource("2_fsqbm")
 
 [node name="Dark Overlay" type="Panel" parent="."]
 visible = false
@@ -54,42 +51,18 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "piece"
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
-script = ExtResource("2_fsqbm")
 metadata/_edit_lock_ = true
 
-[node name="DebounceTimer" type="Timer" parent="TileMap"]
+[node name="DebounceTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="PlacePieceOnBoardTimer" type="Timer" parent="TileMap"]
+[node name="PlacePieceOnBoardTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="LevelCompleteTimer" type="Timer" parent="TileMap"]
+[node name="LevelCompleteTimer" type="Timer" parent="."]
 one_shot = true
 
-[node name="Level" type="Label" parent="."]
-offset_left = 176.0
-offset_top = 400.0
-offset_right = 216.0
-offset_bottom = 423.0
-text = "1"
-
-[node name="Sounds" type="Node" parent="."]
-
-[node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("3_xlb4m")
-
-[node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("4_p0o8h")
-
-[node name="movement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("5_sqrdo")
-
-[node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_w8fa0")
-
-[connection signal="timeout" from="TileMap/DebounceTimer" to="TileMap" method="_on_debounce_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_board_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_on_background_timer_timeout"]
-[connection signal="timeout" from="TileMap/PlacePieceOnBoardTimer" to="TileMap" method="_on_place_piece_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_level_complete_timer_timeout"]
-[connection signal="timeout" from="TileMap/LevelCompleteTimer" to="TileMap" method="_on_timer_timeout"]
+[connection signal="experiment_completed" from="." to="." method="_on_experiment_completed"]
+[connection signal="timeout" from="DebounceTimer" to="." method="_on_debounce_timer_timeout"]
+[connection signal="timeout" from="PlacePieceOnBoardTimer" to="." method="_on_place_piece_on_board_timer_timeout"]
+[connection signal="timeout" from="LevelCompleteTimer" to="." method="_on_level_complete_timer_timeout"]

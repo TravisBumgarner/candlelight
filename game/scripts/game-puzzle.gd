@@ -3,11 +3,8 @@ extends Node2D
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
-
-@onready var sound_one_gem = $"../Sounds/one_gem"
-@onready var sound_two_gems = $"../Sounds/two_gems"
-@onready var sound_movement = $"../Sounds/movement"
-@onready var sound_nonmovement = $"../Sounds/nonmovement"
+@onready var tile_map = $TileMap
+@onready var level_label = $Level
 
 signal target_gem_updated
 
@@ -16,24 +13,24 @@ var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
 var level = 1
-@onready var level_label = $"../Level"
+
 
 func _process(_delta):
 	if can_process_input:
 		if Input.is_action_pressed("MOVE_DOWN"):
-			current_piece.move_piece(Vector2i.DOWN, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.DOWN)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_UP"):
-			current_piece.move_piece(Vector2i.UP, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.UP)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_RIGHT"):
-			current_piece.move_piece(Vector2i.RIGHT, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.RIGHT)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_LEFT"):
-			current_piece.move_piece(Vector2i.LEFT, sound_movement, sound_nonmovement)
+			current_piece.move_piece(Vector2i.LEFT)
 			start_debounce()
 		elif Input.is_action_pressed("ROTATE"):
-			current_piece.rotate_piece(sound_movement, sound_nonmovement)
+			current_piece.rotate_piece()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
 			current_piece.draw_piece_on_board()
@@ -51,9 +48,9 @@ func level_complete(gems):
 	var total_gems = gems.size()
 	
 	if total_gems == 1:
-		sound_one_gem.play()
+		SoundManager.play("one_gem")
 	if total_gems >= 2:
-		sound_two_gems.play()
+		SoundManager.play("two_gems")
 		
 	
 	for gem in gems:
@@ -77,25 +74,25 @@ func _on_debounce_timer_timeout():
 
 func _on_place_piece_on_board_timer_timeout():
 	can_process_input = true
-	current_piece = Piece.new(self, queue.get_next_from_queue())
+	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func _on_level_complete_timer_timeout():
 	level += 1
 	level_label.text = str(level)
-	Utils.erase_area(self, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
-	gemsManager.update_target_gem(level)
+	Utils.erase_area(tile_map, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
+	gemsManager.puzzle_mode_set_target_gem(level)
 	can_process_input = true
-	current_piece = Piece.new(self, queue.get_next_from_queue())
+	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func new_game():
-	gemsManager.update_target_gem(level)
-	#gemsManager.draw_avoid_gem()
-	current_piece = Piece.new(self, queue.get_next_from_queue())
+	# Seed isn't curren't really needed.
+	queue = Queue.new(tile_map, null)
+	gemsManager = GemsManager.new(tile_map)
+	gemsManager.puzzle_mode_set_target_gem(level)
+	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
 
 
 func _ready():
-	queue = Queue.new(self)
-	gemsManager = GemsManager.new(self)
 	new_game()

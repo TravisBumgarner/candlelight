@@ -4,11 +4,22 @@ class_name Queue
 
 const QUEUE_SIZE := 3
 var pieces_queue = []
+var game_key
 var canvas
+var RNG
 
-func _init(main):
+func _init(main, game_key):
 	self.canvas = main
-	fill_queue()
+	self.game_key = game_key
+	
+	RNG = RandomNumberGenerator.new()
+	if game_key == null:
+		RNG.randomize()
+	else:
+		RNG.seed = game_key
+	
+	self.fill_queue()
+
 
 
 func draw_queue( tile_id):
@@ -25,7 +36,8 @@ func erase_queue():
 
 func fill_queue():
 	while pieces_queue.size() <= QUEUE_SIZE:
-		pieces_queue.append(Shapes.SHAPES.pick_random())
+		var random  = Utils.rng_array_item(RNG, Shapes.SHAPES)
+		pieces_queue.append(random)
 
 
 func get_next_from_queue():

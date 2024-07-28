@@ -27,7 +27,7 @@ offset_left = 56.0
 offset_right = 264.0
 offset_bottom = 88.0
 
-[node name="Puzzle Mode" type="Button" parent="Chaos"]
+[node name="Chaos Button" type="Button" parent="Chaos"]
 layout_mode = 2
 disabled = true
 text = "Chaos (Soon)"
@@ -44,7 +44,7 @@ offset_left = 280.0
 offset_right = 488.0
 offset_bottom = 88.0
 
-[node name="Puzzle Mode" type="Button" parent="Daily Challenge"]
+[node name="Daily Button" type="Button" parent="Daily Challenge"]
 layout_mode = 2
 text = "Daily"
 
@@ -61,7 +61,7 @@ offset_top = -112.0
 offset_right = 264.0
 offset_bottom = -24.0
 
-[node name="Puzzle Mode" type="Button" parent="Puzzle Mode"]
+[node name="Puzzle Button" type="Button" parent="Puzzle Mode"]
 layout_mode = 2
 text = "Puzzle"
 
@@ -78,7 +78,7 @@ offset_top = -112.0
 offset_right = 488.0
 offset_bottom = -2.0
 
-[node name="Puzzle Mode" type="Button" parent="Speed Mode"]
+[node name="Speed Button" type="Button" parent="Speed Mode"]
 layout_mode = 2
 disabled = true
 text = "Speed (Soon!)"
@@ -145,15 +145,11 @@ text = "Move Piece - W, A, S, D
 Rotate Piece - R
 Place Piece - Spacebar"
 
-[connection signal="button_up" from="Chaos/Puzzle Mode" to="." method="_on_puzzle_mode_button_up"]
-[connection signal="pressed" from="Chaos/Puzzle Mode" to="." method="_on_puzzle_mode_pressed"]
-[connection signal="button_up" from="Daily Challenge/Puzzle Mode" to="." method="_on_puzzle_mode_button_up"]
-[connection signal="pressed" from="Daily Challenge/Puzzle Mode" to="." method="_on_puzzle_mode_pressed"]
-[connection signal="button_up" from="Puzzle Mode/Puzzle Mode" to="." method="_on_puzzle_mode_button_up"]
-[connection signal="pressed" from="Puzzle Mode/Puzzle Mode" to="." method="_on_puzzle_mode_pressed"]
-[connection signal="button_up" from="Speed Mode/Puzzle Mode" to="." method="_on_puzzle_mode_button_up"]
-[connection signal="pressed" from="Speed Mode/Puzzle Mode" to="." method="_on_puzzle_mode_pressed"]
-[connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_speed_mode_pressed"]
+[connection signal="pressed" from="Chaos/Chaos Button" to="." method="_on_chaos_button_pressed"]
+[connection signal="pressed" from="Daily Challenge/Daily Button" to="." method="_on_daily_button_pressed"]
+[connection signal="pressed" from="Puzzle Mode/Puzzle Button" to="." method="_on_puzzle_button_pressed"]
+[connection signal="pressed" from="Speed Mode/Speed Button" to="." method="_on_speed_button_pressed"]
 [connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_speed_mode_pressed"]
 [connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_speed_mode_pressed"]
+[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
