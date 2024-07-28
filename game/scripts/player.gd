@@ -1,6 +1,6 @@
 # Piece.gd
 extends Node2D
-class_name Piece
+class_name Player
 
 var canvas
 var piece_type

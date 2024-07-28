@@ -18,18 +18,26 @@ func daily_complete(gems):
 func _on_level_complete_timer_timeout():
 	Utils.erase_area(tile_map, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
 	can_process_input = true
-	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
+	player = Player.new(tile_map, queue.get_next_from_queue())
 
 
 func new_game():
+	super()
 	game_key = Utils.generate_key_from_date()
 	queue = Queue.new(tile_map, game_key)
 	gemsManager = GemsManager.new(tile_map)
 	
 	emit_signal('game_key_set', game_key)
 	gemsManager.daily_mode_set_target_gem(game_key)
-	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
+	player = Player.new(tile_map, queue.get_next_from_queue())
 
 
 func _ready():
 	new_game()
+
+
+func _on_undo_pressed():
+	self.queue.undo(player)
+	
+	player = history.remove()
+	player.draw_piece_on_board()

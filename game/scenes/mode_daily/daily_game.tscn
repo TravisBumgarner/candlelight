@@ -22,7 +22,15 @@ offset_top = 465.0
 offset_right = 885.0
 offset_bottom = 488.0
 
+[node name="Undo" type="Button" parent="DailyHUD"]
+offset_left = 623.0
+offset_top = 468.0
+offset_right = 673.0
+offset_bottom = 499.0
+text = "Undo"
+
 [connection signal="experiment_completed" from="DailyBoard" to="DailyHUD" method="_on_daily_board_experiment_completed"]
 [connection signal="game_key_set" from="DailyBoard" to="DailyHUD" method="_on_daily_board_game_key_set"]
+[connection signal="pressed" from="DailyHUD/Undo" to="DailyBoard" method="_on_undo_pressed"]
 
 [editable path="DailyHUD"]
