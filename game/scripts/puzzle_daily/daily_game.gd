@@ -37,7 +37,8 @@ func _ready():
 
 
 func _on_undo_pressed():
-	self.queue.undo(player)
+	self.queue.undo(player.piece_type)
 	
-	player = history.remove()
+	player = history.pop_back()
+	print(player)
 	player.draw_piece_on_board()

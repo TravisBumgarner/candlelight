@@ -6,7 +6,8 @@ class_name History
 var history: Array = []
 
 func pop_back():
-	history.pop_back()
+	return history.pop_back()
 
 func append(item):
 	history.append(item)
+	print(history)
