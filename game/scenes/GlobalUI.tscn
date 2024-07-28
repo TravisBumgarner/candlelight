@@ -17,7 +17,7 @@ scale = Vector2(2.048, 2.048)
 texture = ExtResource("1_oe4gu")
 metadata/_edit_lock_ = true
 
-[node name="Button" type="Button" parent="."]
+[node name="Main Menu" type="Button" parent="."]
 offset_left = 32.0
 offset_top = 448.0
 offset_right = 128.0
@@ -40,4 +40,4 @@ stream = ExtResource("5_e7rpf")
 [node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("6_6mv4o")
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Main Menu" to="." method="_on_button_pressed"]

@@ -2,12 +2,13 @@ extends Node2D
 
 class_name BaseGame
 
+
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
 @onready var tile_map = $TileMap
+var history: History
 
-
-var current_piece: Piece
+var player: Player
 var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
@@ -15,23 +16,32 @@ var gemsManager: GemsManager
 func _process(_delta):
 	if can_process_input:
 		if Input.is_action_pressed("MOVE_DOWN"):
-			current_piece.move_piece(Vector2i.DOWN)
+			player.move_piece(Vector2i.DOWN)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_UP"):
-			current_piece.move_piece(Vector2i.UP)
+			player.move_piece(Vector2i.UP)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_RIGHT"):
-			current_piece.move_piece(Vector2i.RIGHT)
+			player.move_piece(Vector2i.RIGHT)
 			start_debounce()
 		elif Input.is_action_pressed("MOVE_LEFT"):
-			current_piece.move_piece(Vector2i.LEFT)
+			player.move_piece(Vector2i.LEFT)
 			start_debounce()
 		elif Input.is_action_pressed("ROTATE"):
-			current_piece.rotate_piece()
+			player.rotate_piece()
+			start_debounce()
+		elif Input.is_action_pressed("UNDO"):
+			if history.size() == 0:
+				SoundManager.play("nonmovement")
+				start_debounce()
+				return
+			self.undo()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
+			start_debounce()
 			emit_signal('experiment_completed')
-			current_piece.draw_piece_on_board()
+			history.append(tile_map, player)
+			player.draw_piece_on_board()
 			
 			var gems = gemsManager.find_gems()
 			if(gems.size() > 0):
@@ -53,16 +63,35 @@ func start_place_piece_on_board_timer():
 	place_piece_on_board_timer.start(Consts.PLACE_PIECE_ON_BOARD_TIMER)
 
 
+func undo():
+	var record = history.pop_back()
+	if record == null:
+		return
+	self.queue.undo(player.piece_type)
+	player.erase_piece()
+	player = record.player
+	player.draw_piece()
+	
+	for x in range(Consts.GRID.WIDTH):
+		for y in range(Consts.GRID.HEIGHT):
+			var tile_style = record.atlas_coords_array[x][y]
+			self.tile_map.erase_cell(Consts.Layer.Board, Vector2i(x,y))
+			#if tile_style != Vector2i(-1, -1):
+			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.GEMS_TILE_ID, tile_style)
+
+
 func _on_debounce_timer_timeout():
 	can_process_input = true
 
 
 func _on_place_piece_on_board_timer_timeout():
 	can_process_input = true
-	current_piece = Piece.new(tile_map, queue.get_next_from_queue())
+	player = Player.new(tile_map, queue.get_next_from_queue())
 
 func new_game():
-	pass
+	history = History.new()
 
 func _ready():
 	new_game()
+	
+	

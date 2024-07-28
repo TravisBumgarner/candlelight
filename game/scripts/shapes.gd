@@ -5,7 +5,7 @@ const l_90 := [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
 const l_180 := [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
 const l_270 := [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
 const l_preview = {
-	"shape": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2,0)],
+	"vectors": [Vector2i(0, 0), Vector2i(1, 0), Vector2i(2,0)],
 	"height": 1
 }
 const l := {
@@ -18,7 +18,7 @@ const r_90 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
 const r_180 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
 const r_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
 const r_preview = {
-	"shape": [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)],
+	"vectors": [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)],
 	"height": 2
 } 
 const r:= {

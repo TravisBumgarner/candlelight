@@ -1,6 +1,6 @@
 # Piece.gd
 extends Node2D
-class_name Piece
+class_name Player
 
 var canvas
 var piece_type
@@ -12,16 +12,16 @@ func _init(main, new_piece_type):
 	self.canvas = main
 	self.piece_type = new_piece_type
 	self.rotation_index = 0
-	self.current_absolute_position = Vector2i(round(Consts.HEIGHT / 2.0), round(Consts.WIDTH / 2.0))
+	self.current_absolute_position = Vector2i(round(Consts.GRID.HEIGHT / 2.0 - 1), round(Consts.GRID.WIDTH / 2.0 - 1))
 	self.draw_piece()
 
 
 func move_piece(direction):
 	if can_move(direction):
 		SoundManager.play("movement")
-		erase_piece()
+		self.erase_piece()
 		self.current_absolute_position += direction
-		draw_piece()
+		self.draw_piece()
 	else:
 		SoundManager.play("nonmovement")
 		
@@ -41,7 +41,7 @@ func draw_piece():
 		elif(background_tile == Consts.Sprite.Foreground):
 			tile_style = Consts.Sprite.Background
 	
-		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
+		self.canvas.set_cell(Consts.Layer.Piece, self.current_absolute_position + relative_position, Consts.GEMS_TILE_ID, tile_style)
 
 
 func can_move(direction):
@@ -76,20 +76,21 @@ func erase_piece():
 
 
 func draw_piece_on_board():
-	pass
 	for relative_position in self.get_current_piece_rotation():
 		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
-		if(background_tile == null):
-			tile_style = Consts.Sprite.Background
-		elif(background_tile == Consts.Sprite.Background):
+		if(background_tile == Consts.Sprite.Background):
 			tile_style = Consts.Sprite.Foreground
 		elif(background_tile == Consts.Sprite.Foreground):
 			tile_style = Consts.Sprite.Background
+		else:
+			# Handles both null and (-1, -1) for tile. Depending on undo.
+			# There's something off here I don't fully understand.
+			tile_style = Consts.Sprite.Background
 		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + relative_position)
-		self.canvas.set_cell(Consts.Layer.Board, current_absolute_position + relative_position, Consts.TILE_ID, tile_style)
+		self.canvas.set_cell(Consts.Layer.Board, current_absolute_position + relative_position, Consts.GEMS_TILE_ID, tile_style)
 	
 
 func is_within_bounds(direction: Vector2i):
-	return direction.x >= 0 and direction.x < Consts.HEIGHT and direction.y >= 0 and direction.y < Consts.WIDTH
+	return direction.x >= 0 and direction.x < Consts.GRID.HEIGHT and direction.y >= 0 and direction.y < Consts.GRID.WIDTH

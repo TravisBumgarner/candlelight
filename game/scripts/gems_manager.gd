@@ -36,7 +36,8 @@ func daily_mode_generate_gem(game_key: int):
 	var current_point = Vector2i(RNG.randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_WIDTH), RNG.randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_HEIGHT))
 	var points = [current_point]
 	
-	var potential_neighbors = Utils.get_neighboring_cells_on_board(current_point)
+	var potential_neighbors = Utils.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
+		
 	while points.size() < size:
 		var new_neighbor = null
 		Utils.shuffle_rng_array(RNG, potential_neighbors)
@@ -54,7 +55,7 @@ func daily_mode_generate_gem(game_key: int):
 		if new_neighbor == null:
 			break
 		
-		potential_neighbors = Utils.get_neighboring_cells_on_board(new_neighbor)
+		potential_neighbors = Utils.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
 		points.append(new_neighbor)
 	self.target_gem = Utils.move_cells_to_origin(points)
 
@@ -63,7 +64,7 @@ func puzzle_mode_generate_gem(size: int):
 	var current_point = Vector2i(randi_range(0, Consts.DAILY_MODE_MAX_GEM_WIDTH), randi_range(0, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
 	var points = [current_point]
 	
-	var potential_neighbors = Utils.get_neighboring_cells_on_board(current_point)
+	var potential_neighbors = Utils.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
 	while points.size() < size:
 		var new_neighbor = null
 		potential_neighbors.shuffle()
@@ -96,7 +97,7 @@ func erase_avoid_gem():
 
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
-		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.TILE_ID, Consts.Sprite.Gem)
+		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.GEMS_TILE_ID, Consts.Sprite.Gem)
 
 
 func puzzle_mode_set_target_gem(level: int):
@@ -108,26 +109,28 @@ func puzzle_mode_set_target_gem(level: int):
 
 
 func daily_mode_set_target_gem(game_key):
-	
 	self.erase_target_gem()
 	self.daily_mode_generate_gem(game_key)
 	self.draw_target_gem()
 
 func draw_target_gem():
 	for point in target_gem:
-		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.Foreground)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.Foreground)
 
 
 func is_target_gem(shape):
 	if(shape.size() != target_gem.size()):
+		print('\t different size')
 		return false
 		
 	var relative_shape = Utils.move_cells_to_origin(shape)
+	print('\t relative', relative_shape)
+	print('\t target_gem', target_gem)
 	
 	var are_equal = arrays_equal(relative_shape, target_gem)
 	return are_equal
@@ -136,14 +139,14 @@ func is_target_gem(shape):
 var visited = []
 func find_gems():
 	var gems = []
-	visited.resize(10)
-	for i in range(10):
+	visited.resize(Consts.GRID.WIDTH)
+	for i in range(Consts.GRID.WIDTH):
 		visited[i] = []
-		visited[i].resize(10)
+		visited[i].resize(Consts.GRID.HEIGHT)
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
 	var light_shapes = find_shapes(Consts.Sprite.Foreground)
-		
+	print('light', light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)
@@ -168,8 +171,8 @@ func arrays_equal(arr1, arr2) -> bool:
 
 func find_shapes(desired_color: Vector2i):
 	var shapes = []
-	for x in range(10):
-		for y in range(10):
+	for x in range(Consts.GRID.WIDTH):
+		for y in range(Consts.GRID.HEIGHT):
 			var color = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, Vector2i(x,y))
 			if  color == desired_color and not visited[x][y]:
 				var shape = []
@@ -193,5 +196,5 @@ func flood_fill(pos, desired_color, shape):
 		visited[x][y] = true
 		shape.append(current)
 
-		var neighboring_vectors = Utils.get_neighboring_cells_on_board(Vector2i(x,y))
-		stack.append_array(neighboring_vectors)
+		var potential_neighbors = Utils.get_valid_neighbors(Vector2i(x,y), Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
+		stack.append_array(potential_neighbors)
