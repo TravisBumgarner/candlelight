@@ -46,6 +46,7 @@ func fill_queue():
 
 func undo(current_game_piece):
 	self.queue.insert(0, current_game_piece)
+	self.erase_queue()
 	self.draw_queue()
 
 

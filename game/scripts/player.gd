@@ -12,7 +12,7 @@ func _init(main, new_piece_type):
 	self.canvas = main
 	self.piece_type = new_piece_type
 	self.rotation_index = 0
-	self.current_absolute_position = Vector2i(round(Consts.HEIGHT / 2.0), round(Consts.WIDTH / 2.0))
+	self.current_absolute_position = Vector2i(round(Consts.GRID.HEIGHT / 2.0), round(Consts.GRID.WIDTH / 2.0))
 	self.draw_piece()
 
 
@@ -76,7 +76,6 @@ func erase_piece():
 
 
 func draw_piece_on_board():
-	pass
 	for relative_position in self.get_current_piece_rotation():
 		var background_tile = self.canvas.get_cell_atlas_coords(Consts.Layer.Board, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
@@ -92,4 +91,4 @@ func draw_piece_on_board():
 	
 
 func is_within_bounds(direction: Vector2i):
-	return direction.x >= 0 and direction.x < Consts.HEIGHT and direction.y >= 0 and direction.y < Consts.WIDTH
+	return direction.x >= 0 and direction.x < Consts.GRID.HEIGHT and direction.y >= 0 and direction.y < Consts.GRID.WIDTH

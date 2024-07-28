@@ -24,8 +24,10 @@ const Sprite = {
 }
 
 #grid variables
-const HEIGHT := 10
-const WIDTH := 10
+const GRID = {
+	HEIGHT = 10,
+	WIDTH = 10
+}
 
 const PUZZLE_MODE_MAX_GEM_WIDTH := 3
 const PUZZLE_MODE_MAX_GEM_HEIGHT := 3

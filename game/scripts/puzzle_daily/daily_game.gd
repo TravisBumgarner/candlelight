@@ -16,7 +16,7 @@ func daily_complete(gems):
 
 
 func _on_level_complete_timer_timeout():
-	Utils.erase_area(tile_map, Vector2i(1, 1), Vector2i(Consts.WIDTH + 1, Consts.HEIGHT + 1), Consts.Layer.Board)
+	Utils.erase_area(tile_map, Vector2i(1, 1), Vector2i(Consts.GRID.WIDTH + 1, Consts.GRID.HEIGHT + 1), Consts.Layer.Board)
 	can_process_input = true
 	player = Player.new(tile_map, queue.get_next_from_queue())
 
@@ -34,11 +34,23 @@ func new_game():
 
 func _ready():
 	new_game()
+	
+func draw_tiles(atlas_coords):
+	for x in range(Consts.GRID.WIDTH):
+		for y in range(Consts.GRID.HEIGHT):
+			var tile_style = atlas_coords[x][y]
+			self.tile_map.erase_cell(Consts.Layer.Board, Vector2i(x,y))
+			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.TILE_ID, tile_style)
 
 
 func _on_undo_pressed():
+	var record = history.pop_back()
+	if record == null:
+		return
 	self.queue.undo(player.piece_type)
+
+	player.erase_piece()
 	
-	player = history.pop_back()
-	print(player)
-	player.draw_piece_on_board()
+	player = record.player
+	player.draw_piece()
+	self.draw_tiles(record.atlas_coords_array)

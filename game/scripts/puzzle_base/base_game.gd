@@ -2,6 +2,7 @@ extends Node2D
 
 class_name BaseGame
 
+
 @onready var debounce_timer = $DebounceTimer
 @onready var place_piece_on_board_timer = $PlacePieceOnBoardTimer
 @onready var tile_map = $TileMap
@@ -31,8 +32,8 @@ func _process(_delta):
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
 			emit_signal('experiment_completed')
+			history.append(tile_map, player)
 			player.draw_piece_on_board()
-			history.append(player)
 			
 			var gems = gemsManager.find_gems()
 			if(gems.size() > 0):

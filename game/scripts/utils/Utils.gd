@@ -9,7 +9,7 @@ static func is_cell_free(canvas, cell):
 	return canvas.get_cell_source_id(Consts.Layer.Background, cell) == -1
 
 static func is_cell_on_board(cell: Vector2i):
-	if cell.x < 0 or cell.x >= Consts.WIDTH or cell.y < 0 or cell.y >= Consts.HEIGHT:
+	if cell.x < 0 or cell.x >= Consts.GRID.WIDTH or cell.y < 0 or cell.y >= Consts.GRID.HEIGHT:
 		return false
 	return true
 
@@ -58,3 +58,13 @@ func shuffle_rng_array(rng: RandomNumberGenerator, arr: Array):
 func rng_array_item(rng: RandomNumberGenerator, arr: Array):
 	return arr[rng.randi() % arr.size()]
 
+
+func get_atlas_coords_array(canvas):
+	var tile_map_array = []
+	for x in range(Consts.GRID.WIDTH):
+		tile_map_array.append([])
+		for y in range(Consts.GRID.HEIGHT):
+			var tile_id = canvas.get_cell_atlas_coords(Consts.Layer.Board, Vector2i(x, y))
+			tile_map_array[x].append(tile_id)
+	
+	return tile_map_array
