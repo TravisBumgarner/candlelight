@@ -13,8 +13,6 @@ func _init(main, game_key):
 	self.game_key = game_key
 	
 	RNG = RandomNumberGenerator.new()
-
-	print('game key', game_key)
 	if game_key == null:
 		RNG.randomize()
 	else:
@@ -39,7 +37,6 @@ func erase_queue():
 func fill_queue():
 	while pieces_queue.size() <= QUEUE_SIZE:
 		var random  = Utils.rng_array_item(RNG, Shapes.SHAPES)
-		print('r', random)
 		pieces_queue.append(random)
 
 

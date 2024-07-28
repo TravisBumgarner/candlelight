@@ -12,5 +12,17 @@
 
 [node name="DailyHUD" parent="." instance=ExtResource("2_uxm8u")]
 
+[node name="ExperimentsCount" parent="DailyHUD" index="6"]
+text = "0"
+
+[node name="GameKeyLabel" parent="DailyHUD" index="7"]
+visible = false
+offset_left = 661.0
+offset_top = 465.0
+offset_right = 885.0
+offset_bottom = 488.0
+
 [connection signal="experiment_completed" from="DailyBoard" to="DailyHUD" method="_on_daily_board_experiment_completed"]
 [connection signal="game_key_set" from="DailyBoard" to="DailyHUD" method="_on_daily_board_game_key_set"]
+
+[editable path="DailyHUD"]
