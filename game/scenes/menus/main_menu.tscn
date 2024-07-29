@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6jidt0j7dtmu"]
+[gd_scene load_steps=4 format=3 uid="uid://c6jidt0j7dtmu"]
 
 [ext_resource type="Script" path="res://scripts/menus/main_menu.gd" id="1_6a50f"]
 [ext_resource type="Texture2D" uid="uid://7l3y80e8ltro" path="res://assets/homescreen.png" id="2_jgwuj"]
+[ext_resource type="PackedScene" uid="uid://d0jotk8mcuwdc" path="res://scenes/Music.tscn" id="3_eepy8"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -111,11 +112,11 @@ text = "Candlelight"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 188.0
+offset_left = 76.0
 offset_top = 192.0
-offset_right = 491.0
+offset_right = 492.0
 offset_bottom = 232.0
-alignment = 1
+alignment = 2
 
 [node name="Tutorial" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -153,6 +154,9 @@ Move - W, A, S, D
 Rotate - R
 Undo - X
 "
+
+[node name="AudioStreamPlayer" parent="." instance=ExtResource("3_eepy8")]
+stream_paused = false
 
 [connection signal="pressed" from="Chaos/Chaos Button" to="." method="_on_chaos_button_pressed"]
 [connection signal="pressed" from="Daily Challenge/Daily Button" to="." method="_on_daily_button_pressed"]

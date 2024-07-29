@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ebrsgm7rurl8"]
+[gd_scene load_steps=14 format=3 uid="uid://ebrsgm7rurl8"]
 
 [ext_resource type="Script" path="res://scripts/GlobalUI.gd" id="1_86iux"]
 [ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="2_0t1ga"]
@@ -9,6 +9,7 @@
 [ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="7_132p7"]
 [ext_resource type="Script" path="res://scripts/puzzle_puzzle/puzzle_game.gd" id="8_siott"]
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="9_55dvd"]
+[ext_resource type="PackedScene" uid="uid://d0jotk8mcuwdc" path="res://scenes/Music.tscn" id="10_kyycf"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
@@ -185,6 +186,9 @@ offset_right = -96.0
 offset_bottom = 391.0
 text = "Level"
 horizontal_alignment = 1
+
+[node name="AudioStreamPlayer" parent="." instance=ExtResource("10_kyycf")]
+stream_paused = false
 
 [connection signal="pressed" from="GlobalUi/Main Menu" to="GlobalUi" method="_on_main_menu_pressed"]
 [connection signal="pressed" from="GlobalUi/Reset" to="GlobalUi" method="_on_reset_pressed"]
