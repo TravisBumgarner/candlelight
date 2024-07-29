@@ -2,6 +2,7 @@ extends Node2D
 
 var sounds
 @onready var reset_2 = $Reset2
+@onready var reset = $Reset
 
 signal reset_game
 
@@ -26,3 +27,10 @@ func _on_reset_2_button_up():
 	reset_2.release_focus()
 
 	
+
+
+func _on_reset_pressed():
+	print('rseserser')
+	emit_signal('reset_game')
+	# can't ifgure out why the button remains pressed
+	reset.release_focus()

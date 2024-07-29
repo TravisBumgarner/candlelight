@@ -35,6 +35,8 @@ func _on_level_complete_timer_timeout():
 
 func new_game():
 	super()
+	level = 1
+	level_label.text = str(level)
 	# Seed isn't curren't really needed.
 	queue = Queue.new(tile_map, null)
 	gemsManager = GemsManager.new(tile_map)
@@ -44,3 +46,12 @@ func new_game():
 
 func _ready():
 	new_game()
+
+
+func reset():
+	super()
+	new_game()
+
+
+func _on_reset_pressed():
+	reset()
