@@ -29,6 +29,9 @@ const GRID = {
 	WIDTH = 10
 }
 
+const GRID_ORIGIN = Vector2i(0,0)
+const GRID_END = GRID_ORIGIN + Vector2i(GRID.WIDTH, GRID.HEIGHT)
+
 const PUZZLE_MODE_MAX_GEM_WIDTH := 3
 const PUZZLE_MODE_MAX_GEM_HEIGHT := 3
 
