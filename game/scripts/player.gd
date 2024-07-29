@@ -64,7 +64,7 @@ func rotate_piece():
 	if self.can_rotate():
 		SoundManager.play("movement")
 		self.erase_piece()
-		self.rotation_index = (self.rotation_index + 1) % Shapes.SHAPES[0].size()
+		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
 		self.draw_piece()
 	else:
 		SoundManager.play("nonmovement")
