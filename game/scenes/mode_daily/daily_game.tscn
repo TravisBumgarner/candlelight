@@ -1,37 +1,197 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbj3gn6br3v7j"]
+[gd_scene load_steps=14 format=3 uid="uid://bbj3gn6br3v7j"]
 
-[ext_resource type="PackedScene" uid="uid://b5f1ibcdjljpk" path="res://scenes/GlobalUI.tscn" id="1_ns53u"]
-[ext_resource type="PackedScene" uid="uid://nfvtipru81jd" path="res://scenes/mode_daily/daily_board.tscn" id="1_qg4hi"]
-[ext_resource type="PackedScene" uid="uid://1h4gxu55jfq4" path="res://scenes/mode_daily/daily_hud.tscn" id="2_uxm8u"]
+[ext_resource type="Script" path="res://scripts/GlobalUI.gd" id="1_t0mru"]
+[ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="2_ch4iq"]
+[ext_resource type="Script" path="res://scenes/Sounds.gd" id="3_dfuuc"]
+[ext_resource type="AudioStream" uid="uid://bkk5y2vr0kpys" path="res://assets/sounds/1gem.wav" id="4_i66sx"]
+[ext_resource type="AudioStream" uid="uid://f801b8773goa" path="res://assets/sounds/2gems.wav" id="5_ldxr6"]
+[ext_resource type="AudioStream" uid="uid://ct8lc730vltxa" path="res://assets/sounds/movement.wav" id="6_c06k5"]
+[ext_resource type="AudioStream" uid="uid://dkcnit45hi8lc" path="res://assets/sounds/non_movement.wav" id="7_0pnq5"]
+[ext_resource type="Script" path="res://scripts/puzzle_daily/daily_hud.gd" id="8_h8id5"]
+[ext_resource type="Script" path="res://scripts/puzzle_daily/daily_game.gd" id="9_eetkq"]
+[ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="10_ygv4x"]
+
+[sub_resource type="Theme" id="Theme_ru2yb"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
+texture = ExtResource("10_ygv4x")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_ntj6q"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 
 [node name="DailyGame" type="Node2D"]
 
-[node name="GlobalUi" parent="." instance=ExtResource("1_ns53u")]
+[node name="GlobalUi" type="Node2D" parent="."]
+z_index = -10
+script = ExtResource("1_t0mru")
 
-[node name="DailyBoard" parent="." instance=ExtResource("1_qg4hi")]
-position = Vector2(608, 96)
+[node name="Sprite2D" type="Sprite2D" parent="GlobalUi"]
+position = Vector2(512, 256)
+scale = Vector2(2.048, 2.048)
+texture = ExtResource("2_ch4iq")
+metadata/_edit_lock_ = true
 
-[node name="DailyHUD" parent="." instance=ExtResource("2_uxm8u")]
+[node name="Reset2" type="Button" parent="GlobalUi"]
+offset_left = 576.0
+offset_top = 472.0
+offset_right = 832.0
+offset_bottom = 503.0
+text = "Reset"
 
-[node name="ExperimentsCount" parent="DailyHUD" index="6"]
+[node name="Sounds" type="Node" parent="GlobalUi"]
+script = ExtResource("3_dfuuc")
+
+[node name="one_gem" type="AudioStreamPlayer" parent="GlobalUi/Sounds"]
+stream = ExtResource("4_i66sx")
+
+[node name="two_gems" type="AudioStreamPlayer" parent="GlobalUi/Sounds"]
+stream = ExtResource("5_ldxr6")
+
+[node name="movement" type="AudioStreamPlayer" parent="GlobalUi/Sounds"]
+stream = ExtResource("6_c06k5")
+
+[node name="nonmovement" type="AudioStreamPlayer" parent="GlobalUi/Sounds"]
+stream = ExtResource("7_0pnq5")
+
+[node name="Main Menu" type="Button" parent="GlobalUi"]
+offset_left = 576.0
+offset_top = 432.0
+offset_right = 832.0
+offset_bottom = 463.0
+text = "Main Menu"
+
+[node name="DailyHUD" type="CanvasLayer" parent="."]
+layer = 0
+script = ExtResource("8_h8id5")
+
+[node name="ColorRect2" type="ColorRect" parent="DailyHUD"]
+offset_left = 288.0
+offset_top = 328.0
+offset_right = 512.0
+offset_bottom = 480.0
+color = Color(0, 0.454902, 0.372549, 0.556863)
+
+[node name="Experiments" type="Label" parent="DailyHUD"]
+offset_left = 288.0
+offset_top = 432.0
+offset_right = 512.0
+offset_bottom = 455.0
+text = "Experiments
+"
+horizontal_alignment = 1
+
+[node name="ExperimentsCount" type="Label" parent="DailyHUD"]
+offset_left = 288.0
+offset_top = 352.0
+offset_right = 512.0
+offset_bottom = 407.0
+theme_override_font_sizes/font_size = 40
 text = "0"
+horizontal_alignment = 1
 
-[node name="GameKeyLabel" parent="DailyHUD" index="7"]
+[node name="GameKeyLabel" type="Label" parent="DailyHUD"]
 visible = false
-offset_left = 661.0
-offset_top = 465.0
-offset_right = 885.0
-offset_bottom = 488.0
+offset_left = 512.0
+offset_top = 256.0
+offset_right = 736.0
+offset_bottom = 279.0
+text = "Game Key: "
+horizontal_alignment = 1
 
-[node name="Undo" type="Button" parent="DailyHUD"]
-offset_left = 623.0
-offset_top = 468.0
-offset_right = 673.0
-offset_bottom = 499.0
-text = "Undo"
+[node name="Experiments2" type="Label" parent="DailyHUD"]
+offset_left = 288.0
+offset_top = 224.0
+offset_right = 512.0
+offset_bottom = 247.0
+text = "Target"
+horizontal_alignment = 1
 
+[node name="DailyBoard" type="Node2D" parent="."]
+z_index = 2
+z_as_relative = false
+position = Vector2(608, 64)
+script = ExtResource("9_eetkq")
+
+[node name="ColorRect" type="ColorRect" parent="DailyBoard"]
+offset_left = -570.0
+offset_top = -33.0
+offset_right = -362.0
+offset_bottom = 415.0
+theme = SubResource("Theme_ru2yb")
+color = Color(0, 0.454902, 0.372549, 0.556863)
+
+[node name="TileMap" type="TileMap" parent="DailyBoard"]
+visibility_layer = 7
+tile_set = SubResource("TileSet_ntj6q")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "background"
+layer_0/tile_data = PackedInt32Array(655360, 262144, 0, 10, 262144, 0, -1, 262144, 0, 65535, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 458751, 262144, 0, 524287, 262144, 0, 589823, 262144, 0, 655359, 262144, 0, 655361, 262144, 0, 655362, 262144, 0, 655363, 262144, 0, 655364, 262144, 0, 655365, 262144, 0, 655366, 262144, 0, 655367, 262144, 0, 655368, 262144, 0, 655369, 262144, 0, 589834, 262144, 0, 524298, 262144, 0, 458762, 262144, 0, 393226, 262144, 0, 327690, 262144, 0, 262154, 262144, 0, 196618, 262144, 0, 131082, 262144, 0, 65546, 262144, 0, -65526, 262144, 0, -65527, 262144, 0, -65528, 262144, 0, -65529, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 720895, 262144, 0, 655370, 262144, 0)
+layer_1/name = "board"
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "piece"
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()
+metadata/_edit_lock_ = true
+
+[node name="DebounceTimer" type="Timer" parent="DailyBoard"]
+one_shot = true
+
+[node name="PlacePieceOnBoardTimer" type="Timer" parent="DailyBoard"]
+one_shot = true
+
+[node name="LevelCompleteTimer" type="Timer" parent="DailyBoard"]
+one_shot = true
+
+[node name="ColorRect2" type="ColorRect" parent="DailyBoard"]
+offset_left = -320.0
+offset_top = -32.0
+offset_right = -96.0
+offset_bottom = 224.0
+color = Color(0, 0.454902, 0.372549, 0.556863)
+
+[node name="Experiments3" type="Label" parent="DailyBoard"]
+offset_left = -570.0
+offset_top = 368.0
+offset_right = -362.0
+offset_bottom = 391.0
+text = "Queue"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 848.0
+offset_top = 416.0
+offset_right = 960.0
+offset_bottom = 512.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Place - Spacebar        
+Rotate - R  
+Move - W, A, S, D       
+Undo - X
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="reset_game" from="GlobalUi" to="DailyHUD" method="_on_global_ui_reset_game"]
+[connection signal="reset_game" from="GlobalUi" to="DailyBoard" method="_on_global_ui_reset_game"]
+[connection signal="button_up" from="GlobalUi/Reset2" to="GlobalUi" method="_on_reset_2_button_up"]
+[connection signal="pressed" from="GlobalUi/Main Menu" to="GlobalUi" method="_on_main_menu_pressed"]
 [connection signal="experiment_completed" from="DailyBoard" to="DailyHUD" method="_on_daily_board_experiment_completed"]
+[connection signal="experiment_completed" from="DailyBoard" to="DailyBoard" method="_on_experiment_completed"]
+[connection signal="experiment_undo" from="DailyBoard" to="DailyHUD" method="_on_daily_board_experiment_undo"]
 [connection signal="game_key_set" from="DailyBoard" to="DailyHUD" method="_on_daily_board_game_key_set"]
-[connection signal="pressed" from="DailyHUD/Undo" to="DailyBoard" method="_on_undo_pressed"]
-
-[editable path="DailyHUD"]
+[connection signal="timeout" from="DailyBoard/DebounceTimer" to="DailyBoard" method="_on_debounce_timer_timeout"]
+[connection signal="timeout" from="DailyBoard/PlacePieceOnBoardTimer" to="DailyBoard" method="_on_place_piece_on_board_timer_timeout"]
+[connection signal="timeout" from="DailyBoard/LevelCompleteTimer" to="DailyBoard" method="_on_level_complete_timer_timeout"]

@@ -97,7 +97,7 @@ func erase_avoid_gem():
 
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
-		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.GEMS_TILE_ID, Consts.Sprite.Gem)
+		self.canvas.set_cell(Consts.Layer.Board, absolute_position, Consts.GEMS_TILE_ID, Consts.Sprite.GemBlue)
 
 
 func puzzle_mode_set_target_gem(level: int):
@@ -115,12 +115,12 @@ func daily_mode_set_target_gem(game_key):
 
 func draw_target_gem():
 	for point in target_gem:
-		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.TARGET_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.GemBlue)
 
 
 func draw_avoid_gem():
 	for point in avoid_gem:
-		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.Foreground)
+		self.canvas.set_cell(Consts.Layer.Board, Consts.AVOID_GEM_ORIGIN + point, Consts.GEMS_TILE_ID, Consts.Sprite.GemBlue)
 
 
 func is_target_gem(shape):
@@ -142,7 +142,7 @@ func find_gems():
 		visited[i].resize(Consts.GRID.HEIGHT)
 
 	#var dark_shapes = find_shapes(Consts.Sprite.Background)
-	var light_shapes = find_shapes(Consts.Sprite.Foreground)
+	var light_shapes = find_shapes(Consts.Sprite.LightInactive)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)

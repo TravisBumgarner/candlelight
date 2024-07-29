@@ -13,6 +13,10 @@ var queue: Queue
 var can_process_input = true
 var gemsManager: GemsManager
 
+signal experiment_completed
+signal experiment_undo
+signal game_key_set
+
 func _process(_delta):
 	if can_process_input:
 		if Input.is_action_pressed("MOVE_DOWN"):
@@ -71,7 +75,7 @@ func undo():
 	player.erase_piece()
 	player = record.player
 	player.draw_piece()
-	
+	emit_signal('experiment_undo')
 	for x in range(Consts.GRID.WIDTH):
 		for y in range(Consts.GRID.HEIGHT):
 			var tile_style = record.atlas_coords_array[x][y]
@@ -89,9 +93,16 @@ func _on_place_piece_on_board_timer_timeout():
 	player = Player.new(tile_map, queue.get_next_from_queue())
 
 func new_game():
+	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Background)
+	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Board)
+	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Piece)
 	history = History.new()
 
 func _ready():
 	new_game()
 	
+func reset():
+	pass
 	
+
+

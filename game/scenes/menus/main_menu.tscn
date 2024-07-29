@@ -23,9 +23,10 @@ metadata/_edit_lock_ = true
 
 [node name="Chaos" type="VBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 56.0
-offset_right = 264.0
-offset_bottom = 88.0
+offset_left = 60.0
+offset_top = 48.0
+offset_right = 268.0
+offset_bottom = 136.0
 
 [node name="Chaos Button" type="Button" parent="Chaos"]
 layout_mode = 2
@@ -34,15 +35,16 @@ text = "Chaos (Soon)"
 
 [node name="Label" type="Label" parent="Chaos"]
 layout_mode = 2
-text = "Create the gem to advance to the next level."
+text = "Craft precisely or fail."
 horizontal_alignment = 1
 autowrap_mode = 2
 
 [node name="Daily Challenge" type="VBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 280.0
-offset_right = 488.0
-offset_bottom = 88.0
+offset_left = 284.0
+offset_top = -112.0
+offset_right = 492.0
+offset_bottom = -24.0
 
 [node name="Daily Button" type="Button" parent="Daily Challenge"]
 layout_mode = 2
@@ -50,7 +52,7 @@ text = "Daily"
 
 [node name="Label" type="Label" parent="Daily Challenge"]
 layout_mode = 2
-text = "Craft the gem with the minimum experiments."
+text = "Compete with friends to craft the gem with the minimum experiments."
 horizontal_alignment = 1
 autowrap_mode = 2
 
@@ -73,10 +75,10 @@ autowrap_mode = 2
 
 [node name="Speed Mode" type="VBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 280.0
-offset_top = -112.0
-offset_right = 488.0
-offset_bottom = -2.0
+offset_left = 284.0
+offset_top = 48.0
+offset_right = 492.0
+offset_bottom = 158.0
 
 [node name="Speed Button" type="Button" parent="Speed Mode"]
 layout_mode = 2
@@ -109,16 +111,21 @@ text = "Candlelight"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 2
-offset_left = 376.0
-offset_top = 112.0
-offset_right = 492.0
-offset_bottom = 152.0
+offset_left = 188.0
+offset_top = 192.0
+offset_right = 491.0
+offset_bottom = 232.0
 alignment = 1
 
-[node name="Options" type="Button" parent="HBoxContainer"]
+[node name="Tutorial" type="Button" parent="HBoxContainer"]
 layout_mode = 2
 disabled = true
-text = "Options"
+text = "Tutorial (Soon!)"
+
+[node name="Options2" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+disabled = true
+text = "Options (Soon!)"
 
 [node name="Quit" type="Button" parent="HBoxContainer"]
 layout_mode = 2
@@ -126,30 +133,34 @@ text = "Quit"
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 136.0
-offset_right = 413.0
-offset_bottom = 237.0
+offset_left = 316.0
+offset_top = -240.0
+offset_right = 492.0
+offset_bottom = -139.0
 theme_override_colors/font_color = Color(0.662745, 0.705882, 0.690196, 1)
 text = "Instructions"
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 168.0
-offset_right = 413.0
-offset_bottom = 269.0
+offset_left = 316.0
+offset_top = -208.0
+offset_right = 492.0
+offset_bottom = -128.0
 theme_override_colors/font_color = Color(0.664348, 0.704912, 0.689619, 1)
-theme_override_font_sizes/font_size = 14
-text = "Move Piece - W, A, S, D
-Rotate Piece - R
-Place Piece - Spacebar"
+theme_override_font_sizes/font_size = 11
+text = "Place Piece - Spacebar
+Move - W, A, S, D
+Rotate - R
+Undo - X
+"
 
 [connection signal="pressed" from="Chaos/Chaos Button" to="." method="_on_chaos_button_pressed"]
 [connection signal="pressed" from="Daily Challenge/Daily Button" to="." method="_on_daily_button_pressed"]
 [connection signal="pressed" from="Puzzle Mode/Puzzle Button" to="." method="_on_puzzle_button_pressed"]
 [connection signal="pressed" from="Speed Mode/Speed Button" to="." method="_on_speed_button_pressed"]
-[connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_options_pressed"]
-[connection signal="pressed" from="HBoxContainer/Options" to="." method="_on_speed_mode_pressed"]
-[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_speed_mode_pressed"]
+[connection signal="pressed" from="HBoxContainer/Tutorial" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="HBoxContainer/Tutorial" to="." method="_on_speed_mode_pressed"]
+[connection signal="pressed" from="HBoxContainer/Options2" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="HBoxContainer/Options2" to="." method="_on_speed_mode_pressed"]
 [connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_speed_mode_pressed"]

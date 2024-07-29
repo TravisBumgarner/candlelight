@@ -1,8 +1,8 @@
 extends Node
 
 static func erase_area(tile_map, start: Vector2i, end: Vector2i, layer: int):
-	for x in range(start.x, end.x + 1):
-		for y in range(start.y, end.y + 1):
+	for x in range(start.x, end.x):
+		for y in range(start.y, end.y):
 			tile_map.erase_cell(layer, Vector2i(x,y))
 
 static func is_cell_free(tile_map, cell):

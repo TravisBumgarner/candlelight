@@ -29,10 +29,11 @@ func draw_queue():
 	var y_offset = Vector2i(0, 0)
 	for queue_index in range(0, VISIBLE_QUEUE_SIZE):
 		var piece = self.queue[queue_index]
-		print(piece)
-		for vector in piece.preview.vectors:
-			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + vector + y_offset, Consts.GEMS_TILE_ID, Consts.Sprite.Midground) 
-		y_offset += Vector2i(0, piece.preview.height + 1)
+
+		for vector in piece[0]:
+			var color = Consts.Sprite.DarkActive if queue_index == 0 else Consts.Sprite.DarkInactive
+			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + vector + y_offset, Consts.GEMS_TILE_ID, color) 
+		y_offset += Vector2i(0, 4)
 
 
 func erase_queue():
