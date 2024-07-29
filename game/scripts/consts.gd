@@ -1,7 +1,7 @@
 extends Node
 class_name Consts
 
-const QUEUE_PREVIEW_ORIGIN = Vector2i(-17, 2)
+const QUEUE_PREVIEW_ORIGIN = Vector2i(-16, 0)
 const QUEUE_PREVIEW_END = QUEUE_PREVIEW_ORIGIN + Vector2i(7, 12)
 
 const TARGET_GEM_ORIGIN = Vector2i(-9, 0)

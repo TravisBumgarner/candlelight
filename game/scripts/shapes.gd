@@ -50,7 +50,7 @@ const u_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(2,0), Vect
 const u:= {
 	"rotations":[u_0, u_90, u_180, u_270],
 	"preview": {
-		"vectors": u_0,
+		"vectors": u_90,
 		"height": 2
 	} 
 }
@@ -62,8 +62,8 @@ const z_90 := [Vector2i(0,1), Vector2i(1,0), Vector2i(1,1), Vector2i(2,0)]
 const z:= {
 	"rotations":[z_0, z_90, z_0, z_90],
 	"preview": {
-		"vectors": z_0,
-		"height": 3
+		"vectors": z_90,
+		"height": 2
 	} 
 }
 

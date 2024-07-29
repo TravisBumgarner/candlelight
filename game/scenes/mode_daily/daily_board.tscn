@@ -1,9 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://nfvtipru81jd"]
+[gd_scene load_steps=5 format=3 uid="uid://nfvtipru81jd"]
 
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="1_fq2y0"]
 [ext_resource type="Script" path="res://scripts/puzzle_daily/daily_game.gd" id="2_fsqbm"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vurfj"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gfvpd"]
 texture = ExtResource("1_fq2y0")
@@ -25,20 +23,12 @@ sources/0 = SubResource("TileSetAtlasSource_gfvpd")
 position = Vector2(576, 64)
 script = ExtResource("2_fsqbm")
 
-[node name="Dark Overlay" type="Panel" parent="."]
-visible = false
-offset_left = -576.0
-offset_top = -64.0
-offset_right = 448.0
-offset_bottom = 448.0
-
-[node name="Light Overlay" type="Panel" parent="."]
-visible = false
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 368.0
-offset_bottom = 368.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_vurfj")
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_left = -522.0
+offset_top = -33.0
+offset_right = -320.0
+offset_bottom = 370.0
+color = Color(0, 0.454902, 0.372549, 0.556863)
 
 [node name="TileMap" type="TileMap" parent="."]
 visibility_layer = 7
@@ -63,6 +53,13 @@ one_shot = true
 
 [node name="LevelCompleteTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+offset_left = -288.0
+offset_top = -32.0
+offset_right = -64.0
+offset_bottom = 184.0
+color = Color(0, 0.454902, 0.372549, 0.556863)
 
 [connection signal="experiment_completed" from="." to="." method="_on_experiment_completed"]
 [connection signal="timeout" from="DebounceTimer" to="." method="_on_debounce_timer_timeout"]
