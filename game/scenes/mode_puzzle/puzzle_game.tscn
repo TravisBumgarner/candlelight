@@ -42,6 +42,21 @@ text = "Target
 "
 horizontal_alignment = 1
 
+[node name="Label3" type="Label" parent="PuzzleHUD"]
+offset_left = 848.0
+offset_top = 416.0
+offset_right = 960.0
+offset_bottom = 512.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Place - Spacebar        
+Rotate - R  
+Move - W, A, S, D       
+Undo - X
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="GlobalUi" type="Node2D" parent="."]
 script = ExtResource("1_86iux")
 
@@ -52,17 +67,17 @@ texture = ExtResource("2_0t1ga")
 metadata/_edit_lock_ = true
 
 [node name="Main Menu" type="Button" parent="GlobalUi"]
-offset_left = 784.0
-offset_top = 448.0
-offset_right = 960.0
-offset_bottom = 479.0
+offset_left = 576.0
+offset_top = 432.0
+offset_right = 840.0
+offset_bottom = 463.0
 text = "Main Menu"
 
 [node name="Reset" type="Button" parent="GlobalUi"]
 offset_left = 576.0
-offset_top = 448.0
-offset_right = 752.0
-offset_bottom = 479.0
+offset_top = 472.0
+offset_right = 840.0
+offset_bottom = 503.0
 text = "Reset
 "
 

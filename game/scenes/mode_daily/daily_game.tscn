@@ -42,10 +42,10 @@ texture = ExtResource("2_ch4iq")
 metadata/_edit_lock_ = true
 
 [node name="Reset2" type="Button" parent="GlobalUi"]
-offset_left = 592.0
-offset_top = 448.0
-offset_right = 768.0
-offset_bottom = 480.0
+offset_left = 576.0
+offset_top = 472.0
+offset_right = 832.0
+offset_bottom = 503.0
 text = "Reset"
 
 [node name="Sounds" type="Node" parent="GlobalUi"]
@@ -64,10 +64,10 @@ stream = ExtResource("6_c06k5")
 stream = ExtResource("7_0pnq5")
 
 [node name="Main Menu" type="Button" parent="GlobalUi"]
-offset_left = 800.0
-offset_top = 448.0
-offset_right = 976.0
-offset_bottom = 480.0
+offset_left = 576.0
+offset_top = 432.0
+offset_right = 832.0
+offset_bottom = 463.0
 text = "Main Menu"
 
 [node name="DailyHUD" type="CanvasLayer" parent="."]
@@ -168,6 +168,21 @@ offset_right = -362.0
 offset_bottom = 391.0
 text = "Queue"
 horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="."]
+offset_left = 848.0
+offset_top = 416.0
+offset_right = 960.0
+offset_bottom = 512.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 11
+text = "Place - Spacebar        
+Rotate - R  
+Move - W, A, S, D       
+Undo - X
+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="reset_game" from="GlobalUi" to="DailyHUD" method="_on_global_ui_reset_game"]
 [connection signal="reset_game" from="GlobalUi" to="DailyBoard" method="_on_global_ui_reset_game"]

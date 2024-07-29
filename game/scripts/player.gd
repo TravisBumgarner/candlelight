@@ -27,7 +27,7 @@ func move_piece(direction):
 		
 
 func get_current_piece_rotation():
-	return self.piece_type.rotations[self.rotation_index]
+	return self.piece_type[self.rotation_index]
 
 func draw_piece():
 	for relative_position in self.get_current_piece_rotation():
@@ -54,7 +54,7 @@ func can_move(direction):
 func can_rotate():
 	pass
 	var temporary_rotation_index = (self.rotation_index + 1) % Shapes.SHAPES[0].size()
-	for point in piece_type.rotations[temporary_rotation_index]:
+	for point in piece_type[temporary_rotation_index]:
 		if not Utils.is_cell_free(self.canvas, point + current_absolute_position):
 			return false
 	return true
