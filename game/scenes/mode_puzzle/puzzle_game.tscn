@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ebrsgm7rurl8"]
+[gd_scene load_steps=3 format=3 uid="uid://ebrsgm7rurl8"]
 
 [ext_resource type="PackedScene" uid="uid://b5f1ibcdjljpk" path="res://scenes/GlobalUI.tscn" id="1_hebcj"]
 [ext_resource type="PackedScene" uid="uid://q1ejs4pnnjm1" path="res://scenes/mode_puzzle/puzzle_board.tscn" id="2_1mhny"]
-[ext_resource type="PackedScene" uid="uid://btqjm3ripnoej" path="res://scenes/mode_puzzle/puzzle_hud.tscn" id="3_s4vh2"]
 
 [node name="PuzzleGame" type="Node2D"]
 
@@ -10,4 +9,69 @@
 
 [node name="PuzzleBoard" parent="." instance=ExtResource("2_1mhny")]
 
-[node name="PuzzleHUD" parent="." instance=ExtResource("3_s4vh2")]
+[node name="PuzzleHUD" type="CanvasLayer" parent="."]
+
+[node name="QueuePanel" type="Panel" parent="PuzzleHUD"]
+visible = false
+visibility_layer = 3
+offset_top = 96.0
+offset_right = 224.0
+offset_bottom = 480.0
+
+[node name="Panel2" type="Panel" parent="PuzzleHUD"]
+visible = false
+offset_top = 32.0
+offset_right = 224.0
+offset_bottom = 64.0
+
+[node name="Label" type="Label" parent="PuzzleHUD"]
+offset_top = 64.0
+offset_right = 224.0
+offset_bottom = 87.0
+text = "Queue"
+horizontal_alignment = 1
+
+[node name="Level" type="Label" parent="PuzzleHUD"]
+visible = false
+offset_top = 32.0
+offset_right = 224.0
+offset_bottom = 55.0
+text = "1"
+horizontal_alignment = 1
+
+[node name="TargetGemPanel" type="Panel" parent="PuzzleHUD"]
+visible = false
+offset_left = 256.0
+offset_top = 32.0
+offset_right = 480.0
+offset_bottom = 224.0
+
+[node name="Label3" type="Label" parent="PuzzleHUD"]
+offset_left = 256.0
+offset_right = 480.0
+offset_bottom = 23.0
+text = "Target Gem"
+horizontal_alignment = 1
+
+[node name="AvoidGemPanel" type="Panel" parent="PuzzleHUD"]
+visible = false
+offset_left = 256.0
+offset_top = 288.0
+offset_right = 480.0
+offset_bottom = 480.0
+
+[node name="Label4" type="Label" parent="PuzzleHUD"]
+visible = false
+offset_left = 256.0
+offset_top = 256.0
+offset_right = 480.0
+offset_bottom = 279.0
+text = "Avoid Gem"
+horizontal_alignment = 1
+
+[node name="Label2" type="Label" parent="PuzzleHUD"]
+visible = false
+offset_right = 224.0
+offset_bottom = 23.0
+text = "Level"
+horizontal_alignment = 1

@@ -16,6 +16,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+	
+	
+
 
 
 func _on_daily_board_experiment_completed():
@@ -27,3 +30,13 @@ func _on_daily_board_game_key_set(value):
 	# I'm not sure if this is actually the correct way
 	# to do things.
 	game_key = value
+
+
+func _on_daily_board_experiment_undo():
+	counter -= 1
+	experiments_count.text = str(counter)
+	
+
+func _on_global_ui_reset_game():
+	counter = 0
+	experiments_count.text = str(counter)

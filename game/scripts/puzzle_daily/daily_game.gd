@@ -1,10 +1,6 @@
 extends BaseGame
 
 var game_key: int
-@onready var level_label = $"../Level"
-
-signal experiment_completed
-signal game_key_set
 
 # Function called from BaseGame when level completes.
 func level_complete(gems):
@@ -30,7 +26,7 @@ func new_game():
 	emit_signal('game_key_set', game_key)
 	gemsManager.daily_mode_set_target_gem(game_key)
 	player = Player.new(tile_map, queue.get_next_from_queue())
-
+	
 
 func _ready():
 	new_game()
@@ -44,4 +40,9 @@ func draw_tiles(atlas_coords):
 			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.GEMS_TILE_ID, tile_style)
 
 
+func reset():
+	super()
+	new_game()
 
+func _on_global_ui_reset_game():
+	reset()
