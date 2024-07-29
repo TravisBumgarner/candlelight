@@ -68,3 +68,4 @@ func get_atlas_coords_array(tile_map):
 			tile_map_array[x].append(tile_id)
 	
 	return tile_map_array
+	

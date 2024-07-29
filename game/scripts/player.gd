@@ -71,8 +71,7 @@ func rotate_piece():
 
 
 func erase_piece():
-	for point in self.get_current_piece_rotation():
-		self.canvas.erase_cell(Consts.Layer.Piece, current_absolute_position + point)
+	Utils.erase_area(self.canvas, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Piece)
 
 
 func draw_piece_on_board():
