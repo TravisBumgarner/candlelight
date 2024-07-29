@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bbj3gn6br3v7j"]
+[gd_scene load_steps=15 format=3 uid="uid://bbj3gn6br3v7j"]
 
 [ext_resource type="Script" path="res://scripts/GlobalUI.gd" id="1_t0mru"]
 [ext_resource type="Texture2D" uid="uid://cd858h7h2b0dm" path="res://assets/gamescreen.png" id="2_ch4iq"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://scripts/puzzle_daily/daily_hud.gd" id="8_h8id5"]
 [ext_resource type="Script" path="res://scripts/puzzle_daily/daily_game.gd" id="9_eetkq"]
 [ext_resource type="Texture2D" uid="uid://dhxif7p0k0dpu" path="res://assets/sprites/gems.png" id="10_ygv4x"]
+[ext_resource type="PackedScene" uid="uid://d0jotk8mcuwdc" path="res://scenes/Music.tscn" id="11_2lb1y"]
 
 [sub_resource type="Theme" id="Theme_ru2yb"]
 
@@ -183,6 +184,9 @@ Undo - X
 "
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="AudioStreamPlayer" parent="." instance=ExtResource("11_2lb1y")]
+stream_paused = false
 
 [connection signal="reset_game" from="GlobalUi" to="DailyHUD" method="_on_global_ui_reset_game"]
 [connection signal="reset_game" from="GlobalUi" to="DailyBoard" method="_on_global_ui_reset_game"]
