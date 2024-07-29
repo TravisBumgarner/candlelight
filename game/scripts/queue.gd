@@ -31,7 +31,8 @@ func draw_queue():
 		var piece = self.queue[queue_index]
 		print(piece)
 		for vector in piece.preview.vectors:
-			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + vector + y_offset, Consts.GEMS_TILE_ID, Consts.Sprite.Midground) 
+			var color = Consts.Sprite.DarkActive if queue_index == 0 else Consts.Sprite.DarkInactive
+			self.canvas.set_cell(Consts.Layer.Background, Consts.QUEUE_PREVIEW_ORIGIN + vector + y_offset, Consts.GEMS_TILE_ID, color) 
 		y_offset += Vector2i(0, piece.preview.height + 1)
 
 
