@@ -186,7 +186,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="AudioStreamPlayer" parent="." instance=ExtResource("11_2lb1y")]
-stream_paused = false
 
 [connection signal="reset_game" from="GlobalUi" to="DailyHUD" method="_on_global_ui_reset_game"]
 [connection signal="reset_game" from="GlobalUi" to="DailyBoard" method="_on_global_ui_reset_game"]

@@ -5,7 +5,7 @@ extends BaseGame
 
 signal target_gem_updated
 
-var level = 1
+var level
 
 # Function called from BaseGame when level completes.
 func level_complete(gems):

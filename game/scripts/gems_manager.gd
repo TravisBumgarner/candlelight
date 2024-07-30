@@ -10,22 +10,36 @@ func _init(main):
 	self.canvas = main
 
 func puzzle_mode_level_to_gem_size(level: int) -> int:
-	if level < 3:
+	if level < 2:
 		return 1
-	elif level < 6:
+	elif level < 4:
 		return 2
-	elif level < 10:
+	elif level < 7:
 		return 3
-	elif level < 20:
+	elif level < 10:
 		return 4
-	elif level < 30:
+	elif level < 15:
 		return 5
-	elif level < 50:
+	elif level < 21:
 		return 6
-	elif level < 60:
+	elif level < 27:
 		return 7
+	elif level < 34:
+		return 8
+	elif level < 39:
+		return 9
+	elif level < 44:
+		return 10
+	elif level < 50:
+		return 11
+	elif level < 56:
+		return 12
+	elif level < 61:
+		return 13
+	elif level < 66:
+		return 14
 	else:
-		return 8  # Assuming you want a default value for levels 60 and above
+		return 15
 
 
 func daily_mode_generate_gem(game_key: int):
@@ -37,7 +51,7 @@ func daily_mode_generate_gem(game_key: int):
 	var points = [current_point]
 	
 	var potential_neighbors = Utils.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
-		
+
 	while points.size() < size:
 		var new_neighbor = null
 		Utils.shuffle_rng_array(RNG, potential_neighbors)
@@ -61,7 +75,9 @@ func daily_mode_generate_gem(game_key: int):
 
 
 func puzzle_mode_generate_gem(size: int):
-	var current_point = Vector2i(randi_range(0, Consts.DAILY_MODE_MAX_GEM_WIDTH), randi_range(0, Consts.DAILY_MODE_MAX_GEM_HEIGHT))
+	# It's possible that due to the algorithm below, the generation can exit prematurely. So we start the gem in the middle for best luck of being
+	# the desired size. 
+	var current_point = Vector2i(round(Consts.PUZZLE_MODE_MAX_GEM_WIDTH / 2), round(Consts.PUZZLE_MODE_MAX_GEM_HEIGHT / 2))
 	var points = [current_point]
 	
 	var potential_neighbors = Utils.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(Consts.DAILY_MODE_MAX_GEM_WIDTH, Consts.DAILY_MODE_MAX_GEM_HEIGHT))

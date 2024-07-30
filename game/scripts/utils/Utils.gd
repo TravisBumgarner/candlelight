@@ -9,7 +9,7 @@ static func is_cell_free(tile_map, cell):
 	return tile_map.get_cell_source_id(Consts.Layer.Background, cell) == -1
 
 static func is_cell_in_range(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i):
-	if cell.x < min_vector.x  or cell.x >= max_vector.x or cell.y < min_vector.y or cell.y >= max_vector.y:
+	if cell.x < min_vector.x  or cell.x > max_vector.x or cell.y < min_vector.y or cell.y > max_vector.y:
 		return false
 	return true
 
