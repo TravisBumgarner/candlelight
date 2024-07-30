@@ -42,7 +42,6 @@ func _process(_delta):
 			self.undo()
 			start_debounce()
 		elif Input.is_action_pressed("PLACE"):
-			start_debounce()
 			emit_signal('experiment_completed')
 			history.append(tile_map, player)
 			player.draw_piece_on_board()
@@ -51,21 +50,14 @@ func _process(_delta):
 			if(gems.size() > 0):
 				level_complete(gems)
 				return
+			# If player hasn't won this level, we need to draw a new piece. 
+			# Otherwise, new piece is drawn after level complete. 
 			start_place_piece_on_board_timer()
+			
 
 
 func level_complete(gems):
 	pass
-
-func start_debounce():
-	can_process_input = false
-	debounce_timer.start(Consts.DEBOUNCE_TIMER)
-
-
-func start_place_piece_on_board_timer():
-	can_process_input = false
-	place_piece_on_board_timer.start(Consts.PLACE_PIECE_ON_BOARD_TIMER)
-
 
 func undo():
 	var record = history.pop_back()
@@ -84,6 +76,16 @@ func undo():
 			self.tile_map.set_cell(Consts.Layer.Board, Vector2i(x,y), Consts.GEMS_TILE_ID, tile_style)
 
 
+func start_debounce():
+	can_process_input = false
+	debounce_timer.start(Consts.DEBOUNCE_TIMER)
+
+
+func start_place_piece_on_board_timer():
+	can_process_input = false
+	place_piece_on_board_timer.start(Consts.PLACE_PIECE_ON_BOARD_TIMER)
+
+
 func _on_debounce_timer_timeout():
 	can_process_input = true
 
@@ -97,12 +99,13 @@ func new_game():
 	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Board)
 	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Piece)
 	history = History.new()
-
+ 
 func _ready():
 	new_game()
 	
 func reset():
 	pass
 	
+
 
 

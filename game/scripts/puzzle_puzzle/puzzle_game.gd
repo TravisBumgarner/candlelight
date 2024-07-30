@@ -27,7 +27,8 @@ func level_complete(gems):
 func _on_level_complete_timer_timeout():
 	level += 1
 	level_label.text = str(level)
-	Utils.erase_area(tile_map, Vector2i(1, 1), Vector2i(Consts.GRID.WIDTH + 1, Consts.GRID.HEIGHT + 1), Consts.Layer.Board)
+	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Board)
+	Utils.erase_area(tile_map, Consts.GRID_ORIGIN, Consts.GRID_END, Consts.Layer.Piece)
 	gemsManager.puzzle_mode_set_target_gem(level)
 	can_process_input = true
 	player = Player.new(tile_map, queue.get_next_from_queue())
