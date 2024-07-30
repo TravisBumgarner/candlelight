@@ -19,6 +19,7 @@ func _on_level_complete_timer_timeout():
 
 func new_game():
 	super()
+	can_process_input = true
 	game_key = Utils.generate_key_from_date()
 	queue = Queue.new(tile_map, game_key)
 	gemsManager = GemsManager.new(tile_map)
