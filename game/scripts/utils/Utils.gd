@@ -39,8 +39,7 @@ func generate_key_from_date():
 	var today_format_string = "%s-%s-%s"
 	var today := Time.get_date_dict_from_system()
 	var today_string = today_format_string % [today.year, today.month, today.day] 
-	# This might be terrible. Please forgive me lol.
-	return int(str(hash(today_string)).substr(0, 6))
+	return int(str(hash(today_string)))
 
 
 func swap(i : int, j : int, a : Array) -> Array:

@@ -45,7 +45,7 @@ func puzzle_mode_level_to_gem_size(level: int) -> int:
 func daily_mode_generate_gem(game_key: int):
 	var RNG = RandomNumberGenerator.new()
 	RNG.seed = game_key
-	var size = 5 # todo update
+	var size = RNG.randi_range(8, 12)
 
 	var current_point = Vector2i(RNG.randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_WIDTH), RNG.randi_range(0, Consts.PUZZLE_MODE_MAX_GEM_HEIGHT))
 	var points = [current_point]
