@@ -15,6 +15,7 @@ My version of above instructions
 7. Copy `candlelight.vdf` to scripts dir.
 8. Build exeutables with Godot with installers in dirs `windows/` `mac/` `linux/`
     - Installers should be Candlelight.[extension]
+    - I still haven't figured out why I can't get a .app from Godot. For now, I open .dmg and extract .app file.
 9. Make sure all changes in Steam have been published. You'll see a big red banner if not. 
     - Make sure the correct Depots are attached to the correct Application. 
     - You'll also need to restart steam after making changes and uploading and such.
