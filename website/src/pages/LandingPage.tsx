@@ -22,7 +22,9 @@ const LandingPage = () => {
     <Section css={{ }}>
     <Typography textAlign='center' variant='h2'> Build with us:<br />
       <Link target="_blank" css={linkCSS} to="https://twitch.tv/sillysideprojects">Twitch</Link><br />
-      <Link target="_blank" css={linkCSS} to="https://twitch.tv/sillysideprojects">Youtube</Link>
+      <Link target="_blank" css={linkCSS} to="https://www.youtube.com/@SillySideProjects">Youtube</Link><br />
+      <Link target="_blank" css={linkCSS} to="https://discord.gg/ymChU9W73c">Discord</Link>
+
       </Typography>
     </Section>
 
