@@ -1,0 +1,40 @@
+{
+  "compilerOptions": {
+    "outDir": "./build/",
+    "noImplicitAny": true,
+    "strict": true,
+    "module": "es2020",
+    "target": "es2020",
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "lib": [
+      "DOM"
+    ],
+    "allowJs": true,
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "paths": {
+      "*": [
+        "src/types/*"
+      ],
+      "sharedComponents": [
+        "src/sharedComponents"
+      ],
+      "sharedTypes": [
+        "src/sharedTypes/index.ts"
+      ],
+      "theme": [
+        "src/theme.tsx"
+      ],
+      "utilities": [
+        "src/utilities.ts"
+      ],
+      "context": [
+        "src/Context.tsx"
+      ]
+    }
+  }
+}
