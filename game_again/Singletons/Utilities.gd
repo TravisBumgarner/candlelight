@@ -51,3 +51,14 @@ static func is_cell_in_range(cell: Vector2i, min_vector: Vector2i, max_vector: V
 	if cell.x < min_vector.x  or cell.x > max_vector.x or cell.y < min_vector.y or cell.y > max_vector.y:
 		return false
 	return true
+
+
+func get_atlas_coords_array(tile_map):
+	var tile_map_array = []
+	for x in range(GlobalConsts.GRID.WIDTH):
+		tile_map_array.append([])
+		for y in range(GlobalConsts.GRID.HEIGHT):
+			var tile_id = tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x, y))
+			tile_map_array[x].append(tile_id)
+	
+	return tile_map_array

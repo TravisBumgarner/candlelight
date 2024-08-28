@@ -5,3 +5,4 @@ res://Singletons/GlobalConsts.gd
 res://Singletons/Utilities.gd
 res://GameScripts/index.gd
 res://GameScripts/Queue.gd
+res://GameScripts/History.gd
