@@ -1,0 +1,8 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1724807952
+game.gd::GDScript::-1::1724807685::0::1::::<>Node2D<>::
+game.tscn::PackedScene::4399705552190995568::1724807691::0::1::::<><>::res://game.gd<>res://NodeScript.gd
+icon.svg::CompressedTexture2D::4783839304686688220::1724790445::1724807953::1::::<><>::
+NodeScript.gd::GDScript::-1::1724807690::0::1::::<>Node<>::
+::res://Singletons/::1724807775
+InputManager.gd::GDScript::-1::1724807486::0::1::::<>Node<>::
