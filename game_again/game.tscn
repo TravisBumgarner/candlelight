@@ -1,0 +1,57 @@
+[gd_scene load_steps=6 format=3 uid="uid://b3xiri3jav0ca"]
+
+[ext_resource type="Script" path="res://game.gd" id="1_2nenm"]
+[ext_resource type="Script" path="res://Board.gd" id="2_12axg"]
+[ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_u8mr0"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_23r07"]
+texture = ExtResource("2_u8mr0")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+0:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+0:0/0/physics_layer_0/angular_velocity = 0.0
+1:0/0 = 0
+1:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+1:0/0/physics_layer_0/angular_velocity = 0.0
+2:0/0 = 0
+2:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+2:0/0/physics_layer_0/angular_velocity = 0.0
+3:0/0 = 0
+3:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+3:0/0/physics_layer_0/angular_velocity = 0.0
+4:0/0 = 0
+4:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+4:0/0/physics_layer_0/angular_velocity = 0.0
+5:0/0 = 0
+5:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+5:0/0/physics_layer_0/angular_velocity = 0.0
+6:0/0 = 0
+6:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+6:0/0/physics_layer_0/angular_velocity = 0.0
+7:0/0 = 0
+7:0/0/physics_layer_0/linear_velocity = Vector2(0, 0)
+7:0/0/physics_layer_0/angular_velocity = 0.0
+
+[sub_resource type="TileSet" id="TileSet_2tiyp"]
+tile_size = Vector2i(32, 32)
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_23r07")
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_2nenm")
+
+[node name="Board" type="Node2D" parent="."]
+script = ExtResource("2_12axg")
+
+[node name="TileMap" type="TileMap" parent="Board"]
+position = Vector2(579, 148)
+tile_set = SubResource("TileSet_2tiyp")
+format = 2
+layer_0/name = "BORDER"
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 65535, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 458751, 262144, 0, 524287, 262144, 0, 589823, 262144, 0, 655359, 262144, 0, 720895, 262144, 0, 655360, 262144, 0, 655361, 262144, 0, 655362, 262144, 0, 655363, 262144, 0, 655364, 262144, 0, 655365, 262144, 0, 655366, 262144, 0, 655367, 262144, 0, 655368, 262144, 0, 655369, 262144, 0, -65528, 262144, 0, -65529, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, -65527, 262144, 0, -65526, 262144, 0, 10, 262144, 0, 65546, 262144, 0, 131082, 262144, 0, 196618, 262144, 0, 262154, 262144, 0, 327690, 262144, 0, 393226, 262144, 0, 458762, 262144, 0, 524298, 262144, 0, 589834, 262144, 0, 655370, 262144, 0)
+layer_1/name = "PLACED_PIECES"
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "CURRENT_PIECE"
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()

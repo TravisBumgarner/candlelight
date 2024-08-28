@@ -1,0 +1,16 @@
+ea4bc82a6ad023ab7ee23ee620429895
+::res://::1724813435
+Board.gd::GDScript::-1::1724813377::0::1::::BaseGame<>Node2D<>::
+game.gd::GDScript::-1::1724808780::0::1::::<>Node2D<>::
+game.tscn::PackedScene::4399705552190995568::1724813379::0::1::::<><>::res://game.gd<>res://Board.gd<>uid://bv142d00uvou4::::res://assets/gems.png
+icon.svg::CompressedTexture2D::4783839304686688220::1724790445::1724807953::1::::<><>::
+Player.gd::GDScript::-1::1724812798::0::1::::Player<>Node2D<>::
+::res://assets/::1724810995
+gamescreen.png::CompressedTexture2D::1964073771390556949::1724807890::1724810995::1::::<><>::
+gems.png::CompressedTexture2D::3915869428276610373::1724807890::1724810995::1::::<><>::
+::res://GameScripts/::1724813435
+::res://Singletons/::1724813100
+GlobalConsts.gd::GDScript::-1::1724813100::0::1::::<>Node<>::
+InputManager.gd::GDScript::-1::1724807486::0::1::::<>Node<>::
+Shapes.gd::GDScript::-1::1724812326::0::1::::<>Node<>::
+Utilities.gd::GDScript::-1::1724813100::0::1::::<>Node<>::
