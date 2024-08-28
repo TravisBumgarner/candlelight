@@ -1,3 +1,9 @@
 res://game.tscn
+res://Singletons/GlobalConsts.gd
+res://Player.gd
+res://Singletons/Utilities.gd
+res://Singletons/Shapes.gd
+res://Board.gd
+res://GameScripts/Queue.gd
+res://GameScripts/Player.gd
 res://game.gd
-res://Node.gd

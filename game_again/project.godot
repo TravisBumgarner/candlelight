@@ -18,6 +18,9 @@ config/icon="res://icon.svg"
 [autoload]
 
 InputManager="*res://Singletons/InputManager.gd"
+GlobalConsts="*res://Singletons/GlobalConsts.gd"
+Utilities="*res://Singletons/Utilities.gd"
+Shapes="*res://Singletons/Shapes.gd"
 
 [input]
 
