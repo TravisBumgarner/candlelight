@@ -2,18 +2,15 @@ extends Node2D
 
 class_name BaseGame
 
-@onready var tile_map = $TileMap
+@onready var board_tile_map = $Board
+@onready var target_gem_tile_map = $TargetGem
+@onready var queue_tile_map = $Queue
 
 #var history: History
-
 var player: Player
 var queue: Queue
-var can_process_input = true
-#var gemsManager: GemsManager
-
-signal experiment_completed
-signal experiment_undo
-signal game_key_set
+var gemsManager: GemsManager
+var level
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -37,11 +34,12 @@ func _on_action_pressed(action):
 			player.rotate_right()
 		"select":
 			player.place_on_board()
-			player = Player.new(tile_map, queue.next())
+			player = Player.new(board_tile_map, queue.next())
 
 func level_complete(gems):
 	pass
 
+# This could be split into multiple functions. 
 #func undo():
 	#var record = history.pop_back()
 	#if record == null:
@@ -54,20 +52,22 @@ func level_complete(gems):
 	#for x in range(GlobalConsts.GRID.WIDTH):
 		#for y in range(GlobalConsts.GRID.HEIGHT):
 			#var tile_style = record.atlas_coords_array[x][y]
-			#self.tile_map.erase_cell(GlobalConsts.Layer.Board, Vector2i(x,y))
+			#self.board_tile_map.erase_cell(GlobalConsts.Layer.Board, Vector2i(x,y))
 			##if tile_style != Vector2i(-1, -1):
-			#self.tile_map.set_cell(GlobalConsts.Layer.Board, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
+			#self.board_tile_map.set_cell(GlobalConsts.Layer.Board, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func erase_board():
-	tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
-	tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
+	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
+	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
 
 func new_game():
+	level = 1
 	erase_board()
 	#history = History.new()
-	queue = Queue.new(tile_map, null)
-	player = Player.new(tile_map, queue.next())
- 
+	queue = Queue.new(queue_tile_map, null)
+	player = Player.new(board_tile_map, queue.next())
+	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager.puzzle_mode_set_target_gem(level)
 	
 func reset():
 	pass
