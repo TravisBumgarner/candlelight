@@ -5,12 +5,15 @@ class_name BaseGame
 @onready var board_tile_map = $BoardTileMap
 @onready var target_gem_tile_map = $TargetGemTileMap
 @onready var queue_tile_map = $QueueTileMap
+@onready var level_complete_timer = $LevelCompleteTimer
 
 var history: History
 var player: Player
 var queue: Queue
 var gemsManager: GemsManager
 var level
+
+var is_paused_for_scoring = false
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -38,10 +41,37 @@ func _on_action_pressed(action):
 		"select":
 			history.append(board_tile_map, player)
 			player.place_on_board()
-			player = Player.new(board_tile_map, queue.next())
+			self.score()
+
+func score():
+	var gems = gemsManager.find_gems()
+	if(gems.size() > 0):
+		level_complete(gems)
+		return
+	player = Player.new(board_tile_map, queue.next())
 
 func level_complete(gems):
-	pass
+	var total_gems = gems.size()
+	
+	#if total_gems == 1:
+		#continue
+		##SoundManager.play("one_gem")
+	#if total_gems >= 2:
+		#continue
+		##SoundManager.play("two_gems")
+			
+	for gem in gems:
+		gemsManager.draw_gem_on_board(gem)
+	is_paused_for_scoring = true
+	level_complete_timer.start(1)
+
+
+func _on_level_complete_timer_timeout():
+	level += 1
+	erase_board()
+	gemsManager.puzzle_mode_set_target_gem(level)
+	player = Player.new(board_tile_map, queue.next())
+	is_paused_for_scoring = false
 
 # This could be split into multiple functions. 
 func undo():
@@ -61,6 +91,7 @@ func undo():
 			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func erase_board():
+	print('erased')
 	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
 	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
 
