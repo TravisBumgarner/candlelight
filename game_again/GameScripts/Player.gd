@@ -30,14 +30,14 @@ func get_current_piece_rotation():
 func draw_piece():
 	self.tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
 	for relative_position in self.get_current_piece_rotation():
-		var background_tile = self.tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, self.current_absolute_position + relative_position)
+		var placed_tile = self.tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
-		if(background_tile == Vector2i(-1,-1)):
+		if(placed_tile == Vector2i(-1,-1)):
 			tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
-		elif(background_tile == GlobalConsts.SPRITE.DARK_INACTIVE):
+		elif(placed_tile == GlobalConsts.SPRITE.DARK_INACTIVE):
 			tile_style = GlobalConsts.SPRITE.LIGHT_ACTIVE
-		elif(background_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
+		elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
 			tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	
 		self.tile_map.set_cell(GlobalConsts.BOARD_LAYER.CURRENT_PIECE, self.current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
@@ -52,10 +52,10 @@ func can_move(direction):
 
 
 func can_rotate():
-	pass
 	var temporary_rotation_index = (self.rotation_index + 1) % Shapes.SHAPES[0].size()
 	for point in piece_type[temporary_rotation_index]:
-		if Utilities.is_cell_border(self.tile_map, point + current_absolute_position):
+		var is_cell_border = Utilities.is_cell_border(self.tile_map, point + current_absolute_position)
+		if is_cell_border:
 			return false
 	return true
 
@@ -84,7 +84,3 @@ func place_on_board():
 			# There's something off here I don't fully understand.
 			tile_style = GlobalConsts.SPRITE.DARK_INACTIVE
 		self.tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
-	
-
-func is_within_bounds(direction: Vector2i):
-	return direction.x >= 0 and direction.x < GlobalConsts.GRID.HEIGHT and direction.y >= 0 and direction.y < GlobalConsts.GRID.WIDTH

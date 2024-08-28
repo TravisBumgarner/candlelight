@@ -39,30 +39,6 @@ func _on_action_pressed(action):
 			player.place_on_board()
 			player = Player.new(tile_map, queue.next())
 
-
-#func _input():
-	#elif Input.is_action_pressed("UNDO"):
-		#if history.size() == 0:
-			#SoundManager.play("nonmovement")
-			#start_debounce()
-			#return
-		#self.undo()
-		#start_debounce()
-	#elif Input.is_action_pressed("PLACE"):
-		#emit_signal('experiment_completed')
-		#history.append(tile_map, player)
-		#player.draw_piece_on_board()
-		#
-		#var gems = gemsManager.find_gems()
-		#if(gems.size() > 0):
-			#level_complete(gems)
-			#return
-		## If player hasn't won this level, we need to draw a new piece. 
-		## Otherwise, new piece is drawn after level complete. 
-		#start_place_piece_on_board_timer()
-		
-
-
 func level_complete(gems):
 	pass
 
@@ -82,25 +58,6 @@ func level_complete(gems):
 			##if tile_style != Vector2i(-1, -1):
 			#self.tile_map.set_cell(GlobalConsts.Layer.Board, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
-
-#func start_debounce():
-	#can_process_input = false
-	#debounce_timer.start(GlobalConsts.DEBOUNCE_TIMER)
-
-
-#func start_place_piece_on_board_timer():
-	#can_process_input = false
-	#place_piece_on_board_timer.start(GlobalConsts.PLACE_PIECE_ON_BOARD_TIMER)
-
-
-#func _on_debounce_timer_timeout():
-	#can_process_input = true
-#
-
-#func _on_place_piece_on_board_timer_timeout():
-	#can_process_input = true
-	#player = Player.new(tile_map, queue.get_next_from_queue())
-
 func erase_board():
 	tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
 	tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
@@ -114,7 +71,3 @@ func new_game():
 	
 func reset():
 	pass
-	
-
-
-
