@@ -14,9 +14,11 @@ func _ready():
 	exit.connect("pressed", Callable(self, "on_exit_button_down"))
 
 func on_daily_game_button_down():
+	GlobalState.gameMode = GlobalConsts.GAME_MODE.DailyGame
 	get_tree().change_scene_to_packed(puzzle_game)
 	
 func on_puzzle_game_button_down():
+	GlobalState.gameMode = GlobalConsts.GAME_MODE.PuzzleGame
 	get_tree().change_scene_to_packed(daily_game)
 	
 func on_exit_button_down():

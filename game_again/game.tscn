@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3xiri3jav0ca"]
+[gd_scene load_steps=12 format=3 uid="uid://bgogl2jyqlw4c"]
 
 [ext_resource type="Script" path="res://GameScripts/index.gd" id="2_12axg"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_u8mr0"]
@@ -153,5 +153,3 @@ stream = ExtResource("8_n0nom")
 
 [node name="Music" type="AudioStreamPlayer" parent="Game"]
 stream = ExtResource("4_t7a3t")
-
-[connection signal="timeout" from="Game/LevelCompleteTimer" to="Game" method="_on_level_complete_timer_timeout"]

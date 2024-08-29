@@ -8,8 +8,10 @@ extends Node2D
 @onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
 @onready var game_details_value = $GameDetailsTileMap/GameDetailsValue
 
+var game
 func _ready():
-	var base_game = BaseGame.new(
+	if(GlobalState.gameMode == GlobalConsts.GAME_MODE.PuzzleGame):
+		game = PuzzleGame.new(
 		board_tile_map, 
 		target_gem_tile_map, 
 		queue_tile_map, 
@@ -18,4 +20,20 @@ func _ready():
 		game_details_label, 
 		game_details_value
 	)
-	base_game.new_game()
+	
+	if(GlobalState.gameMode == GlobalConsts.GAME_MODE.DailyGame):
+		game = DailyGame.new(
+		board_tile_map, 
+		target_gem_tile_map, 
+		queue_tile_map, 
+		level_complete_timer, 
+		sounds, 
+		game_details_label, 
+		game_details_value
+	)
+	
+	game.new_game()
+	
+	
+	
+

@@ -3,3 +3,8 @@ res://GameScripts/GemsManager.gd
 res://GameScripts/index.gd
 res://GameScripts/BaseGame.gd
 res://Singletons/InputManager.gd
+res://GameScripts/PuzzleGame.gd
+res://GameScripts/DailyGame.gd
+res://Singletons/GlobalConsts.gd
+res://Singletons/GlobalState.gd
+res://MainMenu/index.gd

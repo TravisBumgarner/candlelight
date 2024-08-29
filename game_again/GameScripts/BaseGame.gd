@@ -29,10 +29,9 @@ func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_t
 
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
-
+	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
 
 func _on_action_pressed(action):
-	print('ona ctionpressed')
 	var direction_map = {
 		"up": Vector2i.UP,
 		"down": Vector2i.DOWN,
@@ -52,37 +51,16 @@ func _on_action_pressed(action):
 		"rotate":
 			player.rotate_right()
 		"select":
-			history.append(board_tile_map, player)
-			player.place_on_board()
-			self.score()
+			self.handle_player_placement()
 
-func score():
-	var gems = gemsManager.find_gems()
-	if(gems.size() > 0):
-		level_complete(gems)
-		return
-	player = Player.new(board_tile_map, queue.next())
+func handle_player_placement():
+	assert(false, "Must be implemented in the child class.")
 
 func level_complete(gems):
-	var total_gems = gems.size()
-	
-	if total_gems == 1:
-		SoundManager.play("one_gem")
-	if total_gems >= 2:
-		SoundManager.play("two_gems")
-			
-	for gem in gems:
-		gemsManager.draw_gem_on_board(gem)
-	is_paused_for_scoring = true
-	level_complete_timer.start(1)
-
+	assert(false, "Must be implemented in the child class.")
 
 func _on_level_complete_timer_timeout():
-	level += 1
-	erase_board()
-	gemsManager.puzzle_mode_set_target_gem(level)
-	player = Player.new(board_tile_map, queue.next())
-	is_paused_for_scoring = false
+	assert(false, "Must be implemented in the child class.")
 
 # This could be split into multiple functions. 
 func undo():
@@ -106,10 +84,7 @@ func erase_board():
 	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
 
 func new_game():
-	level = 1
-	erase_board()
-	history = History.new()
-	queue = Queue.new(queue_tile_map, null)
-	player = Player.new(board_tile_map, queue.next())
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	gemsManager.puzzle_mode_set_target_gem(level)
+	assert(false, "Must be implemented in the child class.")
+
+func update_stats():
+	assert(false, "Must be implemented in the child class.")

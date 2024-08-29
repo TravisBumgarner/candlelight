@@ -22,6 +22,7 @@ GlobalConsts="*res://Singletons/GlobalConsts.gd"
 Utilities="*res://Singletons/Utilities.gd"
 Shapes="*res://Singletons/Shapes.gd"
 SoundManager="*res://Singletons/SoundManager.gd"
+GlobalState="*res://Singletons/GlobalState.gd"
 
 [input]
 
