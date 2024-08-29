@@ -10,6 +10,20 @@ const BOARD_LAYER = {
 	CURRENT_PIECE = 2,
 }
 
+# Currently only one layer.
+const TARGET_GEM_LAYER = {
+	BORDER = 0,
+	GEM = 1
+}
+
+# Currently only one layer.
+const QUEUE_LAYER = {
+	BORDER = 0,
+	QUEUE = 1
+}
+
+const MAX_GEM_SIZE = 6
+
 const GEMS_TILE_ID := 0
 
 const SPRITE = {

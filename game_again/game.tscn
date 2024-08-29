@@ -1,8 +1,14 @@
-[gd_scene load_steps=6 format=3 uid="uid://b3xiri3jav0ca"]
+[gd_scene load_steps=14 format=3 uid="uid://b3xiri3jav0ca"]
 
-[ext_resource type="Script" path="res://game.gd" id="1_2nenm"]
-[ext_resource type="Script" path="res://Board.gd" id="2_12axg"]
+[ext_resource type="Script" path="res://root.gd" id="1_2nenm"]
+[ext_resource type="Script" path="res://GameScripts/index.gd" id="2_12axg"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_u8mr0"]
+[ext_resource type="AudioStream" uid="uid://6nkwdp23h1f4" path="res://assets/music/song.mp3" id="4_t7a3t"]
+[ext_resource type="Script" path="res://Sounds.gd" id="4_ysh4b"]
+[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="5_p1hc7"]
+[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_3xqm2"]
+[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_00g8n"]
+[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_n0nom"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_23r07"]
 texture = ExtResource("2_u8mr0")
@@ -37,14 +43,55 @@ tile_size = Vector2i(32, 32)
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_23r07")
 
-[node name="Game" type="Node2D"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tyyol"]
+texture = ExtResource("2_u8mr0")
+texture_region_size = Vector2i(32, 32)
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+14:0/0 = 0
+15:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+14:1/0 = 0
+15:1/0 = 0
+0:0/0 = 0
+0:1/0 = 0
+1:0/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_aavhx"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_tyyol")
+
+[node name="Root" type="Node2D"]
 script = ExtResource("1_2nenm")
 
-[node name="Board" type="Node2D" parent="."]
+[node name="Game" type="Node2D" parent="."]
+position = Vector2(32, -64)
 script = ExtResource("2_12axg")
 
-[node name="TileMap" type="TileMap" parent="Board"]
-position = Vector2(579, 148)
+[node name="BoardTileMap" type="TileMap" parent="Game"]
+position = Vector2(576, 160)
 tile_set = SubResource("TileSet_2tiyp")
 format = 2
 layer_0/name = "BORDER"
@@ -55,3 +102,68 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "CURRENT_PIECE"
 layer_2/z_index = 2
 layer_2/tile_data = PackedInt32Array()
+
+[node name="TargetGemTileMap" type="TileMap" parent="Game"]
+position = Vector2(288, 160)
+tile_set = SubResource("TileSet_aavhx")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "BORDER"
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 458751, 262144, 0, 393216, 262144, 0, 393217, 262144, 0, 393218, 262144, 0, 393219, 262144, 0, 393220, 262144, 0, 393221, 262144, 0, 393222, 262144, 0, 327686, 262144, 0, 262150, 262144, 0, 196614, 262144, 0, 131078, 262144, 0, 65542, 262144, 0, 6, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 65535, 262144, 0)
+layer_1/name = "GEM"
+layer_1/tile_data = PackedInt32Array()
+
+[node name="Label" type="Label" parent="Game/TargetGemTileMap"]
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 224.0
+offset_bottom = -41.0
+text = "Target"
+horizontal_alignment = 1
+
+[node name="QueueTileMap" type="TileMap" parent="Game"]
+position = Vector2(0, 160)
+tile_set = SubResource("TileSet_aavhx")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "BORDER"
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 458751, 262144, 0, 393222, 262144, 0, 327686, 262144, 0, 262150, 262144, 0, 196614, 262144, 0, 131078, 262144, 0, 65542, 262144, 0, 6, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 65535, 262144, 0, 524287, 262144, 0, 589823, 262144, 0, 655359, 262144, 0, 720895, 262144, 0, 786431, 262144, 0, 851967, 262144, 0, 786432, 262144, 0, 786433, 262144, 0, 786434, 262144, 0, 786435, 262144, 0, 786436, 262144, 0, 786437, 262144, 0, 786438, 262144, 0, 720902, 262144, 0, 655366, 262144, 0, 589830, 262144, 0, 524294, 262144, 0, 458758, 262144, 0)
+layer_1/name = "QUEUE"
+layer_1/tile_data = PackedInt32Array()
+
+[node name="Label" type="Label" parent="Game/QueueTileMap"]
+offset_left = -32.0
+offset_top = -64.0
+offset_right = 224.0
+offset_bottom = -41.0
+text = "Queue"
+horizontal_alignment = 1
+
+[node name="Score" type="Label" parent="Game"]
+offset_left = 320.0
+offset_top = 480.0
+offset_right = 480.0
+offset_bottom = 512.0
+
+[node name="LevelCompleteTimer" type="Timer" parent="Game"]
+one_shot = true
+
+[node name="Sounds" type="Node" parent="Game"]
+script = ExtResource("4_ysh4b")
+
+[node name="one_gem" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("5_p1hc7")
+
+[node name="two_gems" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("6_3xqm2")
+
+[node name="movement" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("7_00g8n")
+
+[node name="nonmovement" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("8_n0nom")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_t7a3t")
+
+[connection signal="timeout" from="Game/LevelCompleteTimer" to="Game" method="_on_level_complete_timer_timeout"]
