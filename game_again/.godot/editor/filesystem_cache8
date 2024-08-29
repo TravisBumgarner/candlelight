@@ -1,6 +1,7 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1724890395
-game.tscn::PackedScene::4399705552190995568::1724890293::0::1::::<><>::res://root.gd<>res://GameScripts/index.gd<>uid://bv142d00uvou4::::res://assets/gems.png<>uid://6nkwdp23h1f4::::res://assets/music/song.mp3<>res://Sounds.gd<>uid://bw1vvajpvxyy4::::res://assets/sounds/1gem.wav<>uid://d3vyfyqs54nhl::::res://assets/sounds/2gems.wav<>uid://h8nd3pftkm7u::::res://assets/sounds/movement.wav<>uid://bo5ieqqml5ewe::::res://assets/sounds/non_movement.wav
+::res://::1724947327
+export_presets.cfg::TextFile::-1::1724894230::0::1::::<><>::
+game.tscn::PackedScene::4399705552190995568::1724890447::0::1::::<><>::res://root.gd<>res://GameScripts/index.gd<>uid://bv142d00uvou4::::res://assets/gems.png<>uid://6nkwdp23h1f4::::res://assets/music/song.mp3<>res://Sounds.gd<>uid://bw1vvajpvxyy4::::res://assets/sounds/1gem.wav<>uid://d3vyfyqs54nhl::::res://assets/sounds/2gems.wav<>uid://h8nd3pftkm7u::::res://assets/sounds/movement.wav<>uid://bo5ieqqml5ewe::::res://assets/sounds/non_movement.wav
 icon.svg::CompressedTexture2D::4783839304686688220::1724862189::1724862189::1::::<><>::
 root.gd::GDScript::-1::1724862189::0::1::::<>Node2D<>::
 Sounds.gd::GDScript::-1::1724890195::0::1::::<>Node<>::
@@ -14,13 +15,13 @@ song.mp3::AudioStreamMP3::2203337702981949255::1724889472::1724889515::1::::<><>
 2gems.wav::AudioStreamWAV::9169369028711741749::1724889447::1724889457::1::::<><>::
 movement.wav::AudioStreamWAV::560242543716723812::1724889447::1724889457::1::::<><>::
 non_movement.wav::AudioStreamWAV::3431489572016681248::1724889447::1724889457::1::::<><>::
-::res://GameScripts/::1724890289
+::res://GameScripts/::1724890447
 Board.gd::GDScript::-1::1724887076::0::1::::<>Node<>::
-GemsManager.gd::GDScript::-1::1724888752::0::1::::GemsManager<>Node2D<>::
+GemsManager.gd::GDScript::-1::1724890447::0::1::::GemsManager<>Node2D<>::
 History.gd::GDScript::-1::1724887502::0::1::::History<>Node<>::
 index.gd::GDScript::-1::1724890289::0::1::::BaseGame<>Node2D<>::
 Player.gd::GDScript::-1::1724890109::0::1::::Player<>Node2D<>::
-Queue.gd::GDScript::-1::1724887796::0::1::::Queue<>Node2D<>::
+Queue.gd::GDScript::-1::1724890447::0::1::::Queue<>Node2D<>::
 ::res://Singletons/::1724890121
 GlobalConsts.gd::GDScript::-1::1724885706::0::1::::<>Node<>::
 InputManager.gd::GDScript::-1::1724862189::0::1::::<>Node<>::

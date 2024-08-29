@@ -1,5 +1,6 @@
-AudioStreamPlayer
+Sprite2D
 Node
+AudioStreamPlayer
 Timer
 Label
 TileMap
