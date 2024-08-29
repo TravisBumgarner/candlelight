@@ -1,6 +1,12 @@
-AudioStreamPlayer
-Node
-Timer
 Label
+Control
+VBoxContainer
+MarginContainer
+TextureRect
+Button
+Sprite2D
+Node
+AudioStreamPlayer
+Timer
 TileMap
 Node2D
