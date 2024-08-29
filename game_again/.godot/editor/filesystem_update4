@@ -1,3 +1,2 @@
 res://game.tscn
-res://MainMenu/main_menu.tscn
-res://MainMenu/index.gd
+res://GameScripts/GemsManager.gd
