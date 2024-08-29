@@ -1,2 +1,5 @@
 res://game.tscn
 res://GameScripts/GemsManager.gd
+res://GameScripts/index.gd
+res://GameScripts/BaseGame.gd
+res://Singletons/InputManager.gd
