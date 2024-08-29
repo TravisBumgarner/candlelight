@@ -6,6 +6,7 @@ class_name BaseGame
 @onready var target_gem_tile_map = $TargetGemTileMap
 @onready var queue_tile_map = $QueueTileMap
 @onready var level_complete_timer = $LevelCompleteTimer
+@onready var sounds = $Sounds
 
 var history: History
 var player: Player
@@ -16,6 +17,7 @@ var level
 var is_paused_for_scoring = false
 
 func _ready():
+	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	new_game()
 
@@ -33,7 +35,7 @@ func _on_action_pressed(action):
 	match action:
 		"undo":
 			if history.size() == 0:
-				#SoundManager.play("nonmovement")
+				SoundManager.play("nonmovement")
 				return
 			self.undo()
 		"rotate":
@@ -53,12 +55,10 @@ func score():
 func level_complete(gems):
 	var total_gems = gems.size()
 	
-	#if total_gems == 1:
-		#continue
-		##SoundManager.play("one_gem")
-	#if total_gems >= 2:
-		#continue
-		##SoundManager.play("two_gems")
+	if total_gems == 1:
+		SoundManager.play("one_gem")
+	if total_gems >= 2:
+		SoundManager.play("two_gems")
 			
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
@@ -91,7 +91,6 @@ func undo():
 			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func erase_board():
-	print('erased')
 	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
 	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
 

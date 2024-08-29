@@ -28,7 +28,6 @@ func _init(queue_tile_map: TileMap, game_key):
 
 
 func draw_queue():
-	print('drawing')
 	var y_offset = Vector2i(0, 0)
 	for queue_index in range(0, VISIBLE_QUEUE_SIZE):
 		var piece = self.queue[queue_index]

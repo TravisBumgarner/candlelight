@@ -16,11 +16,11 @@ func _init(main, new_piece_type):
 	
 func move(direction):
 	if can_move(direction):
-		#SoundManager.play("movement")
+		SoundManager.play("movement")
 		self.current_absolute_position += direction
 		self.draw_piece()
 	else:
-		#SoundManager.play("nonmovement")
+		SoundManager.play("nonmovement")
 		pass
 		
 
@@ -62,11 +62,11 @@ func can_rotate():
 
 func rotate_right():
 	if self.can_rotate():
-		#SoundManager.play("movement")
+		SoundManager.play("movement")
 		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
 		self.draw_piece()
 	else:
-		#SoundManager.play("nonmovement")
+		SoundManager.play("nonmovement")
 		pass
 
 func place_on_board():

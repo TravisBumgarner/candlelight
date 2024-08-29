@@ -1,5 +1,6 @@
+AudioStreamPlayer
+Node
 Timer
 Label
 TileMap
 Node2D
-Node

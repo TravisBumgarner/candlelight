@@ -150,7 +150,6 @@ func find_gems():
 		visited[i].resize(GlobalConsts.GRID.HEIGHT)
 
 	var light_shapes = find_shapes(GlobalConsts.SPRITE.LIGHT_INACTIVE)
-	print(light_shapes)
 	for light_shape in light_shapes:
 		if is_target_gem(light_shape):
 			gems.append(light_shape)
@@ -174,7 +173,6 @@ func arrays_equal(arr1, arr2) -> bool:
 
 
 func find_shapes(desired_color: Vector2i):
-	print('find_shapes')
 	var shapes = []
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):

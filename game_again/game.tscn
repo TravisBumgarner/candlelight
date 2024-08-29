@@ -1,8 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://b3xiri3jav0ca"]
+[gd_scene load_steps=14 format=3 uid="uid://b3xiri3jav0ca"]
 
 [ext_resource type="Script" path="res://root.gd" id="1_2nenm"]
 [ext_resource type="Script" path="res://GameScripts/index.gd" id="2_12axg"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_u8mr0"]
+[ext_resource type="AudioStream" uid="uid://6nkwdp23h1f4" path="res://assets/music/song.mp3" id="4_t7a3t"]
+[ext_resource type="Script" path="res://Sounds.gd" id="4_ysh4b"]
+[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="5_p1hc7"]
+[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_3xqm2"]
+[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_00g8n"]
+[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_n0nom"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_23r07"]
 texture = ExtResource("2_u8mr0")
@@ -141,5 +147,23 @@ offset_bottom = 512.0
 
 [node name="LevelCompleteTimer" type="Timer" parent="Game"]
 one_shot = true
+
+[node name="Sounds" type="Node" parent="Game"]
+script = ExtResource("4_ysh4b")
+
+[node name="one_gem" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("5_p1hc7")
+
+[node name="two_gems" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("6_3xqm2")
+
+[node name="movement" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("7_00g8n")
+
+[node name="nonmovement" type="AudioStreamPlayer" parent="Game/Sounds"]
+stream = ExtResource("8_n0nom")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_t7a3t")
 
 [connection signal="timeout" from="Game/LevelCompleteTimer" to="Game" method="_on_level_complete_timer_timeout"]
