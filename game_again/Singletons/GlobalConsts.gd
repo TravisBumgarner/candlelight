@@ -1,5 +1,10 @@
 extends Node
 
+enum GAME_MODE {
+	PuzzleGame,
+	DailyGame
+}
+
 const GRID = { HEIGHT = 10, WIDTH = 10 }
 const BOARD_ORIGIN = Vector2i(0, 0)
 const BOARD_END = BOARD_ORIGIN + Vector2i(GRID.WIDTH, GRID.HEIGHT)

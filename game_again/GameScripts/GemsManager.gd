@@ -44,37 +44,37 @@ func puzzle_mode_level_to_gem_size(level: int) -> int:
 		return 15
 
 
-#func daily_mode_generate_gem(game_key: int):
-	#var RNG = RandomNumberGenerator.new()
-	#RNG.seed = game_key
-	#var size = RNG.randi_range(8, 12)
-#
-	#var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE))
-	#var points = [current_point]
-	#
-	#var potential_neighbors = Utils.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
-#
-	#while points.size() < size:
-		#var new_neighbor = null
-		#Utils.shuffle_rng_array(RNG, potential_neighbors)
-		#
-		#var potential_neighbor = potential_neighbors.pop_front()
-		#while potential_neighbors.size() > 0:
-			#if potential_neighbor not in points:
-				#new_neighbor = potential_neighbor
-				#break
-			#potential_neighbor = potential_neighbors.pop_front()
-		#
-		## It's possible to end up in an infinite loop should the shape spiral in on itself.
-		## I believe This is only possible for gem sizes >= 9 cells. For now, we'll just
-		## break early to prevent the infinite loop.
-		#if new_neighbor == null:
-			#break
-		#
-		#potential_neighbors = Utils.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
-		#points.append(new_neighbor)
-	#self.target_gem = Utils.move_cells_to_origin(points)
-#
+func daily_mode_generate_gem(game_key: int):
+	var RNG = RandomNumberGenerator.new()
+	RNG.seed = game_key
+	var size = RNG.randi_range(8, 12)
+
+	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE))
+	var points = [current_point]
+	
+	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
+
+	while points.size() < size:
+		var new_neighbor = null
+		Utilities.shuffle_rng_array(RNG, potential_neighbors)
+		
+		var potential_neighbor = potential_neighbors.pop_front()
+		while potential_neighbors.size() > 0:
+			if potential_neighbor not in points:
+				new_neighbor = potential_neighbor
+				break
+			potential_neighbor = potential_neighbors.pop_front()
+		
+		# It's possible to end up in an infinite loop should the shape spiral in on itself.
+		# I believe This is only possible for gem sizes >= 9 cells. For now, we'll just
+		# break early to prevent the infinite loop.
+		if new_neighbor == null:
+			break
+		
+		potential_neighbors = Utilities.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
+		points.append(new_neighbor)
+	self.target_gem = Utilities.move_cells_to_origin(points)
+
 #
 func puzzle_mode_generate_gem(size: int):
 	# It's possible that due to the algorithm below, the generation can exit prematurely. So we start the gem in the middle for best luck of being
@@ -121,10 +121,10 @@ func puzzle_mode_set_target_gem(level: int):
 	self.draw_target_gem()
 #
 
-#func daily_mode_set_target_gem(game_key):
-	#self.erase_target_gem()
-	#self.daily_mode_generate_gem(game_key)
-	#self.draw_target_gem()
+func daily_mode_set_target_gem(game_key):
+	self.erase_target_gem()
+	self.daily_mode_generate_gem(game_key)
+	self.draw_target_gem()
 
 func draw_target_gem():
 	for point in target_gem:
