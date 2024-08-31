@@ -10,6 +10,17 @@ extends Node2D
 
 var game
 func _ready():
+	#if(GlobalState.gameMode == GlobalConsts.GAME_MODE.DemoGame):
+		#game = DemoGame.new(
+		#board_tile_map, 
+		#target_gem_tile_map, 
+		#queue_tile_map, 
+		#level_complete_timer, 
+		#sounds, 
+		#game_details_label, 
+		#game_details_value
+	#)
+	
 	if(GlobalState.gameMode == GlobalConsts.GAME_MODE.PuzzleGame):
 		game = PuzzleGame.new(
 		board_tile_map, 

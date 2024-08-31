@@ -1,6 +1,7 @@
 extends Node
 
 enum GAME_MODE {
+	DemoGame,
 	PuzzleGame,
 	DailyGame
 }

@@ -1,11 +1,13 @@
+Node
+VBoxContainer
+BoxContainer
+RichTextLabel
 Label
 Control
-VBoxContainer
 MarginContainer
 TextureRect
 Button
 Sprite2D
-Node
 AudioStreamPlayer
 Timer
 TileMap

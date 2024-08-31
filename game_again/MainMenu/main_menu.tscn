@@ -22,6 +22,7 @@ grow_vertical = 2
 texture = ExtResource("1_4hbhq")
 
 [node name="PuzzleGame" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 864.0
 offset_top = 192.0
 offset_right = 1088.0
@@ -38,6 +39,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Daily" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 864.0
 offset_top = 384.0
 offset_right = 1088.0
@@ -54,6 +56,7 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Exit" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 864.0
 offset_top = 512.0
 offset_right = 1088.0

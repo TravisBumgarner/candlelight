@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://txb5ar0yw8go"]
+
+[ext_resource type="Script" path="res://Apprenticeship/apprenticeship_menu.gd" id="1_sc6it"]
+[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="2_e46t8"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_sc6it")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_e46t8")
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_left = 768.0
+offset_top = 256.0
+offset_right = 1088.0
+offset_bottom = 384.0
+bbcode_enabled = true
+text = "[center]Welcome to your alchemy adventure. 
+
+Press [b]Spacebar[/b] to begin
+
+Press [b]Escape[/b] to skip the tutorial. "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
