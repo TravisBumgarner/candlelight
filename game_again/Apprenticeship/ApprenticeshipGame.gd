@@ -1,16 +1,24 @@
 extends BaseGame
 class_name ApprenticeshipGame
 
-var apprenticeship_stage := 1
+enum ApprenticeshipStage {
+	OneMovement,
+	TwoPlacement,
+	ThreeUndo,
+	FourScore,
+	FiveDone
+}
+
+var apprenticeship_stage := ApprenticeshipStage.OneMovement
 
 var STAGE_ACTION_BECOMES_AVAILABLE = {
-	GlobalConsts.ACTION['UP']: 1,
-	GlobalConsts.ACTION['DOWN'] : 1,
-	GlobalConsts.ACTION['LEFT'] : 1,
-	GlobalConsts.ACTION['RIGHT'] : 1,
-	GlobalConsts.ACTION['ROTATE'] : 1,
-	GlobalConsts.ACTION['SELECT'] : 2,
-	GlobalConsts.ACTION['UNDO'] : 3, 
+	GlobalConsts.ACTION['UP']: ApprenticeshipStage.OneMovement,
+	GlobalConsts.ACTION['DOWN'] : ApprenticeshipStage.OneMovement,
+	GlobalConsts.ACTION['LEFT'] : ApprenticeshipStage.OneMovement,
+	GlobalConsts.ACTION['RIGHT'] : ApprenticeshipStage.OneMovement,
+	GlobalConsts.ACTION['ROTATE'] : ApprenticeshipStage.OneMovement,
+	GlobalConsts.ACTION['SELECT'] : ApprenticeshipStage.TwoPlacement,
+	GlobalConsts.ACTION['UNDO'] : ApprenticeshipStage.ThreeUndo, 
 }
 
 var has_performed_action = {
@@ -60,11 +68,13 @@ func _on_level_complete_timer_timeout():
 
 
 func increment_level_if_complete():
-	if apprenticeship_stage > 3:
+	
+	if apprenticeship_stage > ApprenticeshipStage.ThreeUndo:
+		# Levels after ThreeUndo complete in different ways.
 		return
 	
 	var actions_to_check
-	if apprenticeship_stage == 1:
+	if apprenticeship_stage == ApprenticeshipStage.OneMovement:
 		actions_to_check = [
 			GlobalConsts.ACTION["UP"],
 			GlobalConsts.ACTION["DOWN"],
@@ -73,12 +83,12 @@ func increment_level_if_complete():
 			GlobalConsts.ACTION["ROTATE"]			
 		]
 		
-	if apprenticeship_stage == 2:
+	if apprenticeship_stage == ApprenticeshipStage.TwoPlacement:
 		actions_to_check = [
 			GlobalConsts.ACTION['SELECT']
 		]
 		
-	if apprenticeship_stage == 3:
+	if apprenticeship_stage == ApprenticeshipStage.ThreeUndo:
 		actions_to_check = [
 			GlobalConsts.ACTION['UNDO']
 		]
@@ -87,7 +97,9 @@ func increment_level_if_complete():
 		apprenticeship_stage += 1
 
 func _on_action_pressed(action):
-	if action in STAGE_ACTION_BECOMES_AVAILABLE and STAGE_ACTION_BECOMES_AVAILABLE[action] > apprenticeship_stage:
+	var action_not_available_yet = action in STAGE_ACTION_BECOMES_AVAILABLE and STAGE_ACTION_BECOMES_AVAILABLE[action] > apprenticeship_stage
+	var block_placement_while_undo_stage = action == GlobalConsts.ACTION['SELECT'] and apprenticeship_stage == ApprenticeshipStage.ThreeUndo
+	if action_not_available_yet or block_placement_while_undo_stage:
 		return
 	has_performed_action[action] = true
 
@@ -96,18 +108,17 @@ func _on_action_pressed(action):
 	super(action)
 
 func new_game():
-	level = 1
 	target_gem_tile_map.hide()
 	queue_tile_map.hide()
 	update_instructions()
 	update_stats()
 	erase_board()
-	apprenticeship_stage = 1
+	apprenticeship_stage = ApprenticeshipStage.OneMovement
 	history = History.new()
 	queue = Queue.new(queue_tile_map, 123, true) # TODO - Set this up
 	player = Player.new(board_tile_map, queue.next())
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	gemsManager.puzzle_mode_set_target_gem(level)
+	gemsManager.puzzle_mode_set_target_gem(1)
 
 func update_stats():
 	game_details_label.text = "hello"
@@ -119,33 +130,33 @@ func check_action_complete(action):
 	
 
 func update_instructions():
-	var instructions_text = '[center]'
+	var text = '[center]'
 	
-	if apprenticeship_stage == 1:
-		instructions_text += "Let's get you familiar with setting up experiments.\n"
-		instructions_text += check_action_complete('up')
-		instructions_text += check_action_complete('down')
-		instructions_text += check_action_complete('left')
-		instructions_text += check_action_complete('right')
-		instructions_text += check_action_complete('rotate')
+	if apprenticeship_stage == ApprenticeshipStage.OneMovement:
+		text += "Let's get you familiar with setting up experiments.\n"
+		text += check_action_complete('up')
+		text += check_action_complete('down')
+		text += check_action_complete('left')
+		text += check_action_complete('right')
+		text += check_action_complete('rotate')
 		
-	if apprenticeship_stage == 2:
-		instructions_text += "Time for your first experiment!\n"
-		instructions_text += check_action_complete('select')
+	if apprenticeship_stage == ApprenticeshipStage.TwoPlacement:
+		text += "Time for your first experiment!\n"
+		text += check_action_complete('select')
 		
-	if apprenticeship_stage == 3:
-		instructions_text += "Made a mistake? You can undo!\n"
-		instructions_text += check_action_complete('undo')
+	if apprenticeship_stage == ApprenticeshipStage.ThreeUndo:
+		text += "Made a mistake? You can undo!\n"
+		text += check_action_complete('undo')
 
-	if apprenticeship_stage == 4:
+	if apprenticeship_stage == ApprenticeshipStage.FourScore:
 		target_gem_tile_map.show()
 		queue_tile_map.show()
-		instructions_text += "Time to match the target gem\n Overlap raw metal pieces to craft gems"
+		text += "Time to match the target gem\n Overlap raw metal pieces to craft gems"
 		
-	if apprenticeship_stage == 5:
-		instructions_text += "And that's all for your training, good luck out there! Press [b]Escape[/b] to get started crafting."
+	if apprenticeship_stage == ApprenticeshipStage.FiveDone:
+		text += "And that's all for your training, good luck out there! Press [b]Escape[/b] to get started crafting."
 	
-	instructions.text = instructions_text
+	instructions.text = text
 	
 	
 	
