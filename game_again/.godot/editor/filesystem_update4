@@ -6,3 +6,12 @@ res://Singletons/InputManager.gd
 res://Apprenticeship/apprenticeship_menu.gd
 res://MainMenu/main_menu.tscn
 res://MainMenu/index.gd
+res://Apprenticeship/DemoGame.gd
+res://Singletons/GlobalConsts.gd
+res://GameScripts/index.gd
+res://Apprenticeship/ApprenticeshipGame.gd
+res://GameScripts/DailyGame.gd
+res://GameScripts/Queue.gd
+res://GameScripts/BaseGame.gd
+res://game.tscn
+res://GameScripts/PuzzleGame.gd

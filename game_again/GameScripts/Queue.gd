@@ -11,12 +11,14 @@ var history = []
 var current_game_piece = null
 var game_key
 var queue_tile_map: TileMap
+var is_demo_mode: bool
 
 var RNG
 
-func _init(queue_tile_map: TileMap, game_key):
+func _init(queue_tile_map: TileMap, game_key, is_demo_mode = false):
 	self.queue_tile_map = queue_tile_map
 	self.game_key = game_key
+	self.is_demo_mode = is_demo_mode
 	
 	RNG = RandomNumberGenerator.new()
 	if game_key == null:
@@ -43,8 +45,11 @@ func erase_queue():
 
 func fill_queue():
 	while queue.size() <= VISIBLE_QUEUE_SIZE:
-		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
-		self.queue.append(random)
+		if self.is_demo_mode: 
+			self.queue.append(Shapes.SHAPES[0])
+		else:
+			var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
+			self.queue.append(random)
 
 
 func undo(current_game_piece):

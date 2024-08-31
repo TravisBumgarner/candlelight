@@ -150,7 +150,7 @@ stream = ExtResource("4_t7a3t")
 [node name="Instructions" type="RichTextLabel" parent="."]
 offset_left = 544.0
 offset_top = 544.0
-offset_right = 928.0
-offset_bottom = 672.0
+offset_right = 1024.0
+offset_bottom = 768.0
 bbcode_enabled = true
 text = "[center]Test [b]text[/b]. [/center]"
