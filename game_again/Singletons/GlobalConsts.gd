@@ -1,6 +1,7 @@
 extends Node
 
 enum GAME_MODE {
+	ApprenticeshipGame,
 	PuzzleGame,
 	DailyGame
 }
@@ -38,4 +39,14 @@ const SPRITE = {
 	LIGHT_ACTIVE = Vector2i(3,0),
 	MID_BORDER = Vector2i(4,0),
 	GEM_BLUE = Vector2i(5,0),
+}
+
+const ACTION = {
+	UP = 'up',
+	DOWN = 'down',
+	LEFT = 'left',
+	RIGHT = 'right',
+	ROTATE = 'rotate',
+	UNDO = 'undo',
+	SELECT = 'select'
 }

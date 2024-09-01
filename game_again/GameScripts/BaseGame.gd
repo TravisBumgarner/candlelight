@@ -15,10 +15,12 @@ var player: Player
 var queue: Queue
 var gemsManager: GemsManager
 var level
+var instructions
+var return_to_main_menu
 
 var is_paused_for_scoring = false
 
-func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value):
+func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, instructions, return_to_main_menu):
 	self.board_tile_map = board_tile_map
 	self.target_gem_tile_map = target_gem_tile_map
 	self.queue_tile_map = queue_tile_map
@@ -26,7 +28,9 @@ func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_t
 	self.sounds = sounds
 	self.game_details_label = game_details_label
 	self.game_details_value = game_details_value
-
+	self.instructions = instructions
+	self.return_to_main_menu = return_to_main_menu
+	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
@@ -52,6 +56,8 @@ func _on_action_pressed(action):
 			player.rotate_right()
 		"select":
 			self.handle_player_placement()
+		"escape":
+			self.return_to_main_menu.call()
 
 func handle_player_placement():
 	assert(false, "Must be implemented in the child class.")

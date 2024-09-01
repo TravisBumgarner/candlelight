@@ -4,7 +4,6 @@ signal action_pressed(action)
 
 func _input(event):
 	if event.is_action_pressed("Up"):
-		print('up')	
 		emit_signal("action_pressed", "up")
 	elif event.is_action_pressed("Down"):
 		emit_signal("action_pressed", "down")
@@ -18,3 +17,5 @@ func _input(event):
 		emit_signal("action_pressed", "rotate")
 	elif event.is_action_pressed("Select"):
 		emit_signal("action_pressed", "select")
+	elif event.is_action_pressed("Escape"):
+		emit_signal("action_pressed", "escape")

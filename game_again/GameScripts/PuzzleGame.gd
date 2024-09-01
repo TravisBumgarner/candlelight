@@ -2,8 +2,8 @@ extends BaseGame
 class_name PuzzleGame
 
 # Called when the node enters the scene tree for the first time.
-func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value):
-	super(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value)
+func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, instructions, return_to_main_menu):
+	super(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, instructions, return_to_main_menu)
 
 func new_game():
 	update_stats()
@@ -22,7 +22,7 @@ func handle_player_placement():
 	if(gems.size() > 0):
 		level_complete(gems)
 		return
-	player = Player.new(board_tile_map, queue.next())
+	player = Player.new(board_tile_map, self.queue.next())
 
 func level_complete(gems):
 	var total_gems = gems.size()
@@ -42,7 +42,7 @@ func _on_level_complete_timer_timeout():
 	level += 1
 	erase_board()
 	gemsManager.puzzle_mode_set_target_gem(level)
-	player = Player.new(board_tile_map, queue.next())
+	player = Player.new(board_tile_map, self.queue.next())
 	is_paused_for_scoring = false
 
 func update_stats():

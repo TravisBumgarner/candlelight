@@ -11,13 +11,14 @@ var history = []
 var current_game_piece = null
 var game_key
 var queue_tile_map: TileMap
+var is_demo_mode: bool
 
 var RNG
 
-func _init(queue_tile_map: TileMap, game_key):
+func _init(queue_tile_map: TileMap, game_key, is_demo_mode = false):
 	self.queue_tile_map = queue_tile_map
 	self.game_key = game_key
-	
+	self.is_demo_mode = is_demo_mode
 	RNG = RandomNumberGenerator.new()
 	if game_key == null:
 		RNG.randomize()
@@ -25,9 +26,12 @@ func _init(queue_tile_map: TileMap, game_key):
 		RNG.seed = game_key
 	
 	self.fill_queue()
+	self.draw_queue()
 
 
 func draw_queue():
+	queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
+
 	var y_offset = Vector2i(0, 0)
 	for queue_index in range(0, VISIBLE_QUEUE_SIZE):
 		var piece = self.queue[queue_index]
@@ -38,18 +42,17 @@ func draw_queue():
 			self.queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + y_offset, GlobalConsts.GEMS_TILE_ID, color) 
 		y_offset += Vector2i(0, 4)
 
-func erase_queue():
-	queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
-
 func fill_queue():
 	while queue.size() <= VISIBLE_QUEUE_SIZE:
-		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
-		self.queue.append(random)
+		if self.is_demo_mode: 
+			self.queue.append(Shapes.SHAPES[0])
+		else:
+			var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
+			self.queue.append(random)
 
 
 func undo(current_game_piece):
 	self.queue.insert(0, current_game_piece)
-	self.erase_queue()
 	self.draw_queue()
 
 
@@ -58,7 +61,6 @@ func next():
 		self.history.append(current_game_piece)
 	current_game_piece = queue.pop_front()
 	
-	self.erase_queue()
 	self.draw_queue()
 	self.fill_queue()
 	return current_game_piece

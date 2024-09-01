@@ -22,10 +22,11 @@ grow_vertical = 2
 texture = ExtResource("1_4hbhq")
 
 [node name="PuzzleGame" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 864.0
-offset_top = 192.0
+offset_top = 320.0
 offset_right = 1088.0
-offset_bottom = 288.0
+offset_bottom = 416.0
 
 [node name="PuzzleGame" type="Button" parent="PuzzleGame"]
 layout_mode = 2
@@ -37,11 +38,29 @@ text = "Craft the gem to advance to the next level."
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Daily" type="VBoxContainer" parent="."]
+[node name="ApprenticeshipGame" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 864.0
-offset_top = 384.0
+offset_top = 448.0
 offset_right = 1088.0
-offset_bottom = 480.0
+offset_bottom = 544.0
+
+[node name="ApprenticeshipGame" type="Button" parent="ApprenticeshipGame"]
+layout_mode = 2
+text = "Apprenticeship"
+
+[node name="Label" type="Label" parent="ApprenticeshipGame"]
+layout_mode = 2
+text = "Run the tutorial again."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Daily" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 192.0
+offset_right = 1088.0
+offset_bottom = 288.0
 
 [node name="DailyGame" type="Button" parent="Daily"]
 layout_mode = 2
@@ -54,10 +73,11 @@ horizontal_alignment = 1
 autowrap_mode = 3
 
 [node name="Exit" type="VBoxContainer" parent="."]
+layout_mode = 0
 offset_left = 864.0
-offset_top = 512.0
+offset_top = 576.0
 offset_right = 1088.0
-offset_bottom = 544.0
+offset_bottom = 608.0
 
 [node name="Exit" type="Button" parent="Exit"]
 layout_mode = 2
