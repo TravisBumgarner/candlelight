@@ -30,5 +30,4 @@ func on_puzzle_game_button_down():
 	get_tree().change_scene_to_packed(game)
 	
 func on_exit_button_down():
-	print('called')
 	get_tree().quit()

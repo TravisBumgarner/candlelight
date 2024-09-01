@@ -27,7 +27,6 @@ func _init(queue_tile_map: TileMap, game_key, is_demo_mode = false):
 	
 	self.fill_queue()
 	self.draw_queue()
-	print(self.queue)
 
 
 func draw_queue():

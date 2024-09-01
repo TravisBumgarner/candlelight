@@ -108,7 +108,6 @@ func check_user_performed_action():
 func _on_action_pressed(action):
 	var action_not_available_yet = action in STAGE_ACTION_BECOMES_AVAILABLE and STAGE_ACTION_BECOMES_AVAILABLE[action] > apprenticeship_stage
 	var block_placement_while_undo_stage = action == GlobalConsts.ACTION['SELECT'] and apprenticeship_stage == ApprenticeshipStage.ThreeUndo
-	print('blocking?', action_not_available_yet, block_placement_while_undo_stage)
 	if action_not_available_yet or block_placement_while_undo_stage:
 		return
 	
@@ -165,7 +164,6 @@ func update_instructions():
 		text += "Time to match the target gem\n Overlap raw metal pieces to craft gems"
 		
 	if apprenticeship_stage == ApprenticeshipStage.FiveQueue:
-		print('maing queue')
 		self.queue = Queue.new(queue_tile_map, 123)
 		queue_tile_map.show()
 		text += "Time to match the queue!"
