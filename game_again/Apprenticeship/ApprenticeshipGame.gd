@@ -6,10 +6,11 @@ enum ApprenticeshipStage {
 	TwoPlacement,
 	ThreeUndo,
 	FourScore,
-	FiveDone
+	FiveQueue,
+	SixDone
 }
 
-var apprenticeship_stage := ApprenticeshipStage.OneMovement
+var apprenticeship_stage: ApprenticeshipStage
 
 var STAGE_ACTION_BECOMES_AVAILABLE = {
 	GlobalConsts.ACTION['UP']: ApprenticeshipStage.OneMovement,
@@ -22,13 +23,13 @@ var STAGE_ACTION_BECOMES_AVAILABLE = {
 }
 
 var has_performed_action = {
-	"up": false,
-	"down": false,
-	"left": false,
-	"right": false,
-	"rotate": false,
-	"select": false,
-	"undo": false, 
+	GlobalConsts.ACTION["UP"]: false,
+	GlobalConsts.ACTION["DOWN"]: false,
+	GlobalConsts.ACTION["LEFT"]: false,
+	GlobalConsts.ACTION["RIGHT"]: false,
+	GlobalConsts.ACTION["ROTATE"]: false,
+	GlobalConsts.ACTION["SELECT"]: false,
+	GlobalConsts.ACTION["UNDO"]: false, 
 }
 
 var ACTION_DISPLAY_TEXT = {
@@ -41,9 +42,6 @@ var ACTION_DISPLAY_TEXT = {
 	GlobalConsts.ACTION['UNDO'] : "Undo ([b]Z[/b] Key)",
 }
 
-func _ready():
-	print('ready is called')
-
 func _init(board_tile_map: TileMap, target_gem_tile_map: TileMap, queue_tile_map: TileMap, level_complete_timer, sounds, game_details_label, game_details_value, instructions, return_to_main_menu):
 	super(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, instructions, return_to_main_menu)
 
@@ -54,21 +52,32 @@ func handle_player_placement():
 	if(gems.size() > 0):
 		level_complete(gems)
 		return
-	player = Player.new(board_tile_map, queue.next())
+	player = Player.new(board_tile_map, self.queue.next())
 
 func level_complete(gems):
-	SoundManager.play("two_gems")	
+	if apprenticeship_stage == ApprenticeshipStage.FourScore:
+		SoundManager.play("one_gem")	
+		
+	if apprenticeship_stage == ApprenticeshipStage.FiveQueue:
+		SoundManager.play("two_gems")	
+	
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
+	
 	level_complete_timer.start(1)
 
 func _on_level_complete_timer_timeout():
 	apprenticeship_stage += 1
+	
+	if apprenticeship_stage != ApprenticeshipStage.SixDone:
+		erase_board()
+		player = Player.new(board_tile_map, self.queue.next())
+	
 	update_instructions()
 
 
-func increment_level_if_complete():
-	
+
+func check_user_performed_action():
 	if apprenticeship_stage > ApprenticeshipStage.ThreeUndo:
 		# Levels after ThreeUndo complete in different ways.
 		return
@@ -80,7 +89,7 @@ func increment_level_if_complete():
 			GlobalConsts.ACTION["DOWN"],
 			GlobalConsts.ACTION["LEFT"],
 			GlobalConsts.ACTION["RIGHT"],
-			GlobalConsts.ACTION["ROTATE"]			
+			GlobalConsts.ACTION["ROTATE"]
 		]
 		
 	if apprenticeship_stage == ApprenticeshipStage.TwoPlacement:
@@ -99,12 +108,15 @@ func increment_level_if_complete():
 func _on_action_pressed(action):
 	var action_not_available_yet = action in STAGE_ACTION_BECOMES_AVAILABLE and STAGE_ACTION_BECOMES_AVAILABLE[action] > apprenticeship_stage
 	var block_placement_while_undo_stage = action == GlobalConsts.ACTION['SELECT'] and apprenticeship_stage == ApprenticeshipStage.ThreeUndo
+	print('blocking?', action_not_available_yet, block_placement_while_undo_stage)
 	if action_not_available_yet or block_placement_while_undo_stage:
 		return
+	
 	has_performed_action[action] = true
 
-	increment_level_if_complete()
+	check_user_performed_action()
 	update_instructions()
+	
 	super(action)
 
 func new_game():
@@ -115,8 +127,8 @@ func new_game():
 	erase_board()
 	apprenticeship_stage = ApprenticeshipStage.OneMovement
 	history = History.new()
-	queue = Queue.new(queue_tile_map, 123, true) # TODO - Set this up
-	player = Player.new(board_tile_map, queue.next())
+	self.queue = Queue.new(queue_tile_map, 123, true)
+	player = Player.new(board_tile_map, self.queue.next())
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.puzzle_mode_set_target_gem(1)
 
@@ -150,27 +162,16 @@ func update_instructions():
 
 	if apprenticeship_stage == ApprenticeshipStage.FourScore:
 		target_gem_tile_map.show()
-		queue_tile_map.show()
 		text += "Time to match the target gem\n Overlap raw metal pieces to craft gems"
 		
-	if apprenticeship_stage == ApprenticeshipStage.FiveDone:
+	if apprenticeship_stage == ApprenticeshipStage.FiveQueue:
+		print('maing queue')
+		self.queue = Queue.new(queue_tile_map, 123)
+		queue_tile_map.show()
+		text += "Time to match the queue!"
+		
+	if apprenticeship_stage == ApprenticeshipStage.SixDone:
 		text += "And that's all for your training, good luck out there! Press [b]Escape[/b] to get started crafting."
 	
 	instructions.text = text
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
