@@ -21,7 +21,8 @@ var return_to_main_menu
 
 var is_paused_for_scoring = false
 
-func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
+func _init(board_tile_map: TileMap, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
+	print('initing base game')
 	self.board_tile_map = board_tile_map
 	self.target_gem_tile_map = target_gem_tile_map
 	self.queue_tile_map = queue_tile_map
@@ -37,6 +38,13 @@ func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_t
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
 
+func cleanup():
+	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
+	SoundManager.disconnect("play_sound", sounds.play_sound)
+	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
+	level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
+	
+
 func _on_action_pressed(action):
 	var direction_map = {
 		"up": Vector2i.UP,
@@ -46,6 +54,7 @@ func _on_action_pressed(action):
 	}
 	
 	if action in direction_map:
+		print('on action pressed', self.board_tile_map)
 		player.move(direction_map[action])
 	
 	match action:
@@ -59,16 +68,18 @@ func _on_action_pressed(action):
 		"select":
 			self.handle_player_placement()
 		"escape":
+			cleanup()
 			self.return_to_main_menu.call()
 
 func handle_player_placement():
-	history.append(board_tile_map, player)
+	history.append(self.board_tile_map, player)
 	player.place_on_board()
 	var gems = gemsManager.find_gems()
 	if(gems.size() > 0):
 		level_complete(gems)
 		return
-	player = Player.new(board_tile_map, self.queue.next())
+	player = Player.new(self.board_tile_map, self.queue.next())
+	player.draw_piece()
 	
 
 func level_complete(gems):
@@ -94,8 +105,8 @@ func undo():
 	player.draw_piece()
 
 func erase_board():
-	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
-	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
 
 func new_game():
 	assert(false, "Must be implemented in the child class.")
