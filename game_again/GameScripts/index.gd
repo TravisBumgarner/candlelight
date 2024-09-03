@@ -8,12 +8,14 @@ extends Node2D
 @onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
 @onready var game_details_value = $GameDetailsTileMap/GameDetailsValue
 @onready var instructions = $Instructions
+@onready var game_details_tile_map = $GameDetailsTileMap
+
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
 func return_to_main_menu():
 	get_tree().change_scene_to_packed(self.main_menu_scene)
 
-var game
+var game 
 
 func _ready():
 	if GlobalState.gameMode == GlobalConsts.GAME_MODE.ApprenticeshipGame:
@@ -25,6 +27,7 @@ func _ready():
 		sounds, 
 		game_details_label, 
 		game_details_value,
+		game_details_tile_map,
 		instructions,
 		Callable(self, "return_to_main_menu")
 	)
@@ -38,6 +41,7 @@ func _ready():
 		sounds, 
 		game_details_label, 
 		game_details_value,
+		game_details_tile_map,
 		instructions,
 		Callable(self, "return_to_main_menu")
 	)
@@ -51,6 +55,7 @@ func _ready():
 		sounds, 
 		game_details_label, 
 		game_details_value,
+		game_details_tile_map,
 		instructions,
 		Callable(self, "return_to_main_menu")
 	)

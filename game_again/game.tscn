@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bgogl2jyqlw4c"]
+[gd_scene load_steps=11 format=3 uid="uid://b3xiri3jav0ca"]
 
 [ext_resource type="Script" path="res://GameScripts/index.gd" id="2_12axg"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_u8mr0"]
@@ -50,7 +50,7 @@ tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_tyyol")
 
 [node name="Game" type="Node2D"]
-position = Vector2(32, -64)
+position = Vector2(32, -96)
 script = ExtResource("2_12axg")
 
 [node name="TargetGemTileMap" type="TileMap" parent="."]
@@ -150,7 +150,7 @@ stream = ExtResource("4_t7a3t")
 [node name="Instructions" type="RichTextLabel" parent="."]
 offset_left = 544.0
 offset_top = 544.0
-offset_right = 1024.0
-offset_bottom = 768.0
+offset_right = 992.0
+offset_bottom = 736.0
 bbcode_enabled = true
 text = "[center]Test [b]text[/b]. [/center]"
