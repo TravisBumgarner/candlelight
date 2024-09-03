@@ -9,6 +9,7 @@ var level_complete_timer
 var sounds
 var game_details_label
 var game_details_value
+var game_details_tile_map
 
 var history: History
 var player: Player
@@ -20,7 +21,7 @@ var return_to_main_menu
 
 var is_paused_for_scoring = false
 
-func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, instructions, return_to_main_menu):
+func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
 	self.board_tile_map = board_tile_map
 	self.target_gem_tile_map = target_gem_tile_map
 	self.queue_tile_map = queue_tile_map
@@ -28,6 +29,7 @@ func _init(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_t
 	self.sounds = sounds
 	self.game_details_label = game_details_label
 	self.game_details_value = game_details_value
+	self.game_details_tile_map = game_details_tile_map
 	self.instructions = instructions
 	self.return_to_main_menu = return_to_main_menu
 	
