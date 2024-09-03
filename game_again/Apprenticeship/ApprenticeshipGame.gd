@@ -68,6 +68,8 @@ func level_complete(gems):
 
 func _on_level_complete_timer_timeout():
 	apprenticeship_stage += 1
+	level += 1
+	gemsManager.puzzle_mode_set_target_gem(level)
 	
 	if apprenticeship_stage != ApprenticeshipStage.SixDone:
 		erase_board()
@@ -119,6 +121,7 @@ func _on_action_pressed(action):
 	super(action)
 
 func new_game():
+	level = 1
 	target_gem_tile_map.hide()
 	queue_tile_map.hide()
 	game_details_label.hide()
@@ -132,7 +135,7 @@ func new_game():
 	self.queue = Queue.new(queue_tile_map, 123, true)
 	player = Player.new(board_tile_map, self.queue.next())
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	gemsManager.puzzle_mode_set_target_gem(1)
+	gemsManager.puzzle_mode_set_target_gem(level)
 
 func update_stats():
 	game_details_label.text = "hello"
@@ -147,7 +150,7 @@ func update_instructions():
 	var text = '[center]'
 	
 	if apprenticeship_stage == ApprenticeshipStage.OneMovement:
-		text += "Move and manipulate the raw metal.\n"
+		text += "Move and manipulate the lead piece on the anvil.\n"
 		text += '[/center]'
 		text += check_action_complete('up')
 		text += check_action_complete('down')
@@ -156,21 +159,21 @@ func update_instructions():
 		text += check_action_complete('rotate')
 		
 	if apprenticeship_stage == ApprenticeshipStage.TwoPlacement:
-		text += "Place the raw metal on the anvil.\n"
+		text += "Place the lead piece on the anvil.\n"
 		text += check_action_complete('select')
 		
 	if apprenticeship_stage == ApprenticeshipStage.ThreeUndo:
-		text += "Remove the metal from the anvil.\n"
+		text += "Remove the lead piece from the anvil.\n"
 		text += check_action_complete('undo')
 
 	if apprenticeship_stage == ApprenticeshipStage.FourScore:
 		target_gem_tile_map.show()
-		text += "Overlap metal on the anvil to begin experimenting. Match the light colored overlap to the target to perform alchemy."
+		text += "Overlap lead pieces on the anvil to begin alchemizing. Match the light colored overlap to the target to perform alchemy."
 		
 	if apprenticeship_stage == ApprenticeshipStage.FiveQueue:
 		self.queue = Queue.new(queue_tile_map, 123)
 		queue_tile_map.show()
-		text += "The queue shows what raw metal is coming next. Continue performing alchemy."
+		text += "The queue shows what lead pieces are coming next. Continue performing alchemy."
 		
 	if apprenticeship_stage == ApprenticeshipStage.SixDone:
 		text += "The skills to begin alchemy are simple, but the journey is hard. Good luck out there! Press [b]Escape[/b] to get started crafting."

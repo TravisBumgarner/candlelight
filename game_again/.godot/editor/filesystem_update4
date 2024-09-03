@@ -6,3 +6,4 @@ res://GameScripts/BaseGame.gd
 res://GameScripts/DailyGame.gd
 res://GameScripts/PuzzleGame.gd
 res://Apprenticeship/apprenticeship_menu.tscn
+res://GameScripts/GemsManager.gd
