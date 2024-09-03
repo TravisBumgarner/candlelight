@@ -25,6 +25,10 @@ SoundManager="*res://Singletons/SoundManager.gd"
 GlobalState="*res://Singletons/GlobalState.gd"
 KeyValueStore="*res://Singletons/KeyValueStore.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [input]
 
 Rotate={
