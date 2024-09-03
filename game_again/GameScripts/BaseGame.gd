@@ -2,14 +2,14 @@ extends Node2D
 
 class_name BaseGame
 
-var board_tile_map
-var target_gem_tile_map
-var queue_tile_map
+var board_tile_map: TileMap
+var target_gem_tile_map: TileMap
+var queue_tile_map: TileMap
 var level_complete_timer
 var sounds
 var game_details_label
 var game_details_value
-var game_details_tile_map
+var game_details_tile_map: TileMap
 
 var history: History
 var player: Player
@@ -62,7 +62,14 @@ func _on_action_pressed(action):
 			self.return_to_main_menu.call()
 
 func handle_player_placement():
-	assert(false, "Must be implemented in the child class.")
+	history.append(board_tile_map, player)
+	player.place_on_board()
+	var gems = gemsManager.find_gems()
+	if(gems.size() > 0):
+		level_complete(gems)
+		return
+	player = Player.new(board_tile_map, self.queue.next())
+	
 
 func level_complete(gems):
 	assert(false, "Must be implemented in the child class.")
@@ -70,21 +77,19 @@ func level_complete(gems):
 func _on_level_complete_timer_timeout():
 	assert(false, "Must be implemented in the child class.")
 
-# This could be split into multiple functions. 
 func undo():
 	var record = history.pop()
-	if record == null:
-		return
 	self.queue.undo(player.piece_type)
-	#player.erase_piece()
 	player = record.player
 	player.draw_piece()
-	#emit_signal('experiment_undo')
+	
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
+	
+	print(record.atlas_coords_array)
+	
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):
 			var tile_style = record.atlas_coords_array[x][y]
-			self.board_tile_map.erase_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y))
-			#if tile_style != Vector2i(-1, -1):
 			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func erase_board():

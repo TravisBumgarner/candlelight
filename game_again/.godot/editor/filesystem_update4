@@ -8,3 +8,4 @@ res://GameScripts/PuzzleGame.gd
 res://Apprenticeship/apprenticeship_menu.tscn
 res://GameScripts/GemsManager.gd
 res://MainMenu/main_menu.tscn
+res://GameScripts/Queue.gd

@@ -8,7 +8,7 @@ func clear_local_data():
 
 func _ready():
 	# Useful for debugging. 
-	clear_local_data()
+	#clear_local_data()
 	
 	var hasSeenApprenticeship = KeyValueStore.load_data(KeyValueStore.StoreKey.HasSeenApprenticeship)
 
