@@ -81,7 +81,6 @@ func undo():
 	var record = history.pop()
 	self.queue.undo(player.piece_type)
 	player = record.player
-	player.draw_piece()
 	
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
 	
@@ -91,6 +90,8 @@ func undo():
 		for y in range(GlobalConsts.GRID.HEIGHT):
 			var tile_style = record.atlas_coords_array[x][y]
 			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
+
+	player.draw_piece()
 
 func erase_board():
 	board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
