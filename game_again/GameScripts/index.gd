@@ -6,7 +6,7 @@ extends Node2D
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var sounds = $Sounds
 @onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
-@onready var game_details_value = $GameDetailsTileMap/GameDetailsValue
+@onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
 @onready var game_details_tile_map = $GameDetailsTileMap
 

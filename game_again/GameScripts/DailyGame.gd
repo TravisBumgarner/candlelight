@@ -25,6 +25,20 @@ func new_game():
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.daily_mode_set_target_gem(123)
 
+func undo():
+	super()
+	if experiments > 0:
+		experiments -= 1
+		update_stats()
+
+func handle_player_placement():
+	experiments += 1
+	super()
+	update_stats()
+
 func update_stats():
-	game_details_label.text = "hello"
-	game_details_value.text = "world"
+	var text = "[center]"
+	text += str(experiments) + "\n"
+	text += "Alchemizations"
+	
+	game_details_value.text = text
