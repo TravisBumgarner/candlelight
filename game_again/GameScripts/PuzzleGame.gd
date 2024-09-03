@@ -15,15 +15,6 @@ func new_game():
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.puzzle_mode_set_target_gem(level)
 
-func handle_player_placement():
-	player.place_on_board()
-	history.append(board_tile_map, player)
-	var gems = gemsManager.find_gems()
-	if(gems.size() > 0):
-		level_complete(gems)
-		return
-	player = Player.new(board_tile_map, self.queue.next())
-
 func level_complete(gems):
 	var total_gems = gems.size()
 	

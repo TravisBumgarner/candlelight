@@ -45,15 +45,6 @@ var ACTION_DISPLAY_TEXT = {
 func _init(board_tile_map: TileMap, target_gem_tile_map: TileMap, queue_tile_map: TileMap, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
 	super(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu)
 
-func handle_player_placement():
-	player.place_on_board()
-	history.append(board_tile_map, player)
-	var gems = gemsManager.find_gems()
-	if(gems.size() > 0):
-		level_complete(gems)
-		return
-	player = Player.new(board_tile_map, self.queue.next())
-
 func level_complete(gems):
 	if apprenticeship_stage == ApprenticeshipStage.FourScore:
 		SoundManager.play("one_gem")	
