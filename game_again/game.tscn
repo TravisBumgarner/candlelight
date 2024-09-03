@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://b3xiri3jav0ca"]
+[gd_scene load_steps=12 format=3 uid="uid://b3xiri3jav0ca"]
 
 [ext_resource type="Script" path="res://GameScripts/index.gd" id="2_12axg"]
+[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="2_36ufg"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_u8mr0"]
 [ext_resource type="AudioStream" uid="uid://6nkwdp23h1f4" path="res://assets/music/song.mp3" id="4_t7a3t"]
 [ext_resource type="Script" path="res://Sounds.gd" id="4_ysh4b"]
@@ -52,6 +53,13 @@ sources/0 = SubResource("TileSetAtlasSource_tyyol")
 [node name="Game" type="Node2D"]
 position = Vector2(32, -96)
 script = ExtResource("2_12axg")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -32.0
+offset_top = 96.0
+offset_right = 1312.0
+offset_bottom = 768.0
+texture = ExtResource("2_36ufg")
 
 [node name="TargetGemTileMap" type="TileMap" parent="."]
 position = Vector2(288, 160)

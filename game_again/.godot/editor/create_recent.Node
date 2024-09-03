@@ -1,3 +1,4 @@
+TextureRect
 Node
 VBoxContainer
 BoxContainer
@@ -5,7 +6,6 @@ RichTextLabel
 Label
 Control
 MarginContainer
-TextureRect
 Button
 Sprite2D
 AudioStreamPlayer
