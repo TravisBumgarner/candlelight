@@ -57,5 +57,5 @@ func get_atlas_coords_array(tile_map):
 func generate_key_from_date():
 	var today_format_string = "%s-%s-%s"
 	var today := Time.get_date_dict_from_system()
-	var today_string = today_format_string % [today.year, today.month, today.day + 1] 
+	var today_string = today_format_string % [today.year, today.month, today.day] 
 	return hash(today_string)

@@ -44,15 +44,17 @@ func puzzle_mode_level_to_gem_size(level: int) -> int:
 		return 15
 
 
+
+
 func daily_mode_generate_gem(game_key: int):
 	var RNG = RandomNumberGenerator.new()
 	RNG.seed = game_key
 	var size = RNG.randi_range(8, 12)
 
-	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE - 1))
+	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE - 1), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE - 1))
 	var points = [current_point]
 	
-	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE -1, GlobalConsts.MAX_GEM_SIZE - 1))
+	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE - 1, GlobalConsts.MAX_GEM_SIZE - 1))
 
 	while points.size() < size:
 		var new_neighbor = null
