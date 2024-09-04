@@ -1,6 +1,6 @@
 extends Node
 
-static func is_cell_border(tile_map, cell):
+func is_cell_border(tile_map, cell):
 	return not(tile_map.get_cell_source_id(GlobalConsts.BOARD_LAYER.BORDER, cell) == -1)
 
 func swap(i : int, j : int, a : Array) -> Array:
@@ -20,13 +20,13 @@ func rng_array_item(rng: RandomNumberGenerator, arr: Array):
 
 # Takes a collection of cells and moves them such that at least one point touches
 # Vector2i(0, n) and one point touches Vector2i(m, 0)
-static func move_cells_to_origin(cells: Array):
+func move_cells_to_origin(cells: Array):
 	var min_x = cells.map(func(cell): return cell.x).min()
 	var min_y = cells.map(func(cell): return cell.y).min()
 	
 	return cells.map(func(cell): return Vector2i(cell.x - min_x, cell.y - min_y))
 
-static func get_valid_neighbors(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i) -> Array:
+func get_valid_neighbors(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i) -> Array:
 	var all_neighbors = [
 		Vector2i(cell.x + 1, cell.y),
 		Vector2i(cell.x - 1, cell.y),
@@ -38,7 +38,7 @@ static func get_valid_neighbors(cell: Vector2i, min_vector: Vector2i, max_vector
 	
 	return valid_neighbors
 
-static func is_cell_in_range(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i):
+func is_cell_in_range(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i):
 	if cell.x < min_vector.x  or cell.x > max_vector.x or cell.y < min_vector.y or cell.y > max_vector.y:
 		return false
 	return true

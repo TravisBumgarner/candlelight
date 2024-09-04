@@ -13,5 +13,10 @@ func _ready():
 	var hasSeenApprenticeship = KeyValueStore.load_data(KeyValueStore.StoreKey.HasSeenApprenticeship)
 
 	var scene = main_menu if hasSeenApprenticeship == 'true' else apprenticeship_menu
-	get_tree().change_scene_to_packed(scene)
+	
+	# Use call_deferred to change the scene
+	call_deferred("_change_scene", scene)
 	KeyValueStore.save_data(KeyValueStore.StoreKey.HasSeenApprenticeship, 'true')
+
+func _change_scene(scene):
+	get_tree().change_scene_to_packed(scene)

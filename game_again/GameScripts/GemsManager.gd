@@ -6,10 +6,10 @@ var board_tile_map: TileMap
 var target_gem_tile_map: TileMap
 var queue_tile_map: TileMap
 
-func _init(board_tile_map: TileMap, target_gem_tile_map: TileMap, queue_tile_map: TileMap):
-	self.board_tile_map = board_tile_map
-	self.target_gem_tile_map = target_gem_tile_map
-	self.queue_tile_map = queue_tile_map
+func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap):
+	self.board_tile_map = _board_tile_map
+	self.target_gem_tile_map = _target_gem_tile_map
+	self.queue_tile_map = _queue_tile_map
 #
 func puzzle_mode_level_to_gem_size(level: int) -> int:
 	if level < 2:
@@ -81,7 +81,7 @@ func daily_mode_generate_gem(game_key: int):
 func puzzle_mode_generate_gem(size: int):
 	# It's possible that due to the algorithm below, the generation can exit prematurely. So we start the gem in the middle for best luck of being
 	# the desired size. 
-	var current_point = Vector2i(round(GlobalConsts.MAX_GEM_SIZE / 2), round(GlobalConsts.MAX_GEM_SIZE / 2))
+	var current_point = Vector2i(round(GlobalConsts.MAX_GEM_SIZE / 2.0), round(GlobalConsts.MAX_GEM_SIZE / 2.0))
 	var points = [current_point]
 	
 	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))

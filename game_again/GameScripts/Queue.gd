@@ -15,10 +15,10 @@ var is_demo_mode: bool
 
 var RNG
 
-func _init(queue_tile_map: TileMap, game_key, is_demo_mode = false):
-	self.queue_tile_map = queue_tile_map
-	self.game_key = game_key
-	self.is_demo_mode = is_demo_mode
+func _init(_queue_tile_map: TileMap, _game_key, _is_demo_mode = false):
+	self.queue_tile_map = _queue_tile_map
+	self.game_key = _game_key
+	self.is_demo_mode = _is_demo_mode
 	
 	RNG = RandomNumberGenerator.new()
 	
@@ -53,8 +53,8 @@ func fill_queue():
 			self.queue.append(random)
 
 
-func undo(current_game_piece):
-	self.queue.insert(0, current_game_piece)
+func undo(_current_game_piece):
+	self.queue.insert(0, _current_game_piece)
 	self.draw_queue()
 
 

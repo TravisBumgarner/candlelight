@@ -42,8 +42,8 @@ var ACTION_DISPLAY_TEXT = {
 	GlobalConsts.ACTION['UNDO'] : "Undo ([b]Z[/b] Key)",
 }
 
-func _init(board_tile_map: TileMap, target_gem_tile_map: TileMap, queue_tile_map: TileMap, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
-	super(board_tile_map, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu)
+func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu):
+	super(_board_tile_map, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu)
 
 func level_complete(gems):
 	if apprenticeship_stage == ApprenticeshipStage.FourScore:
@@ -57,8 +57,21 @@ func level_complete(gems):
 	
 	level_complete_timer.start(1)
 
+func increment_stage():
+	# It would appear this is unfortunately the cleanest way to do this.
+	if apprenticeship_stage == ApprenticeshipStage.OneMovement:
+		apprenticeship_stage = ApprenticeshipStage.TwoPlacement
+	elif apprenticeship_stage == ApprenticeshipStage.TwoPlacement:
+		apprenticeship_stage = ApprenticeshipStage.ThreeUndo
+	elif apprenticeship_stage == ApprenticeshipStage.ThreeUndo:
+		apprenticeship_stage = ApprenticeshipStage.FourScore
+	elif apprenticeship_stage == ApprenticeshipStage.FourScore:
+		apprenticeship_stage = ApprenticeshipStage.FiveQueue
+	elif apprenticeship_stage == ApprenticeshipStage.FiveQueue:
+		apprenticeship_stage = ApprenticeshipStage.SixDone
+
 func _on_level_complete_timer_timeout():
-	apprenticeship_stage += 1
+	increment_stage()
 	level += 1
 	gemsManager.puzzle_mode_set_target_gem(level)
 	
@@ -96,7 +109,7 @@ func check_user_performed_action():
 		]
 		
 	if actions_to_check.all(func(action): return has_performed_action[action]):
-		apprenticeship_stage += 1
+		increment_stage()
 
 func _on_action_pressed(action):
 	var action_not_available_yet = action in STAGE_ACTION_BECOMES_AVAILABLE and STAGE_ACTION_BECOMES_AVAILABLE[action] > apprenticeship_stage

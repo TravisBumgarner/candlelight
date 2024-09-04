@@ -7,9 +7,9 @@ var rotation_index
 var current_absolute_position
 
 
-func _init(board_tile_map, new_piece_type):
-	self.board_tile_map = board_tile_map
-	self.piece_type = new_piece_type
+func _init(_board_tile_map, _piece_type):
+	self.board_tile_map = _board_tile_map
+	self.piece_type = _piece_type
 	self.rotation_index = 0
 	self.current_absolute_position = Vector2i(round(GlobalConsts.GRID.HEIGHT / 2.0 - 1), round(GlobalConsts.GRID.WIDTH / 2.0 - 1))
 	self.draw_piece()

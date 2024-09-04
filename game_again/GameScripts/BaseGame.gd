@@ -21,17 +21,17 @@ var return_to_main_menu
 
 var is_paused_for_scoring = false
 
-func _init(board_tile_map: TileMap, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
-	self.board_tile_map = board_tile_map
-	self.target_gem_tile_map = target_gem_tile_map
-	self.queue_tile_map = queue_tile_map
-	self.level_complete_timer = level_complete_timer
-	self.sounds = sounds
-	self.game_details_label = game_details_label
-	self.game_details_value = game_details_value
-	self.game_details_tile_map = game_details_tile_map
-	self.instructions = instructions
-	self.return_to_main_menu = return_to_main_menu
+func _init(_board_tile_map: TileMap, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu):
+	self.board_tile_map = _board_tile_map
+	self.target_gem_tile_map = _target_gem_tile_map
+	self.queue_tile_map = _queue_tile_map
+	self.level_complete_timer = _level_complete_timer
+	self.sounds = _sounds
+	self.game_details_label = _game_details_label
+	self.game_details_value = _game_details_value
+	self.game_details_tile_map = _game_details_tile_map
+	self.instructions = _instructions
+	self.return_to_main_menu = _return_to_main_menu
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -80,7 +80,7 @@ func handle_player_placement():
 	player.draw_piece()
 	
 
-func level_complete(gems):
+func level_complete(_gems):
 	assert(false, "Must be implemented in the child class.")
 
 func _on_level_complete_timer_timeout():

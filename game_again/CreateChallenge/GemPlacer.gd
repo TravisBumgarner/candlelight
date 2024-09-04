@@ -7,8 +7,8 @@ var rotation_index
 var current_position
 
 
-func _init(gem_tile_map):
-	self.gem_tile_map = gem_tile_map
+func _init(_gem_tile_map):
+	self.gem_tile_map = _gem_tile_map
 	self.current_position = Vector2i(0, 0)
 	self.draw_piece()
 	
@@ -36,7 +36,7 @@ func draw_piece():
 	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_PIECE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func can_move(direction):
-	var is_cell_border = Utilities.is_cell_border(self.gem_tile_map, self.current_position)
+	var is_cell_border = Utilities.is_cell_border(self.gem_tile_map, self.current_position + direction)
 	if is_cell_border:
 		return false
 	return true

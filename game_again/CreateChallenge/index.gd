@@ -14,10 +14,6 @@ func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-
 func _on_action_pressed(action):
 	var direction_map = {
 		"up": Vector2i.UP,
