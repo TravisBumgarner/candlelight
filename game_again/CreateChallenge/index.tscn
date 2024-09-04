@@ -1,8 +1,42 @@
-[gd_scene format=3 uid="uid://cifr7f5pbfxlo"]
+[gd_scene load_steps=6 format=3 uid="uid://cifr7f5pbfxlo"]
+
+[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="1_2nkfn"]
+[ext_resource type="Script" path="res://CreateChallenge/index.gd" id="1_5rbuh"]
+[ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_j04o7"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_44wvu"]
+texture = ExtResource("2_j04o7")
+texture_region_size = Vector2i(32, 32)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_awens"]
+tile_size = Vector2i(32, 32)
+sources/0 = SubResource("TileSetAtlasSource_44wvu")
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_5rbuh")
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Hello worlds"
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1344.0
+offset_bottom = 672.0
+texture = ExtResource("1_2nkfn")
+
+[node name="TargetGemTileMap" type="TileMap" parent="."]
+position = Vector2(416, 256)
+tile_set = SubResource("TileSet_awens")
+format = 2
+layer_0/name = "BORDER"
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 458751, 262144, 0, 393216, 262144, 0, 393217, 262144, 0, 393218, 262144, 0, 393219, 262144, 0, 393220, 262144, 0, 393221, 262144, 0, 393222, 262144, 0, -65530, 262144, 0, 6, 262144, 0, 65542, 262144, 0, 131078, 262144, 0, 196614, 262144, 0, 262150, 262144, 0, 327686, 262144, 0, -65536, 262144, 0, -65535, 262144, 0, -65534, 262144, 0, -65533, 262144, 0, -65532, 262144, 0, -65531, 262144, 0, 65535, 262144, 0, 65534, 458752, 0, 131070, 458752, 0, 196606, 458752, 0, 262142, 458752, 0, 327678, 458752, 0, 393214, 458752, 0, 458750, 458752, 0, 524286, 458752, 0, -2, 458752, 0, -65538, 458752, 0, -65537, 458752, 0, -131072, 458752, 0, -131071, 458752, 0, -131070, 458752, 0)
+layer_1/name = "PLACED_PIECES"
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "CURRENT_PIECE"
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()

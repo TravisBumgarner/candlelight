@@ -1,8 +1,9 @@
+TileMap
+TextureRect
 Label
 Control
 VBoxContainer
 RichTextLabel
-TextureRect
 Node
 BoxContainer
 MarginContainer
@@ -10,5 +11,4 @@ Button
 Sprite2D
 AudioStreamPlayer
 Timer
-TileMap
 Node2D

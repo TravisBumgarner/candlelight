@@ -6,3 +6,6 @@ res://GameScripts/GemsManager.gd
 res://MainMenu/main_menu.tscn
 res://MainMenu/index.gd
 res://CreateChallenge/index.tscn
+res://CreateChallenge/index.gd
+res://Singletons/GlobalConsts.gd
+res://CreateChallenge/GemPlacer.gd

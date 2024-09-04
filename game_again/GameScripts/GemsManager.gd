@@ -113,7 +113,7 @@ func erase_target_gem():
 
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
-		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, absolute_position, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE)
+		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, absolute_position, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
 func puzzle_mode_set_target_gem(level: int):
@@ -130,7 +130,7 @@ func daily_mode_set_target_gem(game_key):
 
 func draw_target_gem():
 	for point in target_gem:
-		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE)
+		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
 func is_target_gem(shape):
