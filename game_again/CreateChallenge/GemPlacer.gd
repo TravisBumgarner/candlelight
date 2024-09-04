@@ -25,14 +25,12 @@ func draw_piece():
 	self.gem_tile_map.clear_layer(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_PIECE)
 	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_PIECES, self.current_position)
 	var tile_style: Vector2i
-	print('debug', placed_tile)
-	if(placed_tile == GlobalConsts.SPRITE.EMPTY):
-		print('a')
+	if(placed_tile == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE):
+		tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
+	elif(placed_tile == GlobalConsts.SPRITE.EMPTY):
 		tile_style = GlobalConsts.SPRITE.GEM_BLUE_ACTIVE
-	elif(placed_tile == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE):
-		print('b')
-		tile_style = GlobalConsts.SPRITE.EMPTY_ACTIVE
-	print('result', tile_style)
+	#elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
+		#tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_PIECE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func can_move(direction):

@@ -28,6 +28,7 @@ func _on_action_pressed(action):
 	match action:
 		"select":
 			gemPlacer.place_on_board()
+			gemPlacer.draw_piece()
 		"escape":
 			cleanup()
 			print('escaping')
