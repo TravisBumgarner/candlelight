@@ -47,7 +47,6 @@ const SPRITE = {
 	MID_BORDER = Vector2i(4,0),
 	GEM_BLUE_INACTIVE = Vector2i(5,0),
 	GEM_BLUE_ACTIVE = Vector2i(6,0),
-	EMPTY_ACTIVE = Vector2i(7,0)
 }
 
 const ACTION = {

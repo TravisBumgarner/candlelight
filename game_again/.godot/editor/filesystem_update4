@@ -1,5 +1,4 @@
-res://game.tscn
 res://entry_point.tscn
-res://CreateChallenge/GemPlacer.gd
-res://CreateChallenge/index.gd
-res://entry_point.gd
+res://Singletons/GlobalConsts.gd
+res://CreateChallenge/index.tscn
+res://game.tscn
