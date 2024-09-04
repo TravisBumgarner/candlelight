@@ -44,15 +44,17 @@ func puzzle_mode_level_to_gem_size(level: int) -> int:
 		return 15
 
 
+
+
 func daily_mode_generate_gem(game_key: int):
 	var RNG = RandomNumberGenerator.new()
 	RNG.seed = game_key
 	var size = RNG.randi_range(8, 12)
 
-	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE))
+	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE - 1), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE - 1))
 	var points = [current_point]
 	
-	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
+	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE - 1, GlobalConsts.MAX_GEM_SIZE - 1))
 
 	while points.size() < size:
 		var new_neighbor = null
@@ -71,7 +73,7 @@ func daily_mode_generate_gem(game_key: int):
 		if new_neighbor == null:
 			break
 		
-		potential_neighbors = Utilities.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
+		potential_neighbors = Utilities.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE - 1, GlobalConsts.MAX_GEM_SIZE - 1))
 		points.append(new_neighbor)
 	self.target_gem = Utilities.move_cells_to_origin(points)
 
@@ -191,7 +193,6 @@ func flood_fill(pos, desired_color, shape):
 		var current = stack.pop_back()
 		var x = current.x
 		var y = current.y
-		print(x,y)
 
 		var current_color = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y))
 		if visited[x][y] or current_color != desired_color:
@@ -201,5 +202,4 @@ func flood_fill(pos, desired_color, shape):
 		shape.append(current)
 
 		var potential_neighbors = Utilities.get_valid_neighbors(Vector2i(x,y), Vector2i(0,0), Vector2i(GlobalConsts.GRID.WIDTH - 1, GlobalConsts.GRID.HEIGHT - 1))
-		print(potential_neighbors)
 		stack.append_array(potential_neighbors)
