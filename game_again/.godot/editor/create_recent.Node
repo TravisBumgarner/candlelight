@@ -1,10 +1,10 @@
+Label
 Control
 VBoxContainer
 RichTextLabel
 TextureRect
 Node
 BoxContainer
-Label
 MarginContainer
 Button
 Sprite2D

@@ -58,16 +58,39 @@ autowrap_mode = 3
 [node name="Daily" type="VBoxContainer" parent="."]
 layout_mode = 0
 offset_left = 864.0
-offset_top = 192.0
+offset_top = 128.0
 offset_right = 1088.0
-offset_bottom = 288.0
+offset_bottom = 238.0
 
 [node name="DailyGame" type="Button" parent="Daily"]
 layout_mode = 2
-text = "Daily Game"
+text = "Daily Challenge"
 
 [node name="Label" type="Label" parent="Daily"]
 layout_mode = 2
+text = "Alchemize the desired gem with the least amount of moves. Compete against yourself or with friends for the best score!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PlayerGenerated" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 128.0
+offset_right = 767.0
+offset_bottom = 290.0
+
+[node name="PlayChallenge" type="Button" parent="PlayerGenerated"]
+layout_mode = 2
+disabled = true
+text = "Play Challenges"
+
+[node name="CreateChallenge" type="Button" parent="PlayerGenerated"]
+layout_mode = 2
+text = "Create Challenge (Coming Soon)"
+
+[node name="Label" type="Label" parent="PlayerGenerated"]
+layout_mode = 2
+text = "Create your own challenges or complete challenges created by others!"
 horizontal_alignment = 1
 autowrap_mode = 3
 
