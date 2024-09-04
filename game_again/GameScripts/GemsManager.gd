@@ -49,10 +49,10 @@ func daily_mode_generate_gem(game_key: int):
 	RNG.seed = game_key
 	var size = RNG.randi_range(8, 12)
 
-	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE))
+	var current_point = Vector2i(RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE), RNG.randi_range(0, GlobalConsts.MAX_GEM_SIZE - 1))
 	var points = [current_point]
 	
-	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
+	var potential_neighbors = Utilities.get_valid_neighbors(current_point, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE -1, GlobalConsts.MAX_GEM_SIZE - 1))
 
 	while points.size() < size:
 		var new_neighbor = null
@@ -71,7 +71,7 @@ func daily_mode_generate_gem(game_key: int):
 		if new_neighbor == null:
 			break
 		
-		potential_neighbors = Utilities.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE, GlobalConsts.MAX_GEM_SIZE))
+		potential_neighbors = Utilities.get_valid_neighbors(new_neighbor, Vector2i(0,0), Vector2i(GlobalConsts.MAX_GEM_SIZE - 1, GlobalConsts.MAX_GEM_SIZE - 1))
 		points.append(new_neighbor)
 	self.target_gem = Utilities.move_cells_to_origin(points)
 
