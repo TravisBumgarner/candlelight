@@ -16,14 +16,16 @@ func _on_level_complete_timer_timeout():
 	print('See you tomorrow!')
 
 func new_game():
+	var key = Utilities.generate_key_from_date()
+	
 	update_stats()
 	erase_board()
 	experiments = 0
 	history = History.new()
-	queue = Queue.new(queue_tile_map, 123) # TODO - Set this up
+	queue = Queue.new(queue_tile_map, key) # TODO - Set this up
 	player = Player.new(board_tile_map, queue.next())
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	gemsManager.daily_mode_set_target_gem(123)
+	gemsManager.daily_mode_set_target_gem(key)
 
 func undo():
 	super()

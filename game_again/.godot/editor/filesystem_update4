@@ -1,11 +1,4 @@
-res://MainMenu/main_menu.tscn
-res://GameScripts/index.gd
 res://entry_point.tscn
-res://GameScripts/Player.gd
-res://GameScripts/BaseGame.gd
 res://GameScripts/DailyGame.gd
-res://GameScripts/PuzzleGame.gd
-res://Apprenticeship/ApprenticeshipGame.gd
-res://game.tscn
-res://MainMenu/index.gd
+res://GameScripts/Queue.gd
 res://Singletons/Utilities.gd

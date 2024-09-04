@@ -191,7 +191,6 @@ func flood_fill(pos, desired_color, shape):
 		var current = stack.pop_back()
 		var x = current.x
 		var y = current.y
-		print(x,y)
 
 		var current_color = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y))
 		if visited[x][y] or current_color != desired_color:
@@ -201,5 +200,4 @@ func flood_fill(pos, desired_color, shape):
 		shape.append(current)
 
 		var potential_neighbors = Utilities.get_valid_neighbors(Vector2i(x,y), Vector2i(0,0), Vector2i(GlobalConsts.GRID.WIDTH - 1, GlobalConsts.GRID.HEIGHT - 1))
-		print(potential_neighbors)
 		stack.append_array(potential_neighbors)

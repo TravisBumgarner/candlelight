@@ -22,7 +22,6 @@ var return_to_main_menu
 var is_paused_for_scoring = false
 
 func _init(board_tile_map: TileMap, target_gem_tile_map, queue_tile_map, level_complete_timer, sounds, game_details_label, game_details_value, game_details_tile_map, instructions, return_to_main_menu):
-	print('initing base game')
 	self.board_tile_map = board_tile_map
 	self.target_gem_tile_map = target_gem_tile_map
 	self.queue_tile_map = queue_tile_map
@@ -54,7 +53,6 @@ func _on_action_pressed(action):
 	}
 	
 	if action in direction_map:
-		print('on action pressed', self.board_tile_map)
 		player.move(direction_map[action])
 	
 	match action:
@@ -94,8 +92,6 @@ func undo():
 	player = record.player
 	
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
-	
-	print(record.atlas_coords_array)
 	
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):

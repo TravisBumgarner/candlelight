@@ -24,7 +24,7 @@ func load_data(key: String) -> String:
 		return ""  # Or return a default value
 		
 func clear():
-	var config = ConfigFile.new()
+	config = ConfigFile.new()
 	config.load(FILENAME)
 	config.clear()  # Clears all sections and keys
 	config.save(FILENAME)

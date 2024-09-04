@@ -19,7 +19,9 @@ func _init(queue_tile_map: TileMap, game_key, is_demo_mode = false):
 	self.queue_tile_map = queue_tile_map
 	self.game_key = game_key
 	self.is_demo_mode = is_demo_mode
+	
 	RNG = RandomNumberGenerator.new()
+	
 	if game_key == null:
 		RNG.randomize()
 	else:
