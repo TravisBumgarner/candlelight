@@ -1,0 +1,107 @@
+[gd_scene load_steps=3 format=3 uid="uid://8w1ej44k1x0w"]
+
+[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="1_4hbhq"]
+[ext_resource type="Script" path="res://MainMenu/index.gd" id="1_vxg5o"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_vxg5o")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4hbhq")
+
+[node name="PuzzleGame" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 320.0
+offset_right = 1088.0
+offset_bottom = 416.0
+
+[node name="PuzzleGame" type="Button" parent="PuzzleGame"]
+layout_mode = 2
+text = "Puzzle Game"
+
+[node name="Label" type="Label" parent="PuzzleGame"]
+layout_mode = 2
+text = "Craft the gem to advance to the next level."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="ApprenticeshipGame" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 448.0
+offset_right = 1088.0
+offset_bottom = 544.0
+
+[node name="ApprenticeshipGame" type="Button" parent="ApprenticeshipGame"]
+layout_mode = 2
+text = "Apprenticeship"
+
+[node name="Label" type="Label" parent="ApprenticeshipGame"]
+layout_mode = 2
+text = "Run the tutorial again."
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Daily" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 128.0
+offset_right = 1088.0
+offset_bottom = 238.0
+
+[node name="DailyGame" type="Button" parent="Daily"]
+layout_mode = 2
+text = "Daily Challenge"
+
+[node name="Label" type="Label" parent="Daily"]
+layout_mode = 2
+text = "Alchemize the desired gem with the least amount of moves. Compete against yourself or with friends for the best score!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="PlayerGenerated" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 512.0
+offset_top = 128.0
+offset_right = 767.0
+offset_bottom = 290.0
+
+[node name="PlayChallenge" type="Button" parent="PlayerGenerated"]
+layout_mode = 2
+disabled = true
+text = "Play Challenges"
+
+[node name="CreateChallenge" type="Button" parent="PlayerGenerated"]
+layout_mode = 2
+text = "Create Challenge (Coming Soon)"
+
+[node name="Label" type="Label" parent="PlayerGenerated"]
+layout_mode = 2
+text = "Create your own challenges or complete challenges created by others!"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="Exit" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 864.0
+offset_top = 576.0
+offset_right = 1088.0
+offset_bottom = 608.0
+
+[node name="Exit" type="Button" parent="Exit"]
+layout_mode = 2
+text = "Exit
+"
