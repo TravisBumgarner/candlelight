@@ -1,2 +1,6 @@
 res://entry_point.tscn
 res://game_board.tscn
+res://game.tscn
+res://Singletons/Shapes.gd
+res://GameScripts/Player.gd
+res://GameScripts/Queue.gd
