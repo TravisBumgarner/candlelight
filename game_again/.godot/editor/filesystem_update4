@@ -1,6 +1,0 @@
-res://entry_point.tscn
-res://GameScripts/DailyGame.gd
-res://GameScripts/Queue.gd
-res://Singletons/Utilities.gd
-res://GameScripts/GemsManager.gd
-res://MainMenu/main_menu.tscn
