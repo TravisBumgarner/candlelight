@@ -1,44 +1,42 @@
 extends Node
 
-const l_0 := [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
-const l_90 := [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
-const l_180 := [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
-const l_270 := [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
-const l := [l_0, l_90, l_180, l_270]
+const upper_l_rot0 = [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
+const upper_l_rot1 = [Vector2i(0,2), Vector2i(1,1), Vector2i(2,0)]
+const upper_l_rot2 = [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
+const upper_l_rot3 = [Vector2i(0,0), Vector2i(1,1), Vector2i(2,2)]
+const upper_l = [upper_l_rot0, upper_l_rot1, upper_l_rot2, upper_l_rot3]
 
-const square_0 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const square_90 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const square_180 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const square_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
-const square:= [square_0, square_90, square_180, square_270]
+const square_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
+const square = [square_rot0, square_rot0, square_rot0, square_rot0]
 
-const diag_0 := [Vector2i(0,0), Vector2i(1,1), Vector2i(2,2)]
-const diag_90 := [Vector2i(2,0), Vector2i(1,1), Vector2i(0,2)]
-const diag:= [diag_0, diag_90, diag_0, diag_90]
+const upper_i_rot0 = [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
+const upper_i_rot1 = [Vector2i(0,2), Vector2i(1,1), Vector2i(2,0)]
+const upper_i_rot2 = [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
+const upper_i_rot3 = [Vector2i(0,0), Vector2i(1,1), Vector2i(2,2)]
+const upper_i = [upper_i_rot0, upper_i_rot1, upper_i_rot2, upper_i_rot3]
 
-const x_0 := [Vector2i(0,0), Vector2i(1,1), Vector2i(2,2), Vector2i(2,0), Vector2i(0,2)]
-const x:= [x_0, x_0, x_0, x_0]
+const u_rot3 = [Vector2i(0,0), Vector2i(0,1), Vector2i(0,2), Vector2i(1,0), Vector2i(1,2)]
+const u_rot2 = [Vector2i(0,1), Vector2i(0,2), Vector2i(1,2), Vector2i(2,1), Vector2i(2,2)]
+const u_rot1 = [Vector2i(1,0), Vector2i(1,2), Vector2i(2,0), Vector2i(2,1), Vector2i(2,2)]
+const u_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(2,0), Vector2i(2,1)]
+const u = [u_rot0, u_rot1, u_rot2, u_rot3]
 
-const u_0 := [Vector2i(0,0), Vector2i(0,1), Vector2i(0,2), Vector2i(1,0), Vector2i(1,2)]
-const u_90 := [Vector2i(0,1), Vector2i(0,2), Vector2i(1,2), Vector2i(2,1), Vector2i(2,2)]
-const u_180 := [Vector2i(1,0), Vector2i(1,2), Vector2i(2,0), Vector2i(2,1), Vector2i(2,2)]
-const u_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(2,0), Vector2i(2,1)]
-const u:= [u_0, u_90, u_180, u_270]
+const lowwer_z_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,1), Vector2i(1,2)]
+const lowwer_z_rot1 = [Vector2i(0,1), Vector2i(1,0), Vector2i(1,1), Vector2i(2,0)]
+const lowwer_z = [lowwer_z_rot0, lowwer_z_rot1, lowwer_z_rot0, lowwer_z_rot1]
 
-const z_0 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,1), Vector2i(1,2)]
-const z_90 := [Vector2i(0,1), Vector2i(1,0), Vector2i(1,1), Vector2i(2,0)]
-#const z_180 := [Vector2i(1,0), Vector2i(1,2), Vector2i(2,0), Vector2i(2,1), Vector2i(2,2)]
-#const z_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(2,0), Vector2i(2,1)]
-const z:= [z_0, z_90, z_0, z_90]
+const lower_i_rot0 = [Vector2i(0,0), Vector2i(0,1)]
+const lower_i_rot1 = [Vector2i(0,1), Vector2i(1,0)]
+const lower_i_rot2 = [Vector2i(0,0), Vector2i(1,0)]
+const lower_i_rot3 = [Vector2i(0,0), Vector2i(1,1)]
+const lower_i = [lower_i_rot0, lower_i_rot1, lower_i_rot2, lower_i_rot3]
 
-const i_0 := [Vector2i(0,0), Vector2i(1,0)]
-const i_90 := [Vector2i(0,0), Vector2i(0,1)]
-#const i_180 := [Vector2i(1,0), Vector2i(1,2), Vector2i(2,0), Vector2i(2,1), Vector2i(2,2)]
-#const i_270 := [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(2,0), Vector2i(2,1)]
-const i:= [i_0, i_90, i_0, i_90]
+const upper_z_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,1), Vector2i(2,1), Vector2i(2,2)]
+const upper_z_rot1 = [Vector2i(0,2), Vector2i(1,0), Vector2i(1,1), Vector2i(1,2), Vector2i(2,0)]
+const upper_z = [upper_z_rot0, upper_z_rot1, upper_z_rot0, upper_z_rot1]
 
 const TOTAL_ROTATIONS = 4
-const SHAPES := [l, square, diag, x, u, z, i]
+const SHAPES = [upper_i, upper_l, square, u, lowwer_z, lower_i, upper_z]
 
 
 

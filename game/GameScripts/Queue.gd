@@ -28,19 +28,17 @@ func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _is_demo_m
 
 
 func draw_queue(offset=0):
+	# Offest is used for paginating queue for challenges
 	queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
 
 	var y_offset = Vector2i(0, 0)
 	# It's possible, when undoing that the queue length exceeds the visible queue size, so we clamp.
 
-	#var start = max(offset, 0)
-	#var end = min(len(self.queue), offset + self.visibile_queue_size)
-
 	for queue_index in range(offset, offset + self.visibile_queue_size):
 		if queue_index >= len(self.queue):
 			return
 		var piece = self.queue[queue_index]
-
+		print(piece[0])
 		for vector in piece[0]:
 			var next_in_queue = queue_index == 0
 			var color = GlobalConsts.SPRITE.DARK_ACTIVE if next_in_queue else GlobalConsts.SPRITE.DARK_INACTIVE
