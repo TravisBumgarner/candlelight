@@ -1,2 +1,6 @@
 res://entry_point.tscn
 res://Game/PuzzleGameMenu.tscn
+res://Game/PuzzleGameMenu.gd
+res://Game/BaseGame.gd
+res://Game/PuzzleGame.gd
+res://Singletons/Utilities.gd

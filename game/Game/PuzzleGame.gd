@@ -6,6 +6,7 @@ func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_
 	super(_board_tile_map, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu)
 
 func new_game():
+	game_start_timestamp = Time.get_unix_time_from_system()
 	erase_board()
 	level = 1
 	alchemizations = 1
@@ -21,6 +22,7 @@ func new_game():
 
 
 func load_game(game_save_data):
+	game_start_timestamp = game_save_data.game_start_timestamp
 	level = game_save_data.level
 	alchemizations = game_save_data.alchemizations
 	update_things()
@@ -51,9 +53,10 @@ func save_game():
 	var data = {
 		"level": level,
 		"alchemizations": alchemizations,
+		"game_start_timestamp": game_start_timestamp
 	}
 	print('saving', data)
-	Utilities.save_game(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, data)
+	Utilities.save_game(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp, data)
 
 
 func gems_to_walls():

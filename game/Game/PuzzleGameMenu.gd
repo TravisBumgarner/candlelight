@@ -24,16 +24,16 @@ func check_for_saves():
 	
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
-	print('filename', file_name)
 	var full_file_path = "%s/%s" % [game_save_dir, file_name]
 
 	
-	while full_file_path != "":
+	while file_name != "":
 		if full_file_path.ends_with(".save"):
 			# Found a save file
 			save_files.append(full_file_path)
 			create_save_button(full_file_path)
-		full_file_path = dir.get_next()
+		file_name = dir.get_next()
+		full_file_path = "%s/%s" % [game_save_dir, file_name]
 	
 	dir.list_dir_end()
 

@@ -70,11 +70,11 @@ func get_save_game_dir(key: String):
 	print(what, "what")
 	return what
 
-func get_save_game_path(key: String) -> String:
-	var current_timestamp = Time.get_unix_time_from_system()
+func get_save_game_path(key: String, game_start_timestamp) -> String:
+	#var current_timestamp = Time.get_unix_time_from_system()
 	var directory = get_save_game_dir(key)
-	print('directory', directory)
-	var file_name = "%d.save" % [current_timestamp]
+
+	var file_name = "%d.save" % [game_start_timestamp]
 	var save_path = "%s/%s" % [directory, file_name]
 	
 	# Ensure directory exists
@@ -88,8 +88,8 @@ func get_save_game_path(key: String) -> String:
 	return save_path
 
 # Data can be any object that can be JSON stringified
-func save_game(key: String, data: Dictionary):
-	var save_path = get_save_game_path(key)
+func save_game(key: String, game_start_timestamp: int, data: Dictionary):
+	var save_path = get_save_game_path(key, game_start_timestamp)
 	print('savepath ', save_path)
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 

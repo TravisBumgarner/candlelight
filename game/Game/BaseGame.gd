@@ -19,6 +19,7 @@ var level: int
 var alchemizations: int
 var instructions
 var return_to_main_menu
+var game_start_timestamp: int
 
 var is_paused_for_scoring = false
 
