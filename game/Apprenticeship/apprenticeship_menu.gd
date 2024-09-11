@@ -1,7 +1,7 @@
 extends Node
 
-@onready var main_menu = preload("res://MainMenu/main_menu.tscn")
-@onready var game = preload("res://game.tscn")
+@onready var main_menu = load("res://MainMenu/main_menu.tscn")
+@onready var game = load("res://game_board2.tscn")
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))

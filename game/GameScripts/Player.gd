@@ -11,7 +11,7 @@ func _init(_board_tile_map, _piece_type):
 	self.board_tile_map = _board_tile_map
 	self.piece_type = _piece_type
 	self.rotation_index = 0
-	self.current_absolute_position = Vector2i(round(GlobalConsts.GRID.HEIGHT / 2.0 - 1), round(GlobalConsts.GRID.WIDTH / 2.0 - 1))
+	self.current_absolute_position = GlobalConsts.STARTING_SPACE_ORIGIN
 	self.draw_piece()
 	
 func move(direction):
@@ -53,8 +53,13 @@ func can_move(direction):
 
 func can_place():
 	for point in self.get_current_piece_rotation():
-		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, point + self.current_absolute_position)
+		var current_point = point + self.current_absolute_position
+		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, current_point)
 		if is_cell_border:
+			return false
+
+		var is_in_starting_area = current_point[1] < 0
+		if is_in_starting_area:
 			return false
 	return true
 

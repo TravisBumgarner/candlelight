@@ -33,13 +33,11 @@ func level_complete(gems):
 
 
 func gems_to_walls():
-	print('called')
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):
 			var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES,Vector2i(x,y))
-			print(tile_style)
+
 			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
-				print('gem found', x, y)
 				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BORDER, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.MID_BORDER)
 
 

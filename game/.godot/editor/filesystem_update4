@@ -1,5 +1,8 @@
 res://game_board.tscn
-res://GameScripts/PuzzleGame.gd
-res://entry_point.tscn
+res://game_board2.tscn
+res://MainMenu/index.gd
+res://Apprenticeship/apprenticeship_menu.gd
+res://Singletons/GlobalConsts.gd
 res://GameScripts/Player.gd
-res://GameScripts/Queue.gd
+res://GameScripts/BaseGame.gd
+res://GameScripts/PuzzleGame.gd

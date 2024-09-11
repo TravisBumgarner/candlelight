@@ -1,17 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://b3xiri3jav0ca"]
+[gd_scene load_steps=12 format=3 uid="uid://bcl6w6a2jotyl"]
 
-[ext_resource type="Script" path="res://GameScripts/index.gd" id="2_12axg"]
-[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="2_36ufg"]
-[ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="3_lphoj"]
-[ext_resource type="AudioStream" uid="uid://6nkwdp23h1f4" path="res://assets/music/song.mp3" id="4_t7a3t"]
-[ext_resource type="Script" path="res://Sounds.gd" id="4_ysh4b"]
-[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="5_p1hc7"]
-[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_3xqm2"]
-[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_00g8n"]
-[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_n0nom"]
+[ext_resource type="Script" path="res://GameScripts/index.gd" id="1_hqj3g"]
+[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="2_re0wt"]
+[ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="3_63dmw"]
+[ext_resource type="Script" path="res://Sounds.gd" id="4_88kw1"]
+[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="5_8usr4"]
+[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_j7co4"]
+[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_dnmin"]
+[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_0qgys"]
+[ext_resource type="AudioStream" uid="uid://6nkwdp23h1f4" path="res://assets/music/song.mp3" id="9_sgvb7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcd4k"]
-texture = ExtResource("3_lphoj")
+texture = ExtResource("3_63dmw")
 texture_region_size = Vector2i(32, 32)
 0:0/0 = 0
 1:0/0 = 0
@@ -27,14 +27,14 @@ sources/0 = SubResource("TileSetAtlasSource_fcd4k")
 
 [node name="Game" type="Node2D"]
 position = Vector2(32, -96)
-script = ExtResource("2_12axg")
+script = ExtResource("1_hqj3g")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -32.0
 offset_top = 96.0
 offset_right = 1312.0
 offset_bottom = 768.0
-texture = ExtResource("2_36ufg")
+texture = ExtResource("2_re0wt")
 
 [node name="TargetGemTileMap" type="TileMap" parent="."]
 position = Vector2(288, 160)
@@ -109,12 +109,12 @@ text = "Scoring"
 fit_content = true
 
 [node name="BoardTileMap" type="TileMap" parent="."]
-position = Vector2(576, 160)
+position = Vector2(644, 266)
 tile_set = SubResource("TileSet_aavhx")
 rendering_quadrant_size = 32
 format = 2
 layer_0/name = "BORDER"
-layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 65535, 262144, 0, 458751, 262144, 0, 524287, 262144, 0, 589823, 262144, 0, 655359, 262144, 0, 720895, 262144, 0, 655360, 262144, 0, 655361, 262144, 0, 655362, 262144, 0, 655363, 262144, 0, 655364, 262144, 0, 655365, 262144, 0, 655366, 262144, 0, -65529, 262144, 0, 655367, 262144, 0, -65528, 262144, 0, 655368, 262144, 0, -65527, 262144, 0, 655369, 262144, 0, -65526, 262144, 0, 10, 262144, 0, 65546, 262144, 0, 131082, 262144, 0, 196618, 262144, 0, 262154, 262144, 0, 327690, 262144, 0, 393226, 262144, 0, 458762, 262144, 0, 524298, 262144, 0, 589834, 262144, 0, 655370, 262144, 0)
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 65535, 262144, 0, 458751, 262144, 0, 524287, 262144, 0, 589823, 262144, 0, 655359, 262144, 0, 720895, 262144, 0, 655360, 262144, 0, 655361, 262144, 0, 655362, 262144, 0, 655363, 262144, 0, 655364, 262144, 0, 655365, 262144, 0, 655366, 262144, 0, 655367, 262144, 0, -65528, 262144, 0, 655368, 262144, 0, -65527, 262144, 0, 655369, 262144, 0, -65526, 262144, 0, 655370, 262144, 0, -65525, 262144, 0, -65524, 262144, 0, 655372, 262144, 0, 655371, 262144, 0, 655373, 262144, 0, -65523, 262144, 0, -65532, 262144, 0, -131068, 262144, 0, -196604, 262144, 0, -262140, 262144, 0, -262136, 262144, 0, -196600, 262144, 0, -131064, 262144, 0, 589837, 262144, 0, 524301, 262144, 0, 458765, 262144, 0, 393229, 262144, 0, 327693, 262144, 0, 262157, 262144, 0, 196621, 262144, 0, 131085, 262144, 0, 65549, 262144, 0, 13, 262144, 0, -262139, 262144, 0, -262138, 262144, 0, -262137, 262144, 0)
 layer_1/name = "PLACED_PIECES"
 layer_1/tile_data = PackedInt32Array()
 layer_2/name = "CURRENT_PIECE"
@@ -124,22 +124,22 @@ layer_2/tile_data = PackedInt32Array()
 one_shot = true
 
 [node name="Sounds" type="Node" parent="."]
-script = ExtResource("4_ysh4b")
+script = ExtResource("4_88kw1")
 
 [node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("5_p1hc7")
+stream = ExtResource("5_8usr4")
 
 [node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_3xqm2")
+stream = ExtResource("6_j7co4")
 
 [node name="movement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("7_00g8n")
+stream = ExtResource("7_dnmin")
 
 [node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("8_n0nom")
+stream = ExtResource("8_0qgys")
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_t7a3t")
+stream = ExtResource("9_sgvb7")
 
 [node name="Instructions" type="RichTextLabel" parent="."]
 offset_left = 544.0

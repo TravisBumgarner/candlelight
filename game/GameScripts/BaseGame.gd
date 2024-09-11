@@ -70,6 +70,10 @@ func _on_action_pressed(action):
 			self.return_to_main_menu.call()
 
 func handle_player_placement():
+	if not player.can_place():
+		SoundManager.play("nonmovement")
+		return
+	
 	history.append(self.board_tile_map, player)
 	player.place_on_board()
 	var gems = gemsManager.find_gems()

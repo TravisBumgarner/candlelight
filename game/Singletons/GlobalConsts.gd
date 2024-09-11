@@ -6,9 +6,11 @@ enum GAME_MODE {
 	DailyGame
 }
 
-const GRID = { HEIGHT = 10, WIDTH = 10 }
+const GRID = { HEIGHT = 10, WIDTH = 13 }
 const BOARD_ORIGIN = Vector2i(0, 0)
 const BOARD_END = BOARD_ORIGIN + Vector2i(GRID.WIDTH, GRID.HEIGHT)
+
+const STARTING_SPACE_ORIGIN = Vector2i(5, -3)
 
 const BOARD_LAYER = {
 	BORDER = 0,
