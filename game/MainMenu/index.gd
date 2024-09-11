@@ -11,7 +11,7 @@ class_name MainMenu
 
 @onready var game_scene = preload("res://game_board2.tscn")
 @onready var create_challenge_scene = preload("res://CreateChallenge/index.tscn")
-
+@onready var puzzle_game_menu = preload("res://Game/PuzzleGameMenu.tscn")
 
 func _ready():
 	daily_game_button.connect("pressed", Callable(self, "on_daily_game_button_down"))
@@ -21,16 +21,15 @@ func _ready():
 	exit.connect("pressed", Callable(self, "on_exit_button_down"))
 
 func on_apprenticeship_game_button_down():
-	GlobalState.gameMode = GlobalConsts.GAME_MODE.ApprenticeshipGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.ApprenticeshipGame
 	get_tree().change_scene_to_packed(game_scene)
 	
 func on_daily_game_button_down():
-	GlobalState.gameMode = GlobalConsts.GAME_MODE.DailyGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.DailyGame
 	get_tree().change_scene_to_packed(game_scene)
 	
 func on_puzzle_game_button_down():
-	GlobalState.gameMode = GlobalConsts.GAME_MODE.PuzzleGame
-	get_tree().change_scene_to_packed(game_scene)
+	get_tree().change_scene_to_packed(puzzle_game_menu)
 
 func on_create_challenge_button_down():
 	get_tree().change_scene_to_packed(create_challenge_scene)

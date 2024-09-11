@@ -64,35 +64,55 @@ func generate_key_from_date():
 	var today_string = today_format_string % [today.year, today.month, today.day] 
 	return hash(today_string)
 
-func get_save_game_path(key: String):
-	return "user://%.save" % [key]
+
+func get_save_game_dir(key: String):
+	var what = "user://%s" % [key]
+	print(what, "what")
+	return what
+
+func get_save_game_path(key: String) -> String:
+	var current_timestamp = Time.get_unix_time_from_system()
+	var directory = get_save_game_dir(key)
+	print('directory', directory)
+	var file_name = "%d.save" % [current_timestamp]
+	var save_path = "%s/%s" % [directory, file_name]
+	
+	# Ensure directory exists
+	var dir = DirAccess.open(directory)
+	if dir == null:
+		dir = DirAccess.make_dir_absolute(directory)
+		if dir == null:
+			print("Error: Unable to create save directory.")
+			return ""
+	
+	return save_path
 
 # Data can be any object that can be JSON stringified
 func save_game(key: String, data: Dictionary):
 	var save_path = get_save_game_path(key)
-	
+	print('savepath ', save_path)
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 
 	file.store_string(JSON.stringify(data))
 	file.close()
 
-func load_game(key: String):
-
-	var save_path = get_save_game_path(key)
-	if not FileAccess.file_exists(save_path):
-		print('No game save')
-		return null
-	
-	var file = FileAccess.open(save_path, FileAccess.READ)
-	var saved_text = file.get_as_text()
-	file.close()
-	
-	# Create an instance of the JSON class and parse the text
-	var parse_result = JSON.parse_string(saved_text)
-	
-	if not parse_result is Dictionary:
-		print("Failed to parse saved game data")
-		return null
-	
-	return parse_result
+#func load_game(key: String):
+#
+	#var save_path = get_save_game_path(key)
+	#if not FileAccess.file_exists(save_path):
+		#print('No game save')
+		#return null
+	#
+	#var file = FileAccess.open(save_path, FileAccess.READ)
+	#var saved_text = file.get_as_text()
+	#file.close()
+	#
+	## Create an instance of the JSON class and parse the text
+	#var parse_result = JSON.parse_string(saved_text)
+	#
+	#if not parse_result is Dictionary:
+		#print("Failed to parse saved game data")
+		#return null
+	#
+	#return parse_result
 

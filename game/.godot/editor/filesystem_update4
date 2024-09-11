@@ -1,7 +1,2 @@
-res://game_board2.tscn
-res://Singletons/GlobalConsts.gd
-res://Singletons/Utilities.gd
-res://GameScripts/PuzzleGame.gd
-res://GameScripts/BaseGame.gd
-res://Apprenticeship/ApprenticeshipGame.gd
-res://GameScripts/DailyGame.gd
+res://entry_point.tscn
+res://Game/PuzzleGameMenu.tscn

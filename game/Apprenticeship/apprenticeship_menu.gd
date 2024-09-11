@@ -11,5 +11,5 @@ func _on_action_pressed(action):
 		"escape":
 			get_tree().change_scene_to_packed(main_menu)
 		"select":
-			GlobalState.gameMode = GlobalConsts.GAME_MODE.ApprenticeshipGame
+			GlobalState.game_mode = GlobalConsts.GAME_MODE.ApprenticeshipGame
 			get_tree().change_scene_to_packed(game)

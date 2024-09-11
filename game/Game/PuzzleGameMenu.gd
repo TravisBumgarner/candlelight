@@ -24,6 +24,7 @@ func check_for_saves():
 	
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
+	print('filename', file_name)
 	var full_file_path = "%s/%s" % [game_save_dir, file_name]
 
 	

@@ -1,3 +1,4 @@
 extends Node
 
-var gameMode: GlobalConsts.GAME_MODE
+var game_mode: GlobalConsts.GAME_MODE
+var game_save_data = null
