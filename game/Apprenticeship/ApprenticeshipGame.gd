@@ -132,7 +132,7 @@ func new_game():
 	game_details_value.hide()
 	game_details_tile_map.hide()
 	update_instructions()
-	update_stats()
+	update_things()
 	erase_board()
 	apprenticeship_stage = ApprenticeshipStage.OneMovement
 	history = History.new()
@@ -141,7 +141,7 @@ func new_game():
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.puzzle_mode_set_target_gem(level)
 
-func update_stats():
+func update_things():
 	game_details_label.text = "hello"
 	game_details_value.text = "world"
 

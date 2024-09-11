@@ -62,3 +62,7 @@ const ACTION = {
 	UNDO = 'undo',
 	SELECT = 'select'
 }
+
+const GAME_SAVE_KEYS = {
+	PUZZLE_GAME = "puzzle_game"
+}
