@@ -20,3 +20,10 @@ func size():
 	
 func empty():
 	history.clear()
+
+func load(data: Array):
+	self.empty()
+	self.history = data
+
+func get_history():
+	return self.history

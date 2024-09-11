@@ -86,7 +86,7 @@ func handle_player_placement():
 	player.draw_piece()
 	
 	alchemizations += 1
-	update_things()
+	update_game_display()
 	
 
 func level_complete(_gems):
@@ -111,7 +111,7 @@ func undo():
 	
 	if alchemizations > 0:
 		alchemizations -= 1
-		update_things()
+		update_game_display()
 
 func erase_board():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
@@ -120,8 +120,8 @@ func erase_board():
 func new_game():
 	assert(false, "Must be implemented in the child class.")
 
-func load_game(game_save_data):
+func load_game():
 	assert(false, "Must be implemented in the child class.")
 
-func update_things():
+func update_game_display():
 	assert(false, "Must be implemented in the child class.")

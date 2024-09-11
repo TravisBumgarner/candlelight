@@ -60,9 +60,9 @@ func _ready():
 		Callable(self, "return_to_main_menu")
 	)
 	
-	if GlobalState.game_save_data:
-		game.load_game(GlobalState.game_save_data)
-		GlobalState.game_save_data = null
+	if GlobalState.game_save_file:
+		game.load_game()
+		GlobalState.game_save_file = null
 	else:
 		game.new_game()
 	

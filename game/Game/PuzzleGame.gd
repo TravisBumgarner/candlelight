@@ -10,8 +10,8 @@ func new_game():
 	erase_board()
 	level = 1
 	alchemizations = 1
-	update_things()
-	history = History.new()
+	update_game_display()
+	self.history = History.new()
 	var visible_queue_size = 3
 	var game_key = null
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
@@ -21,19 +21,23 @@ func new_game():
 	gemsManager.puzzle_mode_set_target_gem(level)
 
 
-func load_game(game_save_data):
-	game_start_timestamp = game_save_data.game_start_timestamp
-	level = game_save_data.level
-	alchemizations = game_save_data.alchemizations
-	update_things()
+func load_game():
+	var config = ConfigFile.new()
+	config.load(GlobalState.game_save_file)
+	game_start_timestamp = config.get_value("save", "game_start_timestamp")
+	level = config.get_value("save", "level", level)
+	alchemizations = config.get_value("save", "level")
 	history = History.new()
+	print('history', config.get_value("save", "history"))
+	history.load(config.get_value("save", "history"))
 	var visible_queue_size = 3
 	var game_key = null
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
-	queue.fill_queue()
-	player = Player.new(board_tile_map, queue.next())
+	queue.load(config.get_value("save", "queue"))
+	player = Player.new(board_tile_map, config.get_value("save", "player_shape"))
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.puzzle_mode_set_target_gem(level)
+	update_game_display()
 
 func level_complete(gems):
 	var total_gems = gems.size()
@@ -48,15 +52,33 @@ func level_complete(gems):
 	is_paused_for_scoring = true
 	level_complete_timer.start(1)
 
+func _on_action_pressed(action):
+	super(action)
+	save_game()
 
 func save_game():
-	var data = {
-		"level": level,
-		"alchemizations": alchemizations,
-		"game_start_timestamp": game_start_timestamp
-	}
-	print('saving', data)
-	Utilities.save_game(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp, data)
+	# Create new ConfigFile object.
+	var config = ConfigFile.new()
+
+	# Store some values.
+	config.set_value("save", "level", level)
+	config.set_value("save", "alchemizations", alchemizations)
+	config.set_value("save", "queue", queue.get_queue())
+	config.set_value("save", "game_start_timestamp", game_start_timestamp)
+	config.set_value("save", "history", history.get_history())
+	config.set_value("save", "player_shape", player.shape)
+
+	# Save it to a file (overwrite if already exists).
+	config.save(Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp))
+	
+	#var data = {
+		#"level": level,
+		#"alchemizations": alchemizations,
+		#"game_start_timestamp": game_start_timestamp,
+		#"history": self.history.get_history(),
+		#"queue": self.queue.get_queue()
+	#}
+	#Utilities.save_game(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp, data)
 
 
 func gems_to_walls():
@@ -71,14 +93,14 @@ func gems_to_walls():
 
 func _on_level_complete_timer_timeout():
 	level += 1
-	update_things()
+	update_game_display()
 	gems_to_walls()
 	erase_board()
 	gemsManager.puzzle_mode_set_target_gem(level)
 	player = Player.new(board_tile_map, self.queue.next())
 	is_paused_for_scoring = false
 
-func update_things():
+func update_game_display():
 	var text = "[center]"
 	text += "Level " + str(level) + '\n'
 	text += str(alchemizations) + " Alchemization"
@@ -86,6 +108,4 @@ func update_things():
 		text += "s"
 	
 	game_details_value.text = text
-	
-	save_game()
 	

@@ -50,28 +50,31 @@ func create_save_button(file_name: String):
 # Function to handle button press, loading the save file
 func _on_save_button_pressed(file_name: String):
 	print("Loading save:", file_name)
-	load_game(file_name)
+	#load_game(file_name)
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
+	GlobalState.game_save_file = file_name
+	get_tree().change_scene_to_packed(game_scene)
 
 # Function to load the game based on the selected save file
-func load_game(file_name: String):
-	if not FileAccess.file_exists(file_name):
-		print("Error: Save file not found.")
-		return
-	
-	var file = FileAccess.open(file_name, FileAccess.READ)
-	var save_data = file.get_as_text()  # Assuming the save is in a readable format (e.g., JSON)
-	file.close()
-	
-		# Create an instance of the JSON class and parse the text
-	var parse_result = JSON.parse_string(save_data)
-	
-	if not parse_result is Dictionary:
-		print("Failed to parse saved game data")
-		return null
+#func load_game(file_name: String):
+	#if not FileAccess.file_exists(file_name):
+		#print("Error: Save file not found.")
+		#return
+	#
+	#var file = FileAccess.open(file_name, FileAccess.READ)
+	#var save_data = file.get_as_text()  # Assuming the save is in a readable format (e.g., JSON)
+	#file.close()
+	#
+		## Create an instance of the JSON class and parse the text
+	#var parse_result = JSON.parse_string(save_data)
+	#
+	#if not parse_result is Dictionary:
+		#print("Failed to parse saved game data")
+		#return null
 
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
-	GlobalState.game_save_data = parse_result
-	get_tree().change_scene_to_packed(game_scene)	
+	#GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
+	#GlobalState.game_save_data = parse_result
+	#get_tree().change_scene_to_packed(game_scene)	
 
 
 func _on_new_game_pressed():

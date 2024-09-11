@@ -15,7 +15,7 @@ func _on_level_complete_timer_timeout():
 func new_game():
 	var key = Utilities.generate_key_from_date()
 	
-	update_things()
+	update_game_display()
 	erase_board()
 	alchemizations = 0
 	history = History.new()
@@ -26,7 +26,7 @@ func new_game():
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.daily_mode_set_target_gem(key)
 
-func update_things():
+func update_game_display():
 	var text = "[center]"
 	text += str(alchemizations) + "Alchemization"
 	if alchemizations != 1:

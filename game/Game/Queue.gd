@@ -23,8 +23,6 @@ func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _is_demo_m
 		RNG.randomize()
 	else:
 		RNG.seed = game_key
-	
-	self.draw_queue()
 
 
 func draw_queue(offset=0):
@@ -51,6 +49,7 @@ func fill_queue():
 		else:
 			var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
 			self.queue.append(random)
+	self.draw_queue()
 
 func append_to_queue(shape):
 	self.queue.append(shape)
@@ -72,3 +71,15 @@ func next():
 func size():
 	return len(self.queue)
 
+func get_queue():
+	return self.queue
+	
+func empty():
+	self.queue.clear()
+
+	
+func load(data: Array):
+	self.empty()
+	self.queue = data
+	print('filling queue', data)
+	self.draw_queue()
