@@ -8,6 +8,7 @@ func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_
 func new_game():
 	erase_board()
 	level = 1
+	alchemizations = 1
 	update_stats()
 	history = History.new()
 	var visible_queue_size = 3
@@ -53,6 +54,9 @@ func _on_level_complete_timer_timeout():
 
 func update_stats():
 	var text = "[center]"
-	text += "Level " + str(level)
+	text += "Level " + str(level) + '\n'
+	text += str(alchemizations) + " Alchemization"
+	if alchemizations != 1:
+		text += "s"
 	
 	game_details_value.text = text

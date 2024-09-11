@@ -7,3 +7,4 @@ res://GameScripts/Player.gd
 res://GameScripts/BaseGame.gd
 res://GameScripts/PuzzleGame.gd
 res://Singletons/Utilities.gd
+res://GameScripts/DailyGame.gd

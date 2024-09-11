@@ -1,8 +1,6 @@
 extends BaseGame
 class_name DailyGame
 
-var experiments := 0
-
 func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu):
 	super(_board_tile_map, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu)
 func level_complete(gems):
@@ -19,7 +17,7 @@ func new_game():
 	
 	update_stats()
 	erase_board()
-	experiments = 0
+	alchemizations = 0
 	history = History.new()
 	var visible_queue_size = 3
 	queue = Queue.new(queue_tile_map, key, visible_queue_size)
@@ -28,20 +26,10 @@ func new_game():
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.daily_mode_set_target_gem(key)
 
-func undo():
-	super()
-	if experiments > 0:
-		experiments -= 1
-		update_stats()
-
-func handle_player_placement():
-	experiments += 1
-	super()
-	update_stats()
-
 func update_stats():
 	var text = "[center]"
-	text += str(experiments) + "\n"
-	text += "Alchemizations"
+	text += str(alchemizations) + "Alchemization"
+	if alchemizations != 1:
+		text += "s"
 	
 	game_details_value.text = text

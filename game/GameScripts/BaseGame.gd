@@ -15,7 +15,8 @@ var history: History
 var player: Player
 var queue: Queue
 var gemsManager: GemsManager
-var level
+var level: int
+var alchemizations: int
 var instructions
 var return_to_main_menu
 
@@ -83,6 +84,9 @@ func handle_player_placement():
 	player = Player.new(self.board_tile_map, self.queue.next())
 	player.draw_piece()
 	
+	alchemizations += 1
+	update_stats()
+	
 
 func level_complete(_gems):
 	assert(false, "Must be implemented in the child class.")
@@ -103,6 +107,10 @@ func undo():
 			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 	player.draw_piece()
+	
+	if alchemizations > 0:
+		alchemizations -= 1
+		update_stats()
 
 func erase_board():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
