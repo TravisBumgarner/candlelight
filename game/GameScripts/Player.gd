@@ -25,7 +25,6 @@ func move(direction):
 		
 
 func get_current_piece_rotation():
-	#print('drawing rotation index', rotation_index, self.piece_type)
 	return self.piece_type[self.rotation_index]
 
 func draw_piece():
@@ -50,6 +49,14 @@ func can_move(direction):
 		if is_cell_border:
 			return false
 	return true
+	
+
+func can_place():
+	for point in self.get_current_piece_rotation():
+		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, point + self.current_absolute_position)
+		if is_cell_border:
+			return false
+	return true
 
 
 func can_rotate():
@@ -65,7 +72,6 @@ func rotate_right():
 	if self.can_rotate():
 		SoundManager.play("movement")
 		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
-		print(rotation_index)
 		self.draw_piece()
 	else:
 		SoundManager.play("nonmovement")

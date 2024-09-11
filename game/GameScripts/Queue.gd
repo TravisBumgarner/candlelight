@@ -38,7 +38,6 @@ func draw_queue(offset=0):
 		if queue_index >= len(self.queue):
 			return
 		var piece = self.queue[queue_index]
-		print(piece[0])
 		for vector in piece[0]:
 			var next_in_queue = queue_index == 0
 			var color = GlobalConsts.SPRITE.DARK_ACTIVE if next_in_queue else GlobalConsts.SPRITE.DARK_INACTIVE

@@ -32,9 +32,22 @@ func level_complete(gems):
 	level_complete_timer.start(1)
 
 
+func gems_to_walls():
+	print('called')
+	for x in range(GlobalConsts.GRID.WIDTH):
+		for y in range(GlobalConsts.GRID.HEIGHT):
+			var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES,Vector2i(x,y))
+			print(tile_style)
+			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
+				print('gem found', x, y)
+				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BORDER, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.MID_BORDER)
+
+
+
 func _on_level_complete_timer_timeout():
 	level += 1
 	update_stats()
+	gems_to_walls()
 	erase_board()
 	gemsManager.puzzle_mode_set_target_gem(level)
 	player = Player.new(board_tile_map, self.queue.next())
