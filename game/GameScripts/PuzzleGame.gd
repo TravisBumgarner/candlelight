@@ -38,7 +38,7 @@ func gems_to_walls():
 			var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES,Vector2i(x,y))
 
 			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
-				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BORDER, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.MID_BORDER)
+				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
 

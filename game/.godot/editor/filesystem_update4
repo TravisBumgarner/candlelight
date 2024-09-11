@@ -6,3 +6,4 @@ res://Singletons/GlobalConsts.gd
 res://GameScripts/Player.gd
 res://GameScripts/BaseGame.gd
 res://GameScripts/PuzzleGame.gd
+res://Singletons/Utilities.gd

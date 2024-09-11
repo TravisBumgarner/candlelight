@@ -61,6 +61,10 @@ func can_place():
 		var is_in_starting_area = current_point[1] < 0
 		if is_in_starting_area:
 			return false
+		
+		var is_cell_gem  = Utilities.is_cell_blocker(self.board_tile_map, current_point)
+		if is_cell_gem:
+			return false
 	return true
 
 

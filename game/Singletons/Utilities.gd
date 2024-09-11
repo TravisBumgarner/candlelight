@@ -3,6 +3,10 @@ extends Node
 func is_cell_border(tile_map, cell):
 	return not(tile_map.get_cell_source_id(GlobalConsts.BOARD_LAYER.BORDER, cell) == -1)
 
+func is_cell_blocker(tile_map, cell):
+	return not(tile_map.get_cell_source_id(GlobalConsts.BOARD_LAYER.BLOCKERS, cell) == -1)
+
+
 func swap(i : int, j : int, a : Array) -> Array:
 	var t = a[i]
 	a[i] = a[j]

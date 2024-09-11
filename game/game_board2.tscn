@@ -119,6 +119,9 @@ layer_1/name = "PLACED_PIECES"
 layer_1/tile_data = PackedInt32Array()
 layer_2/name = "CURRENT_PIECE"
 layer_2/tile_data = PackedInt32Array()
+layer_3/name = "BLOCKERS"
+layer_3/z_index = 3
+layer_3/tile_data = PackedInt32Array()
 
 [node name="LevelCompleteTimer" type="Timer" parent="."]
 one_shot = true
