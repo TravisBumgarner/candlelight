@@ -2,38 +2,43 @@ extends Node2D
 
 class_name BaseGame
 
+# _init params Alphabetical
 var board_tile_map: TileMap
-var target_gem_tile_map: TileMap
 var queue_tile_map: TileMap
-var level_complete_timer
-var sounds
-var game_details_label
-var game_details_value
+var level_complete_timer: Timer
+var sounds: Node
+var game_details_label: Label
+var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
+var instructions: RichTextLabel
+var return_to_main_menu: Callable
+var target_gem_tile_map: TileMap
+# end _init Params Alphabetical
 
+# Local Params
 var history: History
 var player: Player
 var queue: Queue
 var gemsManager: GemsManager
 var level: int
 var alchemizations: int
-var instructions
-var return_to_main_menu
 var game_start_timestamp: int
-
 var is_paused_for_scoring = false
+# end Local Params
 
-func _init(_board_tile_map: TileMap, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu):
-	self.board_tile_map = _board_tile_map
-	self.target_gem_tile_map = _target_gem_tile_map
-	self.queue_tile_map = _queue_tile_map
-	self.level_complete_timer = _level_complete_timer
-	self.sounds = _sounds
-	self.game_details_label = _game_details_label
-	self.game_details_value = _game_details_value
-	self.game_details_tile_map = _game_details_tile_map
-	self.instructions = _instructions
-	self.return_to_main_menu = _return_to_main_menu
+func _init(args: Array):
+	# Alphabetical
+	self.board_tile_map = args[0]
+	self.game_details_label = args[1]
+	self.game_details_tile_map = args[2]
+	self.game_details_value =args[3]
+	self.instructions = args[4]
+	self.level_complete_timer = args[5]
+	self.queue_tile_map = args[6]
+	self.return_to_main_menu =args[7]
+	self.sounds = args[8]
+	self.target_gem_tile_map = args[9]
+	# Alphabatical
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -62,7 +67,7 @@ func _on_action_pressed(action):
 			if history.size() == 0:
 				SoundManager.play("nonmovement")
 				return
-			self.undo()
+			self.undo()              
 		"rotate":
 			player.rotate_right()
 		"select":

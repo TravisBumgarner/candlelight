@@ -42,8 +42,8 @@ var ACTION_DISPLAY_TEXT = {
 	GlobalConsts.ACTION['UNDO'] : "Undo ([b]Z[/b] Key)",
 }
 
-func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu):
-	super(_board_tile_map, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu)
+func _init(args):                
+	super(args)
 
 func level_complete(gems):
 	if apprenticeship_stage == ApprenticeshipStage.FourScore:

@@ -1,9 +1,8 @@
 extends BaseGame
 class_name PuzzleGame
 
-# Called when the node enters the scene tree for the first time.
-func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu):
-	super(_board_tile_map, _target_gem_tile_map, _queue_tile_map, _level_complete_timer, _sounds, _game_details_label, _game_details_value, _game_details_tile_map, _instructions, _return_to_main_menu)
+func _init(args):                
+	super(args)
 
 func new_game():
 	game_start_timestamp = Time.get_unix_time_from_system()
@@ -18,7 +17,9 @@ func new_game():
 	
 	var visible_queue_size = 3
 	var game_key = null
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	queue = Queue.new(queue_tile_map,
+	game_key,
+	visible_queue_size)
 	queue.fill_queue()
 	
 	player = Player.new(board_tile_map, queue.next())
@@ -115,5 +116,5 @@ func update_game_display():
 	if alchemizations != 1:
 		text += "s"
 	
-	game_details_value.text = text
+	self.game_details_value.text = text
 	
