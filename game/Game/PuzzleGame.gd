@@ -65,6 +65,7 @@ func save_game():
 	config.set_value("save", "history", history.get_history())
 	config.set_value("save", "player_shape", player.shape)
 	config.set_value("save", "human_readable_last_played", Utilities.human_readable_current_time())
+	#config.set_value("save", "board", )
 	config.save(Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp))
 
 func gems_to_walls():

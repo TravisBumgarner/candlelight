@@ -97,7 +97,7 @@ func _on_level_complete_timer_timeout():
 
 func undo():
 	var record = history.pop()
-	self.queue.undo(player.piece_type)
+	self.queue.undo(player.shape)
 	player = record.player
 	
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
