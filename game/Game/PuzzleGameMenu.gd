@@ -34,9 +34,9 @@ func check_for_saves():
 			
 			var config = ConfigFile.new()
 			config.load(full_file_path)
-			var human_readable_last_played = config.get_value("save", "human_readable_last_played")
-			var alchemizations = config.get_value("save", "alchemizations")
-			var level = config.get_value("save", "level")
+			var human_readable_last_played = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HUMAN_READABLE_LAST_PLAYED)
+			var alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.ALCHEMIZATIONS)
+			var level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL)
 			create_save_button(full_file_path, human_readable_last_played, level, alchemizations)
 		file_name = dir.get_next()
 		full_file_path = "%s/%s" % [game_save_dir, file_name]

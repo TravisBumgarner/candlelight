@@ -64,5 +64,18 @@ const ACTION = {
 }
 
 const GAME_SAVE_KEYS = {
-	PUZZLE_GAME = "puzzle_game"
+	PUZZLE_GAME = "puzzle_game_saves"
 }
+
+const CONFIG_FILE_SAVE_KEY = "game_save"
+
+const PUZZLE_GAME_SAVE_KEY = {
+	LEVEL = 'level',
+	ALCHEMIZATIONS = 'alchemizations',
+	QUEUE = 'queue',
+	GAME_START_TIMESTAMP = 'game_start_timestamp',
+	HISTORY = 'history',
+	PLAYER_SHAPE = 'player_shape',
+	HUMAN_READABLE_LAST_PLAYED = 'human_readable_last_played'
+}
+

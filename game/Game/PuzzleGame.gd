@@ -24,17 +24,17 @@ func new_game():
 func load_game():
 	var config = ConfigFile.new()
 	config.load(GlobalState.game_save_file)
-	game_start_timestamp = config.get_value("save", "game_start_timestamp")
-	level = config.get_value("save", "level", level)
-	alchemizations = config.get_value("save", "level")
+	game_start_timestamp = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.GAME_START_TIMESTAMP)
+	level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL, level)
+	alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL)
 	history = History.new()
-	print('history', config.get_value("save", "history"))
-	history.load(config.get_value("save", "history"))
+	print('history', config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HISTORY))
+	history.load(config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HISTORY))
 	var visible_queue_size = 3
 	var game_key = null
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
-	queue.load(config.get_value("save", "queue"))
-	player = Player.new(board_tile_map, config.get_value("save", "player_shape"))
+	queue.load(config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.QUEUE))
+	player = Player.new(board_tile_map, config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_SHAPE))
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.puzzle_mode_set_target_gem(level)
 	update_game_display()
@@ -58,14 +58,14 @@ func _on_action_pressed(action):
 
 func save_game():
 	var config = ConfigFile.new()
-	config.set_value("save", "level", level)
-	config.set_value("save", "alchemizations", alchemizations)
-	config.set_value("save", "queue", queue.get_queue())
-	config.set_value("save", "game_start_timestamp", game_start_timestamp)
-	config.set_value("save", "history", history.get_history())
-	config.set_value("save", "player_shape", player.shape)
-	config.set_value("save", "human_readable_last_played", Utilities.human_readable_current_time())
-	#config.set_value("save", "board", )
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL, level)
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.ALCHEMIZATIONS, alchemizations)
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.QUEUE, queue.get_queue())
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.GAME_START_TIMESTAMP, game_start_timestamp)
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HISTORY, history.get_history())
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_SHAPE, player.shape)
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HUMAN_READABLE_LAST_PLAYED, Utilities.human_readable_current_time())
+	#config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, "placed_pieces", placed_pieces)
 	config.save(Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp))
 
 func gems_to_walls():
