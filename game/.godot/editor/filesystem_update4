@@ -1,6 +1,2 @@
-res://entry_point.tscn
-res://game_board.tscn
-res://game.tscn
-res://Singletons/Shapes.gd
-res://GameScripts/Player.gd
-res://GameScripts/Queue.gd
+res://Game/PuzzleGameMenu.tscn
+res://Game/PuzzleGameMenu.gd

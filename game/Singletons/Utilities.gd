@@ -3,6 +3,10 @@ extends Node
 func is_cell_border(tile_map, cell):
 	return not(tile_map.get_cell_source_id(GlobalConsts.BOARD_LAYER.BORDER, cell) == -1)
 
+func is_cell_blocker(tile_map, cell):
+	return not(tile_map.get_cell_source_id(GlobalConsts.BOARD_LAYER.BLOCKERS, cell) == -1)
+
+
 func swap(i : int, j : int, a : Array) -> Array:
 	var t = a[i]
 	a[i] = a[j]
@@ -43,19 +47,55 @@ func is_cell_in_range(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i
 		return false
 	return true
 
-
-func get_atlas_coords_array(tile_map):
+ # Takes a tile map, used for the game, and converts it for history or game saves
+func tile_map_to_array(tile_map, level):
 	var tile_map_array = []
 	for x in range(GlobalConsts.GRID.WIDTH):
 		tile_map_array.append([])
 		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_id = tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x, y))
+			var tile_id = tile_map.get_cell_atlas_coords(level, Vector2i(x, y))
 			tile_map_array[x].append(tile_id)
 	
 	return tile_map_array
+	
+# Takes an array, used for history or game saves, and applies it to the board game tile map of placed pieces.	
+func array_to_tile_map(board_tile_map, layer, array):
+	board_tile_map.clear_layer(layer)
+	
+	for x in range(GlobalConsts.GRID.WIDTH):
+		for y in range(GlobalConsts.GRID.HEIGHT):
+			var tile_style = array[x][y]
+			board_tile_map.set_cell(layer, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func generate_key_from_date():
 	var today_format_string = "%s-%s-%s"
 	var today := Time.get_date_dict_from_system()
 	var today_string = today_format_string % [today.year, today.month, today.day] 
 	return hash(today_string)
+
+
+func get_save_game_dir(key: String):
+	return "user://%s" % [key]
+
+func get_save_game_path(key: String, game_start_timestamp) -> String:
+	#var current_timestamp = Time.get_unix_time_from_system()
+	var directory = get_save_game_dir(key)
+
+	var file_name = "%d.save" % [game_start_timestamp]
+	var save_path = "%s/%s" % [directory, file_name]
+	
+	# Ensure directory exists
+	var dir = DirAccess.open(directory)
+	if dir == null:
+		dir = DirAccess.make_dir_absolute(directory)
+		if dir == null:
+			print("Error: Unable to create save directory.")
+			return ""
+	
+	return save_path
+	
+	
+func human_readable_current_time() -> String:
+	var time = Time.get_datetime_string_from_system()
+	return time
+

@@ -6,20 +6,23 @@ enum GAME_MODE {
 	DailyGame
 }
 
-const GRID = { HEIGHT = 10, WIDTH = 10 }
+const GRID = { HEIGHT = 10, WIDTH = 13 }
 const BOARD_ORIGIN = Vector2i(0, 0)
 const BOARD_END = BOARD_ORIGIN + Vector2i(GRID.WIDTH, GRID.HEIGHT)
 
+const STARTING_SPACE_ORIGIN = Vector2i(5, -3)
+
 const BOARD_LAYER = {
 	BORDER = 0,
-	PLACED_PIECES = 1,
-	CURRENT_PIECE = 2,
+	PLACED_SHAPES = 1,
+	CURRENT_SHAPE = 2,
+	BLOCKERS = 3,
 }
 
 const CHALLENGE_GEM_LAYER = {
 	BORDER = 0,
-	PLACED_PIECES = 1,
-	CURRENT_PIECE = 2,
+	PLACED_SHAPES = 1,
+	CURRENT_SHAPE = 2,
 }
 
 # Currently only one layer.
@@ -59,3 +62,23 @@ const ACTION = {
 	UNDO = 'undo',
 	SELECT = 'select'
 }
+
+const GAME_SAVE_KEYS = {
+	PUZZLE_GAME = "puzzle_game_saves"
+}
+
+const CONFIG_FILE_SAVE_KEY = "game_save"
+
+const PUZZLE_GAME_SAVE_KEY = {
+	LEVEL = 'level',
+	ALCHEMIZATIONS = 'alchemizations',
+	QUEUE = 'queue',
+	GAME_START_TIMESTAMP = 'game_start_timestamp',
+	HISTORY = 'history',
+	PLAYER_SHAPE = 'player_shape',
+	HUMAN_READABLE_LAST_PLAYED = 'human_readable_last_played',
+	PLACED_SHAPES = 'placed_shapes',
+	BLOCKERS = 'blockers',
+	TARGET_GEM = 'target_gem'
+}
+
