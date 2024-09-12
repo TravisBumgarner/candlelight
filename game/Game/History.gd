@@ -8,9 +8,9 @@ var history: Array = []
 func pop():
 	return history.pop_back()
 
-func append(tile_map, shape):
+func append(placed_shapes_tile_map, shape):
 	var record = {
-		placed_shapes = Utilities.get_atlas_coords_array(tile_map),
+		placed_shapes = Utilities.tile_map_to_array(placed_shapes_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES),
 		shape = shape
 	}
 	history.append(record)

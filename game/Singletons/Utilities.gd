@@ -47,16 +47,25 @@ func is_cell_in_range(cell: Vector2i, min_vector: Vector2i, max_vector: Vector2i
 		return false
 	return true
 
-
-func get_atlas_coords_array(tile_map):
+ # Takes a tile map, used for the game, and converts it for history or game saves
+func tile_map_to_array(tile_map, level):
 	var tile_map_array = []
 	for x in range(GlobalConsts.GRID.WIDTH):
 		tile_map_array.append([])
 		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_id = tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, Vector2i(x, y))
+			var tile_id = tile_map.get_cell_atlas_coords(level, Vector2i(x, y))
 			tile_map_array[x].append(tile_id)
 	
 	return tile_map_array
+	
+# Takes an array, used for history or game saves, and applies it to the board game tile map of placed pieces.	
+func array_to_tile_map(board_tile_map, layer, array):
+	board_tile_map.clear_layer(layer)
+	
+	for x in range(GlobalConsts.GRID.WIDTH):
+		for y in range(GlobalConsts.GRID.HEIGHT):
+			var tile_style = array[x][y]
+			board_tile_map.set_cell(layer, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func generate_key_from_date():
 	var today_format_string = "%s-%s-%s"

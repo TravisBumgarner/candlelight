@@ -13,3 +13,4 @@ res://Game/Player.gd
 res://Game/Queue.gd
 res://MainMenu/main_menu.tscn
 res://MainMenu/index.gd
+res://Game/GemsManager.gd

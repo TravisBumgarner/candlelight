@@ -45,7 +45,6 @@ func puzzle_mode_level_to_gem_size(level: int) -> int:
 
 
 
-
 func daily_mode_generate_gem(game_key: int):
 	var RNG = RandomNumberGenerator.new()
 	RNG.seed = game_key
@@ -133,6 +132,10 @@ func draw_target_gem():
 		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
+func puzzle_mode_resume(gem):
+	target_gem = gem
+	self.draw_target_gem()
+
 func is_target_gem(shape):
 	if(shape.size() != target_gem.size()):
 		return false
@@ -203,3 +206,6 @@ func flood_fill(pos, desired_color, shape):
 
 		var potential_neighbors = Utilities.get_valid_neighbors(Vector2i(x,y), Vector2i(0,0), Vector2i(GlobalConsts.GRID.WIDTH - 1, GlobalConsts.GRID.HEIGHT - 1))
 		stack.append_array(potential_neighbors)
+
+func get_target_gem():
+	return self.target_gem

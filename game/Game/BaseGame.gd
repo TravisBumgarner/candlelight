@@ -97,17 +97,12 @@ func _on_level_complete_timer_timeout():
 
 func undo():
 	var record = history.pop()
-	print('history record', record)
-	self.queue.undo(player.shape)
-	player = Player.new(self.board_tile_map, record.shape)
-	
-	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_SHAPES)
-	
-	for x in range(GlobalConsts.GRID.WIDTH):
-		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_style = record.placed_shapes[x][y]
-			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
+	self.queue.undo(player.shape)
+	
+	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, record.placed_shapes)
+
+	player = Player.new(self.board_tile_map, record.shape)
 	player.draw()
 	
 	if alchemizations > 0:

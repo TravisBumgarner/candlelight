@@ -59,8 +59,6 @@ func create_save_button(file_name: String, human_readable_last_played: String, l
 
 # Function to handle button press, loading the save file
 func _on_save_button_pressed(file_name: String):
-	print("Loading save:", file_name)
-	#load_game(file_name)
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
 	GlobalState.game_save_file = file_name
 	get_tree().change_scene_to_packed(game_scene)

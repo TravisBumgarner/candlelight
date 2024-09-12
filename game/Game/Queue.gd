@@ -81,5 +81,4 @@ func empty():
 func load(data: Array):
 	self.empty()
 	self.queue = data
-	print('filling queue', data)
 	self.draw_queue()

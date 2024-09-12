@@ -76,6 +76,9 @@ const PUZZLE_GAME_SAVE_KEY = {
 	GAME_START_TIMESTAMP = 'game_start_timestamp',
 	HISTORY = 'history',
 	PLAYER_SHAPE = 'player_shape',
-	HUMAN_READABLE_LAST_PLAYED = 'human_readable_last_played'
+	HUMAN_READABLE_LAST_PLAYED = 'human_readable_last_played',
+	PLACED_SHAPES = 'placed_shapes',
+	BLOCKERS = 'blockers',
+	TARGET_GEM = 'target_gem'
 }
 
