@@ -1,2 +1,7 @@
-res://Game/PuzzleGameMenu.tscn
-res://Game/PuzzleGameMenu.gd
+res://Game/game_board.tscn
+res://Game/index.gd
+res://entry_point.tscn
+res://Game/PuzzleGame.gd
+res://Game/BaseGame.gd
+res://Apprenticeship/ApprenticeshipGame.gd
+res://Game/DailyGame.gd
