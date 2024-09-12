@@ -65,13 +65,12 @@ func save_game():
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HISTORY, history.get_history())
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_SHAPE, player.shape)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HUMAN_READABLE_LAST_PLAYED, Utilities.human_readable_current_time())
-	#config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, "placed_pieces", placed_pieces)
 	config.save(Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp))
 
 func gems_to_walls():
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES,Vector2i(x,y))
+			var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES,Vector2i(x,y))
 
 			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
 				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)

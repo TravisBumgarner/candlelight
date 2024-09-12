@@ -54,8 +54,8 @@ func fill_queue():
 func append_to_queue(shape):
 	self.queue.append(shape)
 
-func undo(_current_game_piece):
-	self.queue.insert(0, _current_game_piece)
+func undo(shape):
+	self.queue.insert(0, shape)
 	self.draw_queue()
 
 

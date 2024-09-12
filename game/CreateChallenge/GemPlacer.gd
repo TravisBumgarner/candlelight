@@ -22,8 +22,8 @@ func move(direction):
 		pass
 		
 func draw_point():
-	self.gem_tile_map.clear_layer(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_PIECE)
-	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_PIECES, self.current_position)
+	self.gem_tile_map.clear_layer(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE)
+	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, self.current_position)
 	var tile_style: Vector2i
 	if(placed_tile == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE):
 		tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
@@ -31,7 +31,7 @@ func draw_point():
 		tile_style = GlobalConsts.SPRITE.GEM_BLUE_ACTIVE
 	#elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
 		#tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
-	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_PIECE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
 
 func can_move(direction):
 	var is_cell_border = Utilities.is_cell_border(self.gem_tile_map, self.current_position + direction)
@@ -40,8 +40,8 @@ func can_move(direction):
 	return true
 
 func place_on_board():
-	self.gem_tile_map.clear_layer(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_PIECE)
-	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_PIECES, self.current_position)
+	self.gem_tile_map.clear_layer(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE)
+	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, self.current_position)
 	var tile_style: Vector2i
 	
 	if(placed_tile == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE):
@@ -52,4 +52,4 @@ func place_on_board():
 		# Handles both null and (-1, -1) for tile. Depending on undo.
 		# There's something off here I don't fully understand.
 		tile_style = GlobalConsts.SPRITE.GEM_BLUE_INACTIVE
-	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_PIECES, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)

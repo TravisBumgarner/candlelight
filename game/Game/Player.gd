@@ -12,25 +12,25 @@ func _init(_board_tile_map, _shape):
 	self.shape = _shape
 	self.rotation_index = 0
 	self.current_absolute_position = GlobalConsts.STARTING_SPACE_ORIGIN
-	self.draw_piece()
+	self.draw()
 	
 func move(direction):
 	if can_move(direction):
 		SoundManager.play("movement")
 		self.current_absolute_position += direction
-		self.draw_piece()
+		self.draw()
 	else:
 		SoundManager.play("nonmovement")
 		pass
 		
 
-func get_current_piece_rotation():
+func get_CURRENT_SHAPE_rotation():
 	return self.shape[self.rotation_index]
 
-func draw_piece():
-	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
-	for relative_position in self.get_current_piece_rotation():
-		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, self.current_absolute_position + relative_position)
+func draw():
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
+	for relative_position in self.get_CURRENT_SHAPE_rotation():
+		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
 		if(placed_tile == Vector2i(-1,-1)):
@@ -40,11 +40,11 @@ func draw_piece():
 		elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
 			tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	
-		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.CURRENT_PIECE, self.current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE, self.current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
 
 
 func can_move(direction):
-	for point in self.get_current_piece_rotation():
+	for point in self.get_CURRENT_SHAPE_rotation():
 		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, point + self.current_absolute_position + direction)
 		if is_cell_border:
 			return false
@@ -52,7 +52,7 @@ func can_move(direction):
 	
 
 func can_place():
-	for point in self.get_current_piece_rotation():
+	for point in self.get_CURRENT_SHAPE_rotation():
 		var current_point = point + self.current_absolute_position
 		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, current_point)
 		if is_cell_border:
@@ -81,15 +81,15 @@ func rotate_right():
 	if self.can_rotate():
 		SoundManager.play("movement")
 		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
-		self.draw_piece()
+		self.draw()
 	else:
 		SoundManager.play("nonmovement")
 		pass
 
 func place_on_board():
-	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
-	for relative_position in self.get_current_piece_rotation():
-		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, self.current_absolute_position + relative_position)
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
+	for relative_position in self.get_CURRENT_SHAPE_rotation():
+		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		
 		if(placed_tile == GlobalConsts.SPRITE.DARK_INACTIVE):
@@ -100,4 +100,4 @@ func place_on_board():
 			# Handles both null and (-1, -1) for tile. Depending on undo.
 			# There's something off here I don't fully understand.
 			tile_style = GlobalConsts.SPRITE.DARK_INACTIVE
-		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)

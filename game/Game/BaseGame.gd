@@ -76,14 +76,14 @@ func handle_player_placement():
 		SoundManager.play("nonmovement")
 		return
 	
-	history.append(self.board_tile_map, player)
+	history.append(self.board_tile_map, player.shape)
 	player.place_on_board()
 	var gems = gemsManager.find_gems()
 	if(gems.size() > 0):
 		level_complete(gems)
 		return
 	player = Player.new(self.board_tile_map, self.queue.next())
-	player.draw_piece()
+	player.draw()
 	
 	alchemizations += 1
 	update_game_display()
@@ -97,25 +97,26 @@ func _on_level_complete_timer_timeout():
 
 func undo():
 	var record = history.pop()
+	print('history record', record)
 	self.queue.undo(player.shape)
-	player = record.player
+	player = Player.new(self.board_tile_map, record.shape)
 	
-	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_SHAPES)
 	
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_style = record.atlas_coords_array[x][y]
-			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
+			var tile_style = record.placed_shapes[x][y]
+			self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, tile_style)
 
-	player.draw_piece()
+	player.draw()
 	
 	if alchemizations > 0:
 		alchemizations -= 1
 		update_game_display()
 
 func erase_board():
-	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_PIECES)
-	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_PIECE)
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_SHAPES)
+	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
 
 func new_game():
 	assert(false, "Must be implemented in the child class.")

@@ -14,15 +14,15 @@ const STARTING_SPACE_ORIGIN = Vector2i(5, -3)
 
 const BOARD_LAYER = {
 	BORDER = 0,
-	PLACED_PIECES = 1,
-	CURRENT_PIECE = 2,
+	PLACED_SHAPES = 1,
+	CURRENT_SHAPE = 2,
 	BLOCKERS = 3,
 }
 
 const CHALLENGE_GEM_LAYER = {
 	BORDER = 0,
-	PLACED_PIECES = 1,
-	CURRENT_PIECE = 2,
+	PLACED_SHAPES = 1,
+	CURRENT_SHAPE = 2,
 }
 
 # Currently only one layer.

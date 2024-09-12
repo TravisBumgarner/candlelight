@@ -53,7 +53,7 @@ func get_atlas_coords_array(tile_map):
 	for x in range(GlobalConsts.GRID.WIDTH):
 		tile_map_array.append([])
 		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_id = tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x, y))
+			var tile_id = tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, Vector2i(x, y))
 			tile_map_array[x].append(tile_id)
 	
 	return tile_map_array

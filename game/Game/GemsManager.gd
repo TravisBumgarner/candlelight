@@ -113,7 +113,7 @@ func erase_target_gem():
 
 func draw_gem_on_board(gem):
 	for absolute_position in gem:
-		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_PIECES, absolute_position, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
+		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, absolute_position, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
 func puzzle_mode_set_target_gem(level: int):
@@ -178,7 +178,7 @@ func find_shapes(desired_color: Vector2i):
 	var shapes = []
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):
-			var color = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y))
+			var color = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, Vector2i(x,y))
 			if  color == desired_color and not visited[x][y]:
 				var shape = []
 				flood_fill(Vector2i(x, y), desired_color, shape)
@@ -194,7 +194,7 @@ func flood_fill(pos, desired_color, shape):
 		var x = current.x
 		var y = current.y
 
-		var current_color = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_PIECES, Vector2i(x,y))
+		var current_color = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, Vector2i(x,y))
 		if visited[x][y] or current_color != desired_color:
 			continue
 
