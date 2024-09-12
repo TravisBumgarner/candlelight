@@ -9,7 +9,7 @@ class_name MainMenu
 
 @onready var exit = $Exit/Exit
 
-@onready var game_scene = preload("res://game_board2.tscn")
+@onready var game_scene = preload("res://Game/game_board.tscn")
 @onready var create_challenge_scene = preload("res://CreateChallenge/index.tscn")
 @onready var puzzle_game_menu = preload("res://Game/PuzzleGameMenu.tscn")
 
