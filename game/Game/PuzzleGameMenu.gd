@@ -31,16 +31,26 @@ func check_for_saves():
 		if full_file_path.ends_with(".save"):
 			# Found a save file
 			save_files.append(full_file_path)
-			create_save_button(full_file_path)
+			
+			var config = ConfigFile.new()
+			config.load(full_file_path)
+			var human_readable_last_played = config.get_value("save", "human_readable_last_played")
+			var alchemizations = config.get_value("save", "alchemizations")
+			var level = config.get_value("save", "level")
+			create_save_button(full_file_path, human_readable_last_played, level, alchemizations)
 		file_name = dir.get_next()
 		full_file_path = "%s/%s" % [game_save_dir, file_name]
 	
 	dir.list_dir_end()
 
 # Function to create a button for each save file
-func create_save_button(file_name: String):
+func create_save_button(file_name: String, human_readable_last_played: String, level: int, alchemizations: int):
 	var button = Button.new()
-	button.text = "Play " + file_name
+	var text = "Last played " + human_readable_last_played + '\n'
+	text += "Level " + str(level) + '\n'
+	text += "Alchemiations " + str(alchemizations)
+	
+	button.text = text
 	button.name = file_name
 	button.connect("pressed", Callable(self, "_on_save_button_pressed").bind(file_name))
 	
@@ -54,28 +64,6 @@ func _on_save_button_pressed(file_name: String):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
 	GlobalState.game_save_file = file_name
 	get_tree().change_scene_to_packed(game_scene)
-
-# Function to load the game based on the selected save file
-#func load_game(file_name: String):
-	#if not FileAccess.file_exists(file_name):
-		#print("Error: Save file not found.")
-		#return
-	#
-	#var file = FileAccess.open(file_name, FileAccess.READ)
-	#var save_data = file.get_as_text()  # Assuming the save is in a readable format (e.g., JSON)
-	#file.close()
-	#
-		## Create an instance of the JSON class and parse the text
-	#var parse_result = JSON.parse_string(save_data)
-	#
-	#if not parse_result is Dictionary:
-		#print("Failed to parse saved game data")
-		#return null
-
-	#GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
-	#GlobalState.game_save_data = parse_result
-	#get_tree().change_scene_to_packed(game_scene)	
-
 
 func _on_new_game_pressed():
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame

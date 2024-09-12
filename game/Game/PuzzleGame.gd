@@ -57,29 +57,15 @@ func _on_action_pressed(action):
 	save_game()
 
 func save_game():
-	# Create new ConfigFile object.
 	var config = ConfigFile.new()
-
-	# Store some values.
 	config.set_value("save", "level", level)
 	config.set_value("save", "alchemizations", alchemizations)
 	config.set_value("save", "queue", queue.get_queue())
 	config.set_value("save", "game_start_timestamp", game_start_timestamp)
 	config.set_value("save", "history", history.get_history())
 	config.set_value("save", "player_shape", player.shape)
-
-	# Save it to a file (overwrite if already exists).
+	config.set_value("save", "human_readable_last_played", Utilities.human_readable_current_time())
 	config.save(Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp))
-	
-	#var data = {
-		#"level": level,
-		#"alchemizations": alchemizations,
-		#"game_start_timestamp": game_start_timestamp,
-		#"history": self.history.get_history(),
-		#"queue": self.queue.get_queue()
-	#}
-	#Utilities.save_game(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp, data)
-
 
 func gems_to_walls():
 	for x in range(GlobalConsts.GRID.WIDTH):
@@ -88,7 +74,6 @@ func gems_to_walls():
 
 			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
 				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
-
 
 
 func _on_level_complete_timer_timeout():

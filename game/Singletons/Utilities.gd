@@ -66,9 +66,7 @@ func generate_key_from_date():
 
 
 func get_save_game_dir(key: String):
-	var what = "user://%s" % [key]
-	print(what, "what")
-	return what
+	return "user://%s" % [key]
 
 func get_save_game_path(key: String, game_start_timestamp) -> String:
 	#var current_timestamp = Time.get_unix_time_from_system()
@@ -86,33 +84,9 @@ func get_save_game_path(key: String, game_start_timestamp) -> String:
 			return ""
 	
 	return save_path
-
-# Data can be any object that can be JSON stringified
-func save_game(key: String, game_start_timestamp: int, data: Dictionary):
-	var save_path = get_save_game_path(key, game_start_timestamp)
-	print('savepath ', save_path)
-	var file = FileAccess.open(save_path, FileAccess.WRITE)
-
-	file.store_string(JSON.stringify(data))
-	file.close()
-
-#func load_game(key: String):
-#
-	#var save_path = get_save_game_path(key)
-	#if not FileAccess.file_exists(save_path):
-		#print('No game save')
-		#return null
-	#
-	#var file = FileAccess.open(save_path, FileAccess.READ)
-	#var saved_text = file.get_as_text()
-	#file.close()
-	#
-	## Create an instance of the JSON class and parse the text
-	#var parse_result = JSON.parse_string(saved_text)
-	#
-	#if not parse_result is Dictionary:
-		#print("Failed to parse saved game data")
-		#return null
-	#
-	#return parse_result
+	
+	
+func human_readable_current_time() -> String:
+	var time = Time.get_datetime_string_from_system()
+	return time
 
