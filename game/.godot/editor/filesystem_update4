@@ -1,16 +1,1 @@
 res://Game/PuzzleGameMenu.tscn
-res://Game/PuzzleGame.gd
-res://entry_point.tscn
-res://Singletons/GlobalConsts.gd
-res://Game/PuzzleGameMenu.gd
-res://Game/BaseGame.gd
-res://Singletons/Utilities.gd
-res://Game/DailyGame.gd
-res://Game/History.gd
-res://Game/index.gd
-res://CreateChallenge/index.gd
-res://Game/Player.gd
-res://Game/Queue.gd
-res://MainMenu/main_menu.tscn
-res://MainMenu/index.gd
-res://Game/GemsManager.gd
