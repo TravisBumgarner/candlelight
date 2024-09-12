@@ -3,15 +3,25 @@ extends Control
 @onready var save_buttons_container = $SaveButtonsContainer
 @onready var new_game_button = $TextureRect/NewGame
 @onready var game_scene = load("res://Game/game_board.tscn")
+const main_menu = preload("res://MainMenu/main_menu.tscn")
 
+var save_files = []
 
-
-var save_files = []  # Store the list of available saves
-
-# Called when the node enters the scene tree
 func _ready():
-	# Scan for save files in the user:// directory
+	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_saves()
+
+func cleanup():
+	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
+	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
+
+	
+
+func _on_action_pressed(action):
+	match action:
+		"escape":
+			cleanup()
+			get_tree().change_scene_to_packed(main_menu)
 
 # Function to check for save files and create buttons dynamically
 func check_for_saves():
