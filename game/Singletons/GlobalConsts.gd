@@ -15,8 +15,8 @@ const STARTING_SPACE_ORIGIN = Vector2i(5, -3)
 const BOARD_LAYER = {
 	BORDER = 0,
 	PLACED_SHAPES = 1,
-	CURRENT_SHAPE = 2,
-	BLOCKERS = 3,
+	BLOCKERS = 2,
+	CURRENT_SHAPE = 3,
 }
 
 const CHALLENGE_GEM_LAYER = {
@@ -51,6 +51,7 @@ const SPRITE = {
 	MID_BORDER = Vector2i(4,0),
 	GEM_BLUE_INACTIVE = Vector2i(5,0),
 	GEM_BLUE_ACTIVE = Vector2i(6,0),
+	INVALID_MOVE = Vector2i(8,0),
 }
 
 const ACTION = {

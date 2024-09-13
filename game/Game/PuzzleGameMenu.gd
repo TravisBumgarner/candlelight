@@ -2,6 +2,7 @@ extends Control
 
 @onready var save_buttons_container = $SaveButtonsContainer
 @onready var new_game_button = $TextureRect/NewGame
+@onready var high_scores_container = $HighScoresContainer
 @onready var game_scene = load("res://Game/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 
@@ -10,12 +11,12 @@ var save_files = []
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_saves()
+	populate_high_scores()
 
 func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 
-	
 
 func _on_action_pressed(action):
 	match action:
@@ -23,7 +24,12 @@ func _on_action_pressed(action):
 			cleanup()
 			get_tree().change_scene_to_packed(main_menu)
 
-# Function to check for save files and create buttons dynamically
+func populate_high_scores():
+	for score in PuzzleModeHighScores.high_scores:
+		var label = Label.new()
+		label.text = "Level: %d, Alchemizations: %d" % [score["level"], score["alchemizations"]]
+		high_scores_container.add_child(label)
+
 func check_for_saves():
 	var game_save_dir = Utilities.get_save_game_dir(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME)
 	var dir = DirAccess.open(game_save_dir)

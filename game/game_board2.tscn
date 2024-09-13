@@ -1,6 +1,5 @@
-[gd_scene load_steps=12 format=3 uid="uid://bcl6w6a2jotyl"]
+[gd_scene load_steps=11 format=3 uid="uid://bcl6w6a2jotyl"]
 
-[ext_resource type="Script" path="res://GameScripts/index.gd" id="1_hqj3g"]
 [ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="2_re0wt"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="3_63dmw"]
 [ext_resource type="Script" path="res://Sounds.gd" id="4_88kw1"]
@@ -27,7 +26,6 @@ sources/0 = SubResource("TileSetAtlasSource_fcd4k")
 
 [node name="Game" type="Node2D"]
 position = Vector2(32, -96)
-script = ExtResource("1_hqj3g")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 offset_left = -32.0
