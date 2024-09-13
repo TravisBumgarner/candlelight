@@ -24,12 +24,12 @@ func move(direction):
 		pass
 		
 
-func get_CURRENT_SHAPE_rotation():
+func get_current_shape_rotation():
 	return self.shape[self.rotation_index]
 
 func draw():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
-	for relative_position in self.get_CURRENT_SHAPE_rotation():
+	for relative_position in self.get_current_shape_rotation():
 		var point = self.current_absolute_position + relative_position
 		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, point)
 		var is_blocker_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.BLOCKERS, point) != Vector2i(-1,-1)
@@ -52,7 +52,7 @@ func draw():
 
 
 func can_move(direction):
-	for point in self.get_CURRENT_SHAPE_rotation():
+	for point in self.get_current_shape_rotation():
 		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, point + self.current_absolute_position + direction)
 		if is_cell_border:
 			return false
@@ -60,7 +60,7 @@ func can_move(direction):
 	
 
 func can_place():
-	for point in self.get_CURRENT_SHAPE_rotation():
+	for point in self.get_current_shape_rotation():
 		var current_point = point + self.current_absolute_position
 		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, current_point)
 		if is_cell_border:
@@ -96,7 +96,7 @@ func rotate_right():
 
 func place_on_board():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
-	for relative_position in self.get_CURRENT_SHAPE_rotation():
+	for relative_position in self.get_current_shape_rotation():
 		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, self.current_absolute_position + relative_position)
 		var tile_style: Vector2i
 		

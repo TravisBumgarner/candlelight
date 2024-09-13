@@ -126,18 +126,25 @@ func _on_action_pressed(action):
 
 func new_game():
 	level = 1
+	
 	target_gem_tile_map.hide()
 	queue_tile_map.hide()
 	game_details_label.hide()
 	game_details_value.hide()
 	game_details_tile_map.hide()
+	
 	update_instructions()
 	update_game_display()
 	erase_board()
+	
 	apprenticeship_stage = ApprenticeshipStage.OneMovement
 	history = History.new()
-	self.queue = Queue.new(queue_tile_map, 123, true)
+	
+	queue = Queue.new(queue_tile_map, 123, true)
+	queue.fill_queue()
+	
 	player = Player.new(board_tile_map, self.queue.next())
+	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	gemsManager.puzzle_mode_set_target_gem(level)
 

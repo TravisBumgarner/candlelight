@@ -49,11 +49,13 @@ func _ready():
 	if GlobalState.game_mode in game_modes:
 		var selected_game = game_modes[GlobalState.game_mode]
 		create_game(selected_game["class"], selected_game["track_high_scores"])
-		
+	
 	if GlobalState.game_save_file:
+		print('loading?')
 		game.load_game()
 		GlobalState.game_save_file = null
 	else:
 		game.new_game()
+		print('new game')
 
 
