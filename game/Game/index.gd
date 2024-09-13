@@ -39,19 +39,7 @@ func create_game(game_mode, track_high_scores: bool) -> void:
 	else:
 		submit_score_button.hide()
 
-func sort_ascending(a, b):
-	if a['foo'] < b['foo']:
-		return true
-	return false
-
-
 func _ready():
-	var my_items = [{"foo":5}, {"foo": 2}, {"foo": 3}]
-	my_items.sort_custom(sort_ascending)
-	print(my_items) # Prints [[4, Tomato], [5, Potato], [9, Rice]].
-	
-	print('hellllo?')
-	
 	var game_modes = {
 		GlobalConsts.GAME_MODE.ApprenticeshipGame: { "class": ApprenticeshipGame, "track_high_scores": false },
 		GlobalConsts.GAME_MODE.PuzzleGame: { "class": PuzzleGame, "track_high_scores": true },

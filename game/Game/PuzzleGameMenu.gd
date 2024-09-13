@@ -25,7 +25,6 @@ func _on_action_pressed(action):
 			get_tree().change_scene_to_packed(main_menu)
 
 func populate_high_scores():
-	print(PuzzleModeHighScores.high_scores)
 	for score in PuzzleModeHighScores.high_scores:
 		var label = Label.new()
 		label.text = "Level: %d, Alchemizations: %d" % [score["level"], score["alchemizations"]]

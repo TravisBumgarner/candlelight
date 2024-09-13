@@ -78,9 +78,15 @@ func _on_action_pressed(action):
 	
 	if level > 1:
 		# Don't start saving until the user has made some progress
-		save_game()
+		create_game_save()
 
-func save_game():
+func delete_game_save():
+	var absolute_file_path = Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp)
+
+	if FileAccess.file_exists(absolute_file_path):
+		DirAccess.remove_absolute(absolute_file_path)
+
+func create_game_save():
 	var config = ConfigFile.new()
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL, level)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.ALCHEMIZATIONS, alchemizations)
@@ -105,7 +111,7 @@ func gems_to_walls():
 
 func _on_submit_pressed():
 	PuzzleModeHighScores.add_high_score(alchemizations, level)
-	print('score saved!')
+	delete_game_save()
 	new_game()
 
 

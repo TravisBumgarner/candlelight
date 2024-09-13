@@ -46,11 +46,6 @@ func add_high_score(alchemizations, level):
 func sort_scores():
 	high_scores.sort_custom(_compare_scores)
 
-
-func display_high_scores():
-	for score in high_scores:
-		print("Level: %d, Alchemizations: %d" % [score["level"], score["alchemizations"]])
-
 func get_high_scores():
 	return high_scores
 

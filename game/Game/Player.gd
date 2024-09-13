@@ -30,15 +30,23 @@ func get_CURRENT_SHAPE_rotation():
 func draw():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
 	for relative_position in self.get_CURRENT_SHAPE_rotation():
-		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, self.current_absolute_position + relative_position)
+		var point = self.current_absolute_position + relative_position
+		var placed_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, point)
+		var is_blocker_tile = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.BLOCKERS, point) != Vector2i(-1,-1)
+		var is_out_of_bounds = point[1] < 0
+		
 		var tile_style: Vector2i
 		
-		if(placed_tile == Vector2i(-1,-1)):
-			tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
-		elif(placed_tile == GlobalConsts.SPRITE.DARK_INACTIVE):
-			tile_style = GlobalConsts.SPRITE.LIGHT_ACTIVE
-		elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
-			tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
+		if is_blocker_tile or is_out_of_bounds:
+			tile_style = GlobalConsts.SPRITE.INVALID_MOVE
+		else:
+			if(placed_tile == Vector2i(-1,-1)):
+				tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
+			elif(placed_tile == GlobalConsts.SPRITE.DARK_INACTIVE):
+				tile_style = GlobalConsts.SPRITE.LIGHT_ACTIVE
+			elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
+				tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
+				
 	
 		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE, self.current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
 
