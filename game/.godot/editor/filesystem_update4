@@ -1,3 +1,8 @@
+res://entry_point.tscn
+res://entry_point.gd
+res://Game/index.gd
+res://Apprenticeship/apprenticeship_menu.gd
+res://Game/Player.gd
+res://Game/PuzzleGame.gd
+res://Apprenticeship/ApprenticeshipGame.gd
 res://Game/game_board.tscn
-res://Game/PuzzleGameMenu.tscn
-res://game_board2.tscn

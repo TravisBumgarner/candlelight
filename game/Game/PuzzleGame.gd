@@ -17,9 +17,7 @@ func new_game():
 	
 	var visible_queue_size = 3
 	var game_key = null
-	queue = Queue.new(queue_tile_map,
-	game_key,
-	visible_queue_size)
+	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
 	queue.fill_queue()
 	
 	player = Player.new(board_tile_map, queue.next())
