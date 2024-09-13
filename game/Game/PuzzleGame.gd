@@ -10,7 +10,7 @@ func new_game():
 	erase_board()
 	
 	level = 1
-	alchemizations = 1
+	alchemizations = 0
 	update_game_display()
 	
 	self.history = History.new()
@@ -75,7 +75,10 @@ func level_complete(gems):
 
 func _on_action_pressed(action):
 	super(action)
-	save_game()
+	
+	if level > 1:
+		# Don't start saving until the user has made some progress
+		save_game()
 
 func save_game():
 	var config = ConfigFile.new()
@@ -98,6 +101,12 @@ func gems_to_walls():
 
 			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
 				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
+
+
+func _on_submit_pressed():
+	PuzzleModeHighScores.add_high_score(alchemizations, level)
+	print('score saved!')
+	new_game()
 
 
 func _on_level_complete_timer_timeout():

@@ -12,6 +12,7 @@ var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
 var instructions: RichTextLabel
 var return_to_main_menu: Callable
+var submit_score_button: Button
 var target_gem_tile_map: TileMap
 # end _init Params Alphabetical
 
@@ -37,19 +38,21 @@ func _init(args: Array):
 	self.queue_tile_map = args[6]
 	self.return_to_main_menu =args[7]
 	self.sounds = args[8]
-	self.target_gem_tile_map = args[9]
+	self.submit_score_button = args[9]
+	self.target_gem_tile_map = args[10]
 	# Alphabatical
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
+	self.submit_score_button.connect('pressed', Callable(self, "_on_submit_pressed"))
 
 func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
 	SoundManager.disconnect("play_sound", sounds.play_sound)
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
-	level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
-	
+	self.level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
+	self.submit_score_button.disconnect('pressed', Callable(self, "_on_submit_pressed"))
 
 func _on_action_pressed(action):
 	var direction_map = {
@@ -125,4 +128,7 @@ func load_game():
 	assert(false, "Must be implemented in the child class.")
 
 func update_game_display():
+	assert(false, "Must be implemented in the child class.")
+
+func _on_submit_pressed():
 	assert(false, "Must be implemented in the child class.")

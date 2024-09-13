@@ -1,7 +1,4 @@
 res://Game/game_board.tscn
+res://Game/PuzzleGameMenu.tscn
 res://Game/index.gd
-res://entry_point.tscn
-res://Game/PuzzleGame.gd
-res://Game/BaseGame.gd
-res://Apprenticeship/ApprenticeshipGame.gd
-res://Game/DailyGame.gd
+res://Singletons/PuzzleModeHighScores.gd

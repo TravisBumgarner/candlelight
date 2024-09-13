@@ -6,7 +6,7 @@ var StoreKey = {
 	"HasSeenApprenticeship": "HasSeenApprenticeship"
 }
 
-const FILENAME = 'user://key_value_store.cfg'
+const FILENAME = 'user://config.cfg'
 
 func save_data(key: String, value: String):
 	assert(key in StoreKey.values(), "Key does not exist in StoreKey")

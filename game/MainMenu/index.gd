@@ -9,9 +9,9 @@ class_name MainMenu
 
 @onready var exit = $Exit/Exit
 
-@onready var game_scene = preload("res://Game/game_board.tscn")
-@onready var create_challenge_scene = preload("res://CreateChallenge/index.tscn")
-@onready var puzzle_game_menu = preload("res://Game/PuzzleGameMenu.tscn")
+@onready var game_scene = load("res://Game/game_board.tscn")
+@onready var create_challenge_scene = load("res://CreateChallenge/index.tscn")
+@onready var puzzle_game_menu = load("res://Game/PuzzleGameMenu.tscn")
 
 func _ready():
 	daily_game_button.connect("pressed", Callable(self, "on_daily_game_button_down"))

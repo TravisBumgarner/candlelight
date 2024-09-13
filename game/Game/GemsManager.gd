@@ -129,7 +129,7 @@ func daily_mode_set_target_gem(game_key):
 
 func draw_target_gem():
 	for point in target_gem:
-		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
+		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.LIGHT_INACTIVE)
 
 
 func puzzle_mode_resume(gem):
