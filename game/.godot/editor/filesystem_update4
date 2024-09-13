@@ -1,9 +1,3 @@
 res://Game/game_board.tscn
 res://Game/PuzzleGameMenu.tscn
-res://Game/index.gd
-res://Singletons/PuzzleModeHighScores.gd
-res://Game/PuzzleGame.gd
-res://Game/PuzzleGameMenu.gd
 res://game_board2.tscn
-res://Singletons/GlobalConsts.gd
-res://Game/Player.gd
