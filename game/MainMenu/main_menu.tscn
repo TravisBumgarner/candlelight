@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://8w1ej44k1x0w"]
+[gd_scene load_steps=4 format=3 uid="uid://8w1ej44k1x0w"]
 
 [ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="1_4hbhq"]
 [ext_resource type="Script" path="res://MainMenu/index.gd" id="1_vxg5o"]
+[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_jaf2s"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -27,14 +28,16 @@ layout_mode = 0
 offset_left = 695.0
 offset_right = 1049.0
 offset_bottom = 648.0
-theme_override_constants/separation = 40
+theme_override_constants/separation = 30
 alignment = 1
 
 [node name="PuzzleGame" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="PuzzleGameButton" type="Button" parent="VBoxContainer/PuzzleGame"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 text = "Puzzles"
 
 [node name="Label" type="Label" parent="VBoxContainer/PuzzleGame"]
@@ -45,9 +48,11 @@ autowrap_mode = 3
 
 [node name="Daily" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="DailyGameButton" type="Button" parent="VBoxContainer/Daily"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 text = "Daily"
 
 [node name="Label" type="Label" parent="VBoxContainer/Daily"]
@@ -58,9 +63,11 @@ autowrap_mode = 3
 
 [node name="Tutorial" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="TutorialButton" type="Button" parent="VBoxContainer/Tutorial"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 text = "Tutorial"
 
 [node name="Label" type="Label" parent="VBoxContainer/Tutorial"]
@@ -71,14 +78,19 @@ autowrap_mode = 3
 
 [node name="PlayerGenerated" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 20
 
 [node name="PlayChallengeButton" type="Button" parent="VBoxContainer/PlayerGenerated"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 disabled = true
 text = "Play Challenges"
 
 [node name="CreateChallenge" type="Button" parent="VBoxContainer/PlayerGenerated"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 disabled = true
 text = "Create Challenge (Coming Soon)"
 
@@ -90,12 +102,15 @@ autowrap_mode = 3
 
 [node name="Misc" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="CreditsButton" type="Button" parent="VBoxContainer/Misc"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 text = "Credits"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer/Misc"]
 layout_mode = 2
+theme = ExtResource("3_jaf2s")
 text = "Exit
 "

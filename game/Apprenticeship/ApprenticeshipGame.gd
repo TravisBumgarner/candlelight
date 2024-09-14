@@ -44,7 +44,7 @@ var ACTION_DISPLAY_TEXT = {
 
 func _init(args):                
 	super(args)
-
+	
 func level_complete(gems):
 	if apprenticeship_stage == ApprenticeshipStage.FourScore:
 		SoundManager.play("one_gem")	

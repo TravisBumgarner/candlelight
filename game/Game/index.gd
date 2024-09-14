@@ -10,13 +10,11 @@ extends Node2D
 @onready var instructions = $Instructions
 @onready var game_details_tile_map = $GameDetailsTileMap
 @onready var submit_score_button = $SubmitScore
+@onready var back_button = $BackButton
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
-func return_to_main_menu():
-	get_tree().change_scene_to_packed(self.main_menu_scene)
-
-var game 
+var game: BaseGame
 
 func create_game(game_mode, track_high_scores: bool) -> void:
 	game = game_mode.new([
@@ -28,7 +26,6 @@ func create_game(game_mode, track_high_scores: bool) -> void:
 		instructions,
 		level_complete_timer, 
 		queue_tile_map, 
-		Callable(self, "return_to_main_menu"),
 		sounds,
 		submit_score_button, 
 		target_gem_tile_map
@@ -58,4 +55,6 @@ func _ready():
 		game.new_game()
 		print('new game')
 
-
+func _on_back_button_pressed():
+	get_tree().change_scene_to_packed(self.main_menu_scene)
+	game.cleanup()
