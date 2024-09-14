@@ -154,7 +154,7 @@ bbcode_enabled = true
 
 [node name="SubmitScore" type="Button" parent="."]
 offset_left = 977.0
-offset_top = 648.0
+offset_top = 647.0
 offset_right = 1087.0
-offset_bottom = 679.0
+offset_bottom = 678.0
 text = "Submit Score"
