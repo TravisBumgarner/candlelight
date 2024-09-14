@@ -9,20 +9,8 @@ const main_menu = preload("res://MainMenu/main_menu.tscn")
 var save_files = []
 
 func _ready():
-	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_saves()
 	populate_high_scores()
-
-func cleanup():
-	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
-	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
-
-
-func _on_action_pressed(action):
-	match action:
-		"escape":
-			cleanup()
-			get_tree().change_scene_to_packed(main_menu)
 
 func populate_high_scores():
 	for score in PuzzleModeHighScores.high_scores:
@@ -82,3 +70,7 @@ func _on_save_button_pressed(file_name: String):
 func _on_new_game_pressed():
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
 	get_tree().change_scene_to_packed(game_scene)
+
+
+func _on_back_button_pressed():
+	get_tree().change_scene_to_packed(main_menu)

@@ -21,87 +21,81 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_4hbhq")
 
-[node name="PuzzleGame" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
 layout_mode = 0
-offset_left = 864.0
-offset_top = 320.0
-offset_right = 1088.0
-offset_bottom = 416.0
+offset_left = 695.0
+offset_right = 1049.0
+offset_bottom = 648.0
+theme_override_constants/separation = 40
+alignment = 1
 
-[node name="PuzzleGame" type="Button" parent="PuzzleGame"]
+[node name="PuzzleGame" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Puzzle Game"
 
-[node name="Label" type="Label" parent="PuzzleGame"]
+[node name="PuzzleGameButton" type="Button" parent="VBoxContainer/PuzzleGame"]
 layout_mode = 2
-text = "Craft the gem to advance to the next level."
+text = "Puzzles"
+
+[node name="Label" type="Label" parent="VBoxContainer/PuzzleGame"]
+layout_mode = 2
+text = "Complete the puzzle to advance levels"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="ApprenticeshipGame" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 864.0
-offset_top = 448.0
-offset_right = 1088.0
-offset_bottom = 544.0
-
-[node name="ApprenticeshipGame" type="Button" parent="ApprenticeshipGame"]
+[node name="Daily" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Apprenticeship"
 
-[node name="Label" type="Label" parent="ApprenticeshipGame"]
+[node name="DailyGameButton" type="Button" parent="VBoxContainer/Daily"]
 layout_mode = 2
-text = "Run the tutorial again."
+text = "Daily"
+
+[node name="Label" type="Label" parent="VBoxContainer/Daily"]
+layout_mode = 2
+text = "New challenges daily"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Daily" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 864.0
-offset_top = 128.0
-offset_right = 1088.0
-offset_bottom = 238.0
-
-[node name="DailyGame" type="Button" parent="Daily"]
+[node name="Tutorial" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
-text = "Daily Challenge"
 
-[node name="Label" type="Label" parent="Daily"]
+[node name="TutorialButton" type="Button" parent="VBoxContainer/Tutorial"]
 layout_mode = 2
-text = "Alchemize the desired gem with the least amount of moves. Compete against yourself or with friends for the best score!"
+text = "Tutorial"
+
+[node name="Label" type="Label" parent="VBoxContainer/Tutorial"]
+layout_mode = 2
+text = "Learn the basics"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="PlayerGenerated" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 512.0
-offset_top = 128.0
-offset_right = 767.0
-offset_bottom = 290.0
+[node name="PlayerGenerated" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 
-[node name="PlayChallenge" type="Button" parent="PlayerGenerated"]
+[node name="PlayChallengeButton" type="Button" parent="VBoxContainer/PlayerGenerated"]
 layout_mode = 2
 disabled = true
 text = "Play Challenges"
 
-[node name="CreateChallenge" type="Button" parent="PlayerGenerated"]
+[node name="CreateChallenge" type="Button" parent="VBoxContainer/PlayerGenerated"]
 layout_mode = 2
+disabled = true
 text = "Create Challenge (Coming Soon)"
 
-[node name="Label" type="Label" parent="PlayerGenerated"]
+[node name="Label" type="Label" parent="VBoxContainer/PlayerGenerated"]
 layout_mode = 2
-text = "Create your own challenges or complete challenges created by others!"
+text = "Build levels and challenge others"
 horizontal_alignment = 1
 autowrap_mode = 3
 
-[node name="Exit" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 864.0
-offset_top = 576.0
-offset_right = 1088.0
-offset_bottom = 608.0
+[node name="Misc" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 
-[node name="Exit" type="Button" parent="Exit"]
+[node name="CreditsButton" type="Button" parent="VBoxContainer/Misc"]
+layout_mode = 2
+text = "Credits"
+
+[node name="ExitButton" type="Button" parent="VBoxContainer/Misc"]
 layout_mode = 2
 text = "Exit
 "

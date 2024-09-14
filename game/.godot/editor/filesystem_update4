@@ -1,8 +1,8 @@
-res://entry_point.tscn
-res://entry_point.gd
-res://Game/index.gd
-res://Apprenticeship/apprenticeship_menu.gd
-res://Game/Player.gd
-res://Game/PuzzleGame.gd
-res://Apprenticeship/ApprenticeshipGame.gd
-res://Game/game_board.tscn
+res://theme.tres
+res://Credits/Credits.tscn
+res://MainMenu/main_menu.tscn
+res://MainMenu/index.gd
+res://Credits/credits.tscn
+res://Credits/index.gd
+res://Game/PuzzleGameMenu.gd
+res://Game/PuzzleGameMenu.tscn

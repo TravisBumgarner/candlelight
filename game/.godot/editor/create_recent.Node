@@ -1,3 +1,6 @@
-Label
-VBoxContainer
 Button
+VBoxContainer
+Label
+HBoxContainer
+LinkButton
+TextureRect
