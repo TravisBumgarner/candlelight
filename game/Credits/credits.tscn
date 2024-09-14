@@ -1,0 +1,113 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvbkpkgd3eysk"]
+
+[ext_resource type="Script" path="res://Credits/index.gd" id="1_ybn2x"]
+[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="2_p6wlq"]
+[ext_resource type="Theme" uid="uid://cagginwaf17os" path="res://theme.tres" id="3_yva52"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ybn2x")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_p6wlq")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 773.0
+offset_right = 1144.0
+offset_bottom = 638.0
+alignment = 1
+
+[node name="Credits" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_yva52")
+theme_override_font_sizes/font_size = 36
+text = "Credits"
+
+[node name="Game Design" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/Game Design"]
+layout_mode = 2
+text = "Game Design By Travis Bumgarner"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Game Design"]
+layout_mode = 2
+uri = "https://departuremono.com/"
+
+[node name="Code" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/Code"]
+layout_mode = 2
+text = "Code By Travis Bumgarner"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Code"]
+layout_mode = 2
+uri = "https://departuremono.com/"
+
+[node name="Art" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/Art"]
+layout_mode = 2
+text = "Art By Travis Bumgarner"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Art"]
+layout_mode = 2
+uri = "https://departuremono.com/"
+
+[node name="Font" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/Font"]
+layout_mode = 2
+text = "Font by Helena Zhang "
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Font"]
+layout_mode = 2
+text = "(Visit)"
+uri = "https://departuremono.com/"
+
+[node name="Music" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/Music"]
+layout_mode = 2
+text = "Music By"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Music"]
+layout_mode = 2
+uri = "https://departuremono.com/"
+
+[node name="Sounds" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/Sounds"]
+layout_mode = 2
+text = "Sounds by Travis Bumgarner"
+
+[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Sounds"]
+layout_mode = 2
+uri = "https://departuremono.com/"
+
+[node name="BackButton" type="Button" parent="."]
+layout_mode = 0
+offset_left = 24.0
+offset_top = 592.0
+offset_right = 73.0
+offset_bottom = 621.0
+text = "Back"
+
+[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
