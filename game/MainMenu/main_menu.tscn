@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://8w1ej44k1x0w"]
 
-[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="1_4hbhq"]
+[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/backgrounds/homescreen.png" id="1_4hbhq"]
 [ext_resource type="Script" path="res://MainMenu/index.gd" id="1_vxg5o"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_jaf2s"]
 

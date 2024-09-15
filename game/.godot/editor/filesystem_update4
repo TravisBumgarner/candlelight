@@ -1,9 +1,10 @@
 res://Game/game_board.tscn
 res://candlelight_theme.tres
+res://resources/keyboard/letter_space.tres
+res://resources/keyboard/letter_esc.tres
 res://resources/keyboard/letter_a.tres
 res://resources/keyboard/letter_d.tres
 res://resources/keyboard/letter_r.tres
-res://resources/keyboard/letter_space.tres
-res://resources/keyboard/letter_esc.tres
-res://Tutorial/TutorialGame.gd
-res://Game/BaseGame.gd
+res://Game/PuzzleGameMenu.tscn
+res://Credits/credits.tscn
+res://Tutorial/tutorial_menu.tscn

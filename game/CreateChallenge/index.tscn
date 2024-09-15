@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://cifr7f5pbfxlo"]
 
-[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="1_2nkfn"]
+[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/backgrounds/gamescreen.png" id="1_2nkfn"]
 [ext_resource type="Script" path="res://CreateChallenge/index.gd" id="1_5rbuh"]
-[ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/gems.png" id="2_j04o7"]
+[ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/sprites/gems.png" id="2_j04o7"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_44wvu"]
 texture = ExtResource("2_j04o7")

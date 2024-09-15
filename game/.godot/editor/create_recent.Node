@@ -1,8 +1,8 @@
+HBoxContainer
 Node
 TextureRect
 VBoxContainer
 Control
-HBoxContainer
 Label
 Sprite2D
 ScrollContainer
