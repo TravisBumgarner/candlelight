@@ -1,10 +1,13 @@
 extends Control
 
-@onready var save_buttons_container = $SaveButtonsContainer
 @onready var new_game_button = $TextureRect/NewGame
-@onready var high_scores_container = $HighScoresContainer
+@onready var high_scores_container = $HighScoresScrollContainer/HighScoresContainer
+@onready var save_buttons_container = $GameSavesScrollContainer/SaveButtonsContainer
+
+
 @onready var game_scene = load("res://Game/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
+const candlelight_theme = preload("res://candlelight_theme.tres")
 
 var save_files = []
 
@@ -56,6 +59,7 @@ func create_save_button(file_name: String, human_readable_last_played: String, l
 	
 	button.text = text
 	button.name = file_name
+	button.theme = candlelight_theme
 	button.connect("pressed", Callable(self, "_on_save_button_pressed").bind(file_name))
 	
 	# Add the button to a container (e.g., a VBoxContainer or Panel)

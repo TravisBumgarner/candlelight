@@ -8,15 +8,19 @@ extends Node2D
 @onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
 @onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
+
 @onready var game_details_tile_map = $GameDetailsTileMap
 @onready var submit_score_button = $SubmitScore
+@onready var back_button = $BackButton
+@onready var instructions_new = $InstructionsNew
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
+
+var game: BaseGame
 
 func return_to_main_menu():
 	get_tree().change_scene_to_packed(self.main_menu_scene)
 
-var game 
 
 func create_game(game_mode, track_high_scores: bool) -> void:
 	game = game_mode.new([
@@ -39,9 +43,9 @@ func create_game(game_mode, track_high_scores: bool) -> void:
 	else:
 		submit_score_button.hide()
 
-func _ready():
+func _ready():	
 	var game_modes = {
-		GlobalConsts.GAME_MODE.ApprenticeshipGame: { "class": ApprenticeshipGame, "track_high_scores": false },
+		GlobalConsts.GAME_MODE.TutorialMode: { "class": TutorialMode, "track_high_scores": false },
 		GlobalConsts.GAME_MODE.PuzzleGame: { "class": PuzzleGame, "track_high_scores": true },
 		GlobalConsts.GAME_MODE.DailyGame: { "class": DailyGame, "track_high_scores": false }
 	}
@@ -58,4 +62,6 @@ func _ready():
 		game.new_game()
 		print('new game')
 
-
+func _on_back_button_pressed():
+	get_tree().change_scene_to_packed(self.main_menu_scene)
+	game.cleanup()

@@ -1,6 +1,8 @@
-res://Apprenticeship/apprenticeship_menu.tscn::89ce6612b79e7e3a74afeecd38db9d4d::1726094563::res://.godot/exported/133200997/export-a75dfd1c4fb78a09395e829d6d7fe3ff-apprenticeship_menu.scn
+res://Apprenticeship/apprenticeship_menu.tscn::89ce6612b79e7e3a74afeecd38db9d4d::1726350541::res://.godot/exported/133200997/export-a75dfd1c4fb78a09395e829d6d7fe3ff-apprenticeship_menu.scn
 res://CreateChallenge/index.tscn::55d208c79cda93a548e767c9da1df20c::1726094563::res://.godot/exported/133200997/export-91f28205572d2fc487b4ee0b1a683954-index.scn
-res://Game/game_board.tscn::1f49a28391cff8a77cf28e543bf66d5e::1726258440::res://.godot/exported/133200997/export-fa572215c48894b9d8f288e8b3c4ce19-game_board.scn
-res://Game/PuzzleGameMenu.tscn::1d3be7a682586db3bd660841725aa807::1726255699::res://.godot/exported/133200997/export-cfe9e4b2219daaddde6241022f2ec4bb-PuzzleGameMenu.scn
-res://MainMenu/main_menu.tscn::d0784efb1adbcf85b193b15f6257105c::1726108176::res://.godot/exported/133200997/export-2bdff2e28ff9e8751ad1da9ff967f70e-main_menu.scn
-res://entry_point.tscn::ccf12caaa88ad6c03e2c84d25c4aa3cd::1726258439::res://.godot/exported/133200997/export-2e70a77e3b2cbb44eae47e0daf03415b-entry_point.scn
+res://Game/game_board.tscn::d48c29c0c47dfd5d2d01fe6d0d218a76::1726359326::res://.godot/exported/133200997/export-fa572215c48894b9d8f288e8b3c4ce19-game_board.scn
+res://Game/PuzzleGameMenu.tscn::2152c27e66d766300a1e987f576dc9e1::1726359122::res://.godot/exported/133200997/export-cfe9e4b2219daaddde6241022f2ec4bb-PuzzleGameMenu.scn
+res://MainMenu/main_menu.tscn::656f018e667f7c74e8860d981ea85cc9::1726359122::res://.godot/exported/133200997/export-2bdff2e28ff9e8751ad1da9ff967f70e-main_menu.scn
+res://entry_point.tscn::ccf12caaa88ad6c03e2c84d25c4aa3cd::1726350541::res://.godot/exported/133200997/export-2e70a77e3b2cbb44eae47e0daf03415b-entry_point.scn
+res://Credits/credits.tscn::1a7a268ecc0d2dd0fd44a07e91b51bfd::1726356049::res://.godot/exported/133200997/export-4d488ae21d564a9d6cb0c72f395c1210-credits.scn
+res://candlelight_theme.tres::3bd8c0aeca872330d8eeff0bf34bee25::1726358187::res://.godot/exported/133200997/export-9f5fcd6392429bcccd427c256e357664-candlelight_theme.res

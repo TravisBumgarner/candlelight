@@ -1,8 +1,9 @@
-res://theme.tres
-res://Credits/Credits.tscn
-res://MainMenu/main_menu.tscn
-res://MainMenu/index.gd
-res://Credits/credits.tscn
-res://Credits/index.gd
-res://Game/PuzzleGameMenu.gd
-res://Game/PuzzleGameMenu.tscn
+res://Game/game_board.tscn
+res://candlelight_theme.tres
+res://resources/keyboard/letter_a.tres
+res://resources/keyboard/letter_d.tres
+res://resources/keyboard/letter_r.tres
+res://resources/keyboard/letter_space.tres
+res://resources/keyboard/letter_esc.tres
+res://Tutorial/TutorialGame.gd
+res://Game/BaseGame.gd

@@ -10,7 +10,7 @@ var sounds: Node
 var game_details_label: Label
 var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
-var instructions: RichTextLabel
+var instructions_container: VBoxContainer
 var return_to_main_menu: Callable
 var submit_score_button: Button
 var target_gem_tile_map: TileMap
@@ -33,14 +33,15 @@ func _init(args: Array):
 	self.game_details_label = args[1]
 	self.game_details_tile_map = args[2]
 	self.game_details_value =args[3]
-	self.instructions = args[4]
+	self.instructions_container = args[4]
 	self.level_complete_timer = args[5]
 	self.queue_tile_map = args[6]
-	self.return_to_main_menu =args[7]
+	self.return_to_main_menu = args[7]
 	self.sounds = args[8]
 	self.submit_score_button = args[9]
 	self.target_gem_tile_map = args[10]
 	# Alphabatical
+	print("huh", self.instructions_container, args[4])
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -63,7 +64,11 @@ func _on_action_pressed(action):
 	}
 	
 	if action in direction_map:
-		player.move(direction_map[action])
+		if player.current_absolute_position[1] == -3 and action == 'down':
+			# Move player down into game board if they're starting in the new area.
+			player.move(Vector2i(0, 3))		
+		else:
+			player.move(direction_map[action])
 	
 	match action:
 		"undo":
@@ -86,7 +91,7 @@ func handle_player_placement():
 	
 	history.append(self.board_tile_map, player.shape)
 	player.place_on_board()
-	var gems = gemsManager.find_gems()
+	var gems = gemsManager.find_gems_and_shapes()['gems']
 	if(gems.size() > 0):
 		level_complete(gems)
 		return

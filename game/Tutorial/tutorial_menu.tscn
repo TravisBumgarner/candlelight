@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://txb5ar0yw8go"]
+
+[ext_resource type="Script" path="res://Tutorial/tutorial_menu.gd" id="1_6xgxm"]
+[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="2_x4xrj"]
+[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://resources/keyboard/letter_space.tres" id="3_xvrdp"]
+[ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://resources/keyboard/letter_esc.tres" id="4_wn5wi"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_6xgxm")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_x4xrj")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 408.0
+offset_right = 1101.0
+offset_bottom = 600.0
+
+[node name="Label" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 72
+text = "Welcome!"
+horizontal_alignment = 1
+
+[node name="SpaceToBegin" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/SpaceToBegin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Press"
+horizontal_alignment = 1
+
+[node name="LetterSpace" type="TextureRect" parent="VBoxContainer/SpaceToBegin"]
+layout_mode = 2
+texture = ExtResource("3_xvrdp")
+stretch_mode = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/SpaceToBegin"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "for tutorial."
+
+[node name="EscToStart" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer/EscToStart"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Or"
+horizontal_alignment = 1
+
+[node name="LetterSpace" type="TextureRect" parent="VBoxContainer/EscToStart"]
+layout_mode = 2
+texture = ExtResource("4_wn5wi")
+stretch_mode = 3
+
+[node name="Label2" type="Label" parent="VBoxContainer/EscToStart"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "to start playing."

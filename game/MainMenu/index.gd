@@ -23,7 +23,7 @@ func _ready():
 	credits_button.connect("pressed", Callable(self, "on_credits_button_down"))
 
 func on_tutorial_button_down():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.ApprenticeshipGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.TutorialMode
 	get_tree().change_scene_to_packed(game_scene)
 	
 func on_daily_game_button_down():

@@ -1,6 +1,11 @@
-Button
-VBoxContainer
-Label
-HBoxContainer
-LinkButton
+Node
 TextureRect
+VBoxContainer
+Control
+HBoxContainer
+Label
+Sprite2D
+ScrollContainer
+VScrollBar
+Button
+LinkButton
