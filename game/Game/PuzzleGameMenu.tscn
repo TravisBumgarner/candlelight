@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bdpcqedjkhwkx"]
 
 [ext_resource type="Script" path="res://Game/PuzzleGameMenu.gd" id="1_vhifd"]
-[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="2_jtyx1"]
+[ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_f6iko"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_6n2vi"]
 
 [node name="PuzzleGameMenu" type="Control"]
@@ -18,11 +18,13 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 38.0
-offset_bottom = -1.0
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 571.0
+offset_bottom = 564.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_jtyx1")
+texture = ExtResource("2_f6iko")
 
 [node name="GameSavesScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
