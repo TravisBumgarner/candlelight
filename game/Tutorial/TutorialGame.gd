@@ -176,30 +176,7 @@ func update_instructions():
 
 
 
-# Scenes
-game.tscn
 
-# Scripts
-
-BaseGame
-	PuzzleGame # extends BaseGame
-	DailyGame # extends BaseGame
-	Tutorial # extends BaseGame
-
-# Main Menu Psuedocode
-
-def handle_game_mode_selection():
-	if game_mode == "PuzzleGame":
-		tutorial_instructions.hide()
-		high_score_ui.show()
-		
-	if game_mode == "DailyGame":
-		tutorial_instructions.hide()
-		high_score_ui.hide()
-		
-	if game_mode == "Tutorial":
-		tutorial_instructions.hide()
-		high_score_ui.hide()
 	
 
 
