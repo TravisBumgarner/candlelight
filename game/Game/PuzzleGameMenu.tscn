@@ -1,10 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://bdpcqedjkhwkx"]
+[gd_scene load_steps=4 format=3 uid="uid://bdpcqedjkhwkx"]
 
-[ext_resource type="Texture2D" uid="uid://bgrxc21ychv1o" path="res://assets/homescreen.png" id="1_4iyth"]
 [ext_resource type="Script" path="res://Game/PuzzleGameMenu.gd" id="1_vhifd"]
+[ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/gamescreen.png" id="2_jtyx1"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_6n2vi"]
-
-[sub_resource type="Theme" id="Theme_4gnvr"]
 
 [node name="PuzzleGameMenu" type="Control"]
 layout_mode = 3
@@ -24,44 +22,31 @@ offset_right = 38.0
 offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_4iyth")
+texture = ExtResource("2_jtyx1")
 
-[node name="SaveButtonsContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_right = 408.0
-offset_bottom = 647.0
-
-[node name="Label" type="Label" parent="SaveButtonsContainer"]
+[node name="GameSavesScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
+offset_left = 632.0
+offset_top = 64.0
+offset_right = 1040.0
+offset_bottom = 576.0
+
+[node name="SaveButtonsContainer" type="VBoxContainer" parent="GameSavesScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="GameSavesScrollContainer/SaveButtonsContainer"]
+layout_mode = 2
+theme = ExtResource("3_6n2vi")
+theme_type_variation = &"New"
+theme_override_font_sizes/font_size = 32
 text = "Game Saves"
 horizontal_alignment = 1
 
-[node name="HighScoresContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 504.0
-offset_right = 880.0
-offset_bottom = 647.0
-
-[node name="Label" type="Label" parent="HighScoresContainer"]
+[node name="NewGame" type="Button" parent="GameSavesScrollContainer/SaveButtonsContainer"]
 layout_mode = 2
-text = "High Scores"
-horizontal_alignment = 1
-
-[node name="NewGame" type="Button" parent="."]
-layout_mode = 0
-offset_left = 992.0
-offset_top = 264.0
-offset_right = 1153.0
-offset_bottom = 400.0
-theme = SubResource("Theme_4gnvr")
-text = "New Game"
-
-[node name="NewGame2" type="Button" parent="."]
-layout_mode = 0
-offset_left = 992.0
-offset_top = 264.0
-offset_right = 1153.0
-offset_bottom = 400.0
 theme = ExtResource("3_6n2vi")
 text = "New Game"
 
@@ -74,6 +59,25 @@ offset_bottom = 621.0
 theme = ExtResource("3_6n2vi")
 text = "Main Menu"
 
-[connection signal="pressed" from="NewGame" to="." method="_on_new_game_pressed"]
-[connection signal="pressed" from="NewGame2" to="." method="_on_new_game_pressed"]
+[node name="HighScoresScrollContainer" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 64.0
+offset_top = 64.0
+offset_right = 472.0
+offset_bottom = 576.0
+
+[node name="HighScoresContainer" type="VBoxContainer" parent="HighScoresScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HighScoresScrollContainer/HighScoresContainer"]
+layout_mode = 2
+theme = ExtResource("3_6n2vi")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 32
+text = "High Scores"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="GameSavesScrollContainer/SaveButtonsContainer/NewGame" to="." method="_on_new_game_pressed"]
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
