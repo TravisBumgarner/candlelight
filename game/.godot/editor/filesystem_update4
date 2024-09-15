@@ -1,5 +1,11 @@
-res://Game/PuzzleGameMenu.tscn
-res://candlelight_theme.tres
 res://Game/game_board.tscn
-res://MainMenu/main_menu.tscn
-res://Game/PuzzleGameMenu.gd
+res://candlelight_theme.tres
+res://resources/keyboard/letter_space.tres
+res://resources/keyboard/letter_esc.tres
+res://resources/keyboard/letter_a.tres
+res://resources/keyboard/letter_d.tres
+res://resources/keyboard/letter_r.tres
+res://Tutorial/TutorialGame.gd
+res://Game/GemsManager.gd
+res://Game/BaseGame.gd
+res://Game/index.gd

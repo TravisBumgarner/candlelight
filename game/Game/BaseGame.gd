@@ -10,7 +10,8 @@ var sounds: Node
 var game_details_label: Label
 var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
-var instructions: RichTextLabel
+var instructions: VBoxContainer
+var return_to_main_menu: Callable
 var submit_score_button: Button
 var target_gem_tile_map: TileMap
 # end _init Params Alphabetical
@@ -35,10 +36,12 @@ func _init(args: Array):
 	self.instructions = args[4]
 	self.level_complete_timer = args[5]
 	self.queue_tile_map = args[6]
-	self.sounds = args[7]
-	self.submit_score_button = args[8]
-	self.target_gem_tile_map = args[9]
+	self.return_to_main_menu = args[7]
+	self.sounds = args[8]
+	self.submit_score_button = args[9]
+	self.target_gem_tile_map = args[10]
 	# Alphabatical
+	print("huh", self.instructions, args[4])
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -52,9 +55,6 @@ func cleanup():
 	self.level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
 	self.submit_score_button.disconnect('pressed', Callable(self, "_on_submit_pressed"))
 
-func _exit_tree():
-	cleanup()
-
 func _on_action_pressed(action):
 	var direction_map = {
 		"up": Vector2i.UP,
@@ -64,7 +64,11 @@ func _on_action_pressed(action):
 	}
 	
 	if action in direction_map:
-		player.move(direction_map[action])
+		if player.current_absolute_position[1] == -3 and action == 'down':
+			# Move player down into game board if they're starting in the new area.
+			player.move(Vector2i(0, 3))		
+		else:
+			player.move(direction_map[action])
 	
 	match action:
 		"undo":
@@ -76,6 +80,9 @@ func _on_action_pressed(action):
 			player.rotate_right()
 		"select":
 			self.handle_player_placement()
+		"escape":
+			cleanup()
+			self.return_to_main_menu.call()
 
 func handle_player_placement():
 	if not player.can_place():
@@ -84,7 +91,7 @@ func handle_player_placement():
 	
 	history.append(self.board_tile_map, player.shape)
 	player.place_on_board()
-	var gems = gemsManager.find_gems()
+	var gems = gemsManager.find_gems_and_shapes()['gems']
 	if(gems.size() > 0):
 		level_complete(gems)
 		return

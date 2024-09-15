@@ -147,18 +147,22 @@ func is_target_gem(shape):
 
 
 var visited = []
-func find_gems():
+func find_gems_and_shapes():
 	var gems = []
 	visited.resize(GlobalConsts.GRID.WIDTH)
 	for i in range(GlobalConsts.GRID.WIDTH):
 		visited[i] = []
 		visited[i].resize(GlobalConsts.GRID.HEIGHT)
 
-	var light_shapes = find_shapes(GlobalConsts.SPRITE.LIGHT_INACTIVE)
-	for light_shape in light_shapes:
-		if is_target_gem(light_shape):
-			gems.append(light_shape)
-	return gems
+	var shapes = _find_shapes(GlobalConsts.SPRITE.LIGHT_INACTIVE)
+	for shape in shapes:
+		if is_target_gem(shape):
+			gems.append(shape)
+			
+	return {
+		'gems' = gems,
+		'shapes' = shapes,
+	}
 
 
 func arrays_equal(arr1, arr2) -> bool:
@@ -176,8 +180,8 @@ func arrays_equal(arr1, arr2) -> bool:
 			return false
 	return true
 
-
-func find_shapes(desired_color: Vector2i):
+# Do not use function alone.
+func _find_shapes(desired_color: Vector2i):
 	var shapes = []
 	for x in range(GlobalConsts.GRID.WIDTH):
 		for y in range(GlobalConsts.GRID.HEIGHT):
