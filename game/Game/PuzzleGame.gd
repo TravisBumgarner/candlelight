@@ -61,6 +61,7 @@ func load_game():
 	update_game_display()
 
 func level_complete(gems):
+	disable_player_interaction = true
 	var total_gems = gems.size()
 	
 	if total_gems == 1:
@@ -108,13 +109,14 @@ func gems_to_walls():
 				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
-func _on_submit_pressed():
-	PuzzleModeHighScores.add_high_score(alchemizations, level)
-	delete_game_save()
-	new_game()
+#func _on_submit_pressed():
+	#PuzzleModeHighScores.add_high_score(alchemizations, level)
+	#delete_game_save()
+	#new_game()
 
 
 func _on_level_complete_timer_timeout():
+	disable_player_interaction = false
 	level += 1
 	update_game_display()
 	gems_to_walls()

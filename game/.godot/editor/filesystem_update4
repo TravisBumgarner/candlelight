@@ -23,3 +23,4 @@ res://Game/DailyGameMenu.gd
 res://MainMenu/index.gd
 res://Singletons/DailyModeHighScores.gd
 res://Game/Queue.gd
+res://Tutorial/TutorialGame.gd
