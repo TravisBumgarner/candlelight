@@ -1,7 +1,9 @@
+VBoxContainer
+LineEdit
+TextEdit
 HBoxContainer
 Node
 TextureRect
-VBoxContainer
 Control
 Label
 Sprite2D

@@ -28,10 +28,10 @@ texture = ExtResource("2_f6iko")
 
 [node name="GameSavesScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 2
-offset_left = 632.0
-offset_top = 64.0
-offset_right = 1040.0
-offset_bottom = 576.0
+offset_left = 160.0
+offset_top = 56.0
+offset_right = 568.0
+offset_bottom = 568.0
 
 [node name="SaveButtonsContainer" type="VBoxContainer" parent="GameSavesScrollContainer"]
 layout_mode = 2
@@ -44,13 +44,8 @@ layout_mode = 2
 theme = ExtResource("3_6n2vi")
 theme_type_variation = &"New"
 theme_override_font_sizes/font_size = 32
-text = "Game Saves"
+text = "Continue Playing"
 horizontal_alignment = 1
-
-[node name="NewGame" type="Button" parent="GameSavesScrollContainer/SaveButtonsContainer"]
-layout_mode = 2
-theme = ExtResource("3_6n2vi")
-text = "New Game"
 
 [node name="BackButton" type="Button" parent="."]
 layout_mode = 0
@@ -63,9 +58,9 @@ text = "Main Menu"
 
 [node name="HighScoresScrollContainer" type="ScrollContainer" parent="."]
 layout_mode = 0
-offset_left = 64.0
+offset_left = -496.0
 offset_top = 64.0
-offset_right = 472.0
+offset_right = -88.0
 offset_bottom = 576.0
 
 [node name="HighScoresContainer" type="VBoxContainer" parent="HighScoresScrollContainer"]
@@ -81,5 +76,27 @@ theme_override_font_sizes/font_size = 32
 text = "High Scores"
 horizontal_alignment = 1
 
-[connection signal="pressed" from="GameSavesScrollContainer/SaveButtonsContainer/NewGame" to="." method="_on_new_game_pressed"]
+[node name="NewGameContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+offset_left = 680.0
+offset_right = 992.0
+offset_bottom = 648.0
+alignment = 1
+
+[node name="NewGameSubContainer" type="VBoxContainer" parent="NewGameContainer"]
+layout_mode = 2
+
+[node name="NameInput" type="LineEdit" parent="NewGameContainer/NewGameSubContainer"]
+layout_mode = 2
+placeholder_text = "Enter your name:"
+max_length = 30
+
+[node name="NewGameButton" type="Button" parent="NewGameContainer/NewGameSubContainer"]
+layout_mode = 2
+theme = ExtResource("3_6n2vi")
+disabled = true
+text = "New Game"
+
 [connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="text_changed" from="NewGameContainer/NewGameSubContainer/NameInput" to="." method="_on_name_input_text_changed"]
+[connection signal="pressed" from="NewGameContainer/NewGameSubContainer/NewGameButton" to="." method="_on_new_game_pressed"]

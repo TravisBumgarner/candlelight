@@ -1,13 +1,15 @@
 extends Control
 
-@onready var new_game_button = $TextureRect/NewGame
+
+@onready var new_game_button = $NewGameContainer/NewGameSubContainer/NewGameButton
 @onready var high_scores_container = $HighScoresScrollContainer/HighScoresContainer
 @onready var save_buttons_container = $GameSavesScrollContainer/SaveButtonsContainer
-
+@onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
 
 @onready var game_scene = load("res://Game/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
+
 
 var save_files = []
 
@@ -41,21 +43,21 @@ func check_for_saves():
 			
 			var config = ConfigFile.new()
 			config.load(full_file_path)
-			var human_readable_last_played = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HUMAN_READABLE_LAST_PLAYED)
+			var player_name = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_NAME)
 			var alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.ALCHEMIZATIONS)
 			var level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL)
-			create_save_button(full_file_path, human_readable_last_played, level, alchemizations)
+			create_save_button(full_file_path, player_name, level, alchemizations)
 		file_name = dir.get_next()
 		full_file_path = "%s/%s" % [game_save_dir, file_name]
 	
 	dir.list_dir_end()
 
 # Function to create a button for each save file
-func create_save_button(file_name: String, human_readable_last_played: String, level: int, alchemizations: int):
+func create_save_button(file_name: String, player_name: String, level: int, alchemizations: int):
 	var button = Button.new()
-	var text = "Last played " + human_readable_last_played + '\n'
+	var text = player_name + '\n'
 	text += "Level " + str(level) + '\n'
-	text += "Alchemiations " + str(alchemizations)
+	text += str(alchemizations) + " Alchemiations"
 	
 	button.text = text
 	button.name = file_name
@@ -78,3 +80,10 @@ func _on_new_game_pressed():
 
 func _on_back_button_pressed():
 	get_tree().change_scene_to_packed(main_menu)
+
+
+func _on_name_input_text_changed(new_text):
+	GlobalState.player_name = new_text
+	var submit_disabled = len(new_text) == 0
+	new_game_button.disabled = submit_disabled
+		

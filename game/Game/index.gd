@@ -12,7 +12,6 @@ extends Node2D
 @onready var game_details_tile_map = $GameDetailsTileMap
 @onready var submit_score_button = $SubmitScore
 @onready var back_button = $BackButton
-@onready var instructions_new = $InstructionsNew
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
@@ -22,7 +21,7 @@ func return_to_main_menu():
 	get_tree().change_scene_to_packed(self.main_menu_scene)
 
 
-func create_game(game_mode, track_high_scores: bool) -> void:
+func create_game(game_mode, track_high_scores: bool, show_instructions: bool) -> void:
 	game = game_mode.new([
 		# ALPHABETICAL
 		board_tile_map, 
@@ -42,17 +41,39 @@ func create_game(game_mode, track_high_scores: bool) -> void:
 		submit_score_button.show()
 	else:
 		submit_score_button.hide()
+	
+	if show_instructions:
+		instructions.show()
+	else:
+		instructions.hide()
 
 func _ready():	
 	var game_modes = {
-		GlobalConsts.GAME_MODE.TutorialMode: { "class": TutorialMode, "track_high_scores": false },
-		GlobalConsts.GAME_MODE.PuzzleGame: { "class": PuzzleGame, "track_high_scores": true },
-		GlobalConsts.GAME_MODE.DailyGame: { "class": DailyGame, "track_high_scores": false }
+		GlobalConsts.GAME_MODE.TutorialMode: {
+			"class": TutorialMode,
+			"track_high_scores": false,
+			"show_instructions": true
+		},
+		GlobalConsts.GAME_MODE.PuzzleGame: {
+			"class": PuzzleGame,
+			"track_high_scores": false,
+			"show_instructions": false
+		},
+		# Setting track_high_scores to false for the time being.
+		GlobalConsts.GAME_MODE.DailyGame: {
+			"class": DailyGame, 
+			"track_high_scores": false,
+			"show_instructions": false
+		}
 	}
 	
 	if GlobalState.game_mode in game_modes:
 		var selected_game = game_modes[GlobalState.game_mode]
-		create_game(selected_game["class"], selected_game["track_high_scores"])
+		create_game(
+			selected_game["class"],
+			selected_game["track_high_scores"],
+			selected_game['show_instructions']
+		)
 	
 	if GlobalState.game_save_file:
 		print('loading?')

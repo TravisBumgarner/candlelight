@@ -30,6 +30,8 @@ func load_game():
 	var config = ConfigFile.new()
 	config.load(GlobalState.game_save_file)
 	
+	GlobalState.player_name = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_NAME)
+	
 	game_start_timestamp = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.GAME_START_TIMESTAMP)
 	
 	level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL, level)
@@ -92,7 +94,7 @@ func create_game_save():
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.GAME_START_TIMESTAMP, game_start_timestamp)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HISTORY, history.get_history())
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_SHAPE, player.shape)
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.HUMAN_READABLE_LAST_PLAYED, Utilities.human_readable_current_time())
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_NAME, GlobalState.player_name)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLACED_SHAPES, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES))
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.BLOCKERS, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS))
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.TARGET_GEM, gemsManager.get_target_gem())

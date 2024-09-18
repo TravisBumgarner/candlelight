@@ -29,7 +29,7 @@ func new_game():
 
 func update_game_display():
 	var text = "[center]"
-	text += str(alchemizations) + "Alchemization"
+	text += str(alchemizations) + " Alchemization"
 	if alchemizations != 1:
 		text += "s"
 	

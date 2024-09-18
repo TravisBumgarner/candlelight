@@ -91,6 +91,10 @@ func handle_player_placement():
 	
 	history.append(self.board_tile_map, player.shape)
 	player.place_on_board()
+	
+	alchemizations += 1
+	update_game_display()
+	
 	var gems = gemsManager.find_gems_and_shapes()['gems']
 	if(gems.size() > 0):
 		level_complete(gems)
@@ -98,8 +102,7 @@ func handle_player_placement():
 	player = Player.new(self.board_tile_map, self.queue.next())
 	player.draw()
 	
-	alchemizations += 1
-	update_game_display()
+
 	
 
 func level_complete(_gems):
