@@ -12,7 +12,6 @@ var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
 var instructions_container: VBoxContainer
 var return_to_main_menu: Callable
-var submit_score_button: Button
 var target_gem_tile_map: TileMap
 # end _init Params Alphabetical
 
@@ -24,7 +23,8 @@ var gemsManager: GemsManager
 var level: int
 var alchemizations: int
 var game_start_timestamp: int
-var is_paused_for_scoring = false
+var disable_player_interaction = false
+
 # end Local Params
 
 func _init(args: Array):
@@ -38,24 +38,25 @@ func _init(args: Array):
 	self.queue_tile_map = args[6]
 	self.return_to_main_menu = args[7]
 	self.sounds = args[8]
-	self.submit_score_button = args[9]
-	self.target_gem_tile_map = args[10]
+	self.target_gem_tile_map = args[9]
 	# Alphabatical
-	print("huh", self.instructions_container, args[4])
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
-	self.submit_score_button.connect('pressed', Callable(self, "_on_submit_pressed"))
+	#self.submit_score_button.connect('pressed', Callable(self, "_on_submit_pressed"))
 
 func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
 	SoundManager.disconnect("play_sound", sounds.play_sound)
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 	self.level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
-	self.submit_score_button.disconnect('pressed', Callable(self, "_on_submit_pressed"))
+	#self.submit_score_button.disconnect('pressed', Callable(self, "_on_submit_pressed"))
 
 func _on_action_pressed(action):
+	if disable_player_interaction and action != 'escape':
+		return
+	
 	var direction_map = {
 		"up": Vector2i.UP,
 		"down": Vector2i.DOWN,
@@ -91,6 +92,10 @@ func handle_player_placement():
 	
 	history.append(self.board_tile_map, player.shape)
 	player.place_on_board()
+	
+	alchemizations += 1
+	update_game_display()
+	
 	var gems = gemsManager.find_gems_and_shapes()['gems']
 	if(gems.size() > 0):
 		level_complete(gems)
@@ -98,8 +103,7 @@ func handle_player_placement():
 	player = Player.new(self.board_tile_map, self.queue.next())
 	player.draw()
 	
-	alchemizations += 1
-	update_game_display()
+
 	
 
 func level_complete(_gems):

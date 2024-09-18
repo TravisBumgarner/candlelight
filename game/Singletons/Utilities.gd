@@ -95,7 +95,5 @@ func get_save_game_path(key: String, game_start_timestamp) -> String:
 	return save_path
 	
 	
-func human_readable_current_time() -> String:
-	var time = Time.get_datetime_string_from_system()
-	return time
-
+func get_daily_puzzle_date() -> String:
+	return Time.get_date_string_from_system()

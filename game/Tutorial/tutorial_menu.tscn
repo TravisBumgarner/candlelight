@@ -40,6 +40,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 theme_override_font_sizes/font_size = 72
 text = "Welcome!"
 horizontal_alignment = 1
@@ -51,6 +52,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 theme_override_font_sizes/font_size = 36
 text = "Press"
 horizontal_alignment = 1
@@ -62,8 +64,9 @@ stretch_mode = 3
 
 [node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 theme_override_font_sizes/font_size = 36
-text = "for tutorial."
+text = "for the tutorial."
 
 [node name="EscToStart" type="HBoxContainer" parent="HBoxContainer/VBoxContainer"]
 layout_mode = 2
@@ -72,6 +75,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="HBoxContainer/VBoxContainer/EscToStart"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 theme_override_font_sizes/font_size = 36
 text = "Or"
 horizontal_alignment = 1
@@ -83,5 +87,6 @@ stretch_mode = 3
 
 [node name="Label2" type="Label" parent="HBoxContainer/VBoxContainer/EscToStart"]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
 theme_override_font_sizes/font_size = 36
 text = "to start playing."

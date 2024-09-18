@@ -50,6 +50,8 @@ func level_complete(gems):
 	# Don't look for gems before the scoring stage.
 	if instruction < INSTRUCTION['4_Score']:
 		return
+		
+	disable_player_interaction = true
 	
 	if instruction == INSTRUCTION['4_Score']:
 		SoundManager.play("one_gem")	
@@ -63,6 +65,7 @@ func level_complete(gems):
 	level_complete_timer.start(2)
 
 func _on_level_complete_timer_timeout():
+	disable_player_interaction = false
 	instruction += 1
 	level += 1
 	gemsManager.puzzle_mode_set_target_gem(level)
