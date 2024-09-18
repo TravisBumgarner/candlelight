@@ -24,6 +24,7 @@ func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _is_demo_m
 	else:
 		RNG.seed = game_key
 
+const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 
 func draw_queue(offset=0):
 	# Offest is used for paginating queue for challenges
@@ -39,7 +40,7 @@ func draw_queue(offset=0):
 		for vector in piece[0]:
 			var next_in_queue = queue_index == 0
 			var color = GlobalConsts.SPRITE.DARK_ACTIVE if next_in_queue else GlobalConsts.SPRITE.DARK_INACTIVE
-			self.queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + y_offset, GlobalConsts.GEMS_TILE_ID, color) 
+			self.queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + y_offset + CENTER_ALIGN_QUEUE, GlobalConsts.GEMS_TILE_ID, color) 
 		y_offset += Vector2i(0, 4)
 
 func fill_queue():
