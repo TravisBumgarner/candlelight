@@ -24,7 +24,8 @@ var gemsManager: GemsManager
 var level: int
 var alchemizations: int
 var game_start_timestamp: int
-var is_paused_for_scoring = false
+var disable_player_interaction = false
+
 # end Local Params
 
 func _init(args: Array):
@@ -56,6 +57,9 @@ func cleanup():
 	self.submit_score_button.disconnect('pressed', Callable(self, "_on_submit_pressed"))
 
 func _on_action_pressed(action):
+	if disable_player_interaction and action != 'escape':
+		return
+	
 	var direction_map = {
 		"up": Vector2i.UP,
 		"down": Vector2i.DOWN,

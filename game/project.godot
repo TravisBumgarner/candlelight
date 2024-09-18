@@ -25,6 +25,7 @@ SoundManager="*res://Singletons/SoundManager.gd"
 GlobalState="*res://Singletons/GlobalState.gd"
 KeyValueStore="*res://Singletons/KeyValueStore.gd"
 PuzzleModeHighScores="*res://Singletons/PuzzleModeHighScores.gd"
+DailyModeHighScores="*res://Singletons/DailyModeHighScores.gd"
 
 [display]
 

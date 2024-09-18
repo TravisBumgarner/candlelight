@@ -18,3 +18,7 @@ res://MainMenu/main_menu.tscn
 res://Singletons/GlobalConsts.gd
 res://Game/DailyGame.gd
 res://Game/BaseGame.gd
+res://Game/DailyGameMenu.tscn
+res://Game/DailyGameMenu.gd
+res://MainMenu/index.gd
+res://Singletons/DailyModeHighScores.gd

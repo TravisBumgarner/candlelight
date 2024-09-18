@@ -70,7 +70,6 @@ func level_complete(gems):
 			
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
-	is_paused_for_scoring = true
 	level_complete_timer.start(1)
 
 func _on_action_pressed(action):
@@ -122,7 +121,6 @@ func _on_level_complete_timer_timeout():
 	erase_board()
 	gemsManager.puzzle_mode_set_target_gem(level)
 	player = Player.new(board_tile_map, self.queue.next())
-	is_paused_for_scoring = false
 
 func update_game_display():
 	var text = "[center]"

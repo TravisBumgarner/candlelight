@@ -13,6 +13,7 @@ class_name MainMenu
 @onready var credits_scene = load("res://Credits/credits.tscn")
 @onready var create_challenge_scene = load("res://CreateChallenge/index.tscn")
 @onready var puzzle_game_menu = load("res://Game/PuzzleGameMenu.tscn")
+@onready var daily_game_menu = load("res://Game/DailyGameMenu.tscn")
 
 func _ready():
 	daily_game_button.connect("pressed", Callable(self, "on_daily_game_button_down"))
@@ -27,8 +28,7 @@ func on_tutorial_button_down():
 	get_tree().change_scene_to_packed(game_scene)
 	
 func on_daily_game_button_down():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.DailyGame
-	get_tree().change_scene_to_packed(game_scene)
+	get_tree().change_scene_to_packed(daily_game_menu)
 	
 func on_puzzle_game_button_down():
 	get_tree().change_scene_to_packed(puzzle_game_menu)

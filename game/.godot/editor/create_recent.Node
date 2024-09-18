@@ -1,3 +1,4 @@
+Label
 VBoxContainer
 LineEdit
 TextEdit
@@ -5,7 +6,6 @@ HBoxContainer
 Node
 TextureRect
 Control
-Label
 Sprite2D
 ScrollContainer
 VScrollBar
