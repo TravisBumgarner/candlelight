@@ -91,7 +91,7 @@ layout_mode = 2
 
 [node name="Label2" type="Label" parent="VBoxContainer/Music"]
 layout_mode = 2
-text = "Music By"
+text = "Music By [Coming Soon]"
 
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/Music"]
 layout_mode = 2

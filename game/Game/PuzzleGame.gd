@@ -54,9 +54,8 @@ func load_game():
 	var placed_shapes_array = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLACED_SHAPES)
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, placed_shapes_array)
 
-	var blockers_array = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.BLOCKERS)
-	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS, blockers_array)
-	
+	#var blockers_array = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.BLOCKERS)
+	#Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS, blockers_array)
 	
 	update_game_display()
 
@@ -96,18 +95,18 @@ func create_game_save():
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_SHAPE, player.shape)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_NAME, GlobalState.player_name)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLACED_SHAPES, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES))
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.BLOCKERS, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS))
+	#config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.BLOCKERS, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS))
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.TARGET_GEM, gemsManager.get_target_gem())
 	config.save(Utilities.get_save_game_path(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME, game_start_timestamp))
 
-func gems_to_walls():
-	for x in range(GlobalConsts.GRID.WIDTH):
-		for y in range(GlobalConsts.GRID.HEIGHT):
-			var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES,Vector2i(x,y))
-
-			if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
-				self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
-
+#func gems_to_walls():
+	#for x in range(GlobalConsts.GRID.WIDTH):
+		#for y in range(GlobalConsts.GRID.HEIGHT):
+			#var tile_style = self.board_tile_map.get_cell_atlas_coords(GlobalConsts.BOARD_LAYER.PLACED_SHAPES,Vector2i(x,y))
+#
+			#if tile_style == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE:
+				#self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.BLOCKERS, Vector2i(x,y), GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
+#
 
 #func _on_submit_pressed():
 	#PuzzleModeHighScores.add_high_score(alchemizations, level)
@@ -119,7 +118,7 @@ func _on_level_complete_timer_timeout():
 	disable_player_interaction = false
 	level += 1
 	update_game_display()
-	gems_to_walls()
+	#gems_to_walls()
 	erase_board()
 	history.empty()
 	gemsManager.puzzle_mode_set_target_gem(level)
