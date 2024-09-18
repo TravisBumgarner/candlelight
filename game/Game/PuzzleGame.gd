@@ -121,6 +121,7 @@ func _on_level_complete_timer_timeout():
 	update_game_display()
 	gems_to_walls()
 	erase_board()
+	history.empty()
 	gemsManager.puzzle_mode_set_target_gem(level)
 	player = Player.new(board_tile_map, self.queue.next())
 
