@@ -97,3 +97,19 @@ func get_save_game_path(key: String, game_start_timestamp) -> String:
 	
 func get_daily_puzzle_date() -> String:
 	return Time.get_date_string_from_system()
+
+
+func load_json(file_path: String) -> Dictionary:
+	var file = FileAccess.open(file_path, FileAccess.READ)
+	if file:
+		var json_string = file.get_as_text()
+		file.close()
+		
+		# Parse the JSON
+		var json = JSON.new()
+		json.parse(json_string)
+		return json.get_data()
+	
+	else:
+		print("Error opening file: ", file_path)
+		return {}

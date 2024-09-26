@@ -1,3 +1,5 @@
+ScrollContainer
+Button
 Label
 VBoxContainer
 LineEdit
@@ -7,7 +9,5 @@ Node
 TextureRect
 Control
 Sprite2D
-ScrollContainer
 VScrollBar
-Button
 LinkButton

@@ -18,3 +18,12 @@ res://Credits/credits.tscn
 res://MainMenu/main_menu.tscn
 res://Game/PuzzleGameMenu.tscn
 res://Game/PuzzleGameMenu.gd
+res://Singletons/PuzzleModeLevelManager.gd
+res://Game/puzzle_mode_levels/index.json
+res://Singletons/Utilities.gd
+res://Game/PuzzleGame.gd
+res://Game/puzzle_mode_levels/2.cfg
+res://Game/puzzle_mode_levels/0.cfg
+res://Game/puzzle_mode_levels/1.cfg
+res://Singletons/GlobalState.gd
+res://Game/Queue.gd

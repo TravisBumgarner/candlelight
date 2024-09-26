@@ -84,3 +84,16 @@ const FREE_PLAY_GAME_SAVE_KEY = {
 	TARGET_GEM = 'target_gem'
 }
 
+const PUZZLE_GAME_SAVE_KEY = {
+	#LEVEL = 'level',
+	#ALCHEMIZATIONS = 'alchemizations',
+	QUEUE = 'queue',
+	#GAME_START_TIMESTAMP = 'game_start_timestamp',
+	#HISTORY = 'history',
+	#PLAYER_SHAPE = 'player_shape',
+	#PLAYER_NAME = 'player_name',
+	#PLACED_SHAPES = 'placed_shapes',
+	#BLOCKERS = 'blockers',
+	TARGET_GEM = 'target_gem'
+}
+

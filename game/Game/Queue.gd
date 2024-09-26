@@ -59,7 +59,6 @@ func undo(shape):
 	self.queue.insert(0, shape)
 	self.draw_queue()
 
-
 func next():
 	if current_game_piece:
 		self.history.append(current_game_piece)
@@ -78,7 +77,6 @@ func get_queue():
 func empty():
 	self.queue.clear()
 
-	
 func load(data: Array):
 	self.empty()
 	self.queue = data

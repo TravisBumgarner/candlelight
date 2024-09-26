@@ -70,6 +70,11 @@ func _ready():
 			"class": DailyGame, 
 			"show_instructions": false,
 			"show_new_game_button": true
+		},
+			GlobalConsts.GAME_MODE.PuzzleGame: {
+			"class": PuzzleGame, 
+			"show_instructions": false,
+			"show_new_game_button": false
 		}
 	}
 	
@@ -81,7 +86,7 @@ func _ready():
 			selected_game['show_new_game_button']
 		)
 	
-	if GlobalState.game_save_file:
+	if GlobalState.game_save_file or GlobalState.puzzle_mode_level != null:
 		game.load_game()
 		GlobalState.game_save_file = null
 	else:
