@@ -16,3 +16,5 @@ res://Game/index.gd
 res://Game/game_board.tscn
 res://Credits/credits.tscn
 res://MainMenu/main_menu.tscn
+res://Game/PuzzleGameMenu.tscn
+res://Game/PuzzleGameMenu.gd

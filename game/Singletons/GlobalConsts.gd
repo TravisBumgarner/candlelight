@@ -3,7 +3,8 @@ extends Node
 enum GAME_MODE {
 	TutorialMode,
 	FreePlayGame,
-	DailyGame
+	DailyGame,
+	PuzzleGame
 }
 
 const GRID = { HEIGHT = 10, WIDTH = 13 }

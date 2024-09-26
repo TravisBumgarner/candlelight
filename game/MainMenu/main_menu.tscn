@@ -31,6 +31,21 @@ offset_bottom = 648.0
 theme_override_constants/separation = 30
 alignment = 1
 
+[node name="Puzzle Mode" type="VBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PuzzleModeButton" type="Button" parent="VBoxContainer/Puzzle Mode"]
+layout_mode = 2
+theme = ExtResource("3_jaf2s")
+text = "Puzzles"
+
+[node name="Label" type="Label" parent="VBoxContainer/Puzzle Mode"]
+layout_mode = 2
+text = "Complete puzzles guey."
+horizontal_alignment = 1
+autowrap_mode = 3
+
 [node name="FreePlayGame" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
@@ -86,13 +101,7 @@ theme_override_constants/separation = 20
 layout_mode = 2
 theme = ExtResource("3_jaf2s")
 disabled = true
-text = "Play Challenges"
-
-[node name="CreateChallenge" type="Button" parent="VBoxContainer/PlayerGenerated"]
-layout_mode = 2
-theme = ExtResource("3_jaf2s")
-disabled = true
-text = "Create Challenge (Coming Soon)"
+text = "Challenges (Coming Soon)"
 
 [node name="Label" type="Label" parent="VBoxContainer/PlayerGenerated"]
 layout_mode = 2
