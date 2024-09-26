@@ -1,7 +1,6 @@
 extends Control
 class_name MainMenu
-
-@onready var puzzle_game_button = $VBoxContainer/PuzzleGame/PuzzleGameButton
+@onready var free_play_game_button = $VBoxContainer/FreePlayGame/FreePlayGameButton
 @onready var tutorial_button = $VBoxContainer/Tutorial/TutorialButton
 @onready var daily_game_button = $VBoxContainer/Daily/DailyGameButton
 @onready var play_challenge_button = $VBoxContainer/PlayerGenerated/PlayChallengeButton
@@ -12,12 +11,12 @@ class_name MainMenu
 
 @onready var credits_scene = load("res://Credits/credits.tscn")
 @onready var create_challenge_scene = load("res://CreateChallenge/index.tscn")
-@onready var puzzle_game_menu = load("res://Game/PuzzleGameMenu.tscn")
+@onready var free_play_game_menu = load("res://Game/FreePlayGameMenu.tscn")
 @onready var daily_game_menu = load("res://Game/DailyGameMenu.tscn")
 
 func _ready():
 	daily_game_button.connect("pressed", Callable(self, "on_daily_game_button_down"))
-	puzzle_game_button.connect("pressed", Callable(self, "on_puzzle_game_button_down"))
+	free_play_game_button.connect("pressed", Callable(self, "on_free_play_game_button_down"))
 	tutorial_button.connect("pressed", Callable(self, "on_tutorial_button_down"))
 	play_challenge_button.connect("pressed", Callable(self, "on_play_challenge_button_down"))
 	exit_button.connect("pressed", Callable(self, "on_exit_button_down"))
@@ -30,8 +29,8 @@ func on_tutorial_button_down():
 func on_daily_game_button_down():
 	get_tree().change_scene_to_packed(daily_game_menu)
 	
-func on_puzzle_game_button_down():
-	get_tree().change_scene_to_packed(puzzle_game_menu)
+func on_free_play_game_button_down():
+	get_tree().change_scene_to_packed(free_play_game_menu)
 
 func on_play_challenge_button_down():
 	get_tree().change_scene_to_packed(create_challenge_scene)

@@ -1,11 +1,11 @@
 res://CreateChallenge/index.tscn::eaf4151036cda452b944dcf5b9c0f3a6::1726683581::res://.godot/exported/133200997/export-91f28205572d2fc487b4ee0b1a683954-index.scn
-res://Game/game_board.tscn::7abcfd1bd16da618f3a5425381138210::1726692219::res://.godot/exported/133200997/export-fa572215c48894b9d8f288e8b3c4ce19-game_board.scn
-res://Game/PuzzleGameMenu.tscn::13cdae235495adcaa01d5a676ac784bd::1726683583::res://.godot/exported/133200997/export-cfe9e4b2219daaddde6241022f2ec4bb-PuzzleGameMenu.scn
+res://Game/game_board.tscn::7abcfd1bd16da618f3a5425381138210::1726696867::res://.godot/exported/133200997/export-fa572215c48894b9d8f288e8b3c4ce19-game_board.scn
+res://Game/PuzzleGameMenu.tscn::13cdae235495adcaa01d5a676ac784bd::1726696867::res://.godot/exported/133200997/export-cfe9e4b2219daaddde6241022f2ec4bb-PuzzleGameMenu.scn
 res://MainMenu/main_menu.tscn::3ee60349145c93f16495d500f58381f4::1726684798::res://.godot/exported/133200997/export-2bdff2e28ff9e8751ad1da9ff967f70e-main_menu.scn
 res://entry_point.tscn::ccf12caaa88ad6c03e2c84d25c4aa3cd::1726369214::res://.godot/exported/133200997/export-2e70a77e3b2cbb44eae47e0daf03415b-entry_point.scn
-res://Credits/credits.tscn::382b4ca6bac293833da04b92690ab8e8::1726692219::res://.godot/exported/133200997/export-4d488ae21d564a9d6cb0c72f395c1210-credits.scn
+res://Credits/credits.tscn::382b4ca6bac293833da04b92690ab8e8::1726696867::res://.godot/exported/133200997/export-4d488ae21d564a9d6cb0c72f395c1210-credits.scn
 res://candlelight_theme.tres::3bd8c0aeca872330d8eeff0bf34bee25::1726680677::res://.godot/exported/133200997/export-9f5fcd6392429bcccd427c256e357664-candlelight_theme.res
-res://Game/DailyGameMenu.tscn::02227a21e1791fd8ae185455ff3a6434::1726689842::res://.godot/exported/133200997/export-c7f560cbe202b050936f2d5e68942b57-DailyGameMenu.scn
+res://Game/DailyGameMenu.tscn::02227a21e1791fd8ae185455ff3a6434::1726696867::res://.godot/exported/133200997/export-c7f560cbe202b050936f2d5e68942b57-DailyGameMenu.scn
 res://resources/keyboard/letter_a.tres::1a84cb0e75478a05bb6872c3bdddd74b::1726690403::res://.godot/exported/133200997/export-1635a4ae353ec16b4a6c6a5bd588a20e-letter_a.res
 res://resources/keyboard/letter_d.tres::cfec8763fc4b7195e9c7295e74e0e577::1726690403::res://.godot/exported/133200997/export-332a8c3d0324df5946bfec5000aa6279-letter_d.res
 res://resources/keyboard/letter_esc.tres::4c960ea0bc61d5e758f454a95c776a03::1726680677::res://.godot/exported/133200997/export-77c20dc5de258fc554dc826c61f60ced-letter_esc.res
@@ -14,4 +14,4 @@ res://resources/keyboard/letter_s.tres::a0ad235387f9fe6eae2383e2d6cc7f61::172643
 res://resources/keyboard/letter_space.tres::8c9257692b49dadac95c7a2143719f53::1726680677::res://.godot/exported/133200997/export-f00ab2136c8ec930669b45a98ac3bed8-letter_space.res
 res://resources/keyboard/letter_w.tres::7a1632b368ffb9ccc795f5930960bd41::1726436357::res://.godot/exported/133200997/export-ca16732d7b44274b3e4f1725d4843116-letter_w.res
 res://resources/keyboard/letter_z.tres::05502fe8243df9d3f5d3587b535f363b::1726436357::res://.godot/exported/133200997/export-72cc8f4ba87af3b9b5a366f95a4dd70a-letter_z.res
-res://Tutorial/tutorial_menu.tscn::31e5c0c6eef74c9803cf2dfdaebd37b6::1726683583::res://.godot/exported/133200997/export-d22ca77fea1b233853d783d7bea8aab8-tutorial_menu.scn
+res://Tutorial/tutorial_menu.tscn::31e5c0c6eef74c9803cf2dfdaebd37b6::1726696867::res://.godot/exported/133200997/export-d22ca77fea1b233853d783d7bea8aab8-tutorial_menu.scn

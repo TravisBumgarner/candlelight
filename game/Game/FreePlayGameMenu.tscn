@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bdpcqedjkhwkx"]
 
-[ext_resource type="Script" path="res://Game/PuzzleGameMenu.gd" id="1_vhifd"]
+[ext_resource type="Script" path="res://Game/FreePlayGameMenu.gd" id="1_vhifd"]
 [ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_f6iko"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_6n2vi"]
 

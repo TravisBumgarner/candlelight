@@ -60,8 +60,8 @@ func _ready():
 			"show_instructions": true,
 			"show_new_game_button": false
 		},
-		GlobalConsts.GAME_MODE.PuzzleGame: {
-			"class": PuzzleGame,
+		GlobalConsts.GAME_MODE.FreePlayGame: {
+			"class": FreePlayGame,
 			"show_instructions": false,
 			"show_new_game_button": false
 		},

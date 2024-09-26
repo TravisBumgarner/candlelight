@@ -18,13 +18,13 @@ func _ready():
 	populate_high_scores()
 
 func populate_high_scores():
-	for score in PuzzleModeHighScores.high_scores:
+	for score in FreePlayModeHighScores.high_scores:
 		var label = Label.new()
 		label.text = "Level: %d, Alchemizations: %d" % [score["level"], score["alchemizations"]]
 		high_scores_container.add_child(label)
 
 func check_for_saves():
-	var game_save_dir = Utilities.get_save_game_dir(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME)
+	var game_save_dir = Utilities.get_save_game_dir(GlobalConsts.GAME_SAVE_KEYS.FREE_PLAY_GAME)
 	var dir = DirAccess.open(game_save_dir)
 	
 	if dir == null:
@@ -43,9 +43,9 @@ func check_for_saves():
 			
 			var config = ConfigFile.new()
 			config.load(full_file_path)
-			var player_name = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_NAME)
-			var alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.ALCHEMIZATIONS)
-			var level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL)
+			var player_name = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLAYER_NAME)
+			var alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.ALCHEMIZATIONS)
+			var level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.LEVEL)
 			create_save_button(full_file_path, player_name, level, alchemizations)
 		file_name = dir.get_next()
 		full_file_path = "%s/%s" % [game_save_dir, file_name]
@@ -69,12 +69,12 @@ func create_save_button(file_name: String, player_name: String, level: int, alch
 
 # Function to handle button press, loading the save file
 func _on_save_button_pressed(file_name: String):
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.FreePlayGame
 	GlobalState.game_save_file = file_name
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_new_game_pressed():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.FreePlayGame
 	get_tree().change_scene_to_packed(game_scene)
 
 

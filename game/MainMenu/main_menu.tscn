@@ -31,18 +31,18 @@ offset_bottom = 648.0
 theme_override_constants/separation = 30
 alignment = 1
 
-[node name="PuzzleGame" type="VBoxContainer" parent="VBoxContainer"]
+[node name="FreePlayGame" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="PuzzleGameButton" type="Button" parent="VBoxContainer/PuzzleGame"]
+[node name="FreePlayGameButton" type="Button" parent="VBoxContainer/FreePlayGame"]
 layout_mode = 2
 theme = ExtResource("3_jaf2s")
-text = "Puzzles"
+text = "Free Play"
 
-[node name="Label" type="Label" parent="VBoxContainer/PuzzleGame"]
+[node name="Label" type="Label" parent="VBoxContainer/FreePlayGame"]
 layout_mode = 2
-text = "Complete the puzzle to advance levels"
+text = "Relax, jam to the music."
 horizontal_alignment = 1
 autowrap_mode = 3
 

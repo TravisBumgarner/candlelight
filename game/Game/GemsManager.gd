@@ -11,7 +11,7 @@ func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_
 	self.target_gem_tile_map = _target_gem_tile_map
 	self.queue_tile_map = _queue_tile_map
 #
-func puzzle_mode_level_to_gem_size(level: int) -> int:
+func free_play_mode_level_to_gem_size(level: int) -> int:
 	if level < 2:
 		return 1
 	elif level < 4:
@@ -77,7 +77,7 @@ func daily_mode_generate_gem(game_key: int):
 	self.target_gem = Utilities.move_cells_to_origin(points)
 
 #
-func puzzle_mode_generate_gem(size: int):
+func free_play_mode_generate_gem(size: int):
 	# It's possible that due to the algorithm below, the generation can exit prematurely. So we start the gem in the middle for best luck of being
 	# the desired size. 
 	var current_point = Vector2i(round(GlobalConsts.MAX_GEM_SIZE / 2.0), round(GlobalConsts.MAX_GEM_SIZE / 2.0))
@@ -115,10 +115,10 @@ func draw_gem_on_board(gem):
 		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, absolute_position, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 
-func puzzle_mode_set_target_gem(level: int):
+func free_play_mode_set_target_gem(level: int):
 	self.erase_target_gem()
-	var size = self.puzzle_mode_level_to_gem_size(level)
-	self.puzzle_mode_generate_gem(size)
+	var size = self.free_play_mode_level_to_gem_size(level)
+	self.free_play_mode_generate_gem(size)
 	self.draw_target_gem()
 #
 
@@ -132,7 +132,7 @@ func draw_target_gem():
 		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.LIGHT_INACTIVE)
 
 
-func puzzle_mode_resume(gem):
+func free_play_mode_resume(gem):
 	target_gem = gem
 	self.draw_target_gem()
 

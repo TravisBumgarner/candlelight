@@ -1,6 +1,6 @@
 extends Node
 
-var config_file_path = "user://puzzle_mode_high_scores.cfg"
+var config_file_path = "user://free_play_mode_high_scores.cfg"
 
 var high_scores = []
 
