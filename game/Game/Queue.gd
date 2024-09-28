@@ -6,16 +6,16 @@ var history = []
 var current_game_piece = null
 var game_key
 var queue_tile_map: TileMap
-var is_demo_mode: bool
 var visibile_queue_size: int
+var should_fill_queue: bool # Used for PuzzleMode which can have a specified number of pieces. 
 
 var RNG
 
-func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _is_demo_mode = false):
+func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _should_fill_queue = true):
 	self.queue_tile_map = _queue_tile_map
 	self.game_key = _game_key
 	self.visibile_queue_size = _visibile_queue_size
-	self.is_demo_mode = _is_demo_mode
+	self.should_fill_queue = _should_fill_queue
 	
 	RNG = RandomNumberGenerator.new()
 	
@@ -23,10 +23,11 @@ func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _is_demo_m
 		RNG.randomize()
 	else:
 		RNG.seed = game_key
+	self._fill_queue()
 
 const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 
-func draw_queue(offset=0):
+func _draw_queue(offset=0):
 	# Offest is used for paginating queue for challenges
 	queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
 
@@ -43,29 +44,27 @@ func draw_queue(offset=0):
 			self.queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + y_offset + CENTER_ALIGN_QUEUE, GlobalConsts.GEMS_TILE_ID, color) 
 		y_offset += Vector2i(0, 4)
 
-func fill_queue():
+# Should not be called outside of Queue
+func _fill_queue():
 	while queue.size() <= self.visibile_queue_size:
-		if self.is_demo_mode: 
-			self.queue.append(Shapes.SHAPES[0])
-		else:
-			var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
-			self.queue.append(random)
-	self.draw_queue()
+		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
+		self.queue.append(random)
+	self._draw_queue()
 
 func append_to_queue(shape):
 	self.queue.append(shape)
 
 func undo(shape):
 	self.queue.insert(0, shape)
-	self.draw_queue()
+	self._draw_queue()
 
 func next():
 	if current_game_piece:
 		self.history.append(current_game_piece)
 	current_game_piece = queue.pop_front()
-	
-	self.draw_queue()
-	self.fill_queue()
+	if should_fill_queue:
+		self._fill_queue()
+	self._draw_queue()
 	return current_game_piece
 
 func size():
@@ -80,4 +79,4 @@ func empty():
 func load(data: Array):
 	self.empty()
 	self.queue = data
-	self.draw_queue()
+	self._draw_queue()

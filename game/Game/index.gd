@@ -10,10 +10,10 @@ extends Node2D
 @onready var instructions = $Instructions
 
 @onready var game_details_tile_map = $GameDetailsTileMap
-#@onready var submit_score_button = $SubmitScore
 @onready var back_button = $BackButton
 @onready var new_game_button = $NewGameButton
 
+@onready var puzzle_complete_hbox_container = $PuzzleGameLevelComplete
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
@@ -36,13 +36,18 @@ func create_game(
 		game_details_value,
 		instructions,
 		level_complete_timer, 
+		puzzle_complete_hbox_container,
 		queue_tile_map, 
 		Callable(self, "return_to_main_menu"),
 		sounds,
 		target_gem_tile_map
 		# ALPHABETICAL
 	])
-		
+	
+	# Will never be visible on game start.
+	# The PuzzleGame is responsible for controlling visibility.
+	puzzle_complete_hbox_container.hide()
+	
 	if show_instructions:
 		instructions.show()
 	else:
@@ -85,8 +90,14 @@ func _ready():
 			selected_game['show_instructions'],
 			selected_game['show_new_game_button']
 		)
+		
+	if GlobalState.puzzle_mode_level != null:
+		# I don't think we can pass the level from the PuzzleGameMenu
+		# So I think this is the next best thing
+		game.level = GlobalState.puzzle_mode_level
+		GlobalState.puzzle_mode_level = null
 	
-	if GlobalState.game_save_file or GlobalState.puzzle_mode_level != null:
+	if GlobalState.game_save_file:
 		game.load_game()
 		GlobalState.game_save_file = null
 	else:
@@ -97,4 +108,12 @@ func _on_back_button_pressed():
 	game.cleanup()
 
 func _on_new_game_button_pressed():
+	self.game.new_game()
+
+func _on_next_level_pressed():
+	self.game.level += 1
+	self.game.new_game()
+	
+
+func _on_try_again_pressed():
 	self.game.new_game()

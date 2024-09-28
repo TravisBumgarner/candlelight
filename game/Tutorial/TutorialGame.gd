@@ -76,8 +76,6 @@ func _on_level_complete_timer_timeout():
 	
 	update_instructions()
 
-
-
 func check_user_performed_action():
 	var has_passed_level = false
 	if instruction > INSTRUCTION['3_Undo']:
@@ -134,9 +132,9 @@ func new_game():
 	erase_board()
 	
 	history = History.new()
-	
-	queue = Queue.new(queue_tile_map, 123, true)
-	queue.fill_queue()
+	var game_key = null
+	var visibile_queue_size = 3
+	queue = Queue.new(queue_tile_map, game_key, visibile_queue_size)
 	
 	player = Player.new(board_tile_map, self.queue.next())
 	
@@ -170,10 +168,6 @@ func update_instructions():
 		target_gem_tile_map.show()
 
 	if instruction == INSTRUCTION['5_Queue']:
-		var visible_queue_size = 3
-		var game_key = 123
-		self.queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
-		self.queue.fill_queue()
 		queue_tile_map.show()
 
 
