@@ -11,6 +11,7 @@ var game_details_label: Label
 var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
 var instructions_container: VBoxContainer
+var puzzle_complete_hbox_container: HBoxContainer
 var return_to_main_menu: Callable
 var target_gem_tile_map: TileMap
 # end _init Params Alphabetical
@@ -35,10 +36,11 @@ func _init(args: Array):
 	self.game_details_value =args[3]
 	self.instructions_container = args[4]
 	self.level_complete_timer = args[5]
-	self.queue_tile_map = args[6]
-	self.return_to_main_menu = args[7]
-	self.sounds = args[8]
-	self.target_gem_tile_map = args[9]
+	self.puzzle_complete_hbox_container = args[6]
+	self.queue_tile_map = args[7]
+	self.return_to_main_menu = args[8]
+	self.sounds = args[9]
+	self.target_gem_tile_map = args[10]
 	# Alphabatical
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
@@ -100,16 +102,20 @@ func handle_player_placement():
 	if(gems.size() > 0):
 		level_complete(gems)
 		return
-	player = Player.new(self.board_tile_map, self.queue.next())
-	player.draw()
-	
-
-	
+	var next_shape = self.queue.next()
+	if next_shape == null:
+		# Currently only used for puzzle mode
+		self.game_over()
+	else:
+		player = Player.new(self.board_tile_map, next_shape)
 
 func level_complete(_gems):
 	assert(false, "Must be implemented in the child class.")
 
 func _on_level_complete_timer_timeout():
+	assert(false, "Must be implemented in the child class.")
+	
+func game_over():
 	assert(false, "Must be implemented in the child class.")
 
 func undo():
@@ -120,7 +126,6 @@ func undo():
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, record.placed_shapes)
 
 	player = Player.new(self.board_tile_map, record.shape)
-	player.draw()
 	
 	if alchemizations > 0:
 		alchemizations -= 1

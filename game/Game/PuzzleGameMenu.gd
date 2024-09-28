@@ -1,89 +1,37 @@
 extends Control
 
-
-@onready var new_game_button = $NewGameContainer/NewGameSubContainer/NewGameButton
-@onready var high_scores_container = $HighScoresScrollContainer/HighScoresContainer
-@onready var save_buttons_container = $GameSavesScrollContainer/SaveButtonsContainer
 @onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
+@onready var levels_container = $ScrollContainer/LevelsContainer
 
 @onready var game_scene = load("res://Game/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
 
-
-var save_files = []
-
 func _ready():
-	check_for_saves()
-	populate_high_scores()
+	var levels = PuzzleModeLevelManager.get_levels_metadata()
+	for level in levels:
+		create_level_button(level['file_name'], level['level'])
 
-func populate_high_scores():
-	for score in PuzzleModeHighScores.high_scores:
-		var label = Label.new()
-		label.text = "Level: %d, Alchemizations: %d" % [score["level"], score["alchemizations"]]
-		high_scores_container.add_child(label)
-
-func check_for_saves():
-	var game_save_dir = Utilities.get_save_game_dir(GlobalConsts.GAME_SAVE_KEYS.PUZZLE_GAME)
-	var dir = DirAccess.open(game_save_dir)
-	
-	if dir == null:
-		print("Error: Unable to access the save directory.")
-		return
-	
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	var full_file_path = "%s/%s" % [game_save_dir, file_name]
-
-	
-	while file_name != "":
-		if full_file_path.ends_with(".save"):
-			# Found a save file
-			save_files.append(full_file_path)
-			
-			var config = ConfigFile.new()
-			config.load(full_file_path)
-			var player_name = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.PLAYER_NAME)
-			var alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.ALCHEMIZATIONS)
-			var level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.PUZZLE_GAME_SAVE_KEY.LEVEL)
-			create_save_button(full_file_path, player_name, level, alchemizations)
-		file_name = dir.get_next()
-		full_file_path = "%s/%s" % [game_save_dir, file_name]
-	
-	dir.list_dir_end()
-
-# Function to create a button for each save file
-func create_save_button(file_name: String, player_name: String, level: int, alchemizations: int):
+func create_level_button(file_name: String, level: int):
 	var button = Button.new()
-	var text = player_name + '\n'
-	text += "Level " + str(level) + '\n'
-	text += str(alchemizations) + " Alchemiations"
+	var text = "Level " + str(level) + '\n'
 	
 	button.text = text
 	button.name = file_name
 	button.theme = candlelight_theme
-	button.connect("pressed", Callable(self, "_on_save_button_pressed").bind(file_name))
-	
-	# Add the button to a container (e.g., a VBoxContainer or Panel)
-	save_buttons_container.add_child(button)
+	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(level))
+	levels_container.add_child(button)
 
-# Function to handle button press, loading the save file
-func _on_save_button_pressed(file_name: String):
+
+func _on_level_button_pressed(level):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
-	GlobalState.game_save_file = file_name
+	GlobalState.puzzle_mode_level = level
 	get_tree().change_scene_to_packed(game_scene)
-
-func _on_new_game_pressed():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
-	get_tree().change_scene_to_packed(game_scene)
-
 
 func _on_back_button_pressed():
 	get_tree().change_scene_to_packed(main_menu)
 
-
 func _on_name_input_text_changed(new_text):
 	GlobalState.player_name = new_text
 	var submit_disabled = len(new_text) == 0
-	new_game_button.disabled = submit_disabled
-		
+	#new_game_button.disabled = submit_disabled

@@ -24,8 +24,9 @@ Shapes="*res://Singletons/Shapes.gd"
 SoundManager="*res://Singletons/SoundManager.gd"
 GlobalState="*res://Singletons/GlobalState.gd"
 KeyValueStore="*res://Singletons/KeyValueStore.gd"
-PuzzleModeHighScores="*res://Singletons/PuzzleModeHighScores.gd"
+FreePlayModeHighScores="*res://Singletons/FreePlayModeHighScores.gd"
 DailyModeHighScores="*res://Singletons/DailyModeHighScores.gd"
+PuzzleModeLevelManager="*res://Singletons/PuzzleModeLevelManager.gd"
 
 [display]
 

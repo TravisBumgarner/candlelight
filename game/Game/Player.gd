@@ -12,13 +12,13 @@ func _init(_board_tile_map, _shape):
 	self.shape = _shape
 	self.rotation_index = 0
 	self.current_absolute_position = GlobalConsts.STARTING_SPACE_ORIGIN
-	self.draw()
+	self._draw()
 	
 func move(direction):
 	if can_move(direction):
 		SoundManager.play("movement")
 		self.current_absolute_position += direction
-		self.draw()
+		self._draw()
 	else:
 		SoundManager.play("nonmovement")
 		pass
@@ -27,7 +27,7 @@ func move(direction):
 func get_current_shape_rotation():
 	return self.shape[self.rotation_index]
 
-func draw():
+func _draw():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
 	for relative_position in self.get_current_shape_rotation():
 		var point = self.current_absolute_position + relative_position
@@ -89,7 +89,7 @@ func rotate_right():
 	if self.can_rotate():
 		SoundManager.play("movement")
 		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
-		self.draw()
+		self._draw()
 	else:
 		SoundManager.play("nonmovement")
 		pass

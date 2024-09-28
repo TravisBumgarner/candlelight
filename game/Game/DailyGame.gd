@@ -20,7 +20,7 @@ func _on_level_complete_timer_timeout():
 
 func new_game():
 	disable_player_interaction = false
-	var key = Utilities.generate_key_from_date()
+	var game_key = Utilities.generate_key_from_date()
 	
 	today_best_score = DailyModeHighScores.get_high_score_by_date(Utilities.get_daily_puzzle_date())
 	alchemizations = 0
@@ -29,11 +29,10 @@ func new_game():
 	erase_board()
 	history = History.new()
 	var visible_queue_size = 3
-	queue = Queue.new(queue_tile_map, key, visible_queue_size)
-	queue.fill_queue()
+	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
 	player = Player.new(board_tile_map, queue.next())
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	gemsManager.daily_mode_set_target_gem(key)
+	gemsManager.daily_mode_set_target_gem(game_key)
 
 func update_game_display():
 	var text = "[center]"
