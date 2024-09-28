@@ -102,14 +102,20 @@ func handle_player_placement():
 	if(gems.size() > 0):
 		level_complete(gems)
 		return
-	print('handling player placement')
-	player = Player.new(self.board_tile_map, self.queue.next())
-	#player.draw()
+	var next_shape = self.queue.next()
+	if next_shape == null:
+		# Currently only used for puzzle mode
+		self.game_over()
+	else:
+		player = Player.new(self.board_tile_map, next_shape)
 
 func level_complete(_gems):
 	assert(false, "Must be implemented in the child class.")
 
 func _on_level_complete_timer_timeout():
+	assert(false, "Must be implemented in the child class.")
+	
+func game_over():
 	assert(false, "Must be implemented in the child class.")
 
 func undo():

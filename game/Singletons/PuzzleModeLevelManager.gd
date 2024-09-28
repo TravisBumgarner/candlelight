@@ -14,7 +14,6 @@ func get_levels_metadata():
 
 func get_level_data(level):
 	var absolute_path = "res://Game/puzzle_mode_levels/%d.cfg" % [level]
-	print(absolute_path)
 	var config = ConfigFile.new()
 	config.load(absolute_path)
 	

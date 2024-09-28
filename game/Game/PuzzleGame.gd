@@ -5,6 +5,7 @@ func _init(args):
 	super(args)
 
 func new_game():
+	self.disable_player_interaction = false
 	self.puzzle_complete_hbox_container.hide()
 	erase_board()
 	self.alchemizations = 0
@@ -13,7 +14,8 @@ func new_game():
 
 	var visible_queue_size = 3
 	var game_key = null
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	var should_fill_queue = false
+	queue = Queue.new(queue_tile_map, game_key, visible_queue_size, should_fill_queue)
 	queue.load(config.get_value('level', GlobalConsts.PUZZLE_GAME_SAVE_KEY.QUEUE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
@@ -41,12 +43,12 @@ func _on_action_pressed(action):
 func _on_level_complete_timer_timeout():
 	disable_player_interaction = false
 	self.puzzle_complete_hbox_container.show()
-	#level += 1
-	#update_game_display()
-	#erase_board()
-	#history.empty()
-	#gemsManager.free_play_mode_set_target_gem(level)
-	#player = Player.new(board_tile_map, self.queue.next())
+
+func game_over():
+	self.disable_player_interaction = true
+	SoundManager.play("nonmovement")
+	SoundManager.play("nonmovement")
+	self.puzzle_complete_hbox_container.show()
 
 func update_game_display():
 	var text = "[center]"

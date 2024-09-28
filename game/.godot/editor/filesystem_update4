@@ -15,3 +15,4 @@ res://Game/Queue.gd
 res://Tutorial/TutorialGame.gd
 res://Game/DailyGame.gd
 res://Game/Player.gd
+res://Singletons/PuzzleModeLevelManager.gd

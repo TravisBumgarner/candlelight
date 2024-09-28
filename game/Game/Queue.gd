@@ -46,12 +46,19 @@ func _draw_queue(offset=0):
 
 # Should not be called outside of Queue
 func _fill_queue():
+	# For PuzzleMode specifically where the puzzle should have the entire queue.
+	if !self.should_fill_queue:
+		return
+	
 	while queue.size() <= self.visibile_queue_size:
 		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
+		print('filling')
 		self.queue.append(random)
 	self._draw_queue()
 
 func append_to_queue(shape):
+	# Used for Challenge mode
+	print('appending')
 	self.queue.append(shape)
 
 func undo(shape):
@@ -62,8 +69,7 @@ func next():
 	if current_game_piece:
 		self.history.append(current_game_piece)
 	current_game_piece = queue.pop_front()
-	if should_fill_queue:
-		self._fill_queue()
+	self._fill_queue()
 	self._draw_queue()
 	return current_game_piece
 
@@ -78,5 +84,6 @@ func empty():
 
 func load(data: Array):
 	self.empty()
+	print('loading', len(data))
 	self.queue = data
 	self._draw_queue()
