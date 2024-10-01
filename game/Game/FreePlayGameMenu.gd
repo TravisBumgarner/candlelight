@@ -15,7 +15,6 @@ func _ready():
 func check_for_saves():
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.FreePlay]
 	DirAccess.make_dir_recursive_absolute(game_saves_path)
-	var dir = DirAccess.open(game_saves_path)
 	
 	for save_slot in GlobalConsts.GAME_SLOTS:
 		var absolute_file_path = "%s/%s.save" % [game_saves_path, save_slot]

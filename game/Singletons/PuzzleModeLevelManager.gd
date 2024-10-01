@@ -1,12 +1,6 @@
 extends Node
 
 const levels = preload("res://Game/puzzle_mode_levels/index.json")
-
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
 func get_worlds_metadata():
 	return levels.data

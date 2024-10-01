@@ -55,7 +55,6 @@ func cleanup():
 func check_for_saves():
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	DirAccess.make_dir_recursive_absolute(game_saves_path)
-	var dir = DirAccess.open(game_saves_path)
 	
 	for save_slot in GlobalConsts.GAME_SLOTS:
 		var absolute_file_path = "%s/%s.save" % [game_saves_path, save_slot]
@@ -98,9 +97,9 @@ func handle_save_press(save_slot: String):
 	level_buttons_container.get_child(1).grab_focus()
 	
 	
-func create_world_label(name: String, world: int):
+func create_world_label(world_name: String, world_number: int):
 	var label = Label.new()
-	label.text = "World %d: %s" % [world, name]
+	label.text = "World %d: %s" % [world_number, world_name]
 	label.horizontal_alignment = 1 # center
 	level_buttons_container.add_child(label)
 

@@ -41,7 +41,7 @@ func new_game():
 		
 	var config = ConfigFile.new()
 	config.load(absolute_file_path)
-	var best_scores = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.DAILY_SAVE_METADATA.BEST_SCORES)
+	var best_scores = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.DAILY_SAVE_METADATA.BEST_SCORES, {})
 	var today = Utilities.get_daily_puzzle_date()
 	
 	if today in best_scores:
