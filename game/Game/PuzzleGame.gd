@@ -28,6 +28,10 @@ func new_game():
 
 	player = Player.new(board_tile_map, queue.next())
 
+func load_game():
+	# Save states are not quite consistant across game modes. Will maybe need to think through this more.
+	self.new_game()
+
 func level_complete(gems):
 	upsert_game_save()
 	disable_player_interaction = true

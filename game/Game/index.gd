@@ -98,7 +98,6 @@ func _ready():
 		GlobalState.puzzle_mode_level = null
 	
 	var game_save_path = "user://game_saves/%s/%s.save" % [GlobalState.game_mode, GlobalState.save_slot]
-	
 	if FileAccess.file_exists(game_save_path):
 		game.load_game()
 	else:

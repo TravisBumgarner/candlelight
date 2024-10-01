@@ -16,9 +16,11 @@ func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_saves()
 
-func create_level_button(file_name: String, level: int, disabled: bool):
+func create_level_button(file_name: String, level: int, disabled: bool, best_score: int):
 	var button = Button.new()
 	var text = "Level " + str(level) + '\n'
+	if best_score > 0: # If undefined, best score is -1
+		text+= "%d Alchemizations" % [best_score]
 	
 	button.text = text
 	button.disabled = disabled
@@ -82,7 +84,8 @@ func handle_save_press(save_slot: String):
 		print(level['level'], levels_complete)
 		# Levels are one indexed, + 1 to handle this.
 		var disabled = level['level'] > levels_complete + 1
-		create_level_button(level['file_name'], level['level'], disabled)
+		var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level['level']], -1)
+		create_level_button(level['file_name'], level['level'], disabled, best_score)
 	
 	level_buttons_container.get_child(0).grab_focus()
 	
