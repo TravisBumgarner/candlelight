@@ -63,26 +63,30 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../SaveDButton")
 theme = ExtResource("3_6n2vi")
 text = "Save A
+Empty
 "
 
 [node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
 theme = ExtResource("3_6n2vi")
-text = "Save B"
+text = "Save B
+Empty"
 
 [node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
 theme = ExtResource("3_6n2vi")
-text = "Save C"
+text = "Save C
+Empty"
 
 [node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../SaveAButton")
 theme = ExtResource("3_6n2vi")
-text = "Save D"
+text = "Save D
+Empty"
 
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveAButton" to="." method="_on_save_a_button_pressed"]
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveBButton" to="." method="_on_save_b_button_pressed"]

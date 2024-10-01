@@ -88,6 +88,10 @@ const PUZZLE_SAVE_METADATA = {
 	LEVELS_COMPLETE = 'levels_complete',
 }
 
+const DAILY_SAVE_METADATA = {
+	BEST_SCORES = 'best_scores',
+}
+
 const PUZZLE_LEVEL_METADATA = {
 	QUEUE = 'queue',
 	TARGET_GEM = 'target_gem'

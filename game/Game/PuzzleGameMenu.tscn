@@ -61,28 +61,32 @@ theme_override_constants/separation = 20
 [node name="SaveAButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-focus_previous = NodePath("../SaveDButton")
+focus_neighbor_top = NodePath("../SaveDButton")
 theme = ExtResource("3_fk0hb")
-text = "Save A"
+text = "Save A
+Empty"
 
 [node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme = ExtResource("3_fk0hb")
-text = "Save B"
+text = "Save B
+Empty"
 
 [node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme = ExtResource("3_fk0hb")
-text = "Save C"
+text = "Save C
+Empty"
 
 [node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../SaveAButton")
 theme = ExtResource("3_fk0hb")
-text = "Save D"
+text = "Save D
+Empty"
 
 [node name="LevelsPositioningContainer" type="CenterContainer" parent="."]
 visible = false

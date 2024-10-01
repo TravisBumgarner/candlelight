@@ -80,7 +80,7 @@ func handle_save_press(save_slot: String):
 	var config = ConfigFile.new()
 	var game_saves_path = "user://game_saves/%s/%s.save" % [GlobalConsts.GAME_MODE.Puzzle, save_slot]
 	config.load(game_saves_path)
-	var levels_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE)
+	var levels_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, 0)
 	
 	saves_positioning_container.hide()
 	levels_positioning_container.show()
