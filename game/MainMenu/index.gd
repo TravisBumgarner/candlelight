@@ -40,11 +40,11 @@ func _ready():
 	puzzle_mode_button.grab_focus()
 	
 func on_tutorial_button_down():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.TutorialMode
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.Tutorial
 	get_tree().change_scene_to_packed(game_scene)
 	
 func on_puzzle_mode_button_down():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
 	get_tree().change_scene_to_packed(puzzle_game_menu)
 	
 func on_daily_game_button_down():

@@ -1,8 +1,7 @@
 extends Node
 
-var game_mode: GlobalConsts.GAME_MODE
-var game_save_file = null
-var player_name = ''
+var game_mode
+var save_slot = null
 
 # Could find a better home for this?
 var puzzle_mode_level = null

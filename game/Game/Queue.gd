@@ -52,7 +52,6 @@ func _fill_queue():
 	
 	while queue.size() <= self.visibile_queue_size:
 		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
-		print('filling')
 		self.queue.append(random)
 	self._draw_queue()
 

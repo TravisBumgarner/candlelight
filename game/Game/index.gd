@@ -60,23 +60,23 @@ func create_game(
 
 func _ready():	
 	var game_modes = {
-		GlobalConsts.GAME_MODE.TutorialMode: {
+		GlobalConsts.GAME_MODE.Tutorial: {
 			"class": TutorialMode,
 			"show_instructions": true,
 			"show_new_game_button": false
 		},
-		GlobalConsts.GAME_MODE.FreePlayGame: {
+		GlobalConsts.GAME_MODE.FreePlay: {
 			"class": FreePlayGame,
 			"show_instructions": false,
 			"show_new_game_button": false
 		},
 		# Setting track_high_scores to false for the time being.
-		GlobalConsts.GAME_MODE.DailyGame: {
+		GlobalConsts.GAME_MODE.Daily: {
 			"class": DailyGame, 
 			"show_instructions": false,
 			"show_new_game_button": true
 		},
-			GlobalConsts.GAME_MODE.PuzzleGame: {
+			GlobalConsts.GAME_MODE.Puzzle: {
 			"class": PuzzleGame, 
 			"show_instructions": false,
 			"show_new_game_button": false
@@ -97,9 +97,10 @@ func _ready():
 		game.level = GlobalState.puzzle_mode_level
 		GlobalState.puzzle_mode_level = null
 	
-	if GlobalState.game_save_file:
+	var game_save_path = "user://game_saves/%s/%s.save" % [GlobalState.game_mode, GlobalState.save_slot]
+	
+	if FileAccess.file_exists(game_save_path):
 		game.load_game()
-		GlobalState.game_save_file = null
 	else:
 		game.new_game()
 

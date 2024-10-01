@@ -41,7 +41,7 @@ func populate_high_scores():
 			scores_for_date += 1
 
 func _on_new_game_pressed():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.DailyGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.Daily
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_back_button_pressed():
