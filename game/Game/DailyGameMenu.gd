@@ -3,9 +3,7 @@ extends Control
 
 @onready var new_game_button = $NewGameContainer/NewGameSubContainer/NewGameButton
 
-
 @onready var high_scores_container = $HighScoresContainer
-
 
 @onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
 
@@ -15,6 +13,7 @@ const candlelight_theme = preload("res://candlelight_theme.tres")
 
 func _ready():
 	populate_high_scores()
+	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 
 
 func populate_high_scores():
@@ -52,3 +51,12 @@ func _on_name_input_text_changed(new_text):
 	GlobalState.player_name = new_text
 	var submit_disabled = len(new_text) == 0
 	new_game_button.disabled = submit_disabled
+
+func _on_action_pressed(action):
+	match action:
+		"escape":
+			cleanup()
+
+func cleanup():
+	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
+	get_tree().change_scene_to_packed(main_menu)

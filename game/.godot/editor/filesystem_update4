@@ -5,4 +5,16 @@ res://resources/keyboard/letter_d.tres
 res://resources/keyboard/letter_r.tres
 res://resources/keyboard/letter_space.tres
 res://resources/keyboard/letter_esc.tres
+res://MainMenu/main_menu.tscn
+res://MainMenu/index.gd
+res://Singletons/InputManager.gd
+res://Credits/credits.tscn
+res://Credits/index.gd
+res://Game/index.gd
+res://Game/PuzzleGameMenu.tscn
+res://Game/PuzzleGameMenu.gd
+res://Game/FreePlayGameMenu.tscn
+res://Game/FreePlayGameMenu.gd
+res://Game/DailyGameMenu.gd
+res://Game/DailyGameMenu.tscn
 res://Game/puzzle_mode_levels/index.json

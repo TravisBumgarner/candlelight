@@ -103,10 +103,6 @@ func _ready():
 	else:
 		game.new_game()
 
-func _on_back_button_pressed():
-	get_tree().change_scene_to_packed(self.main_menu_scene)
-	game.cleanup()
-
 func _on_new_game_button_pressed():
 	self.game.new_game()
 

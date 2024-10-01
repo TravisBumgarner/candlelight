@@ -3,17 +3,17 @@ extends Control
 
 @onready var new_game_button = $NewGameContainer/NewGameSubContainer/NewGameButton
 @onready var high_scores_container = $HighScoresScrollContainer/HighScoresContainer
-@onready var save_buttons_container = $GameSavesScrollContainer/SaveButtonsContainer
+@onready var game_saves_container = $GameSavesScrollContainer/GameSavesContainer
 @onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
 
 @onready var game_scene = load("res://Game/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
 
-
 var save_files = []
 
 func _ready():
+	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_saves()
 	populate_high_scores()
 
@@ -49,8 +49,15 @@ func check_for_saves():
 			create_save_button(full_file_path, player_name, level, alchemizations)
 		file_name = dir.get_next()
 		full_file_path = "%s/%s" % [game_save_dir, file_name]
-	
+		
 	dir.list_dir_end()
+	var children = game_saves_container.get_children()
+	# Focus first child that is a button. Best I could come up with. 
+	for child in children:
+		if child is Button:
+			child.grab_focus()
+			break
+
 
 # Function to create a button for each save file
 func create_save_button(file_name: String, player_name: String, level: int, alchemizations: int):
@@ -65,7 +72,7 @@ func create_save_button(file_name: String, player_name: String, level: int, alch
 	button.connect("pressed", Callable(self, "_on_save_button_pressed").bind(file_name))
 	
 	# Add the button to a container (e.g., a VBoxContainer or Panel)
-	save_buttons_container.add_child(button)
+	game_saves_container.add_child(button)
 
 # Function to handle button press, loading the save file
 func _on_save_button_pressed(file_name: String):
@@ -87,3 +94,11 @@ func _on_name_input_text_changed(new_text):
 	var submit_disabled = len(new_text) == 0
 	new_game_button.disabled = submit_disabled
 		
+func _on_action_pressed(action):
+	match action:
+		"escape":
+			cleanup()
+
+func cleanup():
+	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
+	get_tree().change_scene_to_packed(main_menu)
