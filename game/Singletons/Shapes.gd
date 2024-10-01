@@ -36,7 +36,12 @@ const upper_z_rot1 = [Vector2i(0,2), Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)
 const upper_z = [upper_z_rot0, upper_z_rot1, upper_z_rot0, upper_z_rot1]
 
 const TOTAL_ROTATIONS = 4
-const SHAPES = [upper_i, upper_l, square, u, lowwer_z, lower_i, upper_z]
-
-
-
+const SHAPES_DICT = {
+	"upper_i": upper_i,
+	"upper_l": upper_l,
+	"square": square,
+	"u": u,
+	"lowwer_z": lowwer_z,
+	"lower_i": lower_i,
+	"upper_z": upper_z
+}

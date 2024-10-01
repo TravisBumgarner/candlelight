@@ -2,14 +2,14 @@ extends Node2D
 class_name Player
 
 var board_tile_map: TileMap
-var shape
+var shape_name
 var rotation_index
 var current_absolute_position
 
 
-func _init(_board_tile_map, _shape):
+func _init(_board_tile_map, _shape_name):
 	self.board_tile_map = _board_tile_map
-	self.shape = _shape
+	self.shape_name = _shape_name
 	self.rotation_index = 0
 	self.current_absolute_position = GlobalConsts.STARTING_SPACE_ORIGIN
 	self._draw()
@@ -25,7 +25,7 @@ func move(direction):
 		
 
 func get_current_shape_rotation():
-	return self.shape[self.rotation_index]
+	return Shapes.SHAPES_DICT[self.shape_name][self.rotation_index]
 
 func _draw():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
@@ -78,7 +78,7 @@ func can_place():
 
 func can_rotate():
 	var temporary_rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
-	for point in shape[temporary_rotation_index]:
+	for point in Shapes.SHAPES_DICT[self.shape_name][temporary_rotation_index]:
 		var is_cell_border = Utilities.is_cell_border(self.board_tile_map, point + current_absolute_position)
 		if is_cell_border:
 			return false

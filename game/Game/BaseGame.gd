@@ -92,7 +92,7 @@ func handle_player_placement():
 		SoundManager.play("nonmovement")
 		return
 	
-	history.append(self.board_tile_map, player.shape)
+	history.append(self.board_tile_map, player.shape_name)
 	player.place_on_board()
 	
 	alchemizations += 1
@@ -121,11 +121,11 @@ func game_over():
 func undo():
 	var record = history.pop()
 
-	self.queue.undo(player.shape)
+	self.queue.undo(player.shape_name)
 	
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, record.placed_shapes)
 
-	player = Player.new(self.board_tile_map, record.shape)
+	player = Player.new(self.board_tile_map, record.shape_name)
 	
 	if alchemizations > 0:
 		alchemizations -= 1

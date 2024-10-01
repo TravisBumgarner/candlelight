@@ -16,11 +16,12 @@ func new_game():
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size, should_fill_queue)
-	queue.load(config.get_value('level', GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
+	queue.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	var target_gem = config.get_value('level', GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
-	gemsManager.free_play_mode_resume(target_gem)
+	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
+	gemsManager.set_gem(target_gem)
+
 	
 	update_game_display()
 	
