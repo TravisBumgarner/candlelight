@@ -20,7 +20,7 @@ func create_level_button(file_name: String, level: int, disabled: bool, best_sco
 	var button = Button.new()
 	var text = "Level " + str(level) + '\n'
 	if best_score > 0: # If undefined, best score is -1
-		text+= "%d Alchemizations" % [best_score]
+		text+= "Best: %d Alchemizations" % [best_score]
 	
 	button.text = text
 	button.disabled = disabled
@@ -79,16 +79,26 @@ func handle_save_press(save_slot: String):
 	levels_positioning_container.show()
 	GlobalState.save_slot = save_slot
 	
-	var levels = PuzzleModeLevelManager.get_levels_metadata()
-	for level in levels:
-		print(level['level'], levels_complete)
-		# Levels are one indexed, + 1 to handle this.
-		var disabled = level['level'] > levels_complete + 1
-		var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level['level']], -1)
-		create_level_button(level['file_name'], level['level'], disabled, best_score)
+	var worlds = PuzzleModeLevelManager.get_worlds_metadata()
+	for world in worlds:
+		create_world_label(world['name'], world['world'])
+		for level in world["levels"]:
+			print(level)
+			# Levels are one indexed, + 1 to handle this.
+			var disabled = level['level'] > levels_complete + 1
+			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level['level']], -1)
+			create_level_button(level['file_name'], level['level'], disabled, best_score)
+	# 0th child is always a label
+	level_buttons_container.get_child(1).grab_focus()
 	
-	level_buttons_container.get_child(0).grab_focus()
 	
+func create_world_label(name: String, world: int):
+	var label = Label.new()
+	print("World %d: %s" % [world, world])
+	label.text = "World %d: %s" % [world, name]
+	label.horizontal_alignment = 1 # center
+	level_buttons_container.add_child(label)
+
 
 func _on_save_a_button_pressed():
 	handle_save_press('a')

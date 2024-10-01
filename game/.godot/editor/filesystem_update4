@@ -25,3 +25,8 @@ res://Singletons/GlobalState.gd
 res://Game/FreePlayGameMenu.tscn
 res://Game/Queue.gd
 res://Game/DailyGameMenu.gd
+res://Game/puzzle_mode_levels/1.cfg
+res://Game/puzzle_mode_levels/2.cfg
+res://Game/puzzle_mode_levels/3.cfg
+res://Game/puzzle_mode_levels/4.cfg
+res://Game/puzzle_mode_levels/5.cfg
