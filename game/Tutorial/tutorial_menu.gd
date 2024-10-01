@@ -9,6 +9,7 @@ func _ready():
 func _on_action_pressed(action):
 	match action:
 		"escape":
+			print('main menu a')
 			get_tree().change_scene_to_packed(main_menu)
 		"select":
 			GlobalState.game_mode = GlobalConsts.GAME_MODE.TutorialMode

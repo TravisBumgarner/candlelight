@@ -343,6 +343,58 @@ focus_mode = 0
 theme = ExtResource("10_24mwh")
 text = "Try Again"
 
+[node name="PauseMenuContainer" type="Control" parent="."]
+visible = false
+z_index = 999
+z_as_relative = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 576.0
+offset_top = 324.0
+offset_right = 616.0
+offset_bottom = 364.0
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenuContainer"]
+modulate = Color(0.0470588, 0.0901961, 0.0196078, 0.580392)
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+
+[node name="PanelContainer" type="PanelContainer" parent="PauseMenuContainer"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -31.0
+offset_right = 50.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ResumeButton" type="Button" parent="PauseMenuContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+theme = ExtResource("10_24mwh")
+text = "Resume"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenuContainer/PanelContainer/VBoxContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../ResumeButton")
+theme = ExtResource("10_24mwh")
+text = "Main Menu"
+
 [connection signal="pressed" from="NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="PuzzleGameLevelComplete/NextLevel" to="." method="_on_next_level_pressed"]
 [connection signal="pressed" from="PuzzleGameLevelComplete/TryAgain" to="." method="_on_try_again_pressed"]
+[connection signal="visibility_changed" from="PauseMenuContainer" to="." method="_on_pause_menu_container_visibility_changed"]
+[connection signal="pressed" from="PauseMenuContainer/PanelContainer/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenuContainer/PanelContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

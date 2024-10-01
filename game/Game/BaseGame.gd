@@ -11,8 +11,8 @@ var game_details_label: Label
 var game_details_value: RichTextLabel
 var game_details_tile_map: TileMap
 var instructions_container: VBoxContainer
+var pause_menu_container
 var puzzle_complete_hbox_container: HBoxContainer
-var return_to_main_menu: Callable
 var target_gem_tile_map: TileMap
 # end _init Params Alphabetical
 
@@ -29,6 +29,7 @@ var disable_player_interaction = false
 # end Local Params
 
 func _init(args: Array):
+	print('running basegame init')
 	# Alphabetical
 	self.board_tile_map = args[0]
 	self.game_details_label = args[1]
@@ -36,9 +37,9 @@ func _init(args: Array):
 	self.game_details_value =args[3]
 	self.instructions_container = args[4]
 	self.level_complete_timer = args[5]
-	self.puzzle_complete_hbox_container = args[6]
-	self.queue_tile_map = args[7]
-	self.return_to_main_menu = args[8]
+	self.pause_menu_container = args[6]
+	self.puzzle_complete_hbox_container = args[7]
+	self.queue_tile_map = args[8]
 	self.sounds = args[9]
 	self.target_gem_tile_map = args[10]
 	# Alphabatical
@@ -84,8 +85,8 @@ func _on_action_pressed(action):
 		"select":
 			self.handle_player_placement()
 		"escape":
-			cleanup()
-			self.return_to_main_menu.call()
+			self.pause()
+			self.pause_menu_container.show()
 
 func handle_player_placement():
 	if not player.can_place():
@@ -134,6 +135,12 @@ func undo():
 func erase_board():
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.PLACED_SHAPES)
 	self.board_tile_map.clear_layer(GlobalConsts.BOARD_LAYER.CURRENT_SHAPE)
+
+func resume():
+	self.disable_player_interaction = false
+
+func pause():
+	self.disable_player_interaction = true
 
 func new_game():
 	assert(false, "Must be implemented in the child class.")

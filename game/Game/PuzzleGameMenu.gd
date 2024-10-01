@@ -30,12 +30,13 @@ func _on_level_button_pressed(level):
 
 func _on_name_input_text_changed(new_text):
 	GlobalState.player_name = new_text
-	var submit_disabled = len(new_text) == 0
+	#var submit_disabled = len(new_text) == 0
 	#new_game_button.disabled = submit_disabled
 
 func _on_action_pressed(action):
 	match action:
 		"escape":
+			print('main menu b')
 			cleanup()
 
 func cleanup():

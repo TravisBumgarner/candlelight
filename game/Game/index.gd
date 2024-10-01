@@ -10,18 +10,16 @@ extends Node2D
 @onready var instructions = $Instructions
 
 @onready var game_details_tile_map = $GameDetailsTileMap
-@onready var back_button = $BackButton
 @onready var new_game_button = $NewGameButton
+@onready var pause_menu_container = $PauseMenuContainer
+@onready var resume_button = $PauseMenuContainer/PanelContainer/VBoxContainer/ResumeButton
+
 
 @onready var puzzle_complete_hbox_container = $PuzzleGameLevelComplete
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
 var game: BaseGame
-
-func return_to_main_menu():
-	get_tree().change_scene_to_packed(self.main_menu_scene)
-
 
 func create_game(
 	game_mode,
@@ -35,10 +33,10 @@ func create_game(
 		game_details_tile_map,
 		game_details_value,
 		instructions,
-		level_complete_timer, 
+		level_complete_timer,
+		pause_menu_container,
 		puzzle_complete_hbox_container,
 		queue_tile_map, 
-		Callable(self, "return_to_main_menu"),
 		sounds,
 		target_gem_tile_map
 		# ALPHABETICAL
@@ -113,3 +111,17 @@ func _on_next_level_pressed():
 
 func _on_try_again_pressed():
 	self.game.new_game()
+
+func _on_resume_button_pressed():
+	game.resume() # Cannot figure out how to use built in get_tree().pause
+	pause_menu_container.hide()
+
+func _on_main_menu_button_pressed():
+	self.game.cleanup()
+	get_tree().change_scene_to_packed(self.main_menu_scene)
+
+func _on_pause_menu_container_visibility_changed():
+	if is_visible_in_tree():
+		#get_tree().paused = true
+		resume_button.grab_focus()
+

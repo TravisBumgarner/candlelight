@@ -5,8 +5,8 @@ const levels = preload("res://Game/puzzle_mode_levels/index.json")
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+#func _process():
+	#pass
 	
 func get_levels_metadata():
 	# Data of type {file: string, level: number}[]

@@ -18,3 +18,10 @@ res://Game/FreePlayGameMenu.gd
 res://Game/DailyGameMenu.gd
 res://Game/DailyGameMenu.tscn
 res://Game/puzzle_mode_levels/index.json
+res://Game/PopupMenu.tscn
+res://Game/PauseMenu.gd
+res://Game/PauseMenu.tscn
+res://Game/BaseGame.gd
+res://Singletons/PuzzleModeLevelManager.gd
+res://Tutorial/tutorial_menu.gd
+res://CreateChallenge/index.gd
