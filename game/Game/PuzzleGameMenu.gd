@@ -8,9 +8,18 @@ const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
 
 func _ready():
-	var levels = PuzzleModeLevelManager.get_levels_metadata()
-	for level in levels:
-		create_level_button(level['file_name'], level['level'])
+	var worlds = PuzzleModeLevelManager.get_worlds_metadata()
+	for world in worlds:
+		create_world_label(world['name'], world['world'])
+		for level in world["levels"]:
+			create_level_button(level['file_name'], level['level'])
+
+func create_world_label(name: String, world: int):
+	var label = Label.new()
+	print("World %d: %s" % [world, world])
+	label.text = "World %d: %s" % [world, name]
+	label.horizontal_alignment = 1 # center
+	levels_container.add_child(label)
 
 func create_level_button(file_name: String, level: int):
 	var button = Button.new()

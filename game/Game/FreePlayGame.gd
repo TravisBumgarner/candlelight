@@ -22,7 +22,7 @@ func new_game():
 	player = Player.new(board_tile_map, queue.next())
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	gemsManager.free_play_mode_set_target_gem(level)
+	gemsManager.set_gem(level)
 
 
 func load_game():
@@ -44,11 +44,11 @@ func load_game():
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
 	queue.load(config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.QUEUE))
 	
-	player = Player.new(board_tile_map, config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLAYER_SHAPE))
+	player = Player.new(board_tile_map, config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.SHAPE_NAME))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	var target_gem = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.TARGET_GEM)
-	gemsManager.free_play_mode_resume(target_gem)
+	gemsManager.set_gem(target_gem)
 	
 	var placed_shapes_array = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLACED_SHAPES)
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, placed_shapes_array)
@@ -91,7 +91,7 @@ func create_game_save():
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.QUEUE, queue.get_queue())
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.GAME_START_TIMESTAMP, game_start_timestamp)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.HISTORY, history.get_history())
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLAYER_SHAPE, player.shape)
+	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.SHAPE_NAME, player.shape_name)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLAYER_NAME, GlobalState.player_name)
 	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLACED_SHAPES, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES))
 	#config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.BLOCKERS, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS))
@@ -120,7 +120,7 @@ func _on_level_complete_timer_timeout():
 	#gems_to_walls()
 	erase_board()
 	history.empty()
-	gemsManager.free_play_mode_set_target_gem(level)
+	gemsManager.set_gem(level)
 	player = Player.new(board_tile_map, self.queue.next())
 
 func update_game_display():
