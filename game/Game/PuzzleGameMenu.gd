@@ -14,15 +14,14 @@ const candlelight_theme = preload("res://candlelight_theme.tres")
 func _ready():
 	save_buttons_container.get_child(0).grab_focus()
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
-	var levels = PuzzleModeLevelManager.get_levels_metadata()
-	for level in levels:
-		create_level_button(level['file_name'], level['level'])
+	check_for_saves()
 
-func create_level_button(file_name: String, level: int):
+func create_level_button(file_name: String, level: int, disabled: bool):
 	var button = Button.new()
 	var text = "Level " + str(level) + '\n'
 	
 	button.text = text
+	button.disabled = disabled
 	button.name = file_name
 	button.theme = candlelight_theme
 	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(level))
@@ -32,11 +31,6 @@ func _on_level_button_pressed(level):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
 	GlobalState.puzzle_mode_level = level
 	get_tree().change_scene_to_packed(game_scene)
-
-func _on_name_input_text_changed(new_text):
-	GlobalState.player_name = new_text
-	#var submit_disabled = len(new_text) == 0
-	#new_game_button.disabled = submit_disabled
 
 func _on_action_pressed(action):
 	match action:
@@ -49,13 +43,48 @@ func cleanup():
 	get_tree().change_scene_to_packed(main_menu)
 
 
-func handle_save_press(save: String):
-	var config = PuzzleModeLevelManager.get_player_metadata(save)
-	print(config)
+func check_for_saves():
+	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
+	DirAccess.make_dir_recursive_absolute(game_saves_path)
+	var dir = DirAccess.open(game_saves_path)
+	
+	for save_slot in GlobalConsts.GAME_SLOTS:
+		var absolute_file_path = "%s/%s.save" % [game_saves_path, save_slot]
+		if not FileAccess.file_exists(absolute_file_path):
+			continue
+			
+		var config = ConfigFile.new()
+		config.load(absolute_file_path)
+		var levels_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE)
+		
+		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])
+
+		var text = "Save %s\n" % [save_slot]
+		text += "%d Completed Level" % [levels_complete]
+		if levels_complete != 1:
+			text += 's'
+		
+		button.text = text
+
+
+func handle_save_press(save_slot: String):
+	var config = ConfigFile.new()
+	var game_saves_path = "user://game_saves/%s/%s.save" % [GlobalConsts.GAME_MODE.Puzzle, save_slot]
+	config.load(game_saves_path)
+	var levels_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE)
+	
 	saves_positioning_container.hide()
 	levels_positioning_container.show()
+	GlobalState.save_slot = save_slot
+	
+	var levels = PuzzleModeLevelManager.get_levels_metadata()
+	for level in levels:
+		print(level['level'], levels_complete)
+		# Levels are one indexed, + 1 to handle this.
+		var disabled = level['level'] > levels_complete + 1
+		create_level_button(level['file_name'], level['level'], disabled)
+	
 	level_buttons_container.get_child(0).grab_focus()
-	print(save)
 	
 
 func _on_save_a_button_pressed():

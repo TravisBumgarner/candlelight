@@ -13,12 +13,11 @@ func _ready():
 	save_buttons_container.get_child(0).grab_focus()
 
 func check_for_saves():
-	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.FreePlay]
+	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	DirAccess.make_dir_recursive_absolute(game_saves_path)
 	var dir = DirAccess.open(game_saves_path)
 	
-	var file_name = dir.get_next()
-	for save_slot in ["A", "B", "C", "D"]:
+	for save_slot in GlobalConsts.GAME_SLOTS:
 		var absolute_file_path = "%s/%s.save" % [game_saves_path, save_slot]
 		if not FileAccess.file_exists(absolute_file_path):
 			continue
@@ -35,7 +34,6 @@ func check_for_saves():
 		text += "Level %d - %d Alchemizations" % [level, alchemizations]
 		
 		button.text = text
-		button.name = file_name
 
 func _on_back_button_pressed():
 	get_tree().change_scene_to_packed(main_menu)

@@ -27,31 +27,32 @@ func new_game():
 
 func load_game():
 	var config = ConfigFile.new()
-	config.load(GlobalState.game_save_file)
+	var absolute_file_path = "user://game_saves/%s/%s.save" % [GlobalConsts.GAME_MODE.FreePlay, GlobalState.save_slot]
+	config.load(absolute_file_path)
 		
-	game_start_timestamp = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.GAME_START_TIMESTAMP)
 	
-	level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.LEVEL, level)
-	alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.LEVEL)
+	alchemizations = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL)
+	level = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level)
+	game_start_timestamp = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.GAME_START_TIMESTAMP)
 	
 	history = History.new()
-	history.load(config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.HISTORY))
+	history.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.HISTORY))
 	
 	var visible_queue_size = 3
 	var game_key = null
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
-	queue.load(config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.QUEUE))
+	queue.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.QUEUE))
 	
-	player = Player.new(board_tile_map, config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLAYER_SHAPE))
+	player = Player.new(board_tile_map, config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.PLAYER_SHAPE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	var target_gem = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.TARGET_GEM)
+	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.TARGET_GEM)
 	gemsManager.free_play_mode_resume(target_gem)
 	
-	var placed_shapes_array = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLACED_SHAPES)
+	var placed_shapes_array = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.PLACED_SHAPES)
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, placed_shapes_array)
 
-	#var blockers_array = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.BLOCKERS)
+	#var blockers_array = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.BLOCKERS)
 	#Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS, blockers_array)
 	
 	update_game_display()
@@ -74,21 +75,18 @@ func _on_action_pressed(action):
 	
 	if level > 1:
 		# Don't start saving until the user has made some progress
-		create_game_save()
+		upsert_game_save()
 
-func create_game_save():
+func upsert_game_save():
 	var config = ConfigFile.new()
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.LEVEL, level)
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.ALCHEMIZATIONS, alchemizations)
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.QUEUE, queue.get_queue())
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.GAME_START_TIMESTAMP, game_start_timestamp)
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.HISTORY, history.get_history())
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLAYER_SHAPE, player.shape)
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.PLACED_SHAPES, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES))
-	#config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.BLOCKERS, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.BLOCKERS))
-	config.set_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.TARGET_GEM, gemsManager.get_target_gem())
-	
-	# Todo - replace with game mode instead of timestamp 
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.ALCHEMIZATIONS, alchemizations)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.QUEUE, queue.get_queue())
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.GAME_START_TIMESTAMP, game_start_timestamp)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.HISTORY, history.get_history())
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.PLAYER_SHAPE, player.shape)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.PLACED_SHAPES, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES))
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.TARGET_GEM, gemsManager.get_target_gem())
 	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.FreePlay, GlobalState.save_slot, config)
 
 func _on_level_complete_timer_timeout():

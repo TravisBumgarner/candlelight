@@ -63,30 +63,26 @@ custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 focus_previous = NodePath("../SaveDButton")
 theme = ExtResource("3_fk0hb")
-text = "Save A
-2 / 5 Levels"
+text = "Save A"
 
 [node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme = ExtResource("3_fk0hb")
-text = "Save B
-2 / 5 Levels"
+text = "Save B"
 
 [node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme = ExtResource("3_fk0hb")
-text = "Save A
-2 / 5 Levels"
+text = "Save C"
 
 [node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
 custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../SaveAButton")
 theme = ExtResource("3_fk0hb")
-text = "New Game Save
- "
+text = "Save D"
 
 [node name="LevelsPositioningContainer" type="CenterContainer" parent="."]
 visible = false

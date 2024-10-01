@@ -7,6 +7,8 @@ const GAME_MODE = {
 	"Puzzle": "puzzle"
 }
 
+const GAME_SLOTS = ['A', 'B', 'C', 'D']
+
 const GRID = { HEIGHT = 10, WIDTH = 13 }
 const BOARD_ORIGIN = Vector2i(0, 0)
 const BOARD_END = BOARD_ORIGIN + Vector2i(GRID.WIDTH, GRID.HEIGHT)
@@ -65,9 +67,12 @@ const ACTION = {
 	SELECT = 'select'
 }
 
-const CONFIG_FILE_SAVE_KEY = "game_save"
+const GAME_SAVE_SECTIONS = {
+	Metadata = 'metadata',
+	PuzzleLevelScores = 'puzzle_level_scores'
+}
 
-const FREE_PLAY_GAME_SAVE_KEY = {
+const FREE_PLAY_SAVE_METADATA = {
 	LEVEL = 'level',
 	ALCHEMIZATIONS = 'alchemizations',
 	QUEUE = 'queue',
@@ -79,16 +84,12 @@ const FREE_PLAY_GAME_SAVE_KEY = {
 	TARGET_GEM = 'target_gem'
 }
 
-const PUZZLE_GAME_SAVE_KEY = {
-	#LEVEL = 'level',
-	#ALCHEMIZATIONS = 'alchemizations',
+const PUZZLE_SAVE_METADATA = {
+	LEVELS_COMPLETE = 'levels_complete',
+}
+
+const PUZZLE_LEVEL_METADATA = {
 	QUEUE = 'queue',
-	#GAME_START_TIMESTAMP = 'game_start_timestamp',
-	#HISTORY = 'history',
-	#PLAYER_SHAPE = 'player_shape',
-	#PLAYER_NAME = 'player_name',
-	#PLACED_SHAPES = 'placed_shapes',
-	#BLOCKERS = 'blockers',
 	TARGET_GEM = 'target_gem'
 }
 
