@@ -55,7 +55,6 @@ func _on_name_input_text_changed(new_text):
 func _on_action_pressed(action):
 	match action:
 		"escape":
-			print('main menu c')
 			cleanup()
 
 func cleanup():

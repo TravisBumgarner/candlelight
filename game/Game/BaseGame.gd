@@ -29,7 +29,6 @@ var disable_player_interaction = false
 # end Local Params
 
 func _init(args: Array):
-	print('running basegame init')
 	# Alphabetical
 	self.board_tile_map = args[0]
 	self.game_details_label = args[1]

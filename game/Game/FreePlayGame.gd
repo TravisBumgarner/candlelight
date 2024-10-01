@@ -30,8 +30,7 @@ func load_game():
 	var absolute_file_path = "user://game_saves/%s/%s.save" % [GlobalConsts.GAME_MODE.FreePlay, GlobalState.save_slot]
 	config.load(absolute_file_path)
 		
-	
-	alchemizations = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL)
+	alchemizations = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.ALCHEMIZATIONS)
 	level = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level)
 	game_start_timestamp = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.GAME_START_TIMESTAMP)
 	
@@ -73,10 +72,6 @@ func level_complete(gems):
 func _on_action_pressed(action):
 	super(action)
 	
-	if level > 1:
-		# Don't start saving until the user has made some progress
-		upsert_game_save()
-
 func upsert_game_save():
 	var config = ConfigFile.new()
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level)
@@ -98,6 +93,9 @@ func _on_level_complete_timer_timeout():
 	history.empty()
 	gemsManager.free_play_mode_set_target_gem(level)
 	player = Player.new(board_tile_map, self.queue.next())
+	if level > 1:
+		# Don't start saving until the user has made some progress
+		upsert_game_save()
 
 func update_game_display():
 	var text = "[center]"

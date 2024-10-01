@@ -8,7 +8,6 @@ func _init():
 func _on_action_pressed(action):
 	match action:
 		"escape":
-			print('main menu ha')
 			cleanup()
 
 func cleanup():

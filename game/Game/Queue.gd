@@ -57,7 +57,6 @@ func _fill_queue():
 
 func append_to_queue(shape):
 	# Used for Challenge mode
-	print('appending')
 	self.queue.append(shape)
 
 func undo(shape):
@@ -83,6 +82,5 @@ func empty():
 
 func load(data: Array):
 	self.empty()
-	print('loading', len(data))
 	self.queue = data
 	self._draw_queue()

@@ -37,8 +37,15 @@ func _on_level_button_pressed(level):
 func _on_action_pressed(action):
 	match action:
 		"escape":
-			print('main menu b')
-			cleanup()
+			var game_saves_displayed = saves_positioning_container.visible
+			# Return to main menu, otherwise return to saves.
+			if game_saves_displayed:
+				cleanup()
+			else:
+				levels_positioning_container.hide()
+				saves_positioning_container.show()
+				save_buttons_container.get_child(0).grab_focus()
+				
 
 func cleanup():
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -83,7 +90,6 @@ func handle_save_press(save_slot: String):
 	for world in worlds:
 		create_world_label(world['name'], world['world'])
 		for level in world["levels"]:
-			print(level)
 			# Levels are one indexed, + 1 to handle this.
 			var disabled = level['level'] > levels_complete + 1
 			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level['level']], -1)
@@ -94,7 +100,6 @@ func handle_save_press(save_slot: String):
 	
 func create_world_label(name: String, world: int):
 	var label = Label.new()
-	print("World %d: %s" % [world, world])
 	label.text = "World %d: %s" % [world, name]
 	label.horizontal_alignment = 1 # center
 	level_buttons_container.add_child(label)

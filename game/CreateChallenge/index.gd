@@ -87,8 +87,6 @@ func _on_action_pressed(action):
 				creationMode = CreationMode.ShapeSelection
 		"escape":
 			cleanup()
-			print('main menu g')
-			#self.return_to_main_menu.call()
 	
 	if creationMode == CreationMode.GemCreation:
 		var direction_map = {

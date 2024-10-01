@@ -13,7 +13,7 @@ func _ready():
 	save_buttons_container.get_child(0).grab_focus()
 
 func check_for_saves():
-	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
+	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.FreePlay]
 	DirAccess.make_dir_recursive_absolute(game_saves_path)
 	var dir = DirAccess.open(game_saves_path)
 	
@@ -24,11 +24,10 @@ func check_for_saves():
 			
 		var config = ConfigFile.new()
 		config.load(absolute_file_path)
-		var alchemizations = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.ALCHEMIZATIONS)
-		var level = config.get_value(GlobalConsts.CONFIG_FILE_SAVE_KEY, GlobalConsts.FREE_PLAY_GAME_SAVE_KEY.LEVEL)
+		var alchemizations = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.ALCHEMIZATIONS)
+		var level = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL)
 		
 		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])
-		print(button)
 
 		var text = "Save %s\n" % [save_slot]
 		text += "Level %d - %d Alchemizations" % [level, alchemizations]

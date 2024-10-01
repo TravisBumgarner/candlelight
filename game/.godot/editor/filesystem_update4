@@ -30,3 +30,4 @@ res://Game/puzzle_mode_levels/2.cfg
 res://Game/puzzle_mode_levels/3.cfg
 res://Game/puzzle_mode_levels/4.cfg
 res://Game/puzzle_mode_levels/5.cfg
+res://Game/BaseGame.gd
