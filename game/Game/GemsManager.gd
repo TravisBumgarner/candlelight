@@ -106,7 +106,7 @@ func free_play_mode_generate_gem(size: int):
 	self.target_gem = Utilities.move_cells_to_origin(points)
 
 
-func erase_target_gem():
+func _erase_target_gem():
 	target_gem_tile_map.clear_layer(GlobalConsts.TARGET_GEM_LAYER.GEM)
 
 
@@ -116,14 +116,14 @@ func draw_gem_on_board(gem):
 
 
 func free_play_mode_set_target_gem(level: int):
-	self.erase_target_gem()
+	self._erase_target_gem()
 	var size = self.free_play_mode_level_to_gem_size(level)
 	self.free_play_mode_generate_gem(size)
 	self.draw_target_gem()
 #
 
 func daily_mode_set_target_gem(game_key):
-	self.erase_target_gem()
+	self._erase_target_gem()
 	self.daily_mode_generate_gem(game_key)
 	self.draw_target_gem()
 
@@ -132,17 +132,18 @@ func draw_target_gem():
 		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.LIGHT_INACTIVE)
 
 
-func free_play_mode_resume(gem):
+func set_gem(gem):
+	self._erase_target_gem()
 	target_gem = gem
 	self.draw_target_gem()
 
 func is_target_gem(shape):
 	if(shape.size() != target_gem.size()):
 		return false
-		
-	var relative_shape = Utilities.move_cells_to_origin(shape)
 	
-	var are_equal = arrays_equal(relative_shape, target_gem)
+	var existing_shape_at_origin = Utilities.move_cells_to_origin(shape)
+	var target_gem_at_origin = Utilities.move_cells_to_origin(target_gem)
+	var are_equal = arrays_equal(existing_shape_at_origin, target_gem_at_origin)
 	return are_equal
 
 
@@ -158,7 +159,6 @@ func find_gems_and_shapes():
 	for shape in shapes:
 		if is_target_gem(shape):
 			gems.append(shape)
-			
 	return {
 		'gems' = gems,
 		'shapes' = shapes,

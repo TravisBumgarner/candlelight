@@ -20,7 +20,7 @@ func new_game():
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
 	var target_gem = config.get_value('level', GlobalConsts.PUZZLE_GAME_SAVE_KEY.TARGET_GEM)
-	gemsManager.free_play_mode_resume(target_gem)
+	gemsManager.set_gem(target_gem)
 	
 	update_game_display()
 	

@@ -29,7 +29,7 @@ const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 
 func _draw_queue(offset=0):
 	# Offest is used for paginating queue for challenges
-	queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
+	self.queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
 
 	var y_offset = Vector2i(0, 0)
 	# It's possible, when undoing that the queue length exceeds the visible queue size, so we clamp.
@@ -37,8 +37,10 @@ func _draw_queue(offset=0):
 	for queue_index in range(offset, offset + self.visibile_queue_size):
 		if queue_index >= len(self.queue):
 			return
-		var piece = self.queue[queue_index]
-		for vector in piece[0]:
+		var shape_name = self.queue[queue_index]
+
+		var shape = Shapes.SHAPES_DICT[shape_name]
+		for vector in shape[0]:
 			var next_in_queue = queue_index == 0
 			var color = GlobalConsts.SPRITE.DARK_ACTIVE if next_in_queue else GlobalConsts.SPRITE.DARK_INACTIVE
 			self.queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + y_offset + CENTER_ALIGN_QUEUE, GlobalConsts.GEMS_TILE_ID, color) 
@@ -51,14 +53,12 @@ func _fill_queue():
 		return
 	
 	while queue.size() <= self.visibile_queue_size:
-		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES)
-		print('filling')
+		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES_DICT.keys())
 		self.queue.append(random)
 	self._draw_queue()
 
 func append_to_queue(shape):
 	# Used for Challenge mode
-	print('appending')
 	self.queue.append(shape)
 
 func undo(shape):
@@ -79,11 +79,7 @@ func size():
 func get_queue():
 	return self.queue
 	
-func empty():
-	self.queue.clear()
 
 func load(data: Array):
-	self.empty()
-	print('loading', len(data))
 	self.queue = data
 	self._draw_queue()
