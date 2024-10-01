@@ -9,10 +9,12 @@ extends Node2D
 @onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
 
+@onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
+
+
 @onready var game_details_tile_map = $GameDetailsTileMap
 @onready var new_game_button = $NewGameButton
 @onready var pause_menu_container = $PauseMenuContainer
-@onready var resume_button = $PauseMenuContainer/PanelContainer/VBoxContainer/ResumeButton
 
 
 @onready var puzzle_complete_hbox_container = $PuzzleGameLevelComplete
@@ -121,7 +123,7 @@ func _on_main_menu_button_pressed():
 	get_tree().change_scene_to_packed(self.main_menu_scene)
 
 func _on_pause_menu_container_visibility_changed():
+	# For some reason this line will error if PuzzleMenuContainer on _ready
 	if is_visible_in_tree():
-		#get_tree().paused = true
 		resume_button.grab_focus()
 
