@@ -30,9 +30,12 @@ func upsert_scores():
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Daily, GlobalState.save_slot, config)
 
 func _on_level_complete_timer_timeout():
-	pass
+	self.level_complete_controls_h_box_container.show()
+	self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide()
+	self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
 
 func new_game():
+	self.level_complete_controls_h_box_container.hide()
 	disable_player_interaction = false
 	var game_key = Utilities.generate_key_from_date()
 	
