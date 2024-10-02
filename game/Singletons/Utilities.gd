@@ -104,3 +104,8 @@ func load_json(file_path: String) -> Dictionary:
 	else:
 		print("Error opening file: ", file_path)
 		return {}
+
+func remove_all_children(node):
+	for i in range(node.get_child_count()):
+		var child = node.get_child(0)
+		node.remove_child(child)

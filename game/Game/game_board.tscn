@@ -60,6 +60,7 @@ offset_right = 408.0
 offset_bottom = 138.0
 
 [node name="TextureRect3" type="TextureRect" parent="TargetGemControl"]
+layout_mode = 0
 offset_left = -24.0
 offset_top = -22.0
 offset_right = 210.0
@@ -91,6 +92,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TextureRect2" type="TextureRect" parent="QueueControl"]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 84.0
 offset_right = 257.0
@@ -126,6 +128,7 @@ offset_bottom = 458.0
 
 [node name="TextureRect4" type="TextureRect" parent="GameDetailsControl"]
 modulate = Color(0.678944, 0.678944, 0.678944, 1)
+layout_mode = 0
 offset_left = -24.0
 offset_top = -14.0
 offset_right = 208.0
@@ -263,8 +266,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/0_Move"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Move
-Shape"
+text = "Move"
 horizontal_alignment = 1
 
 [node name="LetterR" type="TextureRect" parent="Instructions/0_Move"]
@@ -275,8 +277,7 @@ stretch_mode = 3
 [node name="Label2" type="Label" parent="Instructions/0_Move"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Rotate
-Shape"
+text = "Rotate"
 horizontal_alignment = 1
 
 [node name="1_Place" type="HBoxContainer" parent="Instructions"]
@@ -293,7 +294,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/1_Place"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Place Shape"
+text = "Place"
 horizontal_alignment = 1
 
 [node name="2_Stack" type="HBoxContainer" parent="Instructions"]
@@ -323,7 +324,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/3_Undo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Undo Mistakes"
+text = "Undo"
 horizontal_alignment = 1
 
 [node name="4_Score" type="HBoxContainer" parent="Instructions"]

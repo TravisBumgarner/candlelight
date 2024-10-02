@@ -85,6 +85,8 @@ func handle_save_press(save_slot: String):
 	levels_positioning_container.show()
 	GlobalState.save_slot = save_slot
 	
+	Utilities.remove_all_children(level_buttons_container)
+	
 	var worlds = PuzzleModeLevelManager.get_worlds_metadata()
 	for world in worlds:
 		create_world_label(world['name'], world['world'])
