@@ -45,5 +45,3 @@ const SHAPES_DICT = {
 	"lower_i": lower_i,
 	"upper_z": upper_z
 }
-
-

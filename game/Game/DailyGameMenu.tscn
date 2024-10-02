@@ -26,60 +26,87 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_fudgm")
 
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 592.0
-offset_right = 73.0
-offset_bottom = 621.0
-theme = ExtResource("3_3gck5")
-text = "Main Menu"
+[node name="SavesPositioningContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -222.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
 
-[node name="HighScoresContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 41.0
-offset_right = 500.0
-offset_bottom = 553.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
+[node name="VBoxContainer" type="VBoxContainer" parent="SavesPositioningContainer"]
+custom_minimum_size = Vector2(400, 2.08165e-12)
+layout_mode = 2
+alignment = 1
 
-[node name="Label" type="Label" parent="HighScoresContainer"]
+[node name="Label" type="Label" parent="SavesPositioningContainer/VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_3gck5")
 theme_type_variation = &"HeaderLarge"
 theme_override_font_sizes/font_size = 32
-text = "High Scores"
+text = "Select Game"
 horizontal_alignment = 1
 
-[node name="HighScoresScrollContainer" type="ScrollContainer" parent="."]
-layout_mode = 0
-offset_left = 92.0
-offset_top = 47.0
-offset_right = 500.0
-offset_bottom = 559.0
-
-[node name="NewGameContainer" type="VBoxContainer" parent="."]
+[node name="SaveButtonsContainer" type="VBoxContainer" parent="SavesPositioningContainer/VBoxContainer"]
 layout_mode = 2
-offset_left = 680.0
-offset_right = 992.0
-offset_bottom = 648.0
-alignment = 1
+theme_override_constants/separation = 20
 
-[node name="NewGameSubContainer" type="VBoxContainer" parent="NewGameContainer"]
+[node name="SaveAButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
+focus_neighbor_top = NodePath("../SaveDButton")
+theme = ExtResource("3_3gck5")
+text = "Save A
+Empty"
 
-[node name="NameInput" type="LineEdit" parent="NewGameContainer/NewGameSubContainer"]
-layout_mode = 2
-placeholder_text = "Enter your name:"
-max_length = 30
-
-[node name="NewGameButton" type="Button" parent="NewGameContainer/NewGameSubContainer"]
+[node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 theme = ExtResource("3_3gck5")
-disabled = true
-text = "New Game"
+text = "Save B
+Empty"
 
-[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="text_changed" from="NewGameContainer/NewGameSubContainer/NameInput" to="." method="_on_name_input_text_changed"]
-[connection signal="pressed" from="NewGameContainer/NewGameSubContainer/NewGameButton" to="." method="_on_new_game_pressed"]
+[node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme = ExtResource("3_3gck5")
+text = "Save C
+Empty"
+
+[node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../SaveAButton")
+theme = ExtResource("3_3gck5")
+text = "Save D
+Empty"
+
+[node name="HighScoresPositioningContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 354.0
+offset_bottom = 648.0
+
+[node name="HighScoresContainer" type="VBoxContainer" parent="HighScoresPositioningContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HighScoresPositioningContainer/HighScoresContainer"]
+layout_mode = 2
+theme = ExtResource("3_3gck5")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 32
+text = "High Scores 
+(Coming Soon)"
+horizontal_alignment = 1
+
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveAButton" to="." method="_on_save_a_button_pressed"]
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveBButton" to="." method="_on_save_b_button_pressed"]
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveCButton" to="." method="_on_save_c_button_pressed"]
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveDButton" to="." method="_on_save_d_button_pressed"]

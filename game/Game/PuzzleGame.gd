@@ -16,11 +16,12 @@ func new_game():
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_tile_map, game_key, visible_queue_size, should_fill_queue)
-	queue.load(config.get_value('level', GlobalConsts.PUZZLE_GAME_SAVE_KEY.QUEUE))
+	queue.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
-	var target_gem = config.get_value('level', GlobalConsts.PUZZLE_GAME_SAVE_KEY.TARGET_GEM)
+	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
+
 	
 	update_game_display()
 	
@@ -28,7 +29,12 @@ func new_game():
 
 	player = Player.new(board_tile_map, queue.next())
 
+func load_game():
+	# Save states are not quite consistant across game modes. Will maybe need to think through this more.
+	self.new_game()
+
 func level_complete(gems):
+	upsert_game_save()
 	disable_player_interaction = true
 	
 	SoundManager.play("one_gem")
@@ -36,6 +42,14 @@ func level_complete(gems):
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
 	level_complete_timer.start(1)
+
+func upsert_game_save():
+	var config = ConfigFile.new()
+	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, level)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level], alchemizations)	
+	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
+
 
 func _on_action_pressed(action):
 	super(action)

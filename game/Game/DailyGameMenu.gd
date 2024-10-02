@@ -2,10 +2,10 @@ extends Control
 
 
 @onready var new_game_button = $NewGameContainer/NewGameSubContainer/NewGameButton
-
+@onready var saves_positioning_container = $SavesPositioningContainer
 
 @onready var high_scores_container = $HighScoresContainer
-
+@onready var save_buttons_container = $SavesPositioningContainer/VBoxContainer/SaveButtonsContainer
 
 @onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
 
@@ -14,41 +14,59 @@ const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
 
 func _ready():
-	populate_high_scores()
+	save_buttons_container.get_child(0).grab_focus()
+	check_for_saves()
+	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 
-
-func populate_high_scores():
-	var current_date = null
-	var scores_for_date = 0
+func check_for_saves():
+	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Daily]
+	DirAccess.make_dir_recursive_absolute(game_saves_path)
 	
-	var high_score_dates = DailyModeHighScores.high_scores.keys()
-	high_score_dates.sort_custom(func(a, b): return a.naturalnocasecmp_to(b) > 0)
-	
-	for date in high_score_dates:
-		var date_label = Label.new()
-		date_label.text = date
-		high_scores_container.add_child(date_label)
-		
-		var high_scores = DailyModeHighScores.high_scores[date]
-		
-		scores_for_date = 0
-		for high_score in high_scores:
-			if scores_for_date == 3:
-				break
+	for save_slot in GlobalConsts.GAME_SLOTS:
+		var absolute_file_path = "%s/%s.save" % [game_saves_path, save_slot]
+		if not FileAccess.file_exists(absolute_file_path):
+			continue
 			
-			var label = Label.new()
-			label.text = "Bob - %d" % [high_score["alchemizations"]]
-			high_scores_container.add_child(label)
-			scores_for_date += 1
+		var config = ConfigFile.new()
+		config.load(absolute_file_path)
+		var best_scores = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.DAILY_SAVE_METADATA.BEST_SCORES)
+		
+		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])
 
-func _on_new_game_pressed():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.DailyGame
-	get_tree().change_scene_to_packed(game_scene)
+		var text = "Save %s\n" % [save_slot]
+		var day_text = "Day" if len(best_scores) == 1 else "Days"
+		text += "%d %s Completed" % [len(best_scores), day_text]
+		
+		button.text = text
+	
 
-func _on_back_button_pressed():
+func _on_action_pressed(action):
+	match action:
+		"escape":
+			cleanup()
+
+func cleanup():
+	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 	get_tree().change_scene_to_packed(main_menu)
 
-func _on_name_input_text_changed(new_text):
-	GlobalState.player_name = new_text
-	var submit_disabled = len(new_text) == 0
-	new_game_button.disabled = submit_disabled
+func handle_save_press(save_slot: String):
+	GlobalState.save_slot = save_slot
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.Daily
+	get_tree().change_scene_to_packed(game_scene)
+	
+
+func _on_save_a_button_pressed():
+	handle_save_press('a')
+
+
+func _on_save_b_button_pressed():
+	handle_save_press('b')
+
+
+func _on_save_c_button_pressed():
+	handle_save_press('c')
+
+
+func _on_save_d_button_pressed():
+	handle_save_press('d')
+

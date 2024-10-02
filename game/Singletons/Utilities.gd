@@ -72,32 +72,23 @@ func generate_key_from_date():
 	var today := Time.get_date_dict_from_system()
 	var today_string = today_format_string % [today.year, today.month, today.day] 
 	return hash(today_string)
-
-
-func get_save_game_dir(key: String):
-	return "user://%s" % [key]
-
-func get_save_game_path(key: String, game_start_timestamp) -> String:
-	#var current_timestamp = Time.get_unix_time_from_system()
-	var directory = get_save_game_dir(key)
-
-	var file_name = "%d.save" % [game_start_timestamp]
-	var save_path = "%s/%s" % [directory, file_name]
-	
-	# Ensure directory exists
-	var dir = DirAccess.open(directory)
-	if dir == null:
-		dir = DirAccess.make_dir_absolute(directory)
-		if dir == null:
-			print("Error: Unable to create save directory.")
-			return ""
-	
-	return save_path
-	
 	
 func get_daily_puzzle_date() -> String:
 	return Time.get_date_string_from_system()
 
+
+func create_or_load_game_save_v2(game_mode: String, save_slot: String):
+	var config = ConfigFile.new()
+	var game_mode_path = "user://game_saves/%s" % [game_mode]
+	DirAccess.make_dir_recursive_absolute(game_mode_path)
+	var game_save_path = "%s/%s.save" % [game_mode_path, save_slot]
+	return config.load(game_save_path)
+	
+func write_game_save_v2(game_mode: String, save_slot: String, config: ConfigFile):
+	var game_mode_path = "user://game_saves/%s" % [game_mode]
+	DirAccess.make_dir_recursive_absolute(game_mode_path)
+	var game_save_path = "%s/%s.save" % [game_mode_path, save_slot]
+	config.save(game_save_path)
 
 func load_json(file_path: String) -> Dictionary:
 	var file = FileAccess.open(file_path, FileAccess.READ)

@@ -1,12 +1,14 @@
 extends Control
 class_name MainMenu
-@onready var free_play_game_button = $VBoxContainer/FreePlayGame/FreePlayGameButton
-@onready var tutorial_button = $VBoxContainer/Tutorial/TutorialButton
-@onready var daily_game_button = $VBoxContainer/Daily/DailyGameButton
-@onready var puzzle_mode_button = $"VBoxContainer/Puzzle Mode/PuzzleModeButton"
-@onready var play_challenge_button = $VBoxContainer/PlayerGenerated/PlayChallengeButton
-@onready var credits_button = $VBoxContainer/Misc/CreditsButton
-@onready var exit_button = $VBoxContainer/Misc/ExitButton
+
+@onready var puzzle_mode_button = $VBoxContainer/PuzzleModeButton
+@onready var daily_game_button = $VBoxContainer/DailyGameButton
+@onready var tutorial_button = $VBoxContainer/TutorialButton
+@onready var play_challenge_button = $VBoxContainer/PlayChallengeButton
+@onready var credits_button = $VBoxContainer/CreditsButton
+@onready var exit_button = $VBoxContainer/ExitButton
+@onready var shared_label = $VBoxContainer/SharedLabel
+@onready var free_play_game_button = $VBoxContainer/FreePlayGameButton
 
 @onready var game_scene = load("res://Game/game_board.tscn")
 @onready var puzzle_game_menu = preload("res://Game/PuzzleGameMenu.tscn")
@@ -14,6 +16,16 @@ class_name MainMenu
 @onready var create_challenge_scene = load("res://CreateChallenge/index.tscn")
 @onready var free_play_game_menu = load("res://Game/FreePlayGameMenu.tscn")
 @onready var daily_game_menu = load("res://Game/DailyGameMenu.tscn")
+
+const HELPER_TEXT_DICT = {
+	"PuzzleModeButton": "Complete the puzzle in as few moves as possible.",
+	"FreePlayGameButton": "Sit back, relax, and play.",
+	"DailyGameButton": "Compete against friends in the daily challenge.",
+	"TutorialButton": "Learn the basics.",
+	"PlayChallengeButton": "TBD",
+	"CreditsButton": "Behind the game.",
+	"ExitButton": "See you later!"
+}
 
 func _ready():
 	puzzle_mode_button.connect("pressed", Callable(self, "on_puzzle_mode_button_down"))
@@ -23,13 +35,16 @@ func _ready():
 	play_challenge_button.connect("pressed", Callable(self, "on_play_challenge_button_down"))
 	exit_button.connect("pressed", Callable(self, "on_exit_button_down"))
 	credits_button.connect("pressed", Callable(self, "on_credits_button_down"))
+	get_viewport().connect("gui_focus_changed", Callable(self, "_on_focus_changed"))
 
+	puzzle_mode_button.grab_focus()
+	
 func on_tutorial_button_down():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.TutorialMode
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.Tutorial
 	get_tree().change_scene_to_packed(game_scene)
 	
 func on_puzzle_mode_button_down():
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.PuzzleGame
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
 	get_tree().change_scene_to_packed(puzzle_game_menu)
 	
 func on_daily_game_button_down():
@@ -46,3 +61,7 @@ func on_exit_button_down():
 	
 func on_credits_button_down():
 	get_tree().change_scene_to_packed(credits_scene)
+
+func _on_focus_changed(control:Control) -> void:
+	if control != null:
+		shared_label.text = HELPER_TEXT_DICT[control.name]

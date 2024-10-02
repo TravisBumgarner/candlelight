@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cvbkpkgd3eysk"]
+[gd_scene load_steps=4 format=3 uid="uid://cvbkpkgd3eysk"]
 
 [ext_resource type="Script" path="res://Credits/index.gd" id="1_ybn2x"]
 [ext_resource type="Texture2D" uid="uid://3lhc7mvsvfgn" path="res://assets/backgrounds/background2.png" id="2_qvdfr"]
-[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_w7pd0"]
 
 [sub_resource type="Theme" id="Theme_m5m8v"]
 
@@ -107,14 +106,3 @@ text = "Sounds by Travis Bumgarner"
 [node name="LinkButton" type="LinkButton" parent="VBoxContainer/Sounds"]
 layout_mode = 2
 uri = "https://departuremono.com/"
-
-[node name="BackButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 592.0
-offset_right = 73.0
-offset_bottom = 621.0
-theme = ExtResource("3_w7pd0")
-text = "Main Menu"
-
-[connection signal="pressed" from="BackButton" to="." method="_on_back_button_pressed"]

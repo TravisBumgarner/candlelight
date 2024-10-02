@@ -9,19 +9,19 @@ extends Node2D
 @onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
 
+@onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
+
+
 @onready var game_details_tile_map = $GameDetailsTileMap
-@onready var back_button = $BackButton
 @onready var new_game_button = $NewGameButton
+@onready var pause_menu_container = $PauseMenuContainer
+
 
 @onready var puzzle_complete_hbox_container = $PuzzleGameLevelComplete
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
 var game: BaseGame
-
-func return_to_main_menu():
-	get_tree().change_scene_to_packed(self.main_menu_scene)
-
 
 func create_game(
 	game_mode,
@@ -35,10 +35,10 @@ func create_game(
 		game_details_tile_map,
 		game_details_value,
 		instructions,
-		level_complete_timer, 
+		level_complete_timer,
+		pause_menu_container,
 		puzzle_complete_hbox_container,
 		queue_tile_map, 
-		Callable(self, "return_to_main_menu"),
 		sounds,
 		target_gem_tile_map
 		# ALPHABETICAL
@@ -60,23 +60,23 @@ func create_game(
 
 func _ready():	
 	var game_modes = {
-		GlobalConsts.GAME_MODE.TutorialMode: {
+		GlobalConsts.GAME_MODE.Tutorial: {
 			"class": TutorialMode,
 			"show_instructions": true,
 			"show_new_game_button": false
 		},
-		GlobalConsts.GAME_MODE.FreePlayGame: {
+		GlobalConsts.GAME_MODE.FreePlay: {
 			"class": FreePlayGame,
 			"show_instructions": false,
 			"show_new_game_button": false
 		},
 		# Setting track_high_scores to false for the time being.
-		GlobalConsts.GAME_MODE.DailyGame: {
+		GlobalConsts.GAME_MODE.Daily: {
 			"class": DailyGame, 
 			"show_instructions": false,
 			"show_new_game_button": true
 		},
-			GlobalConsts.GAME_MODE.PuzzleGame: {
+			GlobalConsts.GAME_MODE.Puzzle: {
 			"class": PuzzleGame, 
 			"show_instructions": false,
 			"show_new_game_button": false
@@ -97,15 +97,11 @@ func _ready():
 		game.level = GlobalState.puzzle_mode_level
 		GlobalState.puzzle_mode_level = null
 	
-	if GlobalState.game_save_file:
+	var game_save_path = "user://game_saves/%s/%s.save" % [GlobalState.game_mode, GlobalState.save_slot]
+	if FileAccess.file_exists(game_save_path):
 		game.load_game()
-		GlobalState.game_save_file = null
 	else:
 		game.new_game()
-
-func _on_back_button_pressed():
-	get_tree().change_scene_to_packed(self.main_menu_scene)
-	game.cleanup()
 
 func _on_new_game_button_pressed():
 	self.game.new_game()
@@ -117,3 +113,17 @@ func _on_next_level_pressed():
 
 func _on_try_again_pressed():
 	self.game.new_game()
+
+func _on_resume_button_pressed():
+	game.resume() # Cannot figure out how to use built in get_tree().pause
+	pause_menu_container.hide()
+
+func _on_main_menu_button_pressed():
+	self.game.cleanup()
+	get_tree().change_scene_to_packed(self.main_menu_scene)
+
+func _on_pause_menu_container_visibility_changed():
+	# For some reason this line will error if PuzzleMenuContainer on _ready
+	if is_visible_in_tree():
+		resume_button.grab_focus()
+

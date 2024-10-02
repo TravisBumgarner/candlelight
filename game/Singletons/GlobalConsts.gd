@@ -1,11 +1,13 @@
 extends Node
 
-enum GAME_MODE {
-	TutorialMode,
-	FreePlayGame,
-	DailyGame,
-	PuzzleGame
+const GAME_MODE = {
+	"Tutorial": "tutorial",
+	"FreePlay": "free_play",
+	"Daily": "daily",
+	"Puzzle": "puzzle"
 }
+
+const GAME_SLOTS = ['A', 'B', 'C', 'D']
 
 const GRID = { HEIGHT = 10, WIDTH = 13 }
 const BOARD_ORIGIN = Vector2i(0, 0)
@@ -65,35 +67,33 @@ const ACTION = {
 	SELECT = 'select'
 }
 
-const GAME_SAVE_KEYS = {
-	FREE_PLAY_GAME = "free_play_game_saves"
+const GAME_SAVE_SECTIONS = {
+	Metadata = 'metadata',
+	PuzzleLevelScores = 'puzzle_level_scores'
 }
 
-const CONFIG_FILE_SAVE_KEY = "game_save"
-
-const FREE_PLAY_GAME_SAVE_KEY = {
+const FREE_PLAY_SAVE_METADATA = {
 	LEVEL = 'level',
 	ALCHEMIZATIONS = 'alchemizations',
 	QUEUE = 'queue',
 	GAME_START_TIMESTAMP = 'game_start_timestamp',
 	HISTORY = 'history',
-	SHAPE_NAME = 'shape_name',
-	PLAYER_NAME = 'player_name',
+	SHAPE_NAME = 'player_shape',
 	PLACED_SHAPES = 'placed_shapes',
 	BLOCKERS = 'blockers',
 	TARGET_GEM = 'target_gem'
 }
 
-const PUZZLE_GAME_SAVE_KEY = {
-	#LEVEL = 'level',
-	#ALCHEMIZATIONS = 'alchemizations',
+const PUZZLE_SAVE_METADATA = {
+	LEVELS_COMPLETE = 'levels_complete',
+}
+
+const DAILY_SAVE_METADATA = {
+	BEST_SCORES = 'best_scores',
+}
+
+const PUZZLE_LEVEL_METADATA = {
 	QUEUE = 'queue',
-	#GAME_START_TIMESTAMP = 'game_start_timestamp',
-	#HISTORY = 'history',
-	#SHAPE_NAME = 'shape_name',
-	#PLAYER_NAME = 'player_name',
-	#PLACED_SHAPES = 'placed_shapes',
-	#BLOCKERS = 'blockers',
 	TARGET_GEM = 'target_gem'
 }
 

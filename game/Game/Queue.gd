@@ -38,7 +38,6 @@ func _draw_queue(offset=0):
 		if queue_index >= len(self.queue):
 			return
 		var shape_name = self.queue[queue_index]
-
 		var shape = Shapes.SHAPES_DICT[shape_name]
 		for vector in shape[0]:
 			var next_in_queue = queue_index == 0

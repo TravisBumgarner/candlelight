@@ -3,13 +3,13 @@ extends Node
 signal action_pressed(action)
 
 func _input(event):
-	if event.is_action_pressed("Up"):
+	if event.is_action_pressed("ui_up"):
 		emit_signal("action_pressed", "up")
-	elif event.is_action_pressed("Down"):
+	elif event.is_action_pressed("ui_down"):
 		emit_signal("action_pressed", "down")
-	elif event.is_action_pressed("Left"):
+	elif event.is_action_pressed("ui_left"):
 		emit_signal("action_pressed", "left")
-	elif event.is_action_pressed("Right"):
+	elif event.is_action_pressed("ui_right"):
 		emit_signal("action_pressed", "right")
 	elif event.is_action_pressed("Undo"):
 		emit_signal("action_pressed", "undo")
