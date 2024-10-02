@@ -11,8 +11,8 @@ var should_fill_queue: bool # Used for PuzzleMode which can have a specified num
 
 var RNG
 
-func _init(_queue_tile_map: TileMap, _game_key, _visibile_queue_size, _should_fill_queue = true):
-	self.queue_tile_map = _queue_tile_map
+func _init(_queue_control: Control, _game_key, _visibile_queue_size, _should_fill_queue = true):
+	self.queue_tile_map = _queue_control.find_child("QueueTileMap")
 	self.game_key = _game_key
 	self.visibile_queue_size = _visibile_queue_size
 	self.should_fill_queue = _should_fill_queue

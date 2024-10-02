@@ -6,10 +6,10 @@ var board_tile_map: TileMap
 var target_gem_tile_map: TileMap
 var queue_tile_map: TileMap
 
-func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap):
+func _init(_board_tile_map: TileMap, _target_gem_control: Control, _queue_control: Control):
 	self.board_tile_map = _board_tile_map
-	self.target_gem_tile_map = _target_gem_tile_map
-	self.queue_tile_map = _queue_tile_map
+	self.target_gem_tile_map = _target_gem_control.find_child("TargetGemTileMap")
+	self.queue_tile_map = _queue_control.find_child("QueueTileMap")
 #
 func free_play_mode_level_to_gem_size(level: int) -> int:
 	if level < 2:
@@ -128,9 +128,35 @@ func daily_mode_set_target_gem(game_key):
 	self.draw_target_gem()
 
 func draw_target_gem():
+	# Calculate the bounding box of the gem
+	var min_x = INF
+	var max_x = -INF
+	var min_y = INF
+	var max_y = -INF
+	
 	for point in target_gem:
-		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.LIGHT_INACTIVE)
-
+		min_x = min(min_x, point.x)
+		max_x = max(max_x, point.x)
+		min_y = min(min_y, point.y)
+		max_y = max(max_y, point.y)
+	
+	var gem_width = max_x - min_x + 1
+	var gem_height = max_y - min_y + 1
+	
+	
+	# Calculate the center of the tile map (or some specific area)
+	# Assuming the tile map size is in cells and center_x, center_y is the desired center point
+	var center_x = GlobalConsts.MAX_GEM_SIZE / 2
+	var center_y = GlobalConsts.MAX_GEM_SIZE / 2
+	
+	# Calculate the top-left corner position to start drawing so the gem is centered
+	var offset_x = center_x - gem_width / 2
+	var offset_y = center_y - gem_height / 2
+	
+	# Draw the gem with the calculated offset
+	for point in target_gem:
+		var draw_point = Vector2i(point.x + offset_x, point.y + offset_y)
+		self.target_gem_tile_map.set_cell(GlobalConsts.TARGET_GEM_LAYER.GEM, draw_point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.LIGHT_INACTIVE)
 
 func set_gem(gem):
 	self._erase_target_gem()

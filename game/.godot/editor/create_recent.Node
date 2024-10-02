@@ -1,6 +1,7 @@
+Control
+TextureRect
 CenterContainer
 VBoxContainer
-Control
 Container
 Button
 PanelContainer
@@ -11,4 +12,3 @@ Label
 PopupMenu
 ScrollContainer
 LineEdit
-TextEdit

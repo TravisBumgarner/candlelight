@@ -1,23 +1,20 @@
 extends Node2D
 
 @onready var board_tile_map = $BoardTileMap
-@onready var target_gem_tile_map = $TargetGemTileMap
-@onready var queue_tile_map = $QueueTileMap
+@onready var target_gem_control = $TargetGemControl
+@onready var queue_control = $QueueControl
 @onready var level_complete_timer = $LevelCompleteTimer
+@onready var game_over_timer = $GameOverTimer
 @onready var sounds = $Sounds
-@onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
-@onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
+
+@onready var game_details_label = $GameDetailsControl/GameDetailsTileMap/GameDetailsLabel
+@onready var game_details_value = $GameDetailsControl/GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
-
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
-
-
-@onready var game_details_tile_map = $GameDetailsTileMap
-@onready var new_game_button = $NewGameButton
+@onready var game_details_control = $GameDetailsControl
 @onready var pause_menu_container = $PauseMenuContainer
+@onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
 
-
-@onready var puzzle_complete_hbox_container = $PuzzleGameLevelComplete
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
@@ -25,61 +22,43 @@ var game: BaseGame
 
 func create_game(
 	game_mode,
-	show_instructions: bool,
-	show_new_game_button: bool
 ) -> void:
 	game = game_mode.new([
 		# ALPHABETICAL
 		board_tile_map, 
 		game_details_label, 
-		game_details_tile_map,
+		game_details_control,
 		game_details_value,
+		game_over_timer,
 		instructions,
+		level_complete_controls_h_box_container,
 		level_complete_timer,
 		pause_menu_container,
-		puzzle_complete_hbox_container,
-		queue_tile_map, 
+		queue_control, 
 		sounds,
-		target_gem_tile_map
+		target_gem_control
 		# ALPHABETICAL
 	])
-	
-	# Will never be visible on game start.
-	# The PuzzleGame is responsible for controlling visibility.
-	puzzle_complete_hbox_container.hide()
-	
-	if show_instructions:
-		instructions.show()
-	else:
-		instructions.hide()
-		
-	if show_new_game_button:
-		new_game_button.show()
-	else:
-		new_game_button.hide()
 
-func _ready():	
+func _ready():
+	# Hide overlapping UI Controls.
+	# Doing this programmaticaly makes it easier eveywhere.
+	instructions.hide()
+	level_complete_controls_h_box_container.hide()
+	
 	var game_modes = {
 		GlobalConsts.GAME_MODE.Tutorial: {
 			"class": TutorialMode,
-			"show_instructions": true,
-			"show_new_game_button": false
 		},
 		GlobalConsts.GAME_MODE.FreePlay: {
 			"class": FreePlayGame,
-			"show_instructions": false,
-			"show_new_game_button": false
 		},
 		# Setting track_high_scores to false for the time being.
 		GlobalConsts.GAME_MODE.Daily: {
 			"class": DailyGame, 
-			"show_instructions": false,
-			"show_new_game_button": true
 		},
 			GlobalConsts.GAME_MODE.Puzzle: {
 			"class": PuzzleGame, 
-			"show_instructions": false,
-			"show_new_game_button": false
 		}
 	}
 	
@@ -87,8 +66,6 @@ func _ready():
 		var selected_game = game_modes[GlobalState.game_mode]
 		create_game(
 			selected_game["class"],
-			selected_game['show_instructions'],
-			selected_game['show_new_game_button']
 		)
 		
 	if GlobalState.puzzle_mode_level != null:
@@ -102,18 +79,7 @@ func _ready():
 		game.load_game()
 	else:
 		game.new_game()
-
-func _on_new_game_button_pressed():
-	self.game.new_game()
-
-func _on_next_level_pressed():
-	self.game.level += 1
-	self.game.new_game()
 	
-
-func _on_try_again_pressed():
-	self.game.new_game()
-
 func _on_resume_button_pressed():
 	game.resume() # Cannot figure out how to use built in get_tree().pause
 	pause_menu_container.hide()
@@ -127,3 +93,10 @@ func _on_pause_menu_container_visibility_changed():
 	if is_visible_in_tree():
 		resume_button.grab_focus()
 
+func _on_restart_button_pressed():
+	self.game.new_game()
+
+
+func _on_next_level_button_pressed():
+	self.game.level += 1
+	self.game.new_game()

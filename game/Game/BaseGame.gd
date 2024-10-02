@@ -4,16 +4,17 @@ class_name BaseGame
 
 # _init params Alphabetical
 var board_tile_map: TileMap
-var queue_tile_map: TileMap
-var level_complete_timer: Timer
-var sounds: Node
 var game_details_label: Label
 var game_details_value: RichTextLabel
-var game_details_tile_map: TileMap
+var game_details_control: Control
+var level_complete_controls_h_box_container: HBoxContainer
+var level_complete_timer: Timer
+var game_over_timer: Timer
 var instructions_container: VBoxContainer
 var pause_menu_container
-var puzzle_complete_hbox_container: HBoxContainer
-var target_gem_tile_map: TileMap
+var queue_control: Control
+var sounds: Node
+var target_gem_control: Control
 # end _init Params Alphabetical
 
 # Local Params
@@ -32,21 +33,22 @@ func _init(args: Array):
 	# Alphabetical
 	self.board_tile_map = args[0]
 	self.game_details_label = args[1]
-	self.game_details_tile_map = args[2]
-	self.game_details_value =args[3]
-	self.instructions_container = args[4]
-	self.level_complete_timer = args[5]
-	self.pause_menu_container = args[6]
-	self.puzzle_complete_hbox_container = args[7]
-	self.queue_tile_map = args[8]
-	self.sounds = args[9]
-	self.target_gem_tile_map = args[10]
+	self.game_details_control = args[2]
+	self.game_details_value = args[3]
+	self.game_over_timer = args [4]
+	self.instructions_container = args[5]
+	self.level_complete_controls_h_box_container = args[6]
+	self.level_complete_timer = args[7]
+	self.pause_menu_container = args[8]
+	self.queue_control = args[9]
+	self.sounds = args[10]
+	self.target_gem_control = args[11]
 	# Alphabatical
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
-	#self.submit_score_button.connect('pressed', Callable(self, "_on_submit_pressed"))
+	game_over_timer.connect('timeout', _on_game_over_timer_timeout)
 
 func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
@@ -114,14 +116,19 @@ func level_complete(_gems):
 
 func _on_level_complete_timer_timeout():
 	assert(false, "Must be implemented in the child class.")
-	
+
+func _on_game_over_timer_timeout():
+	assert(false, "Must be implemented in the child class.")
+
 func game_over():
 	assert(false, "Must be implemented in the child class.")
 
 func undo():
 	var record = history.pop()
-
-	self.queue.undo(player.shape_name)
+	
+	# At game end, shape_name is null.
+	if player.shape_name != null:
+		self.queue.undo(player.shape_name)
 	
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, record.placed_shapes)
 

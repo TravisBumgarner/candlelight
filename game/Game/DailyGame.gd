@@ -27,7 +27,7 @@ func upsert_scores():
 		best_scores[today] = alchemizations
 	
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.DAILY_SAVE_METADATA.BEST_SCORES, best_scores)
-	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.Daily, GlobalState.save_slot, config)
+	Utilities.write_game_save(GlobalConsts.GAME_MODE.Daily, GlobalState.save_slot, config)
 
 func _on_level_complete_timer_timeout():
 	pass
@@ -53,9 +53,9 @@ func new_game():
 	erase_board()
 	history = History.new()
 	var visible_queue_size = 3
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	queue = Queue.new(queue_control, game_key, visible_queue_size)
 	player = Player.new(board_tile_map, queue.next())
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	gemsManager.daily_mode_set_target_gem(game_key)
 
 func update_game_display():

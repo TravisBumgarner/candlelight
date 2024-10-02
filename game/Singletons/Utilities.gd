@@ -77,14 +77,14 @@ func get_daily_puzzle_date() -> String:
 	return Time.get_date_string_from_system()
 
 
-func create_or_load_game_save_v2(game_mode: String, save_slot: String):
+func create_or_load_game_save(game_mode: String, save_slot: String):
 	var config = ConfigFile.new()
 	var game_mode_path = "user://game_saves/%s" % [game_mode]
 	DirAccess.make_dir_recursive_absolute(game_mode_path)
 	var game_save_path = "%s/%s.save" % [game_mode_path, save_slot]
 	return config.load(game_save_path)
 	
-func write_game_save_v2(game_mode: String, save_slot: String, config: ConfigFile):
+func write_game_save(game_mode: String, save_slot: String, config: ConfigFile):
 	var game_mode_path = "user://game_saves/%s" % [game_mode]
 	DirAccess.make_dir_recursive_absolute(game_mode_path)
 	var game_save_path = "%s/%s.save" % [game_mode_path, save_slot]

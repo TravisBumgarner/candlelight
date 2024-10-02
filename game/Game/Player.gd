@@ -15,6 +15,10 @@ func _init(_board_tile_map, _shape_name):
 	self._draw()
 	
 func move(direction):
+	# shape_name is cleared after placement, if game is over, no shapes remain.
+	if shape_name == null:
+		return
+	
 	if can_move(direction):
 		SoundManager.play("movement")
 		self.current_absolute_position += direction
@@ -86,6 +90,10 @@ func can_rotate():
 
 
 func rotate_right():
+	# shape_name is cleared after placement, if game is over, no shapes remain.
+	if shape_name == null:
+		return
+		
 	if self.can_rotate():
 		SoundManager.play("movement")
 		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
@@ -109,3 +117,4 @@ func place_on_board():
 			# There's something off here I don't fully understand.
 			tile_style = GlobalConsts.SPRITE.DARK_INACTIVE
 		self.board_tile_map.set_cell(GlobalConsts.BOARD_LAYER.PLACED_SHAPES, current_absolute_position + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+	self.shape_name = null
