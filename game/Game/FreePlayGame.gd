@@ -5,6 +5,7 @@ func _init(args):
 	super(args)
 
 func new_game():
+	@warning_ignore("narrowing_conversion")
 	game_start_timestamp = Time.get_unix_time_from_system()
 	
 	erase_board()
