@@ -125,12 +125,15 @@ offset_right = 408.0
 offset_bottom = 458.0
 
 [node name="TextureRect4" type="TextureRect" parent="GameDetailsControl"]
+modulate = Color(0.678944, 0.678944, 0.678944, 1)
 offset_left = -24.0
-offset_top = -18.0
-offset_right = 210.0
+offset_top = -14.0
+offset_right = 208.0
 offset_bottom = 178.0
 texture = ExtResource("4_4nrn3")
 expand_mode = 1
+stretch_mode = 6
+flip_h = true
 
 [node name="GameDetailsTileMap" type="TileMap" parent="GameDetailsControl"]
 tile_set = SubResource("TileSet_aavhx")
