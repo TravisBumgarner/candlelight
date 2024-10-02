@@ -15,3 +15,5 @@ res://Game/PuzzleGame.gd
 res://Game/DailyGame.gd
 res://Game/FreePlayGame.gd
 res://Game/FreePlayGameMenu.gd
+res://MainMenu/index.gd
+res://MainMenu/main_menu.tscn

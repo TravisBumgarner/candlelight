@@ -18,13 +18,13 @@ class_name MainMenu
 @onready var daily_game_menu = load("res://Game/DailyGameMenu.tscn")
 
 const HELPER_TEXT_DICT = {
-	"PuzzleModeButton": "Complete the puzzle in as few moves as possible.",
-	"FreePlayGameButton": "Sit back, relax, and play.",
-	"DailyGameButton": "Compete against friends in the daily challenge.",
-	"TutorialButton": "Learn the basics.",
-	"PlayChallengeButton": "TBD",
-	"CreditsButton": "Behind the game.",
-	"ExitButton": "See you later!"
+	"PuzzleModeButton": "Solve the puzzle with the fewest moves.",
+	"FreePlayGameButton": "Unwind and play at your own pace.",
+	"DailyGameButton": "Compete with friends to solve the daily challenge.",
+	"TutorialButton": "Master the game’s basics.",
+	"PlayChallengeButton": "Build your own levels.",
+	"CreditsButton": "Meet the creators behind the game.",
+	"ExitButton": "Thanks for playing! See you soon!"
 }
 
 func _ready():
