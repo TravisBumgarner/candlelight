@@ -124,11 +124,11 @@ func new_game():
 	level = 1
 	instruction = 0
 	
-	target_gem_tile_map.hide()
-	queue_tile_map.hide()
+	target_gem_control.hide()
+	queue_control.hide()
 	game_details_label.hide()
 	game_details_value.hide()
-	game_details_tile_map.hide()
+	game_details_control.hide()
 	
 	update_instructions()
 	erase_board()
@@ -136,11 +136,11 @@ func new_game():
 	history = History.new()
 	var game_key = null
 	var visibile_queue_size = 3
-	queue = Queue.new(queue_tile_map, game_key, visibile_queue_size)
+	queue = Queue.new(queue_control, game_key, visibile_queue_size)
 	
 	player = Player.new(board_tile_map, self.queue.next())
 	
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	gemsManager.free_play_mode_set_target_gem(level)
 
 func update_game_display():
@@ -167,10 +167,10 @@ func update_instructions():
 			letter.modulate = Color(1,1,1,0.2 )
 		
 	if instruction == INSTRUCTION['4_Score']:
-		target_gem_tile_map.show()
+		target_gem_control.show()
 
 	if instruction == INSTRUCTION['5_Queue']:
-		queue_tile_map.show()
+		queue_control.show()
 
 
 

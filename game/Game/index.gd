@@ -1,16 +1,17 @@
 extends Node2D
 
 @onready var board_tile_map = $BoardTileMap
-@onready var target_gem_tile_map = $TargetGemTileMap
-@onready var queue_tile_map = $QueueTileMap
+@onready var target_gem_control = $TargetGemControl
+@onready var queue_control = $QueueControl
 @onready var level_complete_timer = $LevelCompleteTimer
 @onready var game_over_timer = $GameOverTimer
 @onready var sounds = $Sounds
-@onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
-@onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
+
+@onready var game_details_label = $GameDetailsControl/GameDetailsTileMap/GameDetailsLabel
+@onready var game_details_value = $GameDetailsControl/GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
-@onready var game_details_tile_map = $GameDetailsTileMap
+@onready var game_details_control = $GameDetailsControl
 @onready var pause_menu_container = $PauseMenuContainer
 @onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
 
@@ -26,16 +27,16 @@ func create_game(
 		# ALPHABETICAL
 		board_tile_map, 
 		game_details_label, 
-		game_details_tile_map,
+		game_details_control,
 		game_details_value,
 		game_over_timer,
 		instructions,
 		level_complete_controls_h_box_container,
 		level_complete_timer,
 		pause_menu_container,
-		queue_tile_map, 
+		queue_control, 
 		sounds,
-		target_gem_tile_map
+		target_gem_control
 		# ALPHABETICAL
 	])
 

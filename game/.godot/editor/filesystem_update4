@@ -13,3 +13,6 @@ res://Game/puzzle_mode_levels/index.json
 res://Game/FreePlayGame.gd
 res://Tutorial/TutorialGame.gd
 res://Game/Player.gd
+res://Game/DailyGame.gd
+res://Game/GemsManager.gd
+res://Game/Queue.gd

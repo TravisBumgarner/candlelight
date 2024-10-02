@@ -53,9 +53,9 @@ func new_game():
 	erase_board()
 	history = History.new()
 	var visible_queue_size = 3
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	queue = Queue.new(queue_control, game_key, visible_queue_size)
 	player = Player.new(board_tile_map, queue.next())
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	gemsManager.daily_mode_set_target_gem(game_key)
 
 func update_game_display():

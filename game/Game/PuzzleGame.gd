@@ -17,10 +17,10 @@ func new_game():
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size, should_fill_queue)
+	queue = Queue.new(queue_control, game_key, visible_queue_size, should_fill_queue)
 	queue.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
 	
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
 

@@ -6,15 +6,15 @@ class_name BaseGame
 var board_tile_map: TileMap
 var game_details_label: Label
 var game_details_value: RichTextLabel
-var game_details_tile_map: TileMap
+var game_details_control: Control
 var level_complete_controls_h_box_container: HBoxContainer
 var level_complete_timer: Timer
 var game_over_timer: Timer
 var instructions_container: VBoxContainer
 var pause_menu_container
-var queue_tile_map: TileMap
+var queue_control: Control
 var sounds: Node
-var target_gem_tile_map: TileMap
+var target_gem_control: Control
 # end _init Params Alphabetical
 
 # Local Params
@@ -33,16 +33,16 @@ func _init(args: Array):
 	# Alphabetical
 	self.board_tile_map = args[0]
 	self.game_details_label = args[1]
-	self.game_details_tile_map = args[2]
+	self.game_details_control = args[2]
 	self.game_details_value = args[3]
 	self.game_over_timer = args [4]
 	self.instructions_container = args[5]
 	self.level_complete_controls_h_box_container = args[6]
 	self.level_complete_timer = args[7]
 	self.pause_menu_container = args[8]
-	self.queue_tile_map = args[9]
+	self.queue_control = args[9]
 	self.sounds = args[10]
-	self.target_gem_tile_map = args[11]
+	self.target_gem_control = args[11]
 	# Alphabatical
 	
 	SoundManager.connect("play_sound", sounds.play_sound)

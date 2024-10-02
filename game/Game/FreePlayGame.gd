@@ -17,11 +17,11 @@ func new_game():
 	
 	var visible_queue_size = 3
 	var game_key = null
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	queue = Queue.new(queue_control, game_key, visible_queue_size)
 	
 	player = Player.new(board_tile_map, queue.next())
 	
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	gemsManager.free_play_mode_set_target_gem(level)
 
 
@@ -39,12 +39,12 @@ func load_game():
 	
 	var visible_queue_size = 3
 	var game_key = null
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	queue = Queue.new(queue_control, game_key, visible_queue_size)
 	queue.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.QUEUE))
 	
 	player = Player.new(board_tile_map, config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.SHAPE_NAME))
 	
-	gemsManager = GemsManager.new(board_tile_map, target_gem_tile_map, queue_tile_map)
+	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
 	

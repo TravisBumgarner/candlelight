@@ -6,10 +6,10 @@ var board_tile_map: TileMap
 var target_gem_tile_map: TileMap
 var queue_tile_map: TileMap
 
-func _init(_board_tile_map: TileMap, _target_gem_tile_map: TileMap, _queue_tile_map: TileMap):
+func _init(_board_tile_map: TileMap, _target_gem_control: Control, _queue_control: Control):
 	self.board_tile_map = _board_tile_map
-	self.target_gem_tile_map = _target_gem_tile_map
-	self.queue_tile_map = _queue_tile_map
+	self.target_gem_tile_map = _target_gem_control.find_child("TargetGemTileMap")
+	self.queue_tile_map = _queue_control.find_child("QueueTileMap")
 #
 func free_play_mode_level_to_gem_size(level: int) -> int:
 	if level < 2:
