@@ -3,6 +3,8 @@ class_name PuzzleGame
 
 var is_game_over: bool = false
 
+var best_score = -1
+
 func _init(args):                
 	super(args)
 
@@ -12,16 +14,23 @@ func new_game():
 	erase_board()
 	self.alchemizations = 0
 		
-	var config = PuzzleModeLevelManager.get_level_data(level)
-
+	var level_config = PuzzleModeLevelManager.get_level_data(level)
+	
+	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
+	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
+	var save_config = ConfigFile.new()
+	save_config.load(absolute_file_path)
+	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level], -1)
+	
+	print('best score', best_score)
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_control, game_key, visible_queue_size, should_fill_queue)
-	queue.load(config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
+	queue.load(level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
-	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
+	var target_gem = level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
 
 	update_game_display()
@@ -63,6 +72,11 @@ func _on_action_pressed(action):
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
+	if level == 5:
+		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
+		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
+		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
+		return
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
 
@@ -83,9 +97,10 @@ func game_over():
 func update_game_display():
 	var text = "[center]"
 	text += "Level " + str(level) + '\n'
-	text += str(alchemizations) + " Alchemization"
-	if alchemizations != 1:
-		text += "s"
-	
+	text += "Score: " + str(alchemizations)  + '\n'
+		
+	if best_score != -1:
+		text += "\nBest Score: " + str(best_score)
+
 	self.game_details_value.text = text
 	

@@ -1,7 +1,7 @@
 extends BaseGame
 class_name DailyGame
 
-var today_best_score = -1
+var best_score = -1
 
 func _init(args):                
 	super(args)
@@ -45,7 +45,7 @@ func new_game():
 	var today = Utilities.get_daily_puzzle_date()
 	
 	if today in best_scores:
-		today_best_score = best_scores[today]
+		best_score = best_scores[today]
 	
 	alchemizations = 0
 	
@@ -60,16 +60,11 @@ func new_game():
 
 func update_game_display():
 	var text = "[center]"
-	text += str(alchemizations) + " Alchemization"
-	if alchemizations != 1:
-		text += "s"
+	text += "Score: " + str(alchemizations)
 	text += '\n'
 		
-	if today_best_score != -1:
-		text += "\nBest:\n"
-		text += str(today_best_score) + " Alchemization"
-		if today_best_score != 1:
-			text += "s\n"
+	if best_score != -1:
+		text += "\nBest Score: " + str(best_score)
 	
 	game_details_value.text = text
 	

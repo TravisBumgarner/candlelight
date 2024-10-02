@@ -20,7 +20,7 @@ func create_level_button(file_name: String, level: int, disabled: bool, best_sco
 	var button = Button.new()
 	var text = "Level " + str(level) + '\n'
 	if best_score > 0: # If undefined, best score is -1
-		text+= "Best: %d Alchemizations" % [best_score]
+		text+= "Best Score: %d" % [best_score]
 	
 	button.text = text
 	button.disabled = disabled
