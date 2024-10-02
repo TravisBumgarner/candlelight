@@ -72,8 +72,8 @@ func _on_action_pressed(action):
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
 	if level == 5:
+		self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
 		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
 		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
 		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
