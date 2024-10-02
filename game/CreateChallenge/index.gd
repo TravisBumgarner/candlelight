@@ -38,6 +38,7 @@ func _ready():
 # Takes the one dimensional Shapes.SHAPES and turn it into 2d selected_shape_index:
 func selected_shape_index_to_shape_grid():
 	var x = selected_shape_index % SHAPE_COLUMNS
+	@warning_ignore("integer_division")
 	var y = selected_shape_index / SHAPE_COLUMNS
 	
 	return Vector2i(x,y)

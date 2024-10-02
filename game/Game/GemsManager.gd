@@ -146,7 +146,9 @@ func draw_target_gem():
 	
 	# Calculate the center of the tile map (or some specific area)
 	# Assuming the tile map size is in cells and center_x, center_y is the desired center point
+	@warning_ignore("integer_division")
 	var center_x = GlobalConsts.MAX_GEM_SIZE / 2
+	@warning_ignore("integer_division")
 	var center_y = GlobalConsts.MAX_GEM_SIZE / 2
 	
 	# Calculate the top-left corner position to start drawing so the gem is centered

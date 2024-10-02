@@ -16,3 +16,4 @@ res://Game/Player.gd
 res://Game/DailyGame.gd
 res://Game/GemsManager.gd
 res://Game/Queue.gd
+res://CreateChallenge/index.gd
