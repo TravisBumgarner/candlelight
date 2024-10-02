@@ -50,7 +50,7 @@ func upsert_game_save():
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, level)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level], alchemizations)	
-	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
+	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
 func _on_action_pressed(action):
 	if action == 'undo' and is_game_over:

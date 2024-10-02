@@ -27,7 +27,7 @@ func upsert_scores():
 		best_scores[today] = alchemizations
 	
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.DAILY_SAVE_METADATA.BEST_SCORES, best_scores)
-	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.Daily, GlobalState.save_slot, config)
+	Utilities.write_game_save(GlobalConsts.GAME_MODE.Daily, GlobalState.save_slot, config)
 
 func _on_level_complete_timer_timeout():
 	pass

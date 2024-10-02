@@ -82,7 +82,7 @@ func upsert_game_save():
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.SHAPE_NAME, player.shape_name)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.PLACED_SHAPES, Utilities.tile_map_to_array(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES))
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.TARGET_GEM, gemsManager.get_target_gem())
-	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.FreePlay, GlobalState.save_slot, config)
+	Utilities.write_game_save(GlobalConsts.GAME_MODE.FreePlay, GlobalState.save_slot, config)
 
 func _on_level_complete_timer_timeout():
 	disable_player_interaction = false
