@@ -6,7 +6,7 @@ func _init(args):
 
 func new_game():
 	self.disable_player_interaction = false
-	self.puzzle_complete_hbox_container.hide()
+	self.level_complete_controls_h_box_container.hide()
 	erase_board()
 	self.alchemizations = 0
 		
@@ -22,7 +22,6 @@ func new_game():
 	var target_gem = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
 
-	
 	update_game_display()
 	
 	self.history = History.new()
@@ -42,6 +41,7 @@ func level_complete(gems):
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
 	level_complete_timer.start(1)
+	
 
 func upsert_game_save():
 	var config = ConfigFile.new()
@@ -50,19 +50,25 @@ func upsert_game_save():
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level], alchemizations)	
 	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
-
 func _on_action_pressed(action):
 	super(action)
 
 func _on_level_complete_timer_timeout():
-	disable_player_interaction = false
-	self.puzzle_complete_hbox_container.show()
+	self.level_complete_controls_h_box_container.show()
+	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
+	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
+
+func _on_game_over_timer_timeout():
+	self.level_complete_controls_h_box_container.show()
+	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
+	self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
 
 func game_over():
 	self.disable_player_interaction = true
 	SoundManager.play("nonmovement")
 	SoundManager.play("nonmovement")
-	self.puzzle_complete_hbox_container.show()
+	game_over_timer.start(1)
+
 
 func update_game_display():
 	var text = "[center]"

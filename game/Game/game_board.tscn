@@ -138,6 +138,9 @@ layer_3/tile_data = PackedInt32Array()
 [node name="LevelCompleteTimer" type="Timer" parent="."]
 one_shot = true
 
+[node name="GameOverTimer" type="Timer" parent="."]
+one_shot = true
+
 [node name="Sounds" type="Node" parent="."]
 script = ExtResource("4_g0rw6")
 
@@ -328,22 +331,27 @@ text = "Tutorial
 complete!"
 horizontal_alignment = 1
 
-[node name="PuzzleGameLevelComplete" type="HBoxContainer" parent="."]
-offset_left = 752.0
-offset_top = 572.0
-offset_right = 983.0
-offset_bottom = 612.0
+[node name="LevelCompleteControllsCenterContainer" type="CenterContainer" parent="."]
+offset_left = 652.0
+offset_top = 512.0
+offset_right = 1132.0
+offset_bottom = 648.0
+
+[node name="LevelCompleteControlsHBoxContainer" type="HBoxContainer" parent="LevelCompleteControllsCenterContainer"]
+layout_mode = 2
 theme_override_constants/separation = 40
 
-[node name="NextLevelButton" type="Button" parent="PuzzleGameLevelComplete"]
+[node name="NextLevelButton" type="Button" parent="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer"]
 layout_mode = 2
-focus_mode = 0
+focus_neighbor_left = NodePath("../RestartButton")
+focus_neighbor_right = NodePath("../RestartButton")
 theme = ExtResource("10_24mwh")
 text = "Next Level"
 
-[node name="TryAgainButton" type="Button" parent="PuzzleGameLevelComplete"]
+[node name="RestartButton" type="Button" parent="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer"]
 layout_mode = 2
-focus_mode = 0
+focus_neighbor_left = NodePath("../NextLevelButton")
+focus_neighbor_right = NodePath("../NextLevelButton")
 theme = ExtResource("10_24mwh")
 text = "Try Again"
 
@@ -505,8 +513,8 @@ text = "Undo "
 horizontal_alignment = 1
 
 [connection signal="pressed" from="NewGameButton" to="." method="_on_new_game_button_pressed"]
-[connection signal="pressed" from="PuzzleGameLevelComplete/NextLevel" to="." method="_on_next_level_pressed"]
-[connection signal="pressed" from="PuzzleGameLevelComplete/TryAgain" to="." method="_on_try_again_pressed"]
+[connection signal="pressed" from="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="visibility_changed" from="PauseMenuContainer" to="." method="_on_pause_menu_container_visibility_changed"]
 [connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="visibility_changed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_visibility_changed"]

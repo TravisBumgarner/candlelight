@@ -4,20 +4,17 @@ extends Node2D
 @onready var target_gem_tile_map = $TargetGemTileMap
 @onready var queue_tile_map = $QueueTileMap
 @onready var level_complete_timer = $LevelCompleteTimer
+@onready var game_over_timer = $GameOverTimer
 @onready var sounds = $Sounds
 @onready var game_details_label = $GameDetailsTileMap/GameDetailsLabel
 @onready var game_details_value = $GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
-
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
-
-
 @onready var game_details_tile_map = $GameDetailsTileMap
 @onready var new_game_button = $NewGameButton
 @onready var pause_menu_container = $PauseMenuContainer
+@onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
 
-
-@onready var puzzle_complete_hbox_container = $PuzzleGameLevelComplete
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
@@ -34,10 +31,11 @@ func create_game(
 		game_details_label, 
 		game_details_tile_map,
 		game_details_value,
+		game_over_timer,
 		instructions,
+		level_complete_controls_h_box_container,
 		level_complete_timer,
 		pause_menu_container,
-		puzzle_complete_hbox_container,
 		queue_tile_map, 
 		sounds,
 		target_gem_tile_map
@@ -46,7 +44,7 @@ func create_game(
 	
 	# Will never be visible on game start.
 	# The PuzzleGame is responsible for controlling visibility.
-	puzzle_complete_hbox_container.hide()
+	level_complete_controls_h_box_container.hide()
 	
 	if show_instructions:
 		instructions.show()
@@ -103,17 +101,9 @@ func _ready():
 	else:
 		game.new_game()
 
-func _on_new_game_button_pressed():
-	self.game.new_game()
-
-func _on_next_level_pressed():
-	self.game.level += 1
-	self.game.new_game()
+#func _on_new_game_button_pressed():
+	#self.game.new_game()
 	
-
-func _on_try_again_pressed():
-	self.game.new_game()
-
 func _on_resume_button_pressed():
 	game.resume() # Cannot figure out how to use built in get_tree().pause
 	pause_menu_container.hide()
@@ -127,3 +117,10 @@ func _on_pause_menu_container_visibility_changed():
 	if is_visible_in_tree():
 		resume_button.grab_focus()
 
+func _on_restart_button_pressed():
+	self.game.new_game()
+
+
+func _on_next_level_button_pressed():
+	self.game.level += 1
+	self.game.new_game()
