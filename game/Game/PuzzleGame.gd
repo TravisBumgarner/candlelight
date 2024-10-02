@@ -1,6 +1,8 @@
 extends BaseGame
 class_name PuzzleGame
 
+var is_game_over: bool = false
+
 func _init(args):                
 	super(args)
 
@@ -51,7 +53,13 @@ func upsert_game_save():
 	Utilities.write_game_save_v2(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
 func _on_action_pressed(action):
+	if action == 'undo' and is_game_over:
+		is_game_over = false
+		self.level_complete_controls_h_box_container.hide()
+		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
+	
 	super(action)
+	
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
@@ -59,12 +67,14 @@ func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
 
 func _on_game_over_timer_timeout():
+	is_game_over = true
 	self.level_complete_controls_h_box_container.show()
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
 	self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
 
 func game_over():
-	self.disable_player_interaction = true
+	# Experiment with allowing user to hit undo.
+	#self.disable_player_interaction = true
 	SoundManager.play("nonmovement")
 	SoundManager.play("nonmovement")
 	game_over_timer.start(1)

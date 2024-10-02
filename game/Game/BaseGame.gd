@@ -125,8 +125,10 @@ func game_over():
 
 func undo():
 	var record = history.pop()
-
-	self.queue.undo(player.shape_name)
+	
+	# At game end, shape_name is null.
+	if player.shape_name != null:
+		self.queue.undo(player.shape_name)
 	
 	Utilities.array_to_tile_map(board_tile_map, GlobalConsts.BOARD_LAYER.PLACED_SHAPES, record.placed_shapes)
 
