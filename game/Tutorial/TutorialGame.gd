@@ -68,6 +68,7 @@ func _on_level_complete_timer_timeout():
 	disable_player_interaction = false
 	instruction += 1
 	level += 1
+	# Todo the next line might be wrong
 	gemsManager.free_play_mode_set_target_gem(level)
 	
 	if instruction != INSTRUCTION['6_Done']:

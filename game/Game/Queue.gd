@@ -38,7 +38,6 @@ func _draw_queue(offset=0):
 		if queue_index >= len(self.queue):
 			return
 		var shape_name = self.queue[queue_index]
-		print('ruda', shape_name)
 		var shape = Shapes.SHAPES_DICT[shape_name]
 		for vector in shape[0]:
 			var next_in_queue = queue_index == 0
@@ -54,7 +53,6 @@ func _fill_queue():
 	
 	while queue.size() <= self.visibile_queue_size:
 		var random  = Utilities.rng_array_item(RNG, Shapes.SHAPES_DICT.keys())
-		print('random returns', random)
 		self.queue.append(random)
 	self._draw_queue()
 

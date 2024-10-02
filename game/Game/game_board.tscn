@@ -335,13 +335,13 @@ offset_right = 983.0
 offset_bottom = 612.0
 theme_override_constants/separation = 40
 
-[node name="NextLevel" type="Button" parent="PuzzleGameLevelComplete"]
+[node name="NextLevelButton" type="Button" parent="PuzzleGameLevelComplete"]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("10_24mwh")
 text = "Next Level"
 
-[node name="TryAgain" type="Button" parent="PuzzleGameLevelComplete"]
+[node name="TryAgainButton" type="Button" parent="PuzzleGameLevelComplete"]
 layout_mode = 2
 focus_mode = 0
 theme = ExtResource("10_24mwh")

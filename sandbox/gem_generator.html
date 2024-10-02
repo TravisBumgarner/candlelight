@@ -7,7 +7,7 @@
     <style>
         .grid {
             display: grid;
-            grid-template-columns: repeat(3, 50px);
+            grid-template-columns: repeat(6, 50px);
             grid-gap: 10px;
         }
         .cell {
@@ -39,15 +39,14 @@
 <body>
     <h1>Rotate Clockwise</h1>
     <div class="grid">
-        <div class="cell"><input type="checkbox" id="cell-0-0"><label for="cell-0-0">0,0</label></div>
-        <div class="cell"><input type="checkbox" id="cell-0-1"><label for="cell-0-1">0,1</label></div>
-        <div class="cell"><input type="checkbox" id="cell-0-2"><label for="cell-0-2">0,2</label></div>
-        <div class="cell"><input type="checkbox" id="cell-1-0"><label for="cell-1-0">1,0</label></div>
-        <div class="cell"><input type="checkbox" id="cell-1-1"><label for="cell-1-1">1,1</label></div>
-        <div class="cell"><input type="checkbox" id="cell-1-2"><label for="cell-1-2">1,2</label></div>
-        <div class="cell"><input type="checkbox" id="cell-2-0"><label for="cell-2-0">2,0</label></div>
-        <div class="cell"><input type="checkbox" id="cell-2-1"><label for="cell-2-1">2,1</label></div>
-        <div class="cell"><input type="checkbox" id="cell-2-2"><label for="cell-2-2">2,2</label></div>
+        <!-- Generate cells dynamically -->
+        <script>
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 6; j++) {
+                    document.write(`<div class="cell"><input type="checkbox" id="cell-${i}-${j}"><label for="cell-${i}-${j}">${i},${j}</label></div>`);
+                }
+            }
+        </script>
     </div>
     <button onclick="getCoordinates()">Get Coordinates</button>
     <div id="result"></div>
@@ -55,15 +54,15 @@
     <script>
         function getCoordinates() {
             const coordinates = [];
-            for (let i = 0; i < 3; i++) {
-                for (let j = 0; j < 3; j++) {
+            for (let i = 0; i < 6; i++) {
+                for (let j = 0; j < 6; j++) {
                     const checkbox = document.getElementById(`cell-${i}-${j}`);
                     if (checkbox.checked) {
                         coordinates.push(`Vector2i(${i},${j})`);
                     }
                 }
             }
-            document.getElementById('result').innerHTML =  JSON.stringify("[" + coordinates.join(', ') + "]" ) ;
+            document.getElementById('result').innerHTML = JSON.stringify("[" + coordinates.join(', ') + "]");
         }
     </script>
 </body>
