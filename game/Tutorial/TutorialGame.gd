@@ -45,6 +45,7 @@ var has_performed_action = {
 
 func _init(args):                
 	super(args)
+	instructions_container.show()
 	
 func level_complete(gems):
 	# Don't look for gems before the scoring stage.

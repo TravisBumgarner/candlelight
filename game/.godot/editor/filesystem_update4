@@ -10,3 +10,5 @@ res://Game/BaseGame.gd
 res://Game/PuzzleGame.gd
 res://Game/puzzle_mode_levels/0.cfg
 res://Game/puzzle_mode_levels/index.json
+res://Game/FreePlayGame.gd
+res://Tutorial/TutorialGame.gd

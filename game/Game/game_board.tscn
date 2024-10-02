@@ -168,15 +168,6 @@ offset_bottom = 623.0
 theme = ExtResource("10_24mwh")
 text = "Submit Score"
 
-[node name="NewGameButton" type="Button" parent="."]
-offset_left = 156.0
-offset_top = 592.0
-offset_right = 258.0
-offset_bottom = 623.0
-focus_mode = 0
-theme = ExtResource("10_24mwh")
-text = "New Game"
-
 [node name="Instructions" type="VBoxContainer" parent="."]
 offset_left = 656.0
 offset_top = 516.0
@@ -512,7 +503,6 @@ theme_override_font_sizes/font_size = 36
 text = "Undo "
 horizontal_alignment = 1
 
-[connection signal="pressed" from="NewGameButton" to="." method="_on_new_game_button_pressed"]
 [connection signal="pressed" from="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
 [connection signal="pressed" from="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="visibility_changed" from="PauseMenuContainer" to="." method="_on_pause_menu_container_visibility_changed"]

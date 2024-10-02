@@ -11,7 +11,6 @@ extends Node2D
 @onready var instructions = $Instructions
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
 @onready var game_details_tile_map = $GameDetailsTileMap
-@onready var new_game_button = $NewGameButton
 @onready var pause_menu_container = $PauseMenuContainer
 @onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
 
@@ -22,8 +21,6 @@ var game: BaseGame
 
 func create_game(
 	game_mode,
-	show_instructions: bool,
-	show_new_game_button: bool
 ) -> void:
 	game = game_mode.new([
 		# ALPHABETICAL
@@ -41,43 +38,26 @@ func create_game(
 		target_gem_tile_map
 		# ALPHABETICAL
 	])
-	
-	# Will never be visible on game start.
-	# The PuzzleGame is responsible for controlling visibility.
+
+func _ready():
+	# Hide overlapping UI Controls.
+	# Doing this programmaticaly makes it easier eveywhere.
+	instructions.hide()
 	level_complete_controls_h_box_container.hide()
 	
-	if show_instructions:
-		instructions.show()
-	else:
-		instructions.hide()
-		
-	if show_new_game_button:
-		new_game_button.show()
-	else:
-		new_game_button.hide()
-
-func _ready():	
 	var game_modes = {
 		GlobalConsts.GAME_MODE.Tutorial: {
 			"class": TutorialMode,
-			"show_instructions": true,
-			"show_new_game_button": false
 		},
 		GlobalConsts.GAME_MODE.FreePlay: {
 			"class": FreePlayGame,
-			"show_instructions": false,
-			"show_new_game_button": false
 		},
 		# Setting track_high_scores to false for the time being.
 		GlobalConsts.GAME_MODE.Daily: {
 			"class": DailyGame, 
-			"show_instructions": false,
-			"show_new_game_button": true
 		},
 			GlobalConsts.GAME_MODE.Puzzle: {
 			"class": PuzzleGame, 
-			"show_instructions": false,
-			"show_new_game_button": false
 		}
 	}
 	
@@ -85,8 +65,6 @@ func _ready():
 		var selected_game = game_modes[GlobalState.game_mode]
 		create_game(
 			selected_game["class"],
-			selected_game['show_instructions'],
-			selected_game['show_new_game_button']
 		)
 		
 	if GlobalState.puzzle_mode_level != null:
@@ -100,9 +78,6 @@ func _ready():
 		game.load_game()
 	else:
 		game.new_game()
-
-#func _on_new_game_button_pressed():
-	#self.game.new_game()
 	
 func _on_resume_button_pressed():
 	game.resume() # Cannot figure out how to use built in get_tree().pause
