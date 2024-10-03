@@ -101,9 +101,7 @@ func _on_level_complete_timer_timeout():
 func update_game_display():
 	var text = "[center]"
 	text += "Level " + str(level) + '\n'
-	text += str(alchemizations) + " Alchemization"
-	if alchemizations != 1:
-		text += "s"
+	#text += "Score: " + str(alchemizations) Need to rethink this
 	
 	self.game_details_value.text = text
 	

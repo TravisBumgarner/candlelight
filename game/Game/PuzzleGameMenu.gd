@@ -19,8 +19,8 @@ func _ready():
 func create_level_button(file_name: String, level: int, disabled: bool, best_score: int):
 	var button = Button.new()
 	var text = "Level " + str(level) + '\n'
-	if best_score > 0: # If undefined, best score is -1
-		text+= "Best: %d Alchemizations" % [best_score]
+	if best_score > 0: # If undefined, Top Score is -1
+		text+= "Top Score: %d" % [best_score]
 	
 	button.text = text
 	button.disabled = disabled
@@ -84,6 +84,8 @@ func handle_save_press(save_slot: String):
 	saves_positioning_container.hide()
 	levels_positioning_container.show()
 	GlobalState.save_slot = save_slot
+	
+	Utilities.remove_all_children(level_buttons_container)
 	
 	var worlds = PuzzleModeLevelManager.get_worlds_metadata()
 	for world in worlds:

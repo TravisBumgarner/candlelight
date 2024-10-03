@@ -33,7 +33,7 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -222.0
+offset_left = -64.0
 offset_top = -324.0
 offset_right = 576.0
 offset_bottom = 324.0
@@ -89,7 +89,7 @@ Empty"
 
 [node name="HighScoresPositioningContainer" type="CenterContainer" parent="."]
 layout_mode = 0
-offset_right = 354.0
+offset_right = 512.0
 offset_bottom = 648.0
 
 [node name="HighScoresContainer" type="VBoxContainer" parent="HighScoresPositioningContainer"]

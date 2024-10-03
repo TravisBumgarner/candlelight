@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://bcl6w6a2jotyl"]
+[gd_scene load_steps=23 format=3 uid="uid://bcl6w6a2jotyl"]
 
 [ext_resource type="Script" path="res://Game/index.gd" id="1_y6gwg"]
 [ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/backgrounds/gamescreen.png" id="2_sc2oy"]
@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_wxg3l"]
 [ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_nldxa"]
 [ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_rxk82"]
-[ext_resource type="AudioStream" uid="uid://6nkwdp23h1f4" path="res://assets/music/song.mp3" id="9_6k7fy"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="10_24mwh"]
 [ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://resources/keyboard/letter_w.tres" id="11_wwvo0"]
 [ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://resources/keyboard/letter_a.tres" id="12_tbai0"]
@@ -60,6 +59,7 @@ offset_right = 408.0
 offset_bottom = 138.0
 
 [node name="TextureRect3" type="TextureRect" parent="TargetGemControl"]
+layout_mode = 0
 offset_left = -24.0
 offset_top = -22.0
 offset_right = 210.0
@@ -91,6 +91,7 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="TextureRect2" type="TextureRect" parent="QueueControl"]
+layout_mode = 0
 offset_left = 60.0
 offset_top = 84.0
 offset_right = 257.0
@@ -126,6 +127,7 @@ offset_bottom = 458.0
 
 [node name="TextureRect4" type="TextureRect" parent="GameDetailsControl"]
 modulate = Color(0.678944, 0.678944, 0.678944, 1)
+layout_mode = 0
 offset_left = -24.0
 offset_top = -14.0
 offset_right = 208.0
@@ -166,6 +168,7 @@ alignment = 1
 
 [node name="GameDetailsValue" type="RichTextLabel" parent="GameDetailsControl/GameDetailsTileMap/Control/VBoxContainer"]
 layout_mode = 2
+theme = ExtResource("10_24mwh")
 bbcode_enabled = true
 text = "Scoring"
 fit_content = true
@@ -203,9 +206,6 @@ stream = ExtResource("7_nldxa")
 
 [node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_rxk82")
-
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("9_6k7fy")
 
 [node name="SubmitScore" type="Button" parent="."]
 visible = false
@@ -263,8 +263,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/0_Move"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Move
-Shape"
+text = "Move"
 horizontal_alignment = 1
 
 [node name="LetterR" type="TextureRect" parent="Instructions/0_Move"]
@@ -275,8 +274,7 @@ stretch_mode = 3
 [node name="Label2" type="Label" parent="Instructions/0_Move"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Rotate
-Shape"
+text = "Rotate"
 horizontal_alignment = 1
 
 [node name="1_Place" type="HBoxContainer" parent="Instructions"]
@@ -293,7 +291,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/1_Place"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Place Shape"
+text = "Place"
 horizontal_alignment = 1
 
 [node name="2_Stack" type="HBoxContainer" parent="Instructions"]
@@ -323,7 +321,7 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/3_Undo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Undo Mistakes"
+text = "Undo"
 horizontal_alignment = 1
 
 [node name="4_Score" type="HBoxContainer" parent="Instructions"]

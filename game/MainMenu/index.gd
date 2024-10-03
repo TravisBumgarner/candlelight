@@ -18,16 +18,17 @@ class_name MainMenu
 @onready var daily_game_menu = load("res://Game/DailyGameMenu.tscn")
 
 const HELPER_TEXT_DICT = {
-	"PuzzleModeButton": "Complete the puzzle in as few moves as possible.",
-	"FreePlayGameButton": "Sit back, relax, and play.",
-	"DailyGameButton": "Compete against friends in the daily challenge.",
-	"TutorialButton": "Learn the basics.",
-	"PlayChallengeButton": "TBD",
-	"CreditsButton": "Behind the game.",
-	"ExitButton": "See you later!"
+	"PuzzleModeButton": "Solve the puzzle with the fewest moves.",
+	"FreePlayGameButton": "Unwind and play at your own pace.",
+	"DailyGameButton": "Compete with friends to solve the daily challenge.",
+	"TutorialButton": "Master the game’s basics.",
+	"PlayChallengeButton": "Build your own levels.",
+	"CreditsButton": "Meet the creators behind the game.",
+	"ExitButton": "Thanks for playing! See you soon!"
 }
 
 func _ready():
+	MusicPlayer.play_intro_music()
 	puzzle_mode_button.connect("pressed", Callable(self, "on_puzzle_mode_button_down"))
 	daily_game_button.connect("pressed", Callable(self, "on_daily_game_button_down"))
 	free_play_game_button.connect("pressed", Callable(self, "on_free_play_game_button_down"))

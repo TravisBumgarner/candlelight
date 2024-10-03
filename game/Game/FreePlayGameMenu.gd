@@ -29,7 +29,7 @@ func check_for_saves():
 		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])
 
 		var text = "Save %s\n" % [save_slot]
-		text += "Level %d - %d Alchemizations" % [level, alchemizations]
+		text += "Level %d" % [level] # Need to rethink alchemizations
 		
 		button.text = text
 

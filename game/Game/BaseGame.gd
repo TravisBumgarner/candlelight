@@ -31,6 +31,7 @@ var disable_player_interaction = false
 
 func _init(args: Array):
 	# Alphabetical
+	MusicPlayer.play_game_music()
 	self.board_tile_map = args[0]
 	self.game_details_label = args[1]
 	self.game_details_control = args[2]
