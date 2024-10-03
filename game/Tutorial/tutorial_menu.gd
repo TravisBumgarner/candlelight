@@ -5,6 +5,7 @@ extends Node
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
+	MusicPlayer.play_intro_music()
 
 func _on_action_pressed(action):
 	match action:

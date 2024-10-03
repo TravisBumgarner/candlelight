@@ -1,8 +1,8 @@
-[gd_resource type="Theme" load_steps=11 format=3 uid="uid://ckiied77ueyj"]
+[gd_resource type="Theme" load_steps=13 format=3 uid="uid://ckiied77ueyj"]
 
 [ext_resource type="FontFile" uid="uid://cp7dwuoeiaa5w" path="res://assets/fonts/DepartureMono-Regular.otf" id="1_o20ir"]
 [ext_resource type="Texture2D" uid="uid://cn1a83wnoufsi" path="res://assets/sprites/disabled.png" id="2_2n3fw"]
-[ext_resource type="Texture2D" uid="uid://cfsvruhqvv7wh" path="res://assets/sprites/active.png" id="3_1wayh"]
+[ext_resource type="Texture2D" uid="uid://drcuw0wk5qgwl" path="res://assets/sprites/active.png" id="3_1wayh"]
 [ext_resource type="Texture2D" uid="uid://8xekpc4seqc4" path="res://assets/sprites/base.png" id="4_w0olq"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_5vosc"]
@@ -62,6 +62,33 @@ expand_margin_bottom = 5.0
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_21uir"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_30j6t"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.364706, 1, 0.847059, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0, 0.552941, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+corner_detail = 5
+expand_margin_left = 2.0
+expand_margin_top = 2.0
+expand_margin_right = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0hblh"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+
 [resource]
 default_font = ExtResource("1_o20ir")
 Button/colors/font_color = Color(1, 1, 1, 1)
@@ -95,6 +122,39 @@ Label/constants/outline_size = 0
 Label/constants/shadow_offset_x = 1
 Label/constants/shadow_offset_y = 1
 Label/constants/shadow_outline_size = 1
-Label/font_sizes/font_size = 16
+Label/font_sizes/font_size = 24
 Label/fonts/font = ExtResource("1_o20ir")
 Label/styles/normal = SubResource("StyleBoxEmpty_21uir")
+LinkButton/colors/font_color = Color(0.875, 0.875, 0.875, 1)
+LinkButton/colors/font_focus_color = Color(0.95, 0.95, 0.95, 1)
+LinkButton/colors/font_hover_color = Color(0.95, 0.95, 0.95, 1)
+LinkButton/colors/font_outline_color = Color(1, 1, 1, 1)
+LinkButton/colors/font_pressed_color = Color(1, 1, 1, 1)
+LinkButton/constants/outline_size = 0
+LinkButton/constants/underline_spacing = 2
+LinkButton/font_sizes/font_size = 24
+LinkButton/styles/focus = SubResource("StyleBoxFlat_30j6t")
+RichTextLabel/colors/default_color = Color(1, 1, 1, 1)
+RichTextLabel/colors/font_outline_color = Color(1, 1, 1, 1)
+RichTextLabel/colors/font_selected_color = Color(0, 0, 0, 0)
+RichTextLabel/colors/font_shadow_color = Color(0, 0, 0, 0)
+RichTextLabel/colors/selection_color = Color(0.1, 0.1, 1, 0.8)
+RichTextLabel/colors/table_border = Color(0, 0, 0, 0)
+RichTextLabel/colors/table_even_row_bg = Color(0, 0, 0, 0)
+RichTextLabel/colors/table_odd_row_bg = Color(0, 0, 0, 0)
+RichTextLabel/constants/line_separation = 0
+RichTextLabel/constants/outline_size = 0
+RichTextLabel/constants/shadow_offset_x = 1
+RichTextLabel/constants/shadow_offset_y = 1
+RichTextLabel/constants/shadow_outline_size = 1
+RichTextLabel/constants/table_h_separation = 3
+RichTextLabel/constants/table_v_separation = 3
+RichTextLabel/constants/text_highlight_h_padding = 3
+RichTextLabel/constants/text_highlight_v_padding = 3
+RichTextLabel/font_sizes/bold_font_size = 24
+RichTextLabel/font_sizes/bold_italics_font_size = 24
+RichTextLabel/font_sizes/italics_font_size = 24
+RichTextLabel/font_sizes/mono_font_size = 24
+RichTextLabel/font_sizes/normal_font_size = 24
+RichTextLabel/styles/focus = SubResource("StyleBoxFlat_30j6t")
+RichTextLabel/styles/normal = SubResource("StyleBoxEmpty_0hblh")

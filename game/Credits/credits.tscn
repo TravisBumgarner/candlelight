@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvbkpkgd3eysk"]
+[gd_scene load_steps=5 format=3 uid="uid://cvbkpkgd3eysk"]
 
 [ext_resource type="Script" path="res://Credits/index.gd" id="1_ybn2x"]
 [ext_resource type="Texture2D" uid="uid://3lhc7mvsvfgn" path="res://assets/backgrounds/background2.png" id="2_qvdfr"]
+[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_aim3m"]
 
 [sub_resource type="Theme" id="Theme_m5m8v"]
 
@@ -26,83 +27,55 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("2_qvdfr")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 552.0
-offset_top = 48.0
-offset_right = 923.0
-offset_bottom = 686.0
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
 alignment = 1
 
-[node name="Credits" type="Label" parent="VBoxContainer"]
+[node name="Credits" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 theme = SubResource("Theme_m5m8v")
 theme_override_font_sizes/font_size = 36
 text = "Credits"
 
-[node name="Game Design" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Travis" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/Game Design"]
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/Travis"]
 layout_mode = 2
-text = "Game Design By Travis Bumgarner"
+theme = ExtResource("3_aim3m")
+text = "Game Design, Art, Code, Sound By Travis Bumgarner"
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Game Design"]
+[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer/Travis"]
 layout_mode = 2
 uri = "https://departuremono.com/"
 
-[node name="Code" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Ricky" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/Code"]
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/Ricky"]
 layout_mode = 2
-text = "Code By Travis Bumgarner"
+theme = ExtResource("3_aim3m")
+text = "Music By Ricky Brandes"
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Code"]
+[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer/Ricky"]
 layout_mode = 2
 uri = "https://departuremono.com/"
 
-[node name="Art" type="HBoxContainer" parent="VBoxContainer"]
+[node name="Helena" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
 
-[node name="Label2" type="Label" parent="VBoxContainer/Art"]
+[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/Helena"]
 layout_mode = 2
-text = "Art By Travis Bumgarner"
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Art"]
-layout_mode = 2
-uri = "https://departuremono.com/"
-
-[node name="Font" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="VBoxContainer/Font"]
-layout_mode = 2
+theme = ExtResource("3_aim3m")
 text = "Font by Helena Zhang "
 
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Font"]
+[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer/Helena"]
 layout_mode = 2
+theme = ExtResource("3_aim3m")
 text = "(Visit)"
-uri = "https://departuremono.com/"
-
-[node name="Music" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="VBoxContainer/Music"]
-layout_mode = 2
-text = "Music By [Coming Soon]"
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Music"]
-layout_mode = 2
-uri = "https://departuremono.com/"
-
-[node name="Sounds" type="HBoxContainer" parent="VBoxContainer"]
-layout_mode = 2
-
-[node name="Label2" type="Label" parent="VBoxContainer/Sounds"]
-layout_mode = 2
-text = "Sounds by Travis Bumgarner"
-
-[node name="LinkButton" type="LinkButton" parent="VBoxContainer/Sounds"]
-layout_mode = 2
 uri = "https://departuremono.com/"

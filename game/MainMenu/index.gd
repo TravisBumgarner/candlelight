@@ -28,6 +28,7 @@ const HELPER_TEXT_DICT = {
 }
 
 func _ready():
+	MusicPlayer.play_intro_music()
 	puzzle_mode_button.connect("pressed", Callable(self, "on_puzzle_mode_button_down"))
 	daily_game_button.connect("pressed", Callable(self, "on_daily_game_button_down"))
 	free_play_game_button.connect("pressed", Callable(self, "on_free_play_game_button_down"))

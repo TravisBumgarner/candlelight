@@ -87,6 +87,7 @@ custom_minimum_size = Vector2(2.08165e-12, 75)
 layout_mode = 2
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.0
+theme = ExtResource("3_jaf2s")
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3

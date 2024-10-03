@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cqm7du13qfo7g"]
+
+[ext_resource type="Script" path="res://Singletons/MusicPlayer.gd" id="1_pavh4"]
+
+[node name="MusicPlayer" type="AudioStreamPlayer"]
+script = ExtResource("1_pavh4")

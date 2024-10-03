@@ -7,22 +7,22 @@ How to use Steam STK [Link](https://discussions.unity.com/t/solved-uploading-my-
 My version of above instructions
 
 1. Download an install [Steam SDK](https://partner.steamgames.com/downloads/list)
-2. Place it in `Programming/`
-3. `cd steamworks\ sdk/tools/ContentBuilder/builder_osx`
-4. `chmod +x steamcmd`
-5. `bash ./steamcmd.sh`
-6. Login with `login username password`
-7. Copy `candlelight.vdf` to scripts dir.
-8. Build executables with Godot
+1. Place it in `Programming/`
+1. `cd ~/Programming/steamworks\ sdk/tools/ContentBuilder/builder_osx`
+    1. First time only
+        1. `chmod +x steamcmd`
+        1. Copy `candlelight.vdf` and `candlelight_demo.vdf` to scripts dir.
+1. `bash ./steamcmd.sh`
+1. Login with `login username password`
+1. Build executables with Godot
     - `open /Users/travisbumgarner/Programming/steamworks\ sdk/tools/ContentBuilder/content/`
     - Mac
         - Extract `Candlelight.app` from `.dmg` and place in `./mac`
     - Windows
-        - 
+        - Extract `Candlelight.exe` to `./windows`
     - Linux
-        - 
+        - Extract `Candlelight.sh` and `Candlelight.x86_64` to `./linux`
 1. Deploy Depots
-    - (First Deploy Only) Copy .vdf files from thi dir to `/Users/travisbumgarner/Programming/steamworks\ sdk/tools/ContentBuilder/scripts/`
     - Run one of following scripts from within Steam shell to deploy
         - Game `run_app_build ..\scripts\candlelight.vdf`
         - Demo `run_app_build ..\scripts\candlelight_demo.vdf`

@@ -22,7 +22,7 @@ func new_game():
 	save_config.load(absolute_file_path)
 	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level], -1)
 	
-	print('best score', best_score)
+	print('Top Score', best_score)
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false
@@ -101,7 +101,7 @@ func update_game_display():
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
-		text += "\nBest Score: " + str(best_score)
+		text += "\nTop Score: " + str(best_score)
 
 	self.game_details_value.text = text
 	
