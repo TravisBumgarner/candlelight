@@ -1,6 +1,10 @@
+res://MainMenu/main_menu.tscn
 res://candlelight_theme.tres
+res://resources/keyboard/letter_space.tres
+res://resources/keyboard/letter_esc.tres
+res://CreateChallenge/index.tscn
 res://resources/keyboard/letter_a.tres
 res://resources/keyboard/letter_d.tres
 res://resources/keyboard/letter_r.tres
-res://resources/keyboard/letter_space.tres
-res://resources/keyboard/letter_esc.tres
+res://CreateChallenge/index.gd
+res://CreateChallenge/FullQueue.gd

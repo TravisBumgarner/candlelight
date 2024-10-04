@@ -14,7 +14,7 @@ enum CreationMode {
 var creationMode = CreationMode.ShapeSelection
 
 var gemPlacer: GemPlacer
-var queue: Queue
+var full_queue: FullQueue
 
 const SHAPE_COLUMNS = 3 
 const SHAPES_LAYER = 0
@@ -28,7 +28,7 @@ func _ready():
 	gemPlacer.draw_point()
 	var game_key = null
 	var visible_queue_size = 3
-	queue = Queue.new(queue_tile_map, game_key, visible_queue_size)
+	full_queue = FullQueue.new(queue_tile_map, game_key, visible_queue_size)
 	draw_shapes()
 	
 # Takes the two dimensional selected_shape_index and flattens it to index into Shapes.SHAPES

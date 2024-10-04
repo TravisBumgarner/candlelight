@@ -63,7 +63,6 @@ text = "Tutorial"
 [node name="PlayChallengeButton" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 theme = ExtResource("3_jaf2s")
-disabled = true
 text = "Level Designer (Coming Soon)"
 
 [node name="CreditsButton" type="Button" parent="VBoxContainer"]
