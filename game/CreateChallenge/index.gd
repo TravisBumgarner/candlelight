@@ -1,25 +1,28 @@
 extends Node2D
 
-@onready var target_gem_tile_map = $TargetGemTileMap
 @onready var check_button = $CheckButton
-@onready var shapes_tile_map = $ShapesTileMap
-@onready var queue_tile_map = $QueueTileMap
 
-var current_queue_display_start_index = 0
+@onready var shapes_tile_map = $ShapesControl/ShapesTileMap
+@onready var full_queue_control = $FullQueueControl
+@onready var target_gem_tile_map = $TargetGemControl/TargetGemTileMap
 
-enum CreationMode {
-	ShapeSelection,
-	GemCreation
-}
-var creationMode = CreationMode.ShapeSelection
+@onready var background_shapes_upsert = $ShapesControl/Background
+@onready var background_full_queue = $FullQueueControl/Background
+@onready var background_target_gem = $TargetGemControl/Background
+
 
 var gemPlacer: GemPlacer
 var full_queue: FullQueue
 
-const SHAPE_COLUMNS = 3 
-const SHAPES_LAYER = 0
+const SHAPES_LAYER = 1
+const BACKGROUND_LAYER = 0
 
 var selected_shape_index = 0
+var selected_editor_index = 0
+
+var backgrounds
+var SHAPE_UPSERT_EDITOR = 0
+var TARGET_GEM_EDITOR = 1
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -28,68 +31,87 @@ func _ready():
 	gemPlacer.draw_point()
 	var game_key = null
 	var visible_queue_size = 3
-	full_queue = FullQueue.new(queue_tile_map, game_key, visible_queue_size)
+	full_queue = FullQueue.new(full_queue_control)
+	
+	backgrounds = [
+		background_shapes_upsert,
+		background_target_gem
+	]
+
 	draw_shapes()
+	draw_selected_area()
+	print('hi', backgrounds)
 	
-# Takes the two dimensional selected_shape_index and flattens it to index into Shapes.SHAPES
-#func selected_shape_index_to_shape_index():
-	#return selected_shape_index[1] * SHAPE_COLUMNS + selected_shape_index[0]
+func draw_selected_area():
+	for background in backgrounds:
+		background.hide()
+	backgrounds[selected_editor_index].show()
 	
-# Takes the one dimensional Shapes.SHAPES and turn it into 2d selected_shape_index:
-func selected_shape_index_to_shape_grid():
-	var x = selected_shape_index % SHAPE_COLUMNS
-	@warning_ignore("integer_division")
-	var y = selected_shape_index / SHAPE_COLUMNS
+func increment_selected_editor_index(increment):
+	var selected_area_length = len(backgrounds)
+	selected_editor_index = (selected_editor_index + increment) % selected_area_length
 	
-	return Vector2i(x,y)
-
-func draw_shape(shape, shape_index):
-	var shape_column = shape_index % SHAPE_COLUMNS
-	var shape_row = shape_index / SHAPE_COLUMNS # Integer division for rows
-
-	var x_offset_between_shapes = shape_column * (GlobalConsts.MAX_PLAYER_SIZE + 1)
-	var y_offset_between_shapes = shape_row * (GlobalConsts.MAX_PLAYER_SIZE + 1)
+	# Handle negative wrap-around
+	if selected_editor_index < 0:
+		selected_editor_index += selected_area_length
+	draw_selected_area()
 	
-	var relative_position = Vector2i(x_offset_between_shapes, y_offset_between_shapes)
+func increment_selected_shape_index(increment):
+	var shapes_size = Shapes.SHAPES_DICT.size()
+	selected_shape_index = (selected_shape_index + increment) % shapes_size
+	
+	# Handle negative wrap-around
+	if selected_shape_index < 0:
+		selected_shape_index += shapes_size
 		
-	for point in shape:
-		var tile_style: Vector2i
-
-		# Check for 2D selection
-		if selected_shape_index_to_shape_grid() == Vector2i(shape_column, shape_row):
-			tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
-		else:
-			tile_style = GlobalConsts.SPRITE.DARK_INACTIVE
-
-		# Set tile based on relative position
-		shapes_tile_map.set_cell(SHAPES_LAYER, point + relative_position, GlobalConsts.GEMS_TILE_ID, tile_style)
-
-func set_next_selected_shape_index(direction):
-	var new_index = selected_shape_index + direction
-	selected_shape_index = clamp(new_index, 0, len(Shapes.SHAPES) - 1)
+const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 
 func draw_shapes():
-	shapes_tile_map.clear_layer(SHAPES_LAYER)
-	var shape_index = 0
-	for shape in Shapes.SHAPES:
-		draw_shape(shape[0], shape_index)
-		shape_index += 1
+	self.shapes_tile_map.clear_layer(SHAPES_LAYER)
+
+	var y_offset = Vector2i(0, 0)
+	# It's possible, when undoing that the queue length exceeds the visible queue size, so we clamp.
+	
+	var index = 0
+	for shape in Shapes.SHAPES_DICT.values():
+		for vector in shape[0]:
+			var is_selected = index == selected_shape_index
+			var color = GlobalConsts.SPRITE.DARK_ACTIVE if is_selected else GlobalConsts.SPRITE.DARK_INACTIVE
+			self.shapes_tile_map.set_cell(SHAPES_LAYER, vector + y_offset + CENTER_ALIGN_QUEUE, GlobalConsts.GEMS_TILE_ID, color) 
+		y_offset += Vector2i(0, 4)
+		index += 1
 
 func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 
 func _on_action_pressed(action):
-	match action:
-		"toggle":
-			if creationMode == CreationMode.ShapeSelection:
-				creationMode = CreationMode.GemCreation
-			else:
-				creationMode = CreationMode.ShapeSelection
-		"escape":
-			cleanup()
-	
-	if creationMode == CreationMode.GemCreation:
+	if action == "rotate":
+		increment_selected_editor_index(1)
+		
+	if action == 'escape':
+		# Todo - Show escape menu with controls. 
+		cleanup()
+
+	if selected_editor_index == SHAPE_UPSERT_EDITOR:	
+		if action == "down":
+			increment_selected_shape_index(1)
+			draw_shapes()
+
+		if action == "up":
+			increment_selected_shape_index(-1)
+			draw_shapes()
+			
+		if action == "left":
+			full_queue.increment_selected_full_queue_index(-1)
+			
+		if action == "right":
+			full_queue.increment_selected_full_queue_index(1)		
+			
+		if action == 'select':
+			self.full_queue.append_to_queue(Shapes.SHAPES_DICT.keys()[selected_shape_index])
+			
+	if selected_editor_index == TARGET_GEM_EDITOR:
 		var direction_map = {
 			"up": Vector2i.UP,
 			"down": Vector2i.DOWN,
@@ -104,34 +126,7 @@ func _on_action_pressed(action):
 			"select":
 				gemPlacer.place_on_board()
 				gemPlacer.draw_point()
-				
-	if creationMode == CreationMode.ShapeSelection:
-		var shape_selection_map = {
-			"left": -1,
-			"right": 1
-		}
-		
-		if action in shape_selection_map:
-			set_next_selected_shape_index(shape_selection_map[action])
-			draw_shapes()
-	
-		if action == "down":
-			# Ensure there are at least 3 elements left in the queue to display
-			if self.current_queue_display_start_index + 3 < self.queue.size():
-				self.current_queue_display_start_index += 1
-				self.queue.draw_queue(self.current_queue_display_start_index)
 
-		if action == "up":
-			# Allow the index to go down to 0 to include the first element
-			if self.current_queue_display_start_index > 0:
-				self.current_queue_display_start_index -= 1
-				self.queue.draw_queue(self.current_queue_display_start_index)
-
-
-		match action:
-			"select":
-				self.queue.append_to_queue(Shapes.SHAPES[selected_shape_index])
-				self.queue.draw_queue()
 
 
 func _on_check_button_toggled(use_random_shapes):

@@ -1,7 +1,7 @@
-CenterContainer
-AudioStreamPlayer
 Control
 TextureRect
+CenterContainer
+AudioStreamPlayer
 VBoxContainer
 Container
 Button

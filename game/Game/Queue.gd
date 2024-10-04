@@ -27,14 +27,13 @@ func _init(_queue_control: Control, _game_key, _visibile_queue_size, _should_fil
 
 const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 
-func _draw_queue(offset=0):
-	# Offest is used for paginating queue for challenges
+func _draw_queue():
 	self.queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
 
 	var y_offset = Vector2i(0, 0)
 	# It's possible, when undoing that the queue length exceeds the visible queue size, so we clamp.
 
-	for queue_index in range(offset, offset + self.visibile_queue_size):
+	for queue_index in range(0, self.visibile_queue_size):
 		if queue_index >= len(self.queue):
 			return
 		var shape_name = self.queue[queue_index]

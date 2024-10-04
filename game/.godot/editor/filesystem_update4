@@ -8,3 +8,6 @@ res://resources/keyboard/letter_d.tres
 res://resources/keyboard/letter_r.tres
 res://CreateChallenge/index.gd
 res://CreateChallenge/FullQueue.gd
+res://Game/Queue.gd
+res://Game/game_board.tscn
+res://Singletons/MusicPlayer.gd
