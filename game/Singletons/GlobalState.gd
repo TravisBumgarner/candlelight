@@ -5,3 +5,6 @@ var save_slot = null
 
 # Could find a better home for this?
 var puzzle_mode_level = null
+
+# Doot doot. Another var that maybe shouldn't be here.
+var level_designer_file_path = null

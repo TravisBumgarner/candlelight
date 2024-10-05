@@ -15,19 +15,6 @@ func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_levels()
 
-func create_level_button(file_name: String, level: int, disabled: bool, best_score: int):
-	var button = Button.new()
-	var text = "Level " + str(level) + '\n'
-	if best_score > 0: # If undefined, Top Score is -1
-		text+= "Top Score: %d" % [best_score]
-	
-	button.text = text
-	button.disabled = disabled
-	button.name = file_name
-	button.theme = candlelight_theme
-	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(level))
-	level_buttons_container.add_child(button)
-
 func _on_level_button_pressed(level):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
 	GlobalState.puzzle_mode_level = level
@@ -71,13 +58,20 @@ func check_for_levels():
 			var name = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.NAME)
 			
 			var button = Button.new()
-			var text = "Level: " % [name]
+			var text = "Level: " % [absolute_file_path]
 			button.text = text
+			
+			button.connect("pressed", Callable(self, "_on_level_designed_button_pressed").bind(absolute_file_path))
 			level_buttons_container.add_child(button)
-		
-		file_name = dir.get_next()
 
+		file_name = dir.get_next()
 	dir.list_dir_end()
+	
+func _on_level_designed_button_pressed(absolute_file_path):
+	print('settin path', absolute_file_path)
+	GlobalState.level_designer_file_path = absolute_file_path
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.LevelDesigner
+	get_tree().change_scene_to_packed(game_scene)
 
 func _on_new_level_button_pressed():
 	get_tree().change_scene_to_packed(level_designer)

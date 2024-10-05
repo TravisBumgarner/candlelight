@@ -5,7 +5,7 @@ const GAME_MODE = {
 	"FreePlay": "free_play",
 	"Daily": "daily",
 	"Puzzle": "puzzle",
-	"LevelCreator": "level_creator"
+	"LevelDesigner": "level_designer"
 }
 
 const GAME_SLOTS = ['A', 'B', 'C', 'D']

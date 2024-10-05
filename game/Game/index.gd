@@ -57,8 +57,11 @@ func _ready():
 		GlobalConsts.GAME_MODE.Daily: {
 			"class": DailyGame, 
 		},
-			GlobalConsts.GAME_MODE.Puzzle: {
+		GlobalConsts.GAME_MODE.Puzzle: {
 			"class": PuzzleGame, 
+		},
+		GlobalConsts.GAME_MODE.LevelDesigner: {
+			"class": LevelDesignerGame, 
 		}
 	}
 	
@@ -67,6 +70,7 @@ func _ready():
 		create_game(
 			selected_game["class"],
 		)
+		print('loadin, ', GlobalState.game_mode)
 		
 	if GlobalState.puzzle_mode_level != null:
 		# I don't think we can pass the level from the PuzzleGameMenu

@@ -19,3 +19,6 @@ res://Game/PauseMenu.tscn
 res://Game/LevelDesigner.gd
 res://LevelDesigner/index.gd
 res://LevelDesigner/GemPlacer.gd
+res://Singletons/GlobalState.gd
+res://Game/index.gd
+res://Game/LevelDesignerGame.gd
