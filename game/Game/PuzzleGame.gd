@@ -21,8 +21,7 @@ func new_game():
 	var save_config = ConfigFile.new()
 	save_config.load(absolute_file_path)
 	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level], -1)
-	
-	print('Top Score', best_score)
+
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false

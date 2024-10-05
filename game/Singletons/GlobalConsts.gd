@@ -4,7 +4,8 @@ const GAME_MODE = {
 	"Tutorial": "tutorial",
 	"FreePlay": "free_play",
 	"Daily": "daily",
-	"Puzzle": "puzzle"
+	"Puzzle": "puzzle",
+	"LevelCreator": "level_creator"
 }
 
 const GAME_SLOTS = ['A', 'B', 'C', 'D']
@@ -95,5 +96,11 @@ const DAILY_SAVE_METADATA = {
 const PUZZLE_LEVEL_METADATA = {
 	QUEUE = 'queue',
 	TARGET_GEM = 'target_gem'
+}
+
+const LEVEL_DESIGNER_METADATA = {
+	QUEUE = 'queue',
+	TARGET_GEM = 'target_gem',
+	NAME = 'name'
 }
 

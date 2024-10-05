@@ -7,11 +7,13 @@ extends Node2D
 @onready var target_gem_tile_map = $TargetGemControl/TargetGemTileMap
 
 @onready var background_shapes_upsert = $ShapesControl/Background
-@onready var background_full_queue = $FullQueueControl/Background
 @onready var background_target_gem = $TargetGemControl/Background
+@onready var background_buttons = $ButtonsControl/Background
+
+@onready var test_play_button = $ButtonsControl/TestPlayButton
 
 
-var gemPlacer: GemPlacer
+var gem_placer: GemPlacer
 var full_queue: FullQueue
 
 const SHAPES_LAYER = 1
@@ -23,24 +25,25 @@ var selected_editor_index = 0
 var backgrounds
 var SHAPE_UPSERT_EDITOR = 0
 var TARGET_GEM_EDITOR = 1
+var BUTTONS_EDITOR = 2
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 
-	gemPlacer = GemPlacer.new(target_gem_tile_map)
-	gemPlacer.draw_point()
+	gem_placer = GemPlacer.new(target_gem_tile_map)
+	gem_placer.draw_point()
 	var game_key = null
 	var visible_queue_size = 3
 	full_queue = FullQueue.new(full_queue_control)
 	
 	backgrounds = [
 		background_shapes_upsert,
-		background_target_gem
+		background_target_gem,
+		background_buttons
 	]
 
 	draw_shapes()
 	draw_selected_area()
-	print('hi', backgrounds)
 	
 func draw_selected_area():
 	for background in backgrounds:
@@ -54,6 +57,9 @@ func increment_selected_editor_index(increment):
 	# Handle negative wrap-around
 	if selected_editor_index < 0:
 		selected_editor_index += selected_area_length
+		
+	if selected_editor_index == BUTTONS_EDITOR:
+		test_play_button.grab_focus()
 	draw_selected_area()
 	
 func increment_selected_shape_index(increment):
@@ -90,7 +96,6 @@ func _on_action_pressed(action):
 		increment_selected_editor_index(1)
 		
 	if action == 'escape':
-		# Todo - Show escape menu with controls. 
 		cleanup()
 
 	if selected_editor_index == SHAPE_UPSERT_EDITOR:	
@@ -120,12 +125,12 @@ func _on_action_pressed(action):
 		}
 	
 		if action in direction_map:
-			gemPlacer.move(direction_map[action])
+			gem_placer.move(direction_map[action])
 		
 		match action:
 			"select":
-				gemPlacer.place_on_board()
-				gemPlacer.draw_point()
+				gem_placer.place_on_board()
+				gem_placer.draw_point()
 
 
 
@@ -134,6 +139,14 @@ func _on_check_button_toggled(use_random_shapes):
 		shapes_tile_map.hide()
 	else:
 		shapes_tile_map.show()
-		
-	
-	
+
+
+func _on_test_play_button_pressed():
+	var config = ConfigFile.new()
+	var levels_path = "user://user_created_levels/"
+	DirAccess.make_dir_recursive_absolute(levels_path)
+	var full_path = "%s/%d.level" % [levels_path, randi()]
+	config.load(full_path)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.QUEUE, full_queue.full_queue)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.TARGET_GEM, gem_placer.get_points())	
+	config.save(full_path)

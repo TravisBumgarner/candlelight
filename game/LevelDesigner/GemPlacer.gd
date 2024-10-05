@@ -2,10 +2,7 @@ extends Node2D
 class_name GemPlacer
 
 var gem_tile_map: TileMap
-var piece_type
-var rotation_index
 var current_position
-
 
 func _init(_gem_tile_map):
 	self.gem_tile_map = _gem_tile_map
@@ -32,6 +29,14 @@ func draw_point():
 	#elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
 		#tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+
+func get_points():
+	var tile_positions = []
+
+	for position in self.gem_tile_map.get_used_cells(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES):
+		tile_positions.append(position)
+	print('tile_positions', tile_positions)
+	return tile_positions
 
 func can_move(direction):
 	var is_cell_border = Utilities.is_cell_border(self.gem_tile_map, self.current_position + direction)

@@ -1,5 +1,5 @@
 extends BaseGame
-class_name PuzzleGame
+class_name LevelDesignerGame
 
 var is_game_over: bool = false
 
