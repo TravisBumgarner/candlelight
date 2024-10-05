@@ -1,0 +1,121 @@
+[gd_scene load_steps=4 format=3 uid="uid://rgwrlbu7yt2t"]
+
+[ext_resource type="Script" path="res://Game/PuzzleGameMenu.gd" id="1_ktnh7"]
+[ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_wfjog"]
+[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_rcabq"]
+
+[node name="PuzzleGameMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ktnh7")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -32.0
+offset_top = -48.0
+offset_right = 571.0
+offset_bottom = 564.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_wfjog")
+metadata/_edit_lock_ = true
+
+[node name="SavesPositioningContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SavesPositioningContainer"]
+custom_minimum_size = Vector2(400, 2.08165e-12)
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="SavesPositioningContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_rcabq")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 32
+text = "Select Game"
+horizontal_alignment = 1
+
+[node name="SaveButtonsContainer" type="VBoxContainer" parent="SavesPositioningContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="SaveAButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+focus_neighbor_top = NodePath("../SaveDButton")
+theme = ExtResource("3_rcabq")
+text = "Save A
+Empty"
+
+[node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme = ExtResource("3_rcabq")
+text = "Save B
+Empty"
+
+[node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+theme = ExtResource("3_rcabq")
+text = "Save C
+Empty"
+
+[node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../SaveAButton")
+theme = ExtResource("3_rcabq")
+text = "Save D
+Empty"
+
+[node name="LevelsPositioningContainer" type="CenterContainer" parent="."]
+visible = false
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LevelsPositioningContainer"]
+custom_minimum_size = Vector2(400, 2.08165e-12)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="Label" type="Label" parent="LevelsPositioningContainer/VBoxContainer"]
+layout_mode = 2
+theme = ExtResource("3_rcabq")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 32
+text = "Levels
+"
+horizontal_alignment = 1
+
+[node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveAButton" to="." method="_on_save_a_button_pressed"]
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveBButton" to="." method="_on_save_b_button_pressed"]
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveCButton" to="." method="_on_save_c_button_pressed"]
+[connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveDButton" to="." method="_on_save_d_button_pressed"]
