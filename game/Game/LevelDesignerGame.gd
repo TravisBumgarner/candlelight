@@ -1,5 +1,5 @@
 extends BaseGame
-class_name PuzzleGame
+class_name LevelDesignerGame
 
 var is_game_over: bool = false
 
@@ -13,23 +13,20 @@ func new_game():
 	self.level_complete_controls_h_box_container.hide()
 	erase_board()
 	self.alchemizations = 0
-		
-	var level_config = PuzzleModeLevelManager.get_level_data(level)
 	
-	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
-	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
-	var save_config = ConfigFile.new()
-	save_config.load(absolute_file_path)
-	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level], -1)
-
+	print('runnin')
+	var level_config = ConfigFile.new()
+	print('abs', GlobalState.level_designer_file_path)
+	level_config.load(GlobalState.level_designer_file_path)
+	
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_control, game_key, visible_queue_size, should_fill_queue)
-	queue.load(level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
+	queue.load(level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.QUEUE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
-	var target_gem = level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
+	var target_gem = level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
 
 	update_game_display()
@@ -43,7 +40,7 @@ func load_game():
 	self.new_game()
 
 func level_complete(gems):
-	upsert_game_save()
+	#upsert_game_save()
 	disable_player_interaction = true
 	
 	SoundManager.play("one_gem")
@@ -53,12 +50,12 @@ func level_complete(gems):
 	level_complete_timer.start(1)
 	
 
-func upsert_game_save():
-	var config = ConfigFile.new()
-	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, level)
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level], alchemizations)	
-	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
+#func upsert_game_save():
+	#var config = ConfigFile.new()
+	#config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
+	#config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, level)
+	#config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level], alchemizations)	
+	#Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
 func _on_action_pressed(action):
 	if action == 'undo' and is_game_over:

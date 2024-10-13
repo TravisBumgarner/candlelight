@@ -432,6 +432,7 @@ theme_override_constants/separation = 200
 alignment = 1
 
 [node name="ControlsContainer" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 2.08165e-12)
 layout_mode = 2
 theme_override_constants/separation = 20
 alignment = 1
@@ -441,6 +442,12 @@ layout_mode = 2
 focus_neighbor_top = NodePath("../MainMenuButton")
 theme = ExtResource("10_24mwh")
 text = "Resume"
+
+[node name="ReturnToLevelEditorButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+theme = ExtResource("10_24mwh")
+text = "Return to Level Editor"
 
 [node name="MainMenuButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
 layout_mode = 2
@@ -554,4 +561,6 @@ horizontal_alignment = 1
 [connection signal="visibility_changed" from="PauseMenuContainer" to="." method="_on_pause_menu_container_visibility_changed"]
 [connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="visibility_changed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_visibility_changed"]
+[connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ReturnToLevelEditorButton" to="." method="_on_return_to_level_editor_button_pressed"]
+[connection signal="visibility_changed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ReturnToLevelEditorButton" to="." method="_on_resume_button_visibility_changed"]
 [connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

@@ -1,10 +1,10 @@
+Control
+Button
+TextureRect
 CenterContainer
 AudioStreamPlayer
-Control
-TextureRect
 VBoxContainer
 Container
-Button
 PanelContainer
 Panel
 HBoxContainer
