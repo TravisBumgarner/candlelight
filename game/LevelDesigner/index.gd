@@ -12,6 +12,8 @@ extends Node2D
 
 @onready var test_play_button = $ButtonsControl/TestPlayButton
 
+@onready var game_scene = load("res://Game/game_board.tscn")
+const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
 var gem_placer: GemPlacer
 var full_queue: FullQueue
@@ -28,14 +30,24 @@ var TARGET_GEM_EDITOR = 1
 var BUTTONS_EDITOR = 2
 
 func _ready():
+	print('ready')
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 
 	gem_placer = GemPlacer.new(target_gem_tile_map)
-	gem_placer.draw_point()
-	var game_key = null
-	var visible_queue_size = 3
 	full_queue = FullQueue.new(full_queue_control)
 	
+	print('doot', GlobalState.level_designer_file_path)
+	
+	if GlobalState.level_designer_file_path:
+		var level_designed = ConfigFile.new()
+		level_designed.load(GlobalState.level_designer_file_path)
+		var gem_points = level_designed.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.TARGET_GEM)
+		gem_placer.load_points(gem_points)
+		
+		var queue_items = level_designed.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.QUEUE)
+		for item in queue_items:
+			full_queue.append_to_queue(item)
+			
 	backgrounds = [
 		background_shapes_upsert,
 		background_target_gem,
@@ -97,6 +109,8 @@ func _on_action_pressed(action):
 		
 	if action == 'escape':
 		cleanup()
+		get_tree().change_scene_to_packed(main_menu_scene)
+		
 
 	if selected_editor_index == SHAPE_UPSERT_EDITOR:	
 		if action == "down":
@@ -130,7 +144,7 @@ func _on_action_pressed(action):
 		match action:
 			"select":
 				gem_placer.place_on_board()
-				gem_placer.draw_point()
+				#gem_placer.draw_point()
 
 
 
@@ -150,3 +164,6 @@ func _on_test_play_button_pressed():
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.QUEUE, full_queue.full_queue)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.TARGET_GEM, gem_placer.get_points())	
 	config.save(full_path)
+	GlobalState.level_designer_file_path = full_path
+	GlobalState.game_mode = GlobalConsts.GAME_MODE.LevelDesigner
+	get_tree().change_scene_to_packed(game_scene)

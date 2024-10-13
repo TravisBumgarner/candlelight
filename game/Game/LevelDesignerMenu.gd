@@ -9,7 +9,7 @@ extends Control
 @onready var game_scene = load("res://Game/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
-const level_designer = preload("res://LevelDesigner/index.tscn")
+const level_designer_scene = preload("res://LevelDesigner/index.tscn")
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -68,10 +68,8 @@ func check_for_levels():
 	dir.list_dir_end()
 	
 func _on_level_designed_button_pressed(absolute_file_path):
-	print('settin path', absolute_file_path)
 	GlobalState.level_designer_file_path = absolute_file_path
-	GlobalState.game_mode = GlobalConsts.GAME_MODE.LevelDesigner
-	get_tree().change_scene_to_packed(game_scene)
+	get_tree().change_scene_to_packed(level_designer_scene)
 
 func _on_new_level_button_pressed():
-	get_tree().change_scene_to_packed(level_designer)
+	get_tree().change_scene_to_packed(level_designer_scene)

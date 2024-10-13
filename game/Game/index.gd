@@ -14,6 +14,8 @@ extends Node2D
 @onready var game_details_control = $GameDetailsControl
 @onready var pause_menu_container = $PauseMenuContainer
 @onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
+@onready var return_to_level_editor_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ReturnToLevelEditorButton
+@onready var level_designer = preload("res://LevelDesigner/index.tscn")
 
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
@@ -70,7 +72,6 @@ func _ready():
 		create_game(
 			selected_game["class"],
 		)
-		print('loadin, ', GlobalState.game_mode)
 		
 	if GlobalState.puzzle_mode_level != null:
 		# I don't think we can pass the level from the PuzzleGameMenu
@@ -96,11 +97,21 @@ func _on_pause_menu_container_visibility_changed():
 	# For some reason this line will error if PuzzleMenuContainer on _ready
 	if is_visible_in_tree():
 		resume_button.grab_focus()
+		
+	if GlobalState.game_mode == GlobalConsts.GAME_MODE.LevelDesigner:
+		return_to_level_editor_button.show()
+	else:
+		return_to_level_editor_button.hide()
 
 func _on_restart_button_pressed():
 	self.game.new_game()
-
+	
 
 func _on_next_level_button_pressed():
 	self.game.level += 1
 	self.game.new_game()
+
+
+func _on_return_to_level_editor_button_pressed():
+	self.game.cleanup()
+	get_tree().change_scene_to_packed(level_designer)

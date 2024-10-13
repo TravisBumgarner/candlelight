@@ -7,20 +7,20 @@ var current_position
 func _init(_gem_tile_map):
 	self.gem_tile_map = _gem_tile_map
 	self.current_position = Vector2i(0, 0)
-	self.draw_point()
+	self._draw_point(self.current_position)
 	
 func move(direction):
 	if can_move(direction):
 		SoundManager.play("movement")
 		self.current_position += direction
-		self.draw_point()
+		self._draw_point(self.current_position)
 	else:
 		SoundManager.play("nonmovement")
 		pass
 		
-func draw_point():
+func _draw_point(point):
 	self.gem_tile_map.clear_layer(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE)
-	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, self.current_position)
+	var placed_tile = self.gem_tile_map.get_cell_atlas_coords(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, point)
 	var tile_style: Vector2i
 	if(placed_tile == GlobalConsts.SPRITE.GEM_BLUE_INACTIVE):
 		tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
@@ -29,6 +29,10 @@ func draw_point():
 	#elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
 		#tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+	
+func load_points(points):
+		for point in points:
+				self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, point, GlobalConsts.GEMS_TILE_ID, GlobalConsts.SPRITE.GEM_BLUE_INACTIVE)
 
 func get_points():
 	var tile_positions = []
