@@ -6,3 +6,14 @@ res://Game/PuzzleGameMenu.gd
 res://Game/PuzzleGameMenu.tscn
 res://Singletons/GlobalConsts.gd
 res://Game/puzzle_mode_levels/index.json
+res://Game/PuzzleGame.gd
+res://Game/index.gd
+res://Game/BaseGame.gd
+res://Tutorial/TutorialGame.gd
+res://Game/FreePlayGame.gd
+res://Game/LevelDesignerGame.gd
+res://Game/game_board.tscn
+res://resources/keyboard/letter_a.tres
+res://resources/keyboard/letter_d.tres
+res://resources/keyboard/letter_r.tres
+res://Singletons/PuzzleModeLevelManager.gd

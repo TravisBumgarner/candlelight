@@ -68,9 +68,9 @@ func level_complete(gems):
 func _on_level_complete_timer_timeout():
 	disable_player_interaction = false
 	instruction += 1
-	level += 1
+	level_number += 1
 	# Todo the next line might be wrong
-	gemsManager.free_play_mode_set_target_gem(level)
+	gemsManager.free_play_mode_set_target_gem(level_number)
 	
 	if instruction != INSTRUCTION['6_Done']:
 		erase_board()
@@ -121,7 +121,7 @@ func _on_action_pressed(action):
 	update_instructions()
 
 func new_game():
-	level = 1
+	level_number = 1
 	instruction = 0
 	
 	target_gem_control.hide()
@@ -141,7 +141,7 @@ func new_game():
 	player = Player.new(board_tile_map, self.queue.next())
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
-	gemsManager.free_play_mode_set_target_gem(level)
+	gemsManager.free_play_mode_set_target_gem(level_number)
 
 func update_game_display():
 	pass

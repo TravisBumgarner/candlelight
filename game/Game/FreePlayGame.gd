@@ -10,7 +10,7 @@ func new_game():
 	
 	erase_board()
 	
-	level = 1
+	level_number = 1
 	alchemizations = 0
 	update_game_display()
 	
@@ -23,7 +23,7 @@ func new_game():
 	player = Player.new(board_tile_map, queue.next())
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
-	gemsManager.free_play_mode_set_target_gem(level)
+	gemsManager.free_play_mode_set_target_gem(level_number)
 
 
 func load_game():
@@ -32,7 +32,7 @@ func load_game():
 	config.load(absolute_file_path)
 		
 	alchemizations = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.ALCHEMIZATIONS)
-	level = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level)
+	level_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level_number)
 	game_start_timestamp = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.GAME_START_TIMESTAMP)
 	
 	history = History.new()
@@ -75,7 +75,7 @@ func _on_action_pressed(action):
 	
 func upsert_game_save():
 	var config = ConfigFile.new()
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL, level_number)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.ALCHEMIZATIONS, alchemizations)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.QUEUE, queue.get_queue())
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.GAME_START_TIMESTAMP, game_start_timestamp)
@@ -87,20 +87,20 @@ func upsert_game_save():
 
 func _on_level_complete_timer_timeout():
 	disable_player_interaction = false
-	level += 1
+	level_number += 1
 	update_game_display()
 	#gems_to_walls()
 	erase_board()
 	history.empty()
-	gemsManager.free_play_mode_set_target_gem(level)
+	gemsManager.free_play_mode_set_target_gem(level_number)
 	player = Player.new(board_tile_map, self.queue.next())
-	if level > 1:
+	if level_number > 1:
 		# Don't start saving until the user has made some progress
 		upsert_game_save()
 
 func update_game_display():
 	var text = "[center]"
-	text += "Level " + str(level) + '\n'
+	text += "Level " + str(level_number) + '\n'
 	#text += "Score: " + str(alchemizations) Need to rethink this
 	
 	self.game_details_value.text = text

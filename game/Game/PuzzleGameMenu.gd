@@ -17,9 +17,9 @@ func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_saves()
 
-func create_level_button(file_name: String, world: int, level: int, disabled: bool, best_score: int):
+func create_level_button(file_name: String, world_number: int, level_number: int, disabled: bool, best_score: int):
 	var button = Button.new()
-	var text = "Level " + str(level) + '\n'
+	var text = "Level " + str(level_number) + '\n'
 	if best_score > 0: # If undefined, Top Score is -1
 		text+= "Top Score: %d" % [best_score]
 	
@@ -27,13 +27,13 @@ func create_level_button(file_name: String, world: int, level: int, disabled: bo
 	button.disabled = disabled
 	button.name = file_name
 	button.theme = candlelight_theme
-	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(world, level))
+	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(world_number, level_number))
 	level_buttons_container.add_child(button)
 
-func _on_level_button_pressed(world, level):
+func _on_level_button_pressed(world_number, level_number):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
-	GlobalState.puzzle_mode_level = {"level": level, "world": world}
-	GlobalState.puzzle
+	GlobalState.puzzle_mode_level = {"level_number": level_number, "world_number": world_number}
+	print('setting globalstate', GlobalState.puzzle_mode_level)
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_action_pressed(action):
@@ -65,8 +65,9 @@ func check_for_saves():
 			
 		var config = ConfigFile.new()
 		config.load(absolute_file_path)
-		var levels_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE)
-		
+		var current_max_level_available = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1)
+		var levels_complete = current_max_level_available - 1
+		# Todo - this calculation doesn't account for multiple worlds		 
 		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])
 
 		var text = "Save %s\n" % [save_slot]
@@ -81,9 +82,10 @@ func handle_save_press(save_slot: String):
 	var config = ConfigFile.new()
 	var game_saves_path = "user://game_saves/%s/%s.save" % [GlobalConsts.GAME_MODE.Puzzle, save_slot]
 	config.load(game_saves_path)
-	var levels_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, 0)
-	var worlds_complete = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.WORLDS_COMPLETE, 0)
+	var max_available_level_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
+	var max_available_world_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1)
 	
+	print('current world max', max_available_world_number, 'max level number', max_available_level_number)
 	saves_positioning_container.hide()
 	levels_positioning_container.show()
 	GlobalState.save_slot = save_slot
@@ -91,17 +93,25 @@ func handle_save_press(save_slot: String):
 	Utilities.remove_all_children(level_buttons_container)
 	
 	var worlds = PuzzleModeLevelManager.get_worlds_metadata()
-	for world_index in range(worlds.size()):
-		# Worlds are 1 indexed.
-		var world_number = world_index + 1
-		var world_metadata = worlds[world_index]
-		create_world_label(world_metadata['name'], world_number)
-		for level_index in range(world_metadata["levels"].size()):
-			var level_metadata = world_metadata['levels'][level_index]
-			# Levels and worlds are one indexed, + 1 to handle this.
-			var disabled = level_metadata['level'] > levels_complete + 1 and world_metadata['world'] > worlds_complete + 1
-			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_metadata['level']], -1)
-			create_level_button(level_metadata['file_name'], world_number, level_metadata['level'], disabled, best_score)
+	
+	for world_metadata in worlds:
+		create_world_label(world_metadata['name'], world_metadata['world_number'])
+		for level_metadata in world_metadata['levels']:
+			var disabled
+			
+			if world_metadata['world_number'] < max_available_world_number:
+				# Past worlds: Enable all levels
+				disabled = false
+			elif world_metadata['world_number'] == max_available_world_number:
+				# Current world: Enable levels up to max_available_level_number
+				disabled = level_metadata['level_number'] > max_available_level_number
+			else:
+				# Future worlds: Disable everything
+				disabled = true
+						
+			
+			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_metadata['level_number']], -1)
+			create_level_button(level_metadata['file_name'], world_metadata['world_number'], level_metadata['level_number'], disabled, best_score)
 	# 0th child is always a label
 	level_buttons_container.get_child(1).grab_focus()
 	

@@ -68,7 +68,7 @@ func _on_action_pressed(action):
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
-	if level == 5:
+	if level_number == 5:
 		self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
 		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
 		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
@@ -93,7 +93,7 @@ func game_over():
 
 func update_game_display():
 	var text = "[center]"
-	text += "Level " + str(level) + '\n'
+	text += "Level " + str(level_number) + '\n'
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:

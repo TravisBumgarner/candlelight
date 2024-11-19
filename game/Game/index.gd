@@ -76,7 +76,8 @@ func _ready():
 	if GlobalState.puzzle_mode_level != null:
 		# I don't think we can pass the level from the PuzzleGameMenu
 		# So I think this is the next best thing
-		game.level = GlobalState.puzzle_mode_level
+		game.level_number = GlobalState.puzzle_mode_level['level_number']
+		game.world_number = GlobalState.puzzle_mode_level['world_number']
 		GlobalState.puzzle_mode_level = null
 	
 	var game_save_path = "user://game_saves/%s/%s.save" % [GlobalState.game_mode, GlobalState.save_slot]
@@ -108,7 +109,7 @@ func _on_restart_button_pressed():
 	
 
 func _on_next_level_button_pressed():
-	self.game.level += 1
+	self.game.level_number += 1
 	self.game.new_game()
 
 
