@@ -17,3 +17,5 @@ res://resources/keyboard/letter_a.tres
 res://resources/keyboard/letter_d.tres
 res://resources/keyboard/letter_r.tres
 res://Singletons/PuzzleModeLevelManager.gd
+res://Singletons/Utilities.gd
+res://Game/DailyGame.gd

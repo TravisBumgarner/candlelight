@@ -21,7 +21,7 @@ func create_level_button(file_name: String, world_number: int, level_number: int
 	var button = Button.new()
 	var text = "Level " + str(level_number) + '\n'
 	if best_score > 0: # If undefined, Top Score is -1
-		text+= "Top Score: %d" % [best_score]
+		text+= "Best: %d" % [best_score]
 	
 	button.text = text
 	button.disabled = disabled
@@ -82,8 +82,8 @@ func handle_save_press(save_slot: String):
 	var config = ConfigFile.new()
 	var game_saves_path = "user://game_saves/%s/%s.save" % [GlobalConsts.GAME_MODE.Puzzle, save_slot]
 	config.load(game_saves_path)
-	var max_available_level_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
-	var max_available_world_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1)
+	var max_available_world_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
+	var max_available_level_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1)
 	
 	print('current world max', max_available_world_number, 'max level number', max_available_level_number)
 	saves_positioning_container.hide()

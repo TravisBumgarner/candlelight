@@ -109,3 +109,15 @@ func remove_all_children(node):
 	for i in range(node.get_child_count()):
 		var child = node.get_child(0)
 		node.remove_child(child)
+
+
+func is_less_than_world_level(pair_a: Dictionary, pair_b: Dictionary) -> bool:
+	
+	# Compare by world number first
+	if pair_a["world_number"] < pair_b["world_number"]:
+		return true
+	elif pair_a["world_number"] > pair_b["world_number"]:
+		return false
+	
+	# If world numbers are the same, compare by level number
+	return pair_a["level_number"] < pair_b["level_number"]

@@ -97,7 +97,7 @@ func update_game_display():
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
-		text += "\nTop Score: " + str(best_score)
+		text += "\nBest: " + str(best_score)
 
 	self.game_details_value.text = text
 	

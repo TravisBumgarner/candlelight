@@ -109,7 +109,12 @@ func _on_restart_button_pressed():
 	
 
 func _on_next_level_button_pressed():
-	self.game.level_number += 1
+	if GlobalState.game_mode == GlobalConsts.GAME_MODE.Puzzle:
+		var next_level = PuzzleModeLevelManager.get_next_world_and_level_number(self.game.world_number, self.game.level_number)
+		self.game.level_number = next_level['level_number']
+		self.game.world_number = next_level['world_number']
+	else:
+		self.game.level_number += 1
 	self.game.new_game()
 
 

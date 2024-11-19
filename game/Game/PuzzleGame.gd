@@ -57,9 +57,21 @@ func level_complete(gems):
 func upsert_game_save():
 	var config = ConfigFile.new()
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
-	# TODO RESOLVE
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, level_number)
+	
+	var new_max = PuzzleModeLevelManager.get_next_world_and_level_number(world_number, level_number)
+	print('new max', new_max)
+	var current_max = {
+		"level_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1),
+		"world_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
+	}
+	print('current max', current_max)
+	var should_update_save = Utilities.is_less_than_world_level(current_max, new_max)
+	
+	if (should_update_save):
+		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, new_max['level_number'])
+		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, new_max['world_number'])
+
+
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level_number], alchemizations)	
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
@@ -74,12 +86,6 @@ func _on_action_pressed(action):
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
-	if level_number == 5:
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
-		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
-		return
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
 
@@ -99,11 +105,12 @@ func game_over():
 
 func update_game_display():
 	var text = "[center]"
+	text += "World " + str(world_number) + '\n'
 	text += "Level " + str(level_number) + '\n'
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
-		text += "\nTop Score: " + str(best_score)
+		text += "\nBest: " + str(best_score)
 
 	self.game_details_value.text = text
 	
