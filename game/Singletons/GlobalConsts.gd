@@ -87,6 +87,7 @@ const FREE_PLAY_SAVE_METADATA = {
 
 const PUZZLE_SAVE_METADATA = {
 	LEVELS_COMPLETE = 'levels_complete',
+	WORLDS_COMPLETE = 'worlds_complete'
 }
 
 const DAILY_SAVE_METADATA = {

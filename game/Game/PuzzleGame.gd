@@ -13,8 +13,8 @@ func new_game():
 	self.level_complete_controls_h_box_container.hide()
 	erase_board()
 	self.alchemizations = 0
-		
-	var level_config = PuzzleModeLevelManager.get_level_data(level)
+	
+	var level_config = PuzzleModeLevelManager.get_level_data(GlobalState.puzzle_mode_level['world'], level)
 	
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
