@@ -21,9 +21,9 @@ const u_rot1 = [Vector2i(1,0), Vector2i(1,2), Vector2i(2,0), Vector2i(2,1), Vect
 const u_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(2,0), Vector2i(2,1)]
 const u = [u_rot0, u_rot1, u_rot2, u_rot3]
 
-const lowwer_z_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,1), Vector2i(1,2)]
-const lowwer_z_rot1 = [Vector2i(0,1), Vector2i(1,0), Vector2i(1,1), Vector2i(2,0)]
-const lowwer_z = [lowwer_z_rot0, lowwer_z_rot1, lowwer_z_rot0, lowwer_z_rot1]
+const lower_z_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,1), Vector2i(1,2)]
+const lower_z_rot1 = [Vector2i(0,1), Vector2i(1,0), Vector2i(1,1), Vector2i(2,0)]
+const lower_z = [lower_z_rot0, lower_z_rot1, lower_z_rot0, lower_z_rot1]
 
 const lower_i_rot0 = [Vector2i(0,0), Vector2i(0,1)]
 const lower_i_rot1 = [Vector2i(0,1), Vector2i(1,0)]
@@ -41,7 +41,7 @@ const SHAPES_DICT = {
 	"upper_l": upper_l,
 	"square": square,
 	"u": u,
-	"lowwer_z": lowwer_z,
+	"lower_z": lower_z,
 	"lower_i": lower_i,
 	"upper_z": upper_z
 }

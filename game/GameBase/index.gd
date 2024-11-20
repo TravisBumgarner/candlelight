@@ -113,6 +113,7 @@ func _on_next_level_button_pressed():
 		var next_level = PuzzleModeLevelManager.get_next_world_and_level_number(self.game.world_number, self.game.level_number)
 		self.game.level_number = next_level['level_number']
 		self.game.world_number = next_level['world_number']
+		#self.game.level_id = next_level['level_id']
 	else:
 		self.game.level_number += 1
 	self.game.new_game()

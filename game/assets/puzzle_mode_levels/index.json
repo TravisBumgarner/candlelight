@@ -1,76 +1,46 @@
-[
-	{
+{
+	"1": {
 		"world_number": 1,
-		"name": "Back to the Basics",
+		"world_name": "Back to the Basics",
 		"levels": [
 			{
-				"file_name": "1.cfg",
-				"level_number": 1
+				"level_number": 1,
+				"file_name": "ccca8d2e.cfg"
 			},
 			{
-				"file_name": "2.cfg",
-				"level_number": 2
+				"level_number": 2,
+				"file_name": "d6c4d2f0.cfg"
 			},
 			{
-				"file_name": "3.cfg",
-				"level_number": 3
-			},
-			{
-				"file_name": "4.cfg",
-				"level_number": 4
+				"level_number": 3,
+				"file_name": "62f5a998.cfg"
 			}
 		]
 	},
-	{
+	"2": {
 		"world_number": 2,
-		"name": "Nothing but Squares",
+		"world_name": "Nothing but Squares",
 		"levels": [
 			{
-				"file_name": "1.cfg",
-				"level_number": 1
+				"level_number": 1,
+				"file_name": "eaa45f39.cfg"
 			},
 			{
-				"file_name": "2.cfg",
-				"level_number": 2
+				"level_number": 2,
+				"file_name": "756adaeb.cfg"
 			},
 			{
-				"file_name": "3.cfg",
-				"level_number": 3
+				"level_number": 3,
+				"file_name": "4269c0fc.cfg"
 			},
 			{
-				"file_name": "4.cfg",
-				"level_number": 4
+				"level_number": 4,
+				"file_name": "2804c629.cfg"
 			},
 			{
-				"file_name": "5.cfg",
-				"level_number": 5
-			}
-		]
-	},
-	{
-		"world_number": 3,
-		"name": "Pipes",
-		"levels": [
-			{
-				"file_name": "1.cfg",
-				"level_number": 1
-			},
-			{
-				"file_name": "2.cfg",
-				"level_number": 2
-			},
-			{
-				"file_name": "3.cfg",
-				"level_number": 3
-			},
-			{
-				"file_name": "4.cfg",
-				"level_number": 4
-			},
-			{
-				"file_name": "5.cfg",
-				"level_number": 5
+				"level_number": 5,
+				"file_name": "d45ead8e.cfg"
 			}
 		]
 	}
-]
+}
