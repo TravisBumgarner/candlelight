@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://Tutorial/tutorial_menu.gd" id="1_6xgxm"]
 [ext_resource type="Texture2D" uid="uid://df3sdcq35idko" path="res://assets/backgrounds/background3.png" id="2_absii"]
-[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://resources/keyboard/letter_space.tres" id="3_xvrdp"]
-[ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://resources/keyboard/letter_esc.tres" id="4_wn5wi"]
+[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/letter_space.tres" id="3_xvrdp"]
+[ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://assets/keyboard/letter_esc.tres" id="4_wn5wi"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3

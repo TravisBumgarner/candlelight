@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://psocsi5kdfdo"]
+[gd_scene load_steps=4 format=3 uid="uid://bdpcqedjkhwkx"]
 
-[ext_resource type="Script" path="res://Game/PuzzleGameMenu.gd" id="1_45r4n"]
-[ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_srij8"]
-[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_fk0hb"]
+[ext_resource type="Script" path="res://GameFreePlay/FreePlayGameMenu.gd" id="1_vhifd"]
+[ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_f6iko"]
+[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_6n2vi"]
 
-[node name="PuzzleGameMenu" type="Control"]
+[node name="FreePlayGameMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_45r4n")
+script = ExtResource("1_vhifd")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -24,8 +24,7 @@ offset_right = 571.0
 offset_bottom = 564.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_srij8")
-metadata/_edit_lock_ = true
+texture = ExtResource("2_f6iko")
 
 [node name="SavesPositioningContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -48,7 +47,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="SavesPositioningContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("3_fk0hb")
+theme = ExtResource("3_6n2vi")
 theme_type_variation = &"HeaderLarge"
 theme_override_font_sizes/font_size = 32
 text = "Select Game"
@@ -59,66 +58,35 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="SaveAButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
 focus_neighbor_top = NodePath("../SaveDButton")
-theme = ExtResource("3_fk0hb")
+theme = ExtResource("3_6n2vi")
 text = "Save A
-Empty"
+Empty
+"
 
 [node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
-theme = ExtResource("3_fk0hb")
+theme = ExtResource("3_6n2vi")
 text = "Save B
 Empty"
 
 [node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
-theme = ExtResource("3_fk0hb")
+theme = ExtResource("3_6n2vi")
 text = "Save C
 Empty"
 
 [node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(0, 60)
+custom_minimum_size = Vector2(2.08165e-12, 60)
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../SaveAButton")
-theme = ExtResource("3_fk0hb")
+theme = ExtResource("3_6n2vi")
 text = "Save D
 Empty"
-
-[node name="LevelsPositioningContainer" type="CenterContainer" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="LevelsPositioningContainer"]
-custom_minimum_size = Vector2(400, 2.08165e-12)
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-theme_override_constants/separation = 20
-alignment = 1
-
-[node name="Label" type="Label" parent="LevelsPositioningContainer/VBoxContainer"]
-layout_mode = 2
-theme = ExtResource("3_fk0hb")
-theme_type_variation = &"HeaderLarge"
-theme_override_font_sizes/font_size = 32
-text = "Levels
-"
-horizontal_alignment = 1
-
-[node name="ScrollContainer" type="ScrollContainer" parent="LevelsPositioningContainer/VBoxContainer"]
-custom_minimum_size = Vector2(400, 400)
-layout_mode = 2
-
-[node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-theme_override_constants/separation = 20
 
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveAButton" to="." method="_on_save_a_button_pressed"]
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveBButton" to="." method="_on_save_b_button_pressed"]

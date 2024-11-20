@@ -10,13 +10,13 @@ class_name MainMenu
 @onready var shared_label = $VBoxContainer/SharedLabel
 @onready var free_play_game_button = $VBoxContainer/FreePlayGameButton
 
-@onready var game_scene = load("res://Game/game_board.tscn")
-@onready var puzzle_game_menu = load("res://Game/PuzzleGameMenu.tscn")
+@onready var game_scene = load("res://GameBase/game_board.tscn")
+@onready var puzzle_game_menu = load("res://GamePuzzle/PuzzleGameMenu.tscn")
 @onready var credits_scene = load("res://Credits/credits.tscn")
 #@onready var create_challenge_scene = load("res://CreateChallenge/index.tscn")
-@onready var free_play_game_menu = load("res://Game/FreePlayGameMenu.tscn")
-@onready var daily_game_menu = load("res://Game/DailyGameMenu.tscn")
-@onready var level_designer_menu = load("res://Game/LevelDesignerMenu.tscn")
+@onready var free_play_game_menu = load("res://GameFreePlay/FreePlayGameMenu.tscn")
+@onready var daily_game_menu = load("res://GameDaily/DailyGameMenu.tscn")
+@onready var level_designer_menu = load("res://LeveDesigner/LevelDesignerMenu.tscn")
 
 const HELPER_TEXT_DICT = {
 	"PuzzleModeButton": "Solve the puzzle with the fewest moves.",

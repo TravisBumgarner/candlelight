@@ -8,7 +8,7 @@ extends Control
 
 
 
-@onready var game_scene = load("res://Game/game_board.tscn")
+@onready var game_scene = load("res://GameBase/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
 
