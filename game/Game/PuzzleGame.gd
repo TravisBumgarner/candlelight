@@ -14,7 +14,6 @@ func new_game():
 	erase_board()
 	self.alchemizations = 0
 	
-	print('doot doot', GlobalState.puzzle_mode_level)
 	var level_config = PuzzleModeLevelManager.get_level_data(world_number, level_number)
 	
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
@@ -59,18 +58,17 @@ func upsert_game_save():
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
 	
 	var new_max = PuzzleModeLevelManager.get_next_world_and_level_number(world_number, level_number)
-	print('new max', new_max)
+
 	var current_max = {
 		"level_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1),
 		"world_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
 	}
-	print('current max', current_max)
+
 	var should_update_save = Utilities.is_less_than_world_level(current_max, new_max)
 	
 	if (should_update_save):
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, new_max['level_number'])
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, new_max['world_number'])
-
 
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level_number], alchemizations)	
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)

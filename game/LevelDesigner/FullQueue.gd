@@ -19,7 +19,7 @@ func _draw_full_queue():
 	var queue_index = 0
 	for shape_name in self.full_queue:
 		var shape = Shapes.SHAPES_DICT[shape_name]
-		print('queue_index', queue_index, 'selected', selected_full_queue_index)
+
 		var is_selected = selected_full_queue_index == queue_index
 		for vector in shape[0]:
 			var color = GlobalConsts.SPRITE.DARK_ACTIVE if is_selected else GlobalConsts.SPRITE.DARK_INACTIVE

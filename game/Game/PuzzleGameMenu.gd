@@ -33,7 +33,6 @@ func create_level_button(file_name: String, world_number: int, level_number: int
 func _on_level_button_pressed(world_number, level_number):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
 	GlobalState.puzzle_mode_level = {"level_number": level_number, "world_number": world_number}
-	print('setting globalstate', GlobalState.puzzle_mode_level)
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_action_pressed(action):
@@ -85,7 +84,6 @@ func handle_save_press(save_slot: String):
 	var max_available_world_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
 	var max_available_level_number = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1)
 	
-	print('current world max', max_available_world_number, 'max level number', max_available_level_number)
 	saves_positioning_container.hide()
 	levels_positioning_container.show()
 	GlobalState.save_slot = save_slot

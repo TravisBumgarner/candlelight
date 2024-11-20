@@ -39,7 +39,7 @@ func get_points():
 
 	for position in self.gem_tile_map.get_used_cells(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES):
 		tile_positions.append(position)
-	print('tile_positions', tile_positions)
+
 	return tile_positions
 
 func can_move(direction):

@@ -14,9 +14,9 @@ func new_game():
 	erase_board()
 	self.alchemizations = 0
 	
-	print('runnin')
+
 	var level_config = ConfigFile.new()
-	print('abs', GlobalState.level_designer_file_path)
+
 	level_config.load(GlobalState.level_designer_file_path)
 	
 	var visible_queue_size = 3
