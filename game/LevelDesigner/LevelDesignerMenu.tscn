@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://rgwrlbu7yt2t"]
 
-[ext_resource type="Script" path="res://Game/LevelDesignerMenu.gd" id="1_yqefu"]
+[ext_resource type="Script" path="res://LevelDesigner/LevelDesignerMenu.gd" id="1_yqefu"]
 [ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_qxisd"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_pd0m8"]
 

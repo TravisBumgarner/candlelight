@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bdpcqedjkhwkx"]
+[gd_scene load_steps=4 format=3 uid="uid://dneth0b7l8t8y"]
 
-[ext_resource type="Script" path="res://Game/FreePlayGameMenu.gd" id="1_vhifd"]
-[ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_f6iko"]
-[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_6n2vi"]
+[ext_resource type="Script" path="res://GameDaily/DailyGameMenu.gd" id="1_12bl6"]
+[ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_fudgm"]
+[ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_3gck5"]
 
-[node name="FreePlayGameMenu" type="Control"]
+[node name="DailyGameMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_vhifd")
+script = ExtResource("1_12bl6")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -24,7 +24,7 @@ offset_right = 571.0
 offset_bottom = 564.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_f6iko")
+texture = ExtResource("2_fudgm")
 
 [node name="SavesPositioningContainer" type="CenterContainer" parent="."]
 layout_mode = 1
@@ -33,7 +33,7 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -576.0
+offset_left = -64.0
 offset_top = -324.0
 offset_right = 576.0
 offset_bottom = 324.0
@@ -47,7 +47,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="SavesPositioningContainer/VBoxContainer"]
 layout_mode = 2
-theme = ExtResource("3_6n2vi")
+theme = ExtResource("3_3gck5")
 theme_type_variation = &"HeaderLarge"
 theme_override_font_sizes/font_size = 32
 text = "Select Game"
@@ -58,35 +58,53 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="SaveAButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 60)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 focus_neighbor_top = NodePath("../SaveDButton")
-theme = ExtResource("3_6n2vi")
+theme = ExtResource("3_3gck5")
 text = "Save A
-Empty
-"
+Empty"
 
 [node name="SaveBButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 60)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme = ExtResource("3_6n2vi")
+theme = ExtResource("3_3gck5")
 text = "Save B
 Empty"
 
 [node name="SaveCButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 60)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
-theme = ExtResource("3_6n2vi")
+theme = ExtResource("3_3gck5")
 text = "Save C
 Empty"
 
 [node name="SaveDButton" type="Button" parent="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 60)
+custom_minimum_size = Vector2(0, 60)
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../SaveAButton")
-theme = ExtResource("3_6n2vi")
+theme = ExtResource("3_3gck5")
 text = "Save D
 Empty"
+
+[node name="HighScoresPositioningContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_right = 512.0
+offset_bottom = 648.0
+
+[node name="HighScoresContainer" type="VBoxContainer" parent="HighScoresPositioningContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="HighScoresPositioningContainer/HighScoresContainer"]
+layout_mode = 2
+theme = ExtResource("3_3gck5")
+theme_type_variation = &"HeaderLarge"
+theme_override_font_sizes/font_size = 32
+text = "High Scores 
+(Coming Soon)"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveAButton" to="." method="_on_save_a_button_pressed"]
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveBButton" to="." method="_on_save_b_button_pressed"]
