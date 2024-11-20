@@ -14,9 +14,9 @@ func new_game():
 	erase_board()
 	self.alchemizations = 0
 	
-	print('runnin')
+
 	var level_config = ConfigFile.new()
-	print('abs', GlobalState.level_designer_file_path)
+
 	level_config.load(GlobalState.level_designer_file_path)
 	
 	var visible_queue_size = 3
@@ -68,7 +68,7 @@ func _on_action_pressed(action):
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
-	if level == 5:
+	if level_number == 5:
 		self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
 		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
 		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
@@ -93,11 +93,11 @@ func game_over():
 
 func update_game_display():
 	var text = "[center]"
-	text += "Level " + str(level) + '\n'
+	text += "Level " + str(level_number) + '\n'
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
-		text += "\nTop Score: " + str(best_score)
+		text += "\nBest: " + str(best_score)
 
 	self.game_details_value.text = text
 	

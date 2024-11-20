@@ -1,27 +1,55 @@
 [
 	{
-		"world": 1,
+		"world_number": 1,
+		"key": "1_nothing_but_squares",
 		"name": "Nothing but Squares",
 		"levels": [
 			{
 				"file_name": "1.cfg",
-				"level": 1,
+				"level_number": 1,
 			},
 			{
 				"file_name": "2.cfg",
-				"level": 2
+				"level_number": 2
 			},
 			{
 				"file_name": "3.cfg",
-				"level": 3
+				"level_number": 3
 			},
 				{
 				"file_name": "4.cfg",
-				"level": 4
+				"level_number": 4
 			},
 				{
 				"file_name": "5.cfg",
-				"level": 5
+				"level_number": 5
+			},
+		]
+	},
+	{
+		"world_number": 2,
+		"key": "2_pipes",
+		"name": "Pipes",
+		"levels": [
+			{
+				"file_name": "1.cfg",
+				"level_number": 1,
+			},
+			{
+				"file_name": "2.cfg",
+				"level_number": 2
+			},
+			{
+				"file_name": "3.cfg",
+				"level_number": 3
+			},
+				{
+				"file_name": "4.cfg",
+				"level_number": 4
+			},
+				{
+				"file_name": "5.cfg",
+				"level_number": 5
 			},
 		]
 	}

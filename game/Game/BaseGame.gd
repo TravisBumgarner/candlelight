@@ -22,7 +22,8 @@ var history: History
 var player: Player
 var queue: Queue
 var gemsManager: GemsManager
-var level: int
+var level_number: int
+var world_number: int # Currently just used for Puzzles
 var alchemizations: int
 var game_start_timestamp: int
 var disable_player_interaction = false

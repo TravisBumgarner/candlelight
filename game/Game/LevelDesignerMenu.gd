@@ -37,7 +37,6 @@ func check_for_levels():
 	
 	var dir = DirAccess.open(levels_path)
 	if dir == null:
-		print("Cannot open directory: ", levels_path)
 		return
 
 	dir.list_dir_begin()
@@ -47,7 +46,6 @@ func check_for_levels():
 		# Check if the file ends with .level
 		if file_name.ends_with(".level"):
 			var absolute_file_path = "%s/%s" % [levels_path, file_name]
-			print('abs', absolute_file_path)
 
 			if not FileAccess.file_exists(absolute_file_path):
 				file_name = dir.get_next()

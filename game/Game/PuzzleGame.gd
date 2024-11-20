@@ -13,14 +13,14 @@ func new_game():
 	self.level_complete_controls_h_box_container.hide()
 	erase_board()
 	self.alchemizations = 0
-		
-	var level_config = PuzzleModeLevelManager.get_level_data(level)
+	
+	var level_config = PuzzleModeLevelManager.get_level_data(world_number, level_number)
 	
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
 	var save_config = ConfigFile.new()
 	save_config.load(absolute_file_path)
-	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level], -1)
+	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_number], -1)
 
 	var visible_queue_size = 3
 	var game_key = null
@@ -56,8 +56,21 @@ func level_complete(gems):
 func upsert_game_save():
 	var config = ConfigFile.new()
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.LEVELS_COMPLETE, level)
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level], alchemizations)	
+	
+	var new_max = PuzzleModeLevelManager.get_next_world_and_level_number(world_number, level_number)
+
+	var current_max = {
+		"level_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1),
+		"world_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
+	}
+
+	var should_update_save = Utilities.is_less_than_world_level(current_max, new_max)
+	
+	if (should_update_save):
+		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, new_max['level_number'])
+		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, new_max['world_number'])
+
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level_number], alchemizations)	
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
 func _on_action_pressed(action):
@@ -71,12 +84,6 @@ func _on_action_pressed(action):
 
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_h_box_container.show()
-	if level == 5:
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
-		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
-		return
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
 	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
 
@@ -96,11 +103,12 @@ func game_over():
 
 func update_game_display():
 	var text = "[center]"
-	text += "Level " + str(level) + '\n'
+	text += "World " + str(world_number) + '\n'
+	text += "Level " + str(level_number) + '\n'
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
-		text += "\nTop Score: " + str(best_score)
+		text += "\nBest: " + str(best_score)
 
 	self.game_details_value.text = text
 	

@@ -67,7 +67,7 @@ func update_game_display():
 	text += '\n'
 		
 	if best_score != -1:
-		text += "\nTop Score: " + str(best_score)
+		text += "\nBest: " + str(best_score)
 	
 	game_details_value.text = text
 	

@@ -86,7 +86,8 @@ const FREE_PLAY_SAVE_METADATA = {
 }
 
 const PUZZLE_SAVE_METADATA = {
-	LEVELS_COMPLETE = 'levels_complete',
+	MAX_AVAILABLE_WORLD_NUMBER = 'max_available_world_number',
+	MAX_AVAILABLE_LEVEL_NUMBER = 'max_available_level_number'
 }
 
 const DAILY_SAVE_METADATA = {

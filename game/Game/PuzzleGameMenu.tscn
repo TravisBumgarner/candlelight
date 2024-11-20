@@ -111,8 +111,13 @@ text = "Levels
 "
 horizontal_alignment = 1
 
-[node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer"]
+[node name="ScrollContainer" type="ScrollContainer" parent="LevelsPositioningContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
+
+[node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
 [connection signal="pressed" from="SavesPositioningContainer/VBoxContainer/SaveButtonsContainer/SaveAButton" to="." method="_on_save_a_button_pressed"]

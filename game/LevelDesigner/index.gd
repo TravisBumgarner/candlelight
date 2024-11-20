@@ -30,13 +30,10 @@ var TARGET_GEM_EDITOR = 1
 var BUTTONS_EDITOR = 2
 
 func _ready():
-	print('ready')
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 
 	gem_placer = GemPlacer.new(target_gem_tile_map)
 	full_queue = FullQueue.new(full_queue_control)
-	
-	print('doot', GlobalState.level_designer_file_path)
 	
 	if GlobalState.level_designer_file_path:
 		var level_designed = ConfigFile.new()
