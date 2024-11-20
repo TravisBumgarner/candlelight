@@ -5,9 +5,6 @@ const worlds = preload("res://assets/puzzle_mode_levels/index.json")
 func get_worlds_metadata():
 	return worlds.data
 	
-func get_world_metadata(world):
-	worlds.data[world]
-
 func get_level_data(world, level):
 	var current_level_absolute_path = "res://assets/puzzle_mode_levels/%d/%d.cfg" % [world, level]
 	var config = ConfigFile.new()

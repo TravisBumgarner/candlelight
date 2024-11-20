@@ -16,7 +16,7 @@ class_name MainMenu
 #@onready var create_challenge_scene = load("res://CreateChallenge/index.tscn")
 @onready var free_play_game_menu = load("res://GameFreePlay/FreePlayGameMenu.tscn")
 @onready var daily_game_menu = load("res://GameDaily/DailyGameMenu.tscn")
-@onready var level_designer_menu = load("res://LeveDesigner/LevelDesignerMenu.tscn")
+@onready var level_designer_menu = load("res://LevelDesigner/LevelDesignerMenu.tscn")
 
 const HELPER_TEXT_DICT = {
 	"PuzzleModeButton": "Solve the puzzle with the fewest moves.",
