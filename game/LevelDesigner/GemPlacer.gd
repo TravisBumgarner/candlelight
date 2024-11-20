@@ -37,8 +37,8 @@ func load_points(points):
 func get_points():
 	var tile_positions = []
 
-	for position in self.gem_tile_map.get_used_cells(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES):
-		tile_positions.append(position)
+	for placed_position in self.gem_tile_map.get_used_cells(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES):
+		tile_positions.append(placed_position)
 
 	return tile_positions
 

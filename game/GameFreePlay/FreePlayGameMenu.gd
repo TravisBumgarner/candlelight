@@ -23,7 +23,6 @@ func check_for_saves():
 			
 		var config = ConfigFile.new()
 		config.load(absolute_file_path)
-		var alchemizations = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.ALCHEMIZATIONS)
 		var level = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.FREE_PLAY_SAVE_METADATA.LEVEL)
 		
 		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])

@@ -1,12 +1,11 @@
 extends Control
 
-@onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
 @onready var save_buttons_container = $SavesPositioningContainer/VBoxContainer/SaveButtonsContainer
 @onready var level_buttons_container = $LevelsPositioningContainer/VBoxContainer/LevelButtonsContainer
 @onready var levels_positioning_container = $LevelsPositioningContainer
 @onready var saves_positioning_container = $SavesPositioningContainer
 
-@onready var game_scene = load("res://Game/game_board.tscn")
+@onready var game_scene = load("res://GameBase/game_board.tscn")
 const main_menu = preload("res://MainMenu/main_menu.tscn")
 const candlelight_theme = preload("res://candlelight_theme.tres")
 const level_designer_scene = preload("res://LevelDesigner/index.tscn")
@@ -53,7 +52,6 @@ func check_for_levels():
 
 			var config = ConfigFile.new()
 			config.load(absolute_file_path)
-			var name = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.NAME)
 			
 			var button = Button.new()
 			var text = "Level: " % [absolute_file_path]

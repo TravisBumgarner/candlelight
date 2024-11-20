@@ -1,0 +1,46 @@
+{
+    "1": {
+        "world_number": 1,
+        "world_name": "Back to the Basics",
+        "levels": [
+            {
+                "level_number": 1,
+                "file_name": "ccca8d2e.cfg"
+            },
+            {
+                "level_number": 2,
+                "file_name": "d6c4d2f0.cfg"
+            },
+            {
+                "level_number": 3,
+                "file_name": "62f5a998.cfg"
+            }
+        ]
+    },
+    "2": {
+        "world_number": 2,
+        "world_name": "Nothing but Squares",
+        "levels": [
+            {
+                "level_number": 1,
+                "file_name": "eaa45f39.cfg"
+            },
+            {
+                "level_number": 2,
+                "file_name": "756adaeb.cfg"
+            },
+            {
+                "level_number": 3,
+                "file_name": "4269c0fc.cfg"
+            },
+            {
+                "level_number": 4,
+                "file_name": "2804c629.cfg"
+            },
+            {
+                "level_number": 5,
+                "file_name": "d45ead8e.cfg"
+            }
+        ]
+    }
+}
