@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://bqhr0nqy8osli" path="res://assets/backgrounds/background.png" id="2_qxisd"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="3_pd0m8"]
 
-[node name="PuzzleGameMenu" type="Control"]
+[node name="LevelDesignerMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -49,17 +49,17 @@ text = "Levels
 "
 horizontal_alignment = 1
 
-[node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer"]
+[node name="NewLevelButton" type="Button" parent="LevelsPositioningContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="NewLevelButton" type="Button" parent="."]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 32.0
-offset_right = 229.0
-offset_bottom = 73.0
 theme = ExtResource("3_pd0m8")
 text = "New Level"
 
-[connection signal="pressed" from="NewLevelButton" to="." method="_on_new_level_button_pressed"]
+[node name="ScrollContainer" type="ScrollContainer" parent="LevelsPositioningContainer/VBoxContainer"]
+custom_minimum_size = Vector2(2.08165e-12, 400)
+layout_mode = 2
+
+[node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[connection signal="pressed" from="LevelsPositioningContainer/VBoxContainer/NewLevelButton" to="." method="_on_new_level_button_pressed"]

@@ -125,7 +125,6 @@ func _on_pause_menu_container_visibility_changed():
 	if is_visible_in_tree():
 		resume_button.grab_focus()
 
-
 func _on_action_pressed(action):
 	if disable_player_interaction and action != 'escape':
 		return
@@ -185,12 +184,19 @@ func _on_test_play_button_pressed():
 	var config = ConfigFile.new()
 	var levels_path = "user://user_created_levels/"
 	DirAccess.make_dir_recursive_absolute(levels_path)
-	var full_path = "%s/%d.level" % [levels_path, randi()]
-	config.load(full_path)
+	
+	var file_path
+	if GlobalState.level_designer_file_path:
+		file_path = GlobalState.level_designer_file_path
+	else:
+		var filename = "%d.level" % [randi()]
+		file_path = "%s/%s" % [levels_path, filename]
+	print('saving file ', file_path)
+	config.load(file_path)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.QUEUE, full_queue.full_queue)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.TARGET_GEM, gem_placer.get_points())	
-	config.save(full_path)
-	GlobalState.level_designer_file_path = full_path
+	config.save(file_path)
+	GlobalState.level_designer_file_path = file_path
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.LevelDesigner
 	print('doot')
 	get_tree().change_scene_to_packed(game_scene)

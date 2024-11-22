@@ -17,6 +17,7 @@ func new_game():
 
 	var level_config = ConfigFile.new()
 
+	print('global config loads', GlobalState.level_designer_file_path)
 	level_config.load(GlobalState.level_designer_file_path)
 	
 	var visible_queue_size = 3

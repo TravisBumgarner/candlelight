@@ -20,3 +20,4 @@ func _ready():
 
 func _change_scene(scene):
 	get_tree().change_scene_to_packed(scene)
+ 
