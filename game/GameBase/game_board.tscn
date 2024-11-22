@@ -217,6 +217,7 @@ theme = ExtResource("10_24mwh")
 text = "Submit Score"
 
 [node name="Instructions" type="VBoxContainer" parent="."]
+visible = false
 offset_left = 656.0
 offset_top = 516.0
 offset_right = 1132.0

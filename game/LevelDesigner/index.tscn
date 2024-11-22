@@ -1,10 +1,17 @@
-[gd_scene load_steps=12 format=3 uid="uid://cifr7f5pbfxlo"]
+[gd_scene load_steps=21 format=3 uid="uid://cifr7f5pbfxlo"]
 
 [ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/backgrounds/gamescreen.png" id="1_2nkfn"]
 [ext_resource type="Script" path="res://LevelDesigner/index.gd" id="1_5rbuh"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/sprites/gems.png" id="2_j04o7"]
 [ext_resource type="Texture2D" uid="uid://df3sdcq35idko" path="res://assets/backgrounds/background3.png" id="4_4mjd2"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="5_15nix"]
+[ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://assets/keyboard/letter_w.tres" id="6_qyv8p"]
+[ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://assets/keyboard/letter_a.tres" id="7_gbyaq"]
+[ext_resource type="Texture2D" uid="uid://cnedws03cbck2" path="res://assets/keyboard/letter_s.tres" id="8_1lrdm"]
+[ext_resource type="Texture2D" uid="uid://cq60c8757qldh" path="res://assets/keyboard/letter_d.tres" id="9_grto1"]
+[ext_resource type="Texture2D" uid="uid://bb1mn7ebyioek" path="res://assets/keyboard/letter_r.tres" id="10_d2d6v"]
+[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/letter_space.tres" id="11_sfckm"]
+[ext_resource type="Texture2D" uid="uid://dfvq0ya7jnos1" path="res://assets/keyboard/letter_z.tres" id="12_mcfvn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i1jps"]
 texture = ExtResource("2_j04o7")
@@ -51,6 +58,10 @@ texture_region_size = Vector2i(32, 32)
 tile_size = Vector2i(32, 32)
 sources/0 = SubResource("TileSetAtlasSource_44wvu")
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ydel"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ydpfk"]
+
 [node name="LevelDesigner" type="Node2D"]
 script = ExtResource("1_5rbuh")
 
@@ -84,7 +95,7 @@ anchor_left = -0.2
 anchor_top = -0.2
 anchor_right = -0.2
 anchor_bottom = -0.2
-offset_right = 688.0
+offset_right = 99.0
 offset_bottom = 480.0
 texture = ExtResource("4_4mjd2")
 expand_mode = 1
@@ -107,6 +118,21 @@ offset_left = -352.0
 offset_top = -32.0
 offset_right = -312.0
 offset_bottom = 8.0
+
+[node name="Background" type="TextureRect" parent="FullQueueControl"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.2
+anchor_top = -0.2
+anchor_right = -0.2
+anchor_bottom = -0.2
+offset_left = 574.0
+offset_top = 127.0
+offset_right = 1122.0
+offset_bottom = 607.0
+texture = ExtResource("4_4mjd2")
+expand_mode = 1
+stretch_mode = 1
 
 [node name="FullQueueTileMap" type="TileMap" parent="FullQueueControl"]
 position = Vector2(576, 128)
@@ -195,5 +221,168 @@ theme = ExtResource("5_15nix")
 text = "Test Play
 "
 
+[node name="PauseMenuContainer" type="Control" parent="."]
+visible = false
+z_index = 999
+layout_mode = 3
+anchors_preset = 0
+offset_left = 576.0
+offset_top = 324.0
+offset_right = 616.0
+offset_bottom = 364.0
+
+[node name="ColorRect" type="ColorRect" parent="PauseMenuContainer"]
+modulate = Color(0.0470588, 0.0901961, 0.0196078, 0.580392)
+layout_mode = 0
+offset_left = -576.0
+offset_top = -324.0
+offset_right = 576.0
+offset_bottom = 324.0
+
+[node name="PanelContainer" type="PanelContainer" parent="PauseMenuContainer"]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -31.0
+offset_right = 50.0
+offset_bottom = 31.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_2ydel")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/separation = 200
+alignment = 1
+
+[node name="ControlsContainer" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer"]
+custom_minimum_size = Vector2(200, 2.08165e-12)
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="ResumeButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
+layout_mode = 2
+focus_neighbor_top = NodePath("../MainMenuButton")
+theme = ExtResource("5_15nix")
+text = "Resume"
+
+[node name="MainMenuButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
+layout_mode = 2
+focus_neighbor_bottom = NodePath("../ResumeButton")
+theme = ExtResource("5_15nix")
+text = "Main Menu"
+
+[node name="PanelContainer" type="PanelContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ydpfk")
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="0_Move" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="WASD" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+alignment = 1
+
+[node name="Row1" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD"]
+layout_mode = 2
+alignment = 1
+
+[node name="LetterW" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row1"]
+layout_mode = 2
+texture = ExtResource("6_qyv8p")
+stretch_mode = 3
+
+[node name="Row2" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD"]
+layout_mode = 2
+alignment = 1
+
+[node name="LetterA" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row2"]
+layout_mode = 2
+texture = ExtResource("7_gbyaq")
+stretch_mode = 3
+
+[node name="LetterS" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row2"]
+layout_mode = 2
+texture = ExtResource("8_1lrdm")
+stretch_mode = 3
+
+[node name="LetterD" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row2"]
+layout_mode = 2
+texture = ExtResource("9_grto1")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Move"
+horizontal_alignment = 1
+
+[node name="0_1_rotate" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LetterR" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_1_rotate"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("10_d2d6v")
+stretch_mode = 3
+
+[node name="Label2" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_1_rotate"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Change
+Selection"
+horizontal_alignment = 1
+
+[node name="1_Place" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LetterSpace" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/1_Place"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("11_sfckm")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/1_Place"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Place Piece 
+or Gem"
+horizontal_alignment = 1
+
+[node name="3_Undo" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LetterZ" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/3_Undo"]
+clip_contents = true
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("12_mcfvn")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/3_Undo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Undo "
+horizontal_alignment = 1
+
 [connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="ButtonsControl/TestPlayButton" to="." method="_on_test_play_button_pressed"]
+[connection signal="visibility_changed" from="PauseMenuContainer" to="." method="_on_pause_menu_container_visibility_changed"]
+[connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]

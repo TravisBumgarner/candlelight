@@ -6,13 +6,16 @@ extends Node2D
 @onready var full_queue_control = $FullQueueControl
 @onready var target_gem_tile_map = $TargetGemControl/TargetGemTileMap
 
+@onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
 @onready var background_shapes_upsert = $ShapesControl/Background
+@onready var background_full_queue = $FullQueueControl/Background
 @onready var background_target_gem = $TargetGemControl/Background
 @onready var background_buttons = $ButtonsControl/Background
+@onready var pause_menu_container = $PauseMenuContainer
 
 @onready var test_play_button = $ButtonsControl/TestPlayButton
 
-@onready var game_scene = load("res://Game/game_board.tscn")
+@onready var game_scene = load("res://Gamebase/game_board.tscn")
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
 
 var gem_placer: GemPlacer
@@ -24,10 +27,11 @@ const BACKGROUND_LAYER = 0
 var selected_shape_index = 0
 var selected_editor_index = 0
 
-var backgrounds
+var background_groups
 var SHAPE_UPSERT_EDITOR = 0
 var TARGET_GEM_EDITOR = 1
 var BUTTONS_EDITOR = 2
+var disable_player_interaction = false
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
@@ -45,27 +49,29 @@ func _ready():
 		for item in queue_items:
 			full_queue.append_to_queue(item)
 			
-	backgrounds = [
-		background_shapes_upsert,
-		background_target_gem,
-		background_buttons
+	background_groups = [
+		[background_shapes_upsert, background_full_queue],
+		[background_target_gem],
+		[background_buttons]
 	]
 
 	draw_shapes()
 	draw_selected_area()
 	
 func draw_selected_area():
-	for background in backgrounds:
-		background.hide()
-	backgrounds[selected_editor_index].show()
+	for background_group in background_groups:
+		for background in background_group:
+			background.hide()
+	for background in background_groups[selected_editor_index]:
+		background.show()
 	
 func increment_selected_editor_index(increment):
-	var selected_area_length = len(backgrounds)
-	selected_editor_index = (selected_editor_index + increment) % selected_area_length
+	var background_group_count = len(background_groups)
+	selected_editor_index = (selected_editor_index + increment) % background_group_count
 	
 	# Handle negative wrap-around
 	if selected_editor_index < 0:
-		selected_editor_index += selected_area_length
+		selected_editor_index += background_group_count
 		
 	if selected_editor_index == BUTTONS_EDITOR:
 		test_play_button.grab_focus()
@@ -100,13 +106,36 @@ func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 
+func resume():
+	self.disable_player_interaction = false
+
+func pause():
+	self.disable_player_interaction = true
+
+func _on_resume_button_pressed():
+	self.resume() # Cannot figure out how to use built in get_tree().pause
+	pause_menu_container.hide()
+
+func _on_main_menu_button_pressed():
+	self.cleanup()
+	get_tree().change_scene_to_packed(self.main_menu_scene)
+
+func _on_pause_menu_container_visibility_changed():
+	# For some reason this line will error if PuzzleMenuContainer on _ready
+	if is_visible_in_tree():
+		resume_button.grab_focus()
+
+
 func _on_action_pressed(action):
+	if disable_player_interaction and action != 'escape':
+		return
+	
 	if action == "rotate":
 		increment_selected_editor_index(1)
 		
 	if action == 'escape':
-		cleanup()
-		get_tree().change_scene_to_packed(main_menu_scene)
+		self.pause()
+		self.pause_menu_container.show()
 		
 
 	if selected_editor_index == SHAPE_UPSERT_EDITOR:	
@@ -163,4 +192,9 @@ func _on_test_play_button_pressed():
 	config.save(full_path)
 	GlobalState.level_designer_file_path = full_path
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.LevelDesigner
+	print('doot')
 	get_tree().change_scene_to_packed(game_scene)
+
+
+func _on_return_to_level_editor_button_pressed():
+	pass # Replace with function body.
