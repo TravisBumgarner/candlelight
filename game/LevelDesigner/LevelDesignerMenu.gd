@@ -70,4 +70,5 @@ func _on_level_designed_button_pressed(absolute_file_path):
 	get_tree().change_scene_to_packed(level_designer_scene)
 
 func _on_new_level_button_pressed():
+	GlobalState.level_designer_file_path = null
 	get_tree().change_scene_to_packed(level_designer_scene)
