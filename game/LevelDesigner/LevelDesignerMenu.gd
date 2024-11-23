@@ -1,7 +1,8 @@
 extends Control
 
 @onready var save_buttons_container = $SavesPositioningContainer/VBoxContainer/SaveButtonsContainer
-@onready var level_buttons_container = $LevelsPositioningContainer/VBoxContainer/LevelButtonsContainer
+@onready var level_buttons_container = $LevelsPositioningContainer/VBoxContainer/ScrollContainer/LevelButtonsContainer
+
 @onready var levels_positioning_container = $LevelsPositioningContainer
 @onready var saves_positioning_container = $SavesPositioningContainer
 
@@ -45,7 +46,6 @@ func check_for_levels():
 		# Check if the file ends with .level
 		if file_name.ends_with(".level"):
 			var absolute_file_path = "%s/%s" % [levels_path, file_name]
-
 			if not FileAccess.file_exists(absolute_file_path):
 				file_name = dir.get_next()
 				continue
@@ -68,4 +68,5 @@ func _on_level_designed_button_pressed(absolute_file_path):
 	get_tree().change_scene_to_packed(level_designer_scene)
 
 func _on_new_level_button_pressed():
+	GlobalState.level_designer_file_path = null
 	get_tree().change_scene_to_packed(level_designer_scene)

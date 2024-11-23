@@ -93,7 +93,6 @@ func handle_save_press(save_slot: String):
 	var worlds = PuzzleModeLevelManager.get_worlds_metadata()
 	
 	for world_metadata in worlds.values():
-		print(world_metadata)
 		create_world_label(world_metadata['world_name'], world_metadata['world_number'])
 		for level_metadata in world_metadata['levels']:
 			var disabled
