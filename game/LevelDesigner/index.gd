@@ -7,13 +7,18 @@ extends Node2D
 @onready var target_gem_tile_map = $TargetGemControl/TargetGemTileMap
 
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
+
 @onready var background_shapes_upsert = $ShapesControl/Background
 @onready var background_full_queue = $FullQueueControl/Background
 @onready var background_target_gem = $TargetGemControl/Background
-@onready var background_buttons = $ButtonsControl/Background
+@onready var background_test_play= $TestPlayControl/Background
+@onready var background_copy_to_clipboard = $CopyToClipboardControl/Background
+
 @onready var pause_menu_container = $PauseMenuContainer
 
-@onready var test_play_button = $ButtonsControl/TestPlayButton
+@onready var copy_to_clipboard_button = $CopyToClipboardControl/CopyToClipboardButton
+@onready var test_play_button = $TestPlayControl/TestPlayButton
+
 
 @onready var game_scene = load("res://Gamebase/game_board.tscn")
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
@@ -30,7 +35,8 @@ var selected_editor_index = 0
 var background_groups
 var SHAPE_UPSERT_EDITOR = 0
 var TARGET_GEM_EDITOR = 1
-var BUTTONS_EDITOR = 2
+var TEST_PLAY_BUTTON = 2
+var COPY_TO_CLIPB_ARD_BUTTON = 3
 var disable_player_interaction = false
 
 func _ready():
@@ -52,7 +58,8 @@ func _ready():
 	background_groups = [
 		[background_shapes_upsert, background_full_queue],
 		[background_target_gem],
-		[background_buttons]
+		[background_test_play],
+		[background_copy_to_clipboard]
 	]
 
 	draw_shapes()
@@ -68,13 +75,16 @@ func draw_selected_area():
 func increment_selected_editor_index(increment):
 	var background_group_count = len(background_groups)
 	selected_editor_index = (selected_editor_index + increment) % background_group_count
-	
+	print('next is', selected_editor_index)
 	# Handle negative wrap-around
 	if selected_editor_index < 0:
 		selected_editor_index += background_group_count
 		
-	if selected_editor_index == BUTTONS_EDITOR:
+	if selected_editor_index == TEST_PLAY_BUTTON:
 		test_play_button.grab_focus()
+		
+	if selected_editor_index == COPY_TO_CLIPB_ARD_BUTTON:
+		copy_to_clipboard_button.grab_focus()
 	draw_selected_area()
 	
 func increment_selected_shape_index(increment):
@@ -84,6 +94,7 @@ func increment_selected_shape_index(increment):
 	# Handle negative wrap-around
 	if selected_shape_index < 0:
 		selected_shape_index += shapes_size
+		
 		
 const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 
@@ -137,7 +148,7 @@ func _on_action_pressed(action):
 		self.pause_menu_container.show()
 		
 
-	if selected_editor_index == SHAPE_UPSERT_EDITOR:	
+	if selected_editor_index == SHAPE_UPSERT_EDITOR:
 		if action == "down":
 			increment_selected_shape_index(1)
 			draw_shapes()
@@ -198,9 +209,13 @@ func _on_test_play_button_pressed():
 	config.save(file_path)
 	GlobalState.level_designer_file_path = file_path
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.LevelDesigner
-	print('doot')
 	get_tree().change_scene_to_packed(game_scene)
 
 
 func _on_return_to_level_editor_button_pressed():
 	pass # Replace with function body.
+
+
+func _on_save_to_clipboard_button_pressed():
+	var details = JSON.stringify({"queue": full_queue.full_queue, "gem": gem_placer.get_points() })
+	DisplayServer.clipboard_set(details)
