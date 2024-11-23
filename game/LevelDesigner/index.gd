@@ -216,5 +216,18 @@ func _on_return_to_level_editor_button_pressed():
 
 
 func _on_save_to_clipboard_button_pressed():
-	var details = JSON.stringify({"queue": full_queue.full_queue, "gem": gem_placer.get_points() })
+	var points = gem_placer.get_points()
+	var formatted_points = "["
+
+	# Transform each point to the desired format
+	for point in points:
+		formatted_points += ("Vector2i(%d, %d), " % [point.x, point.y])
+	formatted_points += ']'
+	
+	print(formatted_points)
+	# Create the JSON string
+	var details = JSON.stringify({
+		"queue": full_queue.full_queue,
+		"gem": formatted_points
+	})
 	DisplayServer.clipboard_set(details)
