@@ -7,7 +7,7 @@ func get_worlds_metadata():
 	
 func get_level_data(world_number, level_number):
 	var level_metadata = self.get_level_metadata(world_number, level_number)
-	print('level metadat', level_metadata)
+
 	var current_level_absolute_path = "res://assets/puzzle_mode_levels/%s" % [level_metadata['file_name']]
 	var config = ConfigFile.new()
 	config.load(current_level_absolute_path)
@@ -16,7 +16,7 @@ func get_level_data(world_number, level_number):
 
 func get_level_metadata(world_number, level_number):
 	var current_world = self.get_worlds_metadata().values().filter(func(x): return x["world_number"] == world_number)[0]
-	print('current worold', current_world)
+
 	# 1 indexing for level_number, 0 indexing for array.
 	var level_metadata = current_world['levels'][level_number - 1]
 	

@@ -75,7 +75,6 @@ func draw_selected_area():
 func increment_selected_editor_index(increment):
 	var background_group_count = len(background_groups)
 	selected_editor_index = (selected_editor_index + increment) % background_group_count
-	print('next is', selected_editor_index)
 	# Handle negative wrap-around
 	if selected_editor_index < 0:
 		selected_editor_index += background_group_count
@@ -202,7 +201,7 @@ func _on_test_play_button_pressed():
 	else:
 		var filename = "%d.level" % [randi()]
 		file_path = "%s/%s" % [levels_path, filename]
-	print('saving file ', file_path)
+
 	config.load(file_path)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.QUEUE, full_queue.full_queue)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.LEVEL_DESIGNER_METADATA.TARGET_GEM, gem_placer.get_points())	

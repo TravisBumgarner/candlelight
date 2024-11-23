@@ -46,8 +46,6 @@ func check_for_levels():
 		# Check if the file ends with .level
 		if file_name.ends_with(".level"):
 			var absolute_file_path = "%s/%s" % [levels_path, file_name]
-			print('level_path', levels_path)
-			print('file_name', file_name)
 			if not FileAccess.file_exists(absolute_file_path):
 				file_name = dir.get_next()
 				continue
