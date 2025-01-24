@@ -49,6 +49,6 @@
     "lint:fix": "npx eslint --ext .ts ./src/** --fix",
     "start": "webpack-dev-server --mode=development --config=webpack.js",
     "bundle": "export NODE_ENV=production && rm -rf ./build; mkdir ./build; webpack --config=webpack.js",
-    "deploy": "gcloud config set project silly-side-projects && gcloud builds submit --tag gcr.io/silly-side-projects/candlelight && gcloud run deploy candlelight --image gcr.io/silly-side-projects/candlelight --platform managed --region us-east1"
+    "deploy:nfs": "yarn run bundle && bash deploy.sh"
   }
 }
