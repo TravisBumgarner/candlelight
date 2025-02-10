@@ -5,6 +5,57 @@ import shutil
 
 BASE_OUTPUT_PATH = 'puzzle_mode_levels'
 
+def prepare_ingestion_directory():
+    # Remove existing Levels files
+    ingestion_dir = './ingestion'
+    if os.path.exists(ingestion_dir):
+        for file in os.listdir(ingestion_dir):
+            if file.startswith('Levels'):
+                file_path = os.path.join(ingestion_dir, file)
+                os.remove(file_path)
+
+    # Move new files from Downloads
+    downloads_dir = os.path.expanduser('~/Downloads')
+    for file in os.listdir(downloads_dir):
+        if file.startswith('Levels'):
+            print(f"\tMoving {file} to ingestion directory...")
+            src = os.path.join(downloads_dir, file)
+            dst = os.path.join(ingestion_dir, file)
+            shutil.move(src, dst)
+
+
+def move_puzzle_mode_levels():
+    """Move generated puzzle mode levels to game assets directory."""
+    source_dir = './puzzle_mode_levels'
+    dest_dir = '../game/assets/puzzle_mode_levels'
+    
+    # Empty destination dir
+    if os.path.exists(dest_dir):
+        for file in os.listdir(dest_dir):
+            file_path = os.path.join(dest_dir, file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+
+
+    # Create destination directory if it doesn't exist
+    os.makedirs(dest_dir, exist_ok=True)
+    
+    
+    # Move all files from source to destination
+    for file in os.listdir(source_dir):
+        src_path = os.path.join(source_dir, file)
+        dst_path = os.path.join(dest_dir, file)
+        
+        # Remove destination file if it exists
+        if os.path.exists(dst_path):
+            os.remove(dst_path)
+            
+        shutil.move(src_path, dst_path)
+        print(f"Moved {file} to game assets")
+
+
 def format_metadata_to_cfg(level):
     metadata_queue = level['metadata_queue']
     metadata_target_gem = level['metadata_target_gem']
@@ -121,9 +172,17 @@ def empty_output_dir():
                 print(e)
 
 if __name__ == "__main__":
+    print('Starting...')
+    prepare_ingestion_directory()
+
+    print('Empty output directory...')
     empty_output_dir()
 
+    print('Read and sort levels and worlds data...')
     levels_data, worlds_data = read_and_sort_levels_and_worlds_data()
+    print("Data read:")
+    print(f"\tLevels: {len(levels_data)}")
+    print(f"\tWorlds: {len(worlds_data)}")
 
     is_data_sequential = validate_sequential_data(levels_data, worlds_data)
     if not is_data_sequential:
@@ -131,6 +190,7 @@ if __name__ == "__main__":
 
 
     output = map_csv_to_json_and_cfgs(levels_data, worlds_data)
+    move_puzzle_mode_levels()
 
         
 
