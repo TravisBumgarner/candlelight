@@ -1,62 +1,92 @@
 {
-	"1": {
-		"world_number": 1,
-		"world_name": "Back to the Basics",
-		"levels": [
-			{
-				"level_number": 1,
-				"file_name": "2edcf1.cfg"
-			},
-			{
-				"level_number": 2,
-				"file_name": "5e2c9b.cfg"
-			},
-			{
-				"level_number": 3,
-				"file_name": "56fa3d.cfg"
-			}
-		]
-	},
-	"2": {
-		"world_number": 2,
-		"world_name": "Nothing but Squares",
-		"levels": [
-			{
-				"level_number": 1,
-				"file_name": "4dd918.cfg"
-			},
-			{
-				"level_number": 2,
-				"file_name": "37284c.cfg"
-			},
-			{
-				"level_number": 3,
-				"file_name": "438941.cfg"
-			},
-			{
-				"level_number": 4,
-				"file_name": "e8a657.cfg"
-			},
-			{
-				"level_number": 5,
-				"file_name": "a2191f.cfg"
-			},
-			{
-				"level_number": 6,
-				"file_name": "f01680.cfg"
-			},
-			{
-				"level_number": 7,
-				"file_name": "08d893.cfg"
-			},
-			{
-				"level_number": 8,
-				"file_name": "0800f4.cfg"
-			},
-			{
-				"level_number": 9,
-				"file_name": "174233.cfg"
-			}
-		]
-	}
+    "1": {
+        "world_number": 1,
+        "world_name": "Back to the Basics",
+        "levels": [
+            {
+                "level_number": 1,
+                "file_name": "010001.cfg"
+            },
+            {
+                "level_number": 2,
+                "file_name": "010002.cfg"
+            },
+            {
+                "level_number": 3,
+                "file_name": "010003.cfg"
+            }
+        ]
+    },
+    "2": {
+        "world_number": 2,
+        "world_name": "Nothing but Squares",
+        "levels": [
+            {
+                "level_number": 1,
+                "file_name": "020001.cfg"
+            },
+            {
+                "level_number": 2,
+                "file_name": "020002.cfg"
+            },
+            {
+                "level_number": 3,
+                "file_name": "020003.cfg"
+            },
+            {
+                "level_number": 4,
+                "file_name": "020004.cfg"
+            },
+            {
+                "level_number": 5,
+                "file_name": "020005.cfg"
+            },
+            {
+                "level_number": 6,
+                "file_name": "020006.cfg"
+            },
+            {
+                "level_number": 7,
+                "file_name": "020007.cfg"
+            },
+            {
+                "level_number": 8,
+                "file_name": "020008.cfg"
+            },
+            {
+                "level_number": 9,
+                "file_name": "020009.cfg"
+            }
+        ]
+    },
+    "3": {
+        "world_number": 3,
+        "world_name": "Caught ZZZing",
+        "levels": [
+            {
+                "level_number": 1,
+                "file_name": "030001.cfg"
+            },
+            {
+                "level_number": 2,
+                "file_name": "030002.cfg"
+            },
+            {
+                "level_number": 3,
+                "file_name": "030003.cfg"
+            },
+            {
+                "level_number": 4,
+                "file_name": "030004.cfg"
+            },
+            {
+                "level_number": 5,
+                "file_name": "030005.cfg"
+            },
+            {
+                "level_number": 6,
+                "file_name": "030006.cfg"
+            }
+        ]
+    }
 }

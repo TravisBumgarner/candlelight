@@ -7,11 +7,12 @@ func get_worlds_metadata():
 	
 func get_level_data(world_number, level_number):
 	var level_metadata = self.get_level_metadata(world_number, level_number)
-
+	print('loading level', level_metadata)
 	var current_level_absolute_path = "res://assets/puzzle_mode_levels/%s" % [level_metadata['file_name']]
 	var config = ConfigFile.new()
+	print('loading', current_level_absolute_path)
 	config.load(current_level_absolute_path)
-
+	print("encoded", config.encode_to_text())
 	return config
 
 func get_level_metadata(world_number, level_number):

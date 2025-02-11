@@ -106,6 +106,9 @@ func handle_save_press(save_slot: String):
 			else:
 				# Future worlds: Disable everything
 				disabled = true
+				
+			# ENABLE EVERYTHING
+			disabled = false
 						
 			
 			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_metadata['level_number']], -1)

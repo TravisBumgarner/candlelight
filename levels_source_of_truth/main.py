@@ -6,13 +6,7 @@ import shutil
 BASE_OUTPUT_PATH = 'puzzle_mode_levels'
 
 def prepare_ingestion_directory():
-    # Remove existing Levels files
     ingestion_dir = './ingestion'
-    if os.path.exists(ingestion_dir):
-        for file in os.listdir(ingestion_dir):
-            if file.startswith('Levels'):
-                file_path = os.path.join(ingestion_dir, file)
-                os.remove(file_path)
 
     # Move new files from Downloads
     downloads_dir = os.path.expanduser('~/Downloads')
@@ -107,7 +101,8 @@ def read_and_sort_levels_and_worlds_data():
         with open(levels_path, 'r') as file:
             reader = csv.DictReader(file)
             levels_data = list(reader)
-            levels_data = sorted(levels_data, key=lambda x: (int(x['world_number']), int(x['level_number'])))
+            valid_levels_data = [level for level in levels_data if level['unique_id'] != '' and level['world_number'] != '' and level['level_number'] != '']
+            levels_data = sorted(valid_levels_data, key=lambda x: (int(x['world_number']), int(x['level_number'])))
 
     if os.path.isfile(worlds_path):
         with open(worlds_path, 'r') as file:
@@ -183,6 +178,9 @@ if __name__ == "__main__":
     print("Data read:")
     print(f"\tLevels: {len(levels_data)}")
     print(f"\tWorlds: {len(worlds_data)}")
+
+    if len(levels_data) == 0 or len(worlds_data) == 0:
+        raise Exception('No data found')
 
     is_data_sequential = validate_sequential_data(levels_data, worlds_data)
     if not is_data_sequential:

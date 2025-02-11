@@ -13,9 +13,9 @@ func new_game():
 	self.level_complete_controls_h_box_container.hide()
 	erase_board()
 	self.alchemizations = 0
-	
+	print('wolrd num, level num', world_number, level_number)
 	var level_config = PuzzleModeLevelManager.get_level_data(world_number, level_number)
-	
+	print('level config', level_config)
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
 	var save_config = ConfigFile.new()
@@ -26,6 +26,7 @@ func new_game():
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_control, game_key, visible_queue_size, should_fill_queue)
+	print('??', level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
 	queue.load(level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
 	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
