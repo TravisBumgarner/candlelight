@@ -4,19 +4,6 @@ import re
 from visualize import SHAPES_DICT
 import shutil
 
-def prepare_ingestion_directory():
-    ingestion_dir = './ingestion'
-
-    # Move new files from Downloads
-    downloads_dir = os.path.expanduser('~/Downloads')
-    for file in os.listdir(downloads_dir):
-        if file.startswith('Levels'):
-            print(f"\tMoving {file} to ingestion directory...")
-            src = os.path.join(downloads_dir, file)
-            dst = os.path.join(ingestion_dir, file)
-            shutil.move(src, dst)
-
-
 
 def parse_vector2i_list(vector_str):
     # Extract all Vector2i coordinates using regex
@@ -165,5 +152,4 @@ def generate_html():
     print("Generated level_visualization.html")
 
 if __name__ == "__main__":
-    prepare_ingestion_directory()
     generate_html()

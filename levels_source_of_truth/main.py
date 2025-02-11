@@ -5,19 +5,6 @@ import shutil
 
 BASE_OUTPUT_PATH = 'puzzle_mode_levels'
 
-def prepare_ingestion_directory():
-    ingestion_dir = './ingestion'
-
-    # Move new files from Downloads
-    downloads_dir = os.path.expanduser('~/Downloads')
-    for file in os.listdir(downloads_dir):
-        if file.startswith('Levels'):
-            print(f"\tMoving {file} to ingestion directory...")
-            src = os.path.join(downloads_dir, file)
-            dst = os.path.join(ingestion_dir, file)
-            shutil.move(src, dst)
-
-
 def move_puzzle_mode_levels():
     """Move generated puzzle mode levels to game assets directory."""
     source_dir = './puzzle_mode_levels'
@@ -168,7 +155,6 @@ def empty_output_dir():
 
 if __name__ == "__main__":
     print('Starting...')
-    prepare_ingestion_directory()
 
     print('Empty output directory...')
     empty_output_dir()
