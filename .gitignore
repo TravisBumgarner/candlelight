@@ -4,4 +4,5 @@ node_modules/
 build/
 dist/
 *.zip
-ingestion/
+venv/
+.~lock*

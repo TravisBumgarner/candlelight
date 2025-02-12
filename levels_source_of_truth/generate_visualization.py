@@ -47,6 +47,18 @@ def generate_html():
     html = """
     <html>
     <head>
+        <script>
+            // Check for changes every 1 second
+            setInterval(function() {
+                fetch('level_visualization.html?' + new Date().getTime())
+                    .then(response => response.text())
+                    .then(newHtml => {
+                        if (newHtml !== document.documentElement.outerHTML) {
+                            location.reload();
+                        }
+                    });
+            }, 1000);
+        </script>
         <style>
             body { 
                 font-family: Arial, sans-serif;
