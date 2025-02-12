@@ -219,6 +219,7 @@ func _find_shapes(desired_color: Vector2i):
 				flood_fill(Vector2i(x, y), desired_color, shape)
 				if shape.size() > 0:
 					shapes.append(shape)
+	print('shapes found', shapes)
 	return shapes
 
 func flood_fill(pos, desired_color, shape):

@@ -10,11 +10,11 @@ const GAME_MODE = {
 
 const GAME_SLOTS = ['A', 'B', 'C', 'D']
 
-const GRID = { HEIGHT = 10, WIDTH = 13 }
+const GRID = { HEIGHT = 13, WIDTH = 13 }
 const BOARD_ORIGIN = Vector2i(0, 0)
 const BOARD_END = BOARD_ORIGIN + Vector2i(GRID.WIDTH, GRID.HEIGHT)
 
-const STARTING_SPACE_ORIGIN = Vector2i(5, -3)
+const STARTING_SPACE_ORIGIN = Vector2i(5, 5)
 
 const BOARD_LAYER = {
 	BORDER = 0,
@@ -55,7 +55,7 @@ const SPRITE = {
 	MID_BORDER = Vector2i(4,0),
 	GEM_BLUE_INACTIVE = Vector2i(5,0),
 	GEM_BLUE_ACTIVE = Vector2i(6,0),
-	INVALID_MOVE = Vector2i(8,0),
+	#INVALID_MOVE = Vector2i(8,0),
 }
 
 const ACTION = {

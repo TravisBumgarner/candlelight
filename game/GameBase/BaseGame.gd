@@ -71,10 +71,6 @@ func _on_action_pressed(action):
 	}
 	
 	if action in direction_map:
-		if player.current_absolute_position[1] == -3 and action == 'down':
-			# Move player down into game board if they're starting in the new area.
-			player.move(Vector2i(0, 3))		
-		else:
 			player.move(direction_map[action])
 	
 	match action:
