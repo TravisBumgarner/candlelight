@@ -14,17 +14,27 @@ const CENTER_ALIGN_QUEUE = Vector2i(1,1)
 func _draw_full_queue():
 	self.full_queue_tile_map.clear_layer(GlobalConsts.QUEUE_LAYER.QUEUE)
 
-	var x_offset = Vector2i(0, 0)
+	var x_offset = 0
+	var y_offset = 0
+	const SHAPE_SPACING = 4
+	const SHAPES_PER_ROW = 8  # Now we explicitly define how many shapes fit per row
 	
 	var queue_index = 0
 	for shape_name in self.full_queue:
 		var shape = Shapes.SHAPES_DICT[shape_name]
-
+		
+		# Wrap after every 8 shapes
+		if queue_index > 0 and queue_index % SHAPES_PER_ROW == 0:
+			x_offset = 0
+			y_offset += 4
+			
+		var offset = Vector2i(x_offset, y_offset)
 		var is_selected = selected_full_queue_index == queue_index
 		for vector in shape[0]:
 			var color = GlobalConsts.SPRITE.DARK_ACTIVE if is_selected else GlobalConsts.SPRITE.DARK_INACTIVE
-			self.full_queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + x_offset + CENTER_ALIGN_QUEUE, GlobalConsts.GEMS_TILE_ID, color) 
-		x_offset += Vector2i(4, 0)
+			self.full_queue_tile_map.set_cell(GlobalConsts.QUEUE_LAYER.QUEUE, vector + offset + CENTER_ALIGN_QUEUE, GlobalConsts.GEMS_TILE_ID, color)
+		
+		x_offset += SHAPE_SPACING
 		queue_index += 1
 
 func append_to_queue(shape):
