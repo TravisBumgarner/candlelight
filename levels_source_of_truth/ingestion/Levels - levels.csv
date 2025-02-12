@@ -24,3 +24,7 @@ world_number,level_number,,difficulty,unique_id,comments,metadata_queue,metadata
 5,3,5 3,1,50003,,"[""upper_z"", ""upper_z"", ""upper_z"", ""upper_z""]","[Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2), Vector2i(0, 0), Vector2i(0, 1), Vector2i(0, 2), Vector2i(2, 2), Vector2i(2, 0), Vector2i(2, 1), ]"
 5,4,5 4,2,50004,,"[""upper_z"", ""upper_z"", ""upper_z"", ""upper_z""]","[Vector2i(1, 0), Vector2i(1, 1), Vector2i(1, 2), Vector2i(0, 1), Vector2i(2, 1), ]"
 5,5,5 5 ,2,50005,,"[""upper_z"", ""upper_z"", ""upper_z"", ""upper_z""]","[Vector2i(1, 1), Vector2i(0, 2), Vector2i(2, 0), Vector2i(1, 0), Vector2i(0, 1), ]"
+,,,,,,,
+,,,,,,,
+,,,,,,,
+9,1,9 1,5,90001,,"[""upper_z"", ""upper_z"", ""upper_z"", ""upper_z"", ""upper_z"", ""upper_z"", ""upper_z"", ""upper_z"", ""upper_z""]","[Vector2i(0, 0), Vector2i(1, 0), Vector2i(2, 0), Vector2i(3, 0), Vector2i(4, 0), Vector2i(3, 1), Vector2i(2, 1), Vector2i(1, 1), Vector2i(2, 2), ]"
