@@ -12,6 +12,8 @@ class VisualizationHandler(FileSystemEventHandler):
         self.last_modified = 0
         # Minimum time between regenerations to prevent rapid successive updates
         self.cooldown = 1.0
+        subprocess.run(['python', './generate_visualization.py'])
+
 
     def on_modified(self, event):
         if event.src_path.endswith('.csv'):
