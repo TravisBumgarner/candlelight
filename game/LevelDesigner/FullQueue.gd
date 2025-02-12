@@ -45,3 +45,7 @@ func increment_selected_full_queue_index(increment):
 	if selected_full_queue_index < 0:
 		selected_full_queue_index += full_queue_size
 	_draw_full_queue()
+	
+func remove_from_queue():
+	self.full_queue.remove_at(self.selected_full_queue_index)
+	self._draw_full_queue()
