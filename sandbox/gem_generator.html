@@ -37,7 +37,8 @@
     </style>
 </head>
 <body>
-    <h1>Rotate Clockwise</h1>
+    <h1>Shape Generator</h1>
+    <input type="text" id="shapeName" placeholder="Enter shape name">
     <div class="grid">
         <!-- Generate cells dynamically -->
         <script>
@@ -48,21 +49,65 @@
             }
         </script>
     </div>
-    <button onclick="getCoordinates()">Get Coordinates</button>
+    <button onclick="getCoordinates()">Generate Shape Code</button>
     <div id="result"></div>
 
     <script>
+        function rotateCoordinates(coords) {
+            // Get bounds of the shape
+            const maxX = Math.max(...coords.map(c => c.x));
+            const maxY = Math.max(...coords.map(c => c.y));
+            
+            // Rotate 90 degrees clockwise
+            return coords.map(coord => ({
+                x: coord.y,
+                y: maxX - coord.x
+            }));
+        }
+
         function getCoordinates() {
+            const shapeName = document.getElementById('shapeName').value.toLowerCase();
+            if (!shapeName) {
+                alert('Please enter a shape name');
+                return;
+            }
+
+            // Get initial coordinates
             const coordinates = [];
             for (let i = 0; i < 6; i++) {
                 for (let j = 0; j < 6; j++) {
                     const checkbox = document.getElementById(`cell-${i}-${j}`);
                     if (checkbox.checked) {
-                        coordinates.push(`Vector2i(${i},${j})`);
+                        coordinates.push({x: i, y: j});
                     }
                 }
             }
-            document.getElementById('result').innerHTML = JSON.stringify("[" + coordinates.join(', ') + "]");
+
+            // Generate all 4 rotations
+            let currentRotation = coordinates;
+            const allRotations = [currentRotation];
+            
+            for (let i = 0; i < 3; i++) {
+                currentRotation = rotateCoordinates(currentRotation);
+                allRotations.push(currentRotation);
+            }
+
+            // Format the output
+            const rotationStrings = allRotations.map(rotation => {
+                const coordStrings = rotation.map(coord => 
+                    `Vector2i(${coord.x},${coord.y})`
+                );
+                return `[${coordStrings.join(', ')}]`;
+            });
+
+            // Create the final formatted string
+            const finalOutput = `const ${shapeName}_rot3 = ${rotationStrings[0]}
+const ${shapeName}_rot2 = ${rotationStrings[1]}
+const ${shapeName}_rot1 = ${rotationStrings[2]}
+const ${shapeName}_rot0 = ${rotationStrings[3]}
+const ${shapeName} = [${shapeName}_rot0, ${shapeName}_rot1, ${shapeName}_rot2, ${shapeName}_rot3]`;
+
+            document.getElementById('result').innerHTML = `<pre>${finalOutput}</pre>`;
         }
     </script>
 </body>
