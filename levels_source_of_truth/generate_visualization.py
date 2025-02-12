@@ -1,7 +1,7 @@
 import csv
 import os
 import re
-from visualize import SHAPES_DICT
+from shapes import SHAPES_DICT
 import shutil
 
 
@@ -94,25 +94,26 @@ def generate_html():
             .world-section {
                 display: flex;
                 flex-direction: row;
-                gap: 20px;
                 flex-wrap: wrap;
             }
             .levels-wrapper {
                 display: flex;
                 flex-direction: column;
-                gap: 20px;
             }
             .level { 
-                margin: 20px;
-                padding: 20px;
+                margin: 10;
+                padding: 10px;
                 border: 1px solid #ccc;
                 border-radius: 5px;
+                flex: 0 0 30%;
+                box-sizing: border-box;
             }
             .queue {
                 display: flex;
                 gap: 10px;
                 margin: 10px 0;
                 align-items: center;
+                flex-wrap: wrap;
             }
             .shape { display: inline-block; }
             .target-gem { margin-top: 10px; }

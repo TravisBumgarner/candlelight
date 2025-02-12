@@ -69,6 +69,7 @@ def validate_sequential_data(levels_data, worlds_data):
             current_level = 1
 
         if level_number != current_level:
+            print(f"Level {level['unique_id']} is not sequential. Expected level {current_level}, got {level_number}")
             return False
 
         current_level += 1
