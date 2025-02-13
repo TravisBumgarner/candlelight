@@ -123,7 +123,6 @@ func create_world_label(world_name: String, world_number: int):
 	label.horizontal_alignment = 1 # center
 	level_buttons_container.add_child(label)
 
-
 func _on_save_a_button_pressed():
 	handle_save_press('a')
 
