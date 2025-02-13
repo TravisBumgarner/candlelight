@@ -55,11 +55,15 @@ theme = ExtResource("3_pd0m8")
 text = "New Level"
 
 [node name="ScrollContainer" type="ScrollContainer" parent="LevelsPositioningContainer/VBoxContainer"]
+clip_contents = false
 custom_minimum_size = Vector2(2.08165e-12, 400)
 layout_mode = 2
+size_flags_vertical = 3
 
 [node name="LevelButtonsContainer" type="VBoxContainer" parent="LevelsPositioningContainer/VBoxContainer/ScrollContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_constants/separation = 20
 
 [connection signal="pressed" from="LevelsPositioningContainer/VBoxContainer/NewLevelButton" to="." method="_on_new_level_button_pressed"]
