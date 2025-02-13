@@ -1,14 +1,19 @@
 extends Control
 class_name MainMenu
 
-@onready var puzzle_mode_button = $VBoxContainer/PuzzleModeButton
-@onready var daily_game_button = $VBoxContainer/DailyGameButton
-@onready var tutorial_button = $VBoxContainer/TutorialButton
-@onready var level_designer_button = $VBoxContainer/LevelDesignerButton
-@onready var credits_button = $VBoxContainer/CreditsButton
-@onready var exit_button = $VBoxContainer/ExitButton
+@onready var puzzle_mode_button = $VBoxContainer/Buttons/PuzzleModeButton
+@onready var free_play_game_button = $VBoxContainer/Buttons/FreePlayGameButton
+@onready var daily_game_button = $VBoxContainer/Buttons/DailyGameButton
+@onready var tutorial_button = $VBoxContainer/Buttons/TutorialButton
+@onready var credits_button = $VBoxContainer/Buttons/CreditsButton
+@onready var exit_button = $VBoxContainer/Buttons/ExitButton
 @onready var shared_label = $VBoxContainer/SharedLabel
-@onready var free_play_game_button = $VBoxContainer/FreePlayGameButton
+@onready var buttons_container = $VBoxContainer/Buttons
+@onready var buttons = buttons_container.get_children()
+
+@onready var level_designer_button = $VBoxContainer/Buttons/LevelDesignerButton
+
+
 
 @onready var game_scene = load("res://GameBase/game_board.tscn")
 @onready var puzzle_game_menu = load("res://GamePuzzle/PuzzleGameMenu.tscn")
@@ -38,9 +43,14 @@ func _ready():
 	exit_button.connect("pressed", Callable(self, "on_exit_button_down"))
 	credits_button.connect("pressed", Callable(self, "on_credits_button_down"))
 	get_viewport().connect("gui_focus_changed", Callable(self, "_on_focus_changed"))
-
-	puzzle_mode_button.grab_focus()
 	
+	for button in buttons:
+		button.connect("mouse_entered", Callable(self, "_on_button_hovered").bind(button))
+	puzzle_mode_button.grab_focus()
+
+func _on_button_hovered(button):
+	button.grab_focus()  # Set focus on hover	
+
 func on_tutorial_button_down():
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Tutorial
 	get_tree().change_scene_to_packed(game_scene)
