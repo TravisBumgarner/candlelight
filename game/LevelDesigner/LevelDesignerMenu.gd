@@ -17,7 +17,7 @@ func _ready():
 
 func _on_level_button_pressed(level):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
-	GlobalState.puzzle_mode_level = level
+	GlobalState.puzzle_id = level  # This might be incorrect?
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_action_pressed(action):

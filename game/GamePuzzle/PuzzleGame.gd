@@ -13,22 +13,21 @@ func new_game():
 	self.level_complete_controls_center_container.hide()
 	erase_board()
 	self.alchemizations = 0
-	print('wolrd num, level num', world_number, level_number)
+
 	var level_config = PuzzleModeLevelManager.get_level_data(world_number, level_number)
-	print('level config', level_config)
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
 	var save_config = ConfigFile.new()
 	save_config.load(absolute_file_path)
-	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_number], -1)
+	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
+	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, -1)
 
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_control, game_key, visible_queue_size, should_fill_queue)
-	print('??', level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
+
 	queue.load(level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
-	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	var target_gem = level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
@@ -70,8 +69,9 @@ func upsert_game_save():
 	if (should_update_save):
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, new_max['level_number'])
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, new_max['world_number'])
-
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level_number], alchemizations)	
+	
+	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, alchemizations)	
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
 func _on_action_pressed(action):

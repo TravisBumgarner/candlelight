@@ -227,7 +227,6 @@ func _on_save_to_clipboard_button_pressed():
 		formatted_points += ("Vector2i(%d, %d), " % [point.x, point.y])
 	formatted_points += ']'
 	
-	print(formatted_points)
 	# Create the JSON string
 	var details = JSON.stringify({
 		"queue": full_queue.full_queue,

@@ -130,13 +130,14 @@ def map_csv_to_json_and_cfgs(levels_data, worlds_data):
         })
 
     for level in levels_data:
-        file_name = f'{level['unique_id']}.cfg'
+        unique_id = f"{level['world_number']}_{level['level_number']}"
+        file_name = f'{unique_id}.cfg'
 
         save_to_cfg(level, file_name)
-
         output[level['world_number']]['levels'].append({
+            'unique_id': unique_id,
             'level_number': int(level['level_number']),
-            'file_name': file_name,
+            'file_name': file_name
         })
 
     save_to_json(output)

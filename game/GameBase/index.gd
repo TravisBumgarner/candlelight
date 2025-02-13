@@ -74,12 +74,13 @@ func _ready():
 			selected_game["class"],
 		)
 		
-	if GlobalState.puzzle_mode_level != null:
+	if GlobalState.puzzle_id != null:
 		# I don't think we can pass the level from the PuzzleGameMenu
 		# So I think this is the next best thing
-		game.level_number = GlobalState.puzzle_mode_level['level_number']
-		game.world_number = GlobalState.puzzle_mode_level['world_number']
-		GlobalState.puzzle_mode_level = null
+		var details = Utilities.parse_puzzle_id(GlobalState.puzzle_id)
+		game.level_number = details['level_number']
+		game.world_number = details['world_number']
+		GlobalState.puzzle_id = null
 	
 	var game_save_path = "user://game_saves/%s/%s.save" % [GlobalState.game_mode, GlobalState.save_slot]
 	if FileAccess.file_exists(game_save_path):
