@@ -53,10 +53,10 @@ texture = ExtResource("2_sc2oy")
 [node name="TargetGemControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 368.0
-offset_top = 98.0
-offset_right = 408.0
-offset_bottom = 138.0
+offset_left = 352.0
+offset_top = 95.0
+offset_right = 392.0
+offset_bottom = 135.0
 
 [node name="TextureRect3" type="TextureRect" parent="TargetGemControl"]
 layout_mode = 0
@@ -67,7 +67,22 @@ offset_bottom = 210.0
 texture = ExtResource("4_4nrn3")
 expand_mode = 1
 
-[node name="TargetGemTileMap" type="TileMap" parent="TargetGemControl"]
+[node name="CenterContainer" type="CenterContainer" parent="TargetGemControl"]
+layout_mode = 0
+offset_right = 192.0
+offset_bottom = 190.0
+
+[node name="TargetGemTileMap" type="TileMap" parent="TargetGemControl/CenterContainer"]
+position = Vector2(0, 2)
+scale = Vector2(0.75, 0.75)
+tile_set = SubResource("TileSet_aavhx")
+rendering_quadrant_size = 32
+format = 2
+layer_0/name = "BORDER"
+layer_1/name = "GEM"
+layer_1/tile_data = PackedInt32Array()
+
+[node name="Border" type="TileMap" parent="TargetGemControl"]
 tile_set = SubResource("TileSet_aavhx")
 rendering_quadrant_size = 32
 format = 2
@@ -76,19 +91,21 @@ layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 2
 layer_1/name = "GEM"
 layer_1/tile_data = PackedInt32Array()
 
-[node name="Label" type="Label" parent="TargetGemControl/TargetGemTileMap"]
+[node name="Label" type="Label" parent="TargetGemControl/Border"]
 offset_left = -32.0
-offset_top = -64.0
+offset_top = -54.0
 offset_right = 224.0
-offset_bottom = -41.0
+offset_bottom = -31.0
 text = "Target"
 horizontal_alignment = 1
 
 [node name="QueueControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 16.0
+offset_top = -3.0
+offset_right = 56.0
+offset_bottom = 37.0
 
 [node name="TextureRect2" type="TextureRect" parent="QueueControl"]
 layout_mode = 0
@@ -111,19 +128,19 @@ layer_1/tile_data = PackedInt32Array()
 
 [node name="Label" type="Label" parent="QueueControl/QueueTileMap"]
 offset_left = -32.0
-offset_top = -64.0
+offset_top = -55.0
 offset_right = 192.0
-offset_bottom = -41.0
+offset_bottom = -32.0
 text = "Queue"
 horizontal_alignment = 1
 
 [node name="GameDetailsControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 368.0
-offset_top = 418.0
-offset_right = 408.0
-offset_bottom = 458.0
+offset_left = 352.0
+offset_top = 380.0
+offset_right = 392.0
+offset_bottom = 420.0
 
 [node name="TextureRect4" type="TextureRect" parent="GameDetailsControl"]
 modulate = Color(0.678944, 0.678944, 0.678944, 1)
@@ -131,22 +148,24 @@ layout_mode = 0
 offset_left = -24.0
 offset_top = -14.0
 offset_right = 208.0
-offset_bottom = 178.0
+offset_bottom = 144.0
 texture = ExtResource("4_4nrn3")
 expand_mode = 1
 stretch_mode = 6
 flip_h = true
 
 [node name="GameDetailsTileMap" type="TileMap" parent="GameDetailsControl"]
+position = Vector2(0, 3)
 tile_set = SubResource("TileSet_aavhx")
 rendering_quadrant_size = 32
 format = 2
 layer_0/name = "BORDER"
-layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 327686, 262144, 0, 262150, 262144, 0, 196614, 262144, 0, 131078, 262144, 0, 65542, 262144, 0, 6, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 65535, 262144, 0, 327680, 262144, 0, 327681, 262144, 0, 327682, 262144, 0, 327683, 262144, 0, 327684, 262144, 0, 327685, 262144, 0)
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 262150, 262144, 0, 196614, 262144, 0, 131078, 262144, 0, 65542, 262144, 0, 6, 262144, 0, -65530, 262144, 0, -65531, 262144, 0, -65532, 262144, 0, -65533, 262144, 0, -65534, 262144, 0, -65535, 262144, 0, -65536, 262144, 0, 65535, 262144, 0, 262144, 262144, 0, 262145, 262144, 0, 262146, 262144, 0, 262147, 262144, 0, 262148, 262144, 0, 262149, 262144, 0)
 layer_1/name = "QUEUE"
 layer_1/tile_data = PackedInt32Array()
 
 [node name="GameDetailsLabel" type="Label" parent="GameDetailsControl/GameDetailsTileMap"]
+visible = false
 offset_left = -32.0
 offset_top = -64.0
 offset_right = 224.0
@@ -163,7 +182,7 @@ offset_bottom = 160.0
 [node name="VBoxContainer" type="VBoxContainer" parent="GameDetailsControl/GameDetailsTileMap/Control"]
 layout_mode = 0
 offset_right = 192.0
-offset_bottom = 160.0
+offset_bottom = 132.0
 alignment = 1
 
 [node name="GameDetailsValue" type="RichTextLabel" parent="GameDetailsControl/GameDetailsTileMap/Control/VBoxContainer"]
@@ -174,15 +193,15 @@ text = "Scoring"
 fit_content = true
 
 [node name="TextureRect3" type="TextureRect" parent="."]
-offset_left = 668.0
-offset_top = 47.0
-offset_right = 1117.0
-offset_bottom = 494.0
+offset_left = 625.0
+offset_top = 76.0
+offset_right = 1074.0
+offset_bottom = 523.0
 texture = ExtResource("4_4nrn3")
 expand_mode = 1
 
 [node name="BoardTileMap" type="TileMap" parent="."]
-position = Vector2(683, 66)
+position = Vector2(640, 95)
 tile_set = SubResource("TileSet_aavhx")
 rendering_quadrant_size = 32
 format = 2
@@ -225,11 +244,10 @@ theme = ExtResource("10_24mwh")
 text = "Submit Score"
 
 [node name="Instructions" type="VBoxContainer" parent="."]
-visible = false
-offset_left = 656.0
-offset_top = 516.0
-offset_right = 1132.0
-offset_bottom = 648.0
+offset_left = 64.0
+offset_top = 544.0
+offset_right = 1088.0
+offset_bottom = 608.0
 alignment = 1
 
 [node name="0_Move" type="HBoxContainer" parent="Instructions"]
@@ -250,21 +268,17 @@ layout_mode = 2
 texture = ExtResource("11_wwvo0")
 stretch_mode = 3
 
-[node name="Row2" type="HBoxContainer" parent="Instructions/0_Move/WASD"]
-layout_mode = 2
-alignment = 1
-
-[node name="LetterA" type="TextureRect" parent="Instructions/0_Move/WASD/Row2"]
+[node name="LetterA" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("12_tbai0")
 stretch_mode = 3
 
-[node name="LetterS" type="TextureRect" parent="Instructions/0_Move/WASD/Row2"]
+[node name="LetterS" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("13_35u35")
 stretch_mode = 3
 
-[node name="LetterD" type="TextureRect" parent="Instructions/0_Move/WASD/Row2"]
+[node name="LetterD" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("14_uoqib")
 stretch_mode = 3
@@ -312,8 +326,7 @@ alignment = 1
 [node name="Label" type="Label" parent="Instructions/2_Stack"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Place shapes on 
-top of each other"
+text = "Place shapes on top of each other"
 horizontal_alignment = 1
 
 [node name="3_Undo" type="HBoxContainer" parent="Instructions"]
@@ -342,8 +355,7 @@ alignment = 1
 [node name="Label" type="Label" parent="Instructions/4_Score"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Create the target
-gem to advance"
+text = "Create the target gem to advance"
 horizontal_alignment = 1
 
 [node name="5_Queue" type="HBoxContainer" parent="Instructions"]
@@ -355,8 +367,7 @@ alignment = 1
 [node name="Label" type="Label" parent="Instructions/5_Queue"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Plan ahead to build
-harder target gems"
+text = "Plan ahead to build harder target gems"
 horizontal_alignment = 1
 
 [node name="6_Done" type="HBoxContainer" parent="Instructions"]
@@ -373,28 +384,46 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="Instructions/6_Done"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Tutorial
-complete!"
+text = "Tutorial complete!"
 horizontal_alignment = 1
 
-[node name="LevelCompleteControllsCenterContainer" type="CenterContainer" parent="."]
-offset_left = 652.0
-offset_top = 512.0
-offset_right = 1132.0
-offset_bottom = 648.0
+[node name="LevelCompleteControlsCenterContainer" type="CenterContainer" parent="."]
+z_index = 10
+offset_left = 608.0
+offset_top = 60.0
+offset_right = 1088.0
+offset_bottom = 544.0
 
-[node name="LevelCompleteControlsHBoxContainer" type="HBoxContainer" parent="LevelCompleteControllsCenterContainer"]
+[node name="ColorRect" type="ColorRect" parent="LevelCompleteControlsCenterContainer"]
+custom_minimum_size = Vector2(440, 440)
+layout_mode = 2
+color = Color(0, 0, 0, 0.721569)
+
+[node name="BoardTileMap2" type="TileMap" parent="LevelCompleteControlsCenterContainer"]
+position = Vector2(32, 35)
+tile_set = SubResource("TileSet_aavhx")
+rendering_quadrant_size = 32
+format = 2
+layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 131071, 262144, 0, 196607, 262144, 0, 262143, 262144, 0, 327679, 262144, 0, 393215, 262144, 0, 65535, 262144, 0, 458751, 262144, 0, 524287, 262144, 0, 589823, 262144, 0, 655359, 262144, 0, 720895, 262144, 0, 655373, 262144, 0, -65523, 262144, 0, 589837, 262144, 0, 524301, 262144, 0, 458765, 262144, 0, 393229, 262144, 0, 327693, 262144, 0, 262157, 262144, 0, 196621, 262144, 0, 131085, 262144, 0, 65549, 262144, 0, 13, 262144, 0, -65536, 262144, 0, -65535, 262144, 0, -65534, 262144, 0, -65533, 262144, 0, -65532, 262144, 0, -65531, 262144, 0, -65530, 262144, 0, -65529, 262144, 0, -65528, 262144, 0, -65527, 262144, 0, -65526, 262144, 0, -65525, 262144, 0, -65524, 262144, 0, 786431, 262144, 0, 851967, 262144, 0, 917503, 262144, 0, 851968, 262144, 0, 851969, 262144, 0, 851970, 262144, 0, 851971, 262144, 0, 851972, 262144, 0, 851973, 262144, 0, 851974, 262144, 0, 851975, 262144, 0, 851976, 262144, 0, 851977, 262144, 0, 851978, 262144, 0, 851979, 262144, 0, 851980, 262144, 0, 851981, 262144, 0, 786445, 262144, 0, 720909, 262144, 0)
+layer_1/z_index = 1
+layer_1/tile_data = PackedInt32Array()
+layer_2/z_index = 2
+layer_2/tile_data = PackedInt32Array()
+layer_3/z_index = 3
+layer_3/tile_data = PackedInt32Array()
+
+[node name="LevelCompleteControlsVBoxContainer" type="VBoxContainer" parent="LevelCompleteControlsCenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 40
 
-[node name="NextLevelButton" type="Button" parent="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer"]
+[node name="NextLevelButton" type="Button" parent="LevelCompleteControlsCenterContainer/LevelCompleteControlsVBoxContainer"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../RestartButton")
 focus_neighbor_right = NodePath("../RestartButton")
 theme = ExtResource("10_24mwh")
 text = "Next Level"
 
-[node name="RestartButton" type="Button" parent="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer"]
+[node name="RestartButton" type="Button" parent="LevelCompleteControlsCenterContainer/LevelCompleteControlsVBoxContainer"]
 layout_mode = 2
 focus_neighbor_left = NodePath("../NextLevelButton")
 focus_neighbor_right = NodePath("../NextLevelButton")
@@ -449,17 +478,20 @@ alignment = 1
 [node name="ResumeButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_bottom = NodePath("../ReturnToLevelEditorButton")
 theme = ExtResource("10_24mwh")
 text = "Resume"
 
 [node name="ReturnToLevelEditorButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
 layout_mode = 2
-focus_neighbor_top = NodePath("../MainMenuButton")
+focus_neighbor_top = NodePath("../ResumeButton")
+focus_neighbor_bottom = NodePath("../MainMenuButton")
 theme = ExtResource("10_24mwh")
 text = "Return to Level Editor"
 
 [node name="MainMenuButton" type="Button" parent="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../ReturnToLevelEditorButton")
 focus_neighbor_bottom = NodePath("../ResumeButton")
 theme = ExtResource("10_24mwh")
 text = "Main Menu"
@@ -565,8 +597,8 @@ theme_override_font_sizes/font_size = 36
 text = "Undo "
 horizontal_alignment = 1
 
-[connection signal="pressed" from="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
-[connection signal="pressed" from="LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="LevelCompleteControlsCenterContainer/LevelCompleteControlsVBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
+[connection signal="pressed" from="LevelCompleteControlsCenterContainer/LevelCompleteControlsVBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="visibility_changed" from="PauseMenuContainer" to="." method="_on_pause_menu_container_visibility_changed"]
 [connection signal="pressed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
 [connection signal="visibility_changed" from="PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton" to="." method="_on_resume_button_visibility_changed"]

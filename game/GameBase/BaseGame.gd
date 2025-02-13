@@ -7,7 +7,7 @@ var board_tile_map: TileMap
 var game_details_label: Label
 var game_details_value: RichTextLabel
 var game_details_control: Control
-var level_complete_controls_h_box_container: HBoxContainer
+var level_complete_controls_center_container: CenterContainer
 var level_complete_timer: Timer
 var game_over_timer: Timer
 var instructions_container: VBoxContainer
@@ -39,7 +39,7 @@ func _init(args: Array):
 	self.game_details_value = args[3]
 	self.game_over_timer = args [4]
 	self.instructions_container = args[5]
-	self.level_complete_controls_h_box_container = args[6]
+	self.level_complete_controls_center_container = args[6]
 	self.level_complete_timer = args[7]
 	self.pause_menu_container = args[8]
 	self.queue_control = args[9]

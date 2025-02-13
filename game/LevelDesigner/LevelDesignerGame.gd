@@ -10,7 +10,7 @@ func _init(args):
 
 func new_game():
 	self.disable_player_interaction = false
-	self.level_complete_controls_h_box_container.hide()
+	self.level_complete_controls_v_box_container.hide()
 	erase_board()
 	self.alchemizations = 0
 	
@@ -60,28 +60,28 @@ func level_complete(gems):
 func _on_action_pressed(action):
 	if action == 'undo' and is_game_over:
 		is_game_over = false
-		self.level_complete_controls_h_box_container.hide()
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
+		self.level_complete_controls_v_box_container.hide()
+		self.level_complete_controls_v_box_container.find_child('NextLevelButton').disabled = false
 	
 	super(action)
 	
 
 func _on_level_complete_timer_timeout():
-	self.level_complete_controls_h_box_container.show()
+	self.level_complete_controls_v_box_container.show()
 	if level_number == 5:
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
-		self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
+		self.level_complete_controls_v_box_container.find_child('NextLevelButton').hide() # Might conflict with DailyGame, who knows
+		self.level_complete_controls_v_box_container.find_child('NextLevelButton').text = "Demo Complete <3"
+		self.level_complete_controls_v_box_container.find_child('RestartButton').grab_focus()
+		self.level_complete_controls_v_box_container.find_child('NextLevelButton').disabled = true
 		return
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
+	self.level_complete_controls_v_box_container.find_child('NextLevelButton').disabled = false
+	self.level_complete_controls_v_box_container.find_child('NextLevelButton').grab_focus()
 
 func _on_game_over_timer_timeout():
 	is_game_over = true
-	self.level_complete_controls_h_box_container.show()
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
-	self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
+	self.level_complete_controls_v_box_container.show()
+	self.level_complete_controls_v_box_container.find_child('NextLevelButton').disabled = true
+	self.level_complete_controls_v_box_container.find_child('RestartButton').grab_focus()
 
 func game_over():
 	# Experiment with allowing user to hit undo.

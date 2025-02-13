@@ -30,6 +30,7 @@ MusicPlayer="*res://Singletons/MusicPlayer.tscn"
 
 [display]
 
+window/size/viewport_height=608
 window/stretch/mode="viewport"
 window/handheld/orientation=6
 

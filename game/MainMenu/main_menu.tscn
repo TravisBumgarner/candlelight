@@ -26,9 +26,9 @@ texture = ExtResource("1_4hbhq")
 custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
 layout_mode = 0
 offset_left = 688.0
-offset_right = 1042.0
-offset_bottom = 648.0
-theme_override_constants/separation = 30
+offset_right = 1118.0
+offset_bottom = 608.0
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="PuzzleModeButton" type="Button" parent="VBoxContainer"]

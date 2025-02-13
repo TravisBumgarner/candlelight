@@ -1,188 +1,188 @@
 {
-    "1": {
-        "world_number": 1,
-        "world_name": "Back to the Basics",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "10001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "10002.cfg"
-            },
-            {
-                "level_number": 3,
-                "file_name": "10003.cfg"
-            }
-        ]
-    },
-    "2": {
-        "world_number": 2,
-        "world_name": "Nothing but Squares",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "20001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "20002.cfg"
-            },
-            {
-                "level_number": 3,
-                "file_name": "20003.cfg"
-            },
-            {
-                "level_number": 4,
-                "file_name": "20004.cfg"
-            },
-            {
-                "level_number": 5,
-                "file_name": "20005.cfg"
-            },
-            {
-                "level_number": 6,
-                "file_name": "20006.cfg"
-            },
-            {
-                "level_number": 7,
-                "file_name": "20007.cfg"
-            },
-            {
-                "level_number": 8,
-                "file_name": "20008.cfg"
-            },
-            {
-                "level_number": 9,
-                "file_name": "20009.cfg"
-            }
-        ]
-    },
-    "3": {
-        "world_number": 3,
-        "world_name": "Caught ZZZing",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "30001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "30002.cfg"
-            },
-            {
-                "level_number": 3,
-                "file_name": "30003.cfg"
-            },
-            {
-                "level_number": 4,
-                "file_name": "30004.cfg"
-            },
-            {
-                "level_number": 5,
-                "file_name": "30005.cfg"
-            },
-            {
-                "level_number": 6,
-                "file_name": "30006.cfg"
-            }
-        ]
-    },
-    "4": {
-        "world_number": 4,
-        "world_name": "Time for You",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "40001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "40002.cfg"
-            }
-        ]
-    },
-    "5": {
-        "world_number": 5,
-        "world_name": "Slithering Snakes",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "50001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "50002.cfg"
-            },
-            {
-                "level_number": 3,
-                "file_name": "50003.cfg"
-            },
-            {
-                "level_number": 4,
-                "file_name": "50004.cfg"
-            },
-            {
-                "level_number": 5,
-                "file_name": "50005.cfg"
-            }
-        ]
-    },
-    "6": {
-        "world_number": 6,
-        "world_name": "Dot your I's and T's",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "60001.cfg"
-            }
-        ]
-    },
-    "7": {
-        "world_number": 7,
-        "world_name": "Take the W",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "70001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "70002.cfg"
-            }
-        ]
-    },
-    "8": {
-        "world_number": 8,
-        "world_name": "The Kitchen Sink",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "80001.cfg"
-            }
-        ]
-    },
-    "9": {
-        "world_number": 9,
-        "world_name": "Just Like, Really Hard",
-        "levels": [
-            {
-                "level_number": 1,
-                "file_name": "90001.cfg"
-            },
-            {
-                "level_number": 2,
-                "file_name": "90002.cfg"
-            },
-            {
-                "level_number": 3,
-                "file_name": "90003.cfg"
-            },
-            {
-                "level_number": 4,
-                "file_name": "90004.cfg"
-            }
-        ]
-    }
+	"1": {
+		"world_number": 1,
+		"world_name": "Back to the Basics",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "10001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "10002.cfg"
+			},
+			{
+				"level_number": 3,
+				"file_name": "10003.cfg"
+			}
+		]
+	},
+	"2": {
+		"world_number": 2,
+		"world_name": "Nothing but Squares",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "20001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "20002.cfg"
+			},
+			{
+				"level_number": 3,
+				"file_name": "20003.cfg"
+			},
+			{
+				"level_number": 4,
+				"file_name": "20004.cfg"
+			},
+			{
+				"level_number": 5,
+				"file_name": "20005.cfg"
+			},
+			{
+				"level_number": 6,
+				"file_name": "20006.cfg"
+			},
+			{
+				"level_number": 7,
+				"file_name": "20007.cfg"
+			},
+			{
+				"level_number": 8,
+				"file_name": "20008.cfg"
+			},
+			{
+				"level_number": 9,
+				"file_name": "20009.cfg"
+			}
+		]
+	},
+	"3": {
+		"world_number": 3,
+		"world_name": "Caught ZZZing",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "30001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "30002.cfg"
+			},
+			{
+				"level_number": 3,
+				"file_name": "30003.cfg"
+			},
+			{
+				"level_number": 4,
+				"file_name": "30004.cfg"
+			},
+			{
+				"level_number": 5,
+				"file_name": "30005.cfg"
+			},
+			{
+				"level_number": 6,
+				"file_name": "30006.cfg"
+			}
+		]
+	},
+	"4": {
+		"world_number": 4,
+		"world_name": "Time for You",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "40001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "40002.cfg"
+			}
+		]
+	},
+	"5": {
+		"world_number": 5,
+		"world_name": "Slithering Snakes",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "50001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "50002.cfg"
+			},
+			{
+				"level_number": 3,
+				"file_name": "50003.cfg"
+			},
+			{
+				"level_number": 4,
+				"file_name": "50004.cfg"
+			},
+			{
+				"level_number": 5,
+				"file_name": "50005.cfg"
+			}
+		]
+	},
+	"6": {
+		"world_number": 6,
+		"world_name": "Dot your I's and T's",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "60001.cfg"
+			}
+		]
+	},
+	"7": {
+		"world_number": 7,
+		"world_name": "Take the W",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "70001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "70002.cfg"
+			}
+		]
+	},
+	"8": {
+		"world_number": 8,
+		"world_name": "The Kitchen Sink",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "80001.cfg"
+			}
+		]
+	},
+	"9": {
+		"world_number": 9,
+		"world_name": "Just Like, Really Hard",
+		"levels": [
+			{
+				"level_number": 1,
+				"file_name": "90001.cfg"
+			},
+			{
+				"level_number": 2,
+				"file_name": "90002.cfg"
+			},
+			{
+				"level_number": 3,
+				"file_name": "90003.cfg"
+			},
+			{
+				"level_number": 4,
+				"file_name": "90004.cfg"
+			}
+		]
+	}
 }

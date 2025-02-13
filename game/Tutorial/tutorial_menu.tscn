@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3 uid="uid://txb5ar0yw8go"]
 
 [ext_resource type="Script" path="res://Tutorial/tutorial_menu.gd" id="1_6xgxm"]
-[ext_resource type="Texture2D" uid="uid://df3sdcq35idko" path="res://assets/backgrounds/background3.png" id="2_absii"]
 [ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/letter_space.tres" id="3_xvrdp"]
 [ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://assets/keyboard/letter_esc.tres" id="4_wn5wi"]
+[ext_resource type="Texture2D" uid="uid://dfexdx88ofads" path="res://assets/backgrounds/background4.png" id="4_xbr1v"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -14,24 +14,15 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_6xgxm")
 
-[node name="TextureRect" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -272.0
-offset_top = -16.0
-offset_right = 21.0
-offset_bottom = 216.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("2_absii")
-expand_mode = 1
+[node name="Background4" type="Sprite2D" parent="."]
+position = Vector2(352, 168)
+scale = Vector2(1.57037, 1.31207)
+texture = ExtResource("4_xbr1v")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2
 offset_right = 1152.0
-offset_bottom = 648.0
+offset_bottom = 608.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
@@ -39,7 +30,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 72
 text = "Welcome!"
 horizontal_alignment = 1
@@ -51,7 +42,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "Press"
 horizontal_alignment = 1
@@ -63,7 +54,7 @@ stretch_mode = 3
 
 [node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "for the tutorial."
 
@@ -74,7 +65,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/EscToStart"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "Or"
 horizontal_alignment = 1
@@ -86,7 +77,7 @@ stretch_mode = 3
 
 [node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/EscToStart"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "to start playing."
 
@@ -97,7 +88,7 @@ alignment = 1
 
 [node name="Label" type="Label" parent="CenterContainer/VBoxContainer/ReturnLater"]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24
 text = "(Access the tutorial from 
 the main menu.)"

@@ -13,7 +13,8 @@ extends Node2D
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
 @onready var game_details_control = $GameDetailsControl
 @onready var pause_menu_container = $PauseMenuContainer
-@onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
+@onready var level_complete_controls_center_container = $LevelCompleteControlsCenterContainer
+
 @onready var return_to_level_editor_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ReturnToLevelEditorButton
 @onready var level_designer = preload("res://LevelDesigner/index.tscn")
 
@@ -33,7 +34,7 @@ func create_game(
 		game_details_value,
 		game_over_timer,
 		instructions,
-		level_complete_controls_h_box_container,
+		level_complete_controls_center_container,
 		level_complete_timer,
 		pause_menu_container,
 		queue_control, 
@@ -46,7 +47,7 @@ func _ready():
 	# Hide overlapping UI Controls.
 	# Doing this programmaticaly makes it easier eveywhere.
 	instructions.hide()
-	level_complete_controls_h_box_container.hide()
+	level_complete_controls_center_container.hide()
 	
 	var game_modes = {
 		GlobalConsts.GAME_MODE.Tutorial: {
