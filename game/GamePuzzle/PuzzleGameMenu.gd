@@ -34,7 +34,6 @@ func create_level_button(file_name: String, world_number: int, level_number: int
 func _on_level_button_pressed(puzzle_id):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
 	GlobalState.puzzle_id = puzzle_id
-	print('setting', GlobalState.puzzle_id)
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_action_pressed(action):
@@ -119,8 +118,9 @@ func handle_save_press(save_slot: String):
 	
 func create_world_label(world_name: String, world_number: int):
 	var label = Label.new()
-	label.text = "World %d: %s" % [world_number, world_name]
+	label.text = "World %d\n%s" % [world_number, world_name]
 	label.horizontal_alignment = 1 # center
+	label.add_theme_font_size_override("font_size", 24)
 	level_buttons_container.add_child(label)
 
 func _on_save_a_button_pressed():
