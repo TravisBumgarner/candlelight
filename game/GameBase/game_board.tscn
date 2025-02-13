@@ -300,6 +300,23 @@ theme_override_font_sizes/font_size = 36
 text = "Rotate"
 horizontal_alignment = 1
 
+[node name="Label3" type="Label" parent="Instructions/0_Move"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "("
+horizontal_alignment = 1
+
+[node name="LetterEsc" type="TextureRect" parent="Instructions/0_Move"]
+layout_mode = 2
+texture = ExtResource("18_170w1")
+stretch_mode = 3
+
+[node name="Label4" type="Label" parent="Instructions/0_Move"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "All Commands)"
+horizontal_alignment = 1
+
 [node name="1_Place" type="HBoxContainer" parent="Instructions"]
 visible = false
 layout_mode = 2
@@ -315,6 +332,23 @@ stretch_mode = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Place"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Instructions/1_Place"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "("
+horizontal_alignment = 1
+
+[node name="LetterEsc" type="TextureRect" parent="Instructions/1_Place"]
+layout_mode = 2
+texture = ExtResource("18_170w1")
+stretch_mode = 3
+
+[node name="Label4" type="Label" parent="Instructions/1_Place"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "All Commands)"
 horizontal_alignment = 1
 
 [node name="2_Stack" type="HBoxContainer" parent="Instructions"]
@@ -344,6 +378,23 @@ stretch_mode = 3
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Undo"
+horizontal_alignment = 1
+
+[node name="Label3" type="Label" parent="Instructions/3_Undo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "("
+horizontal_alignment = 1
+
+[node name="LetterEsc" type="TextureRect" parent="Instructions/3_Undo"]
+layout_mode = 2
+texture = ExtResource("18_170w1")
+stretch_mode = 3
+
+[node name="Label4" type="Label" parent="Instructions/3_Undo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "All Commands)"
 horizontal_alignment = 1
 
 [node name="4_Score" type="HBoxContainer" parent="Instructions"]
@@ -577,7 +628,8 @@ stretch_mode = 3
 [node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/1_Place"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Place"
+text = "Place
+Select"
 horizontal_alignment = 1
 
 [node name="3_Undo" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
