@@ -10,24 +10,24 @@ func _init(args):
 
 func new_game():
 	self.disable_player_interaction = false
-	self.level_complete_controls_h_box_container.hide()
+	self.level_complete_controls_center_container.hide()
 	erase_board()
 	self.alchemizations = 0
-	
+
 	var level_config = PuzzleModeLevelManager.get_level_data(world_number, level_number)
-	
 	var game_saves_path = "user://game_saves/%s" % [GlobalConsts.GAME_MODE.Puzzle]
 	var absolute_file_path = "%s/%s.save" % [game_saves_path, GlobalState.save_slot]	
 	var save_config = ConfigFile.new()
 	save_config.load(absolute_file_path)
-	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_number], -1)
+	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
+	best_score = save_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, -1)
 
 	var visible_queue_size = 3
 	var game_key = null
 	var should_fill_queue = false
 	queue = Queue.new(queue_control, game_key, visible_queue_size, should_fill_queue)
+
 	queue.load(level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.QUEUE))
-	
 	gemsManager = GemsManager.new(board_tile_map, target_gem_control, queue_control)
 	var target_gem = level_config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_LEVEL_METADATA.TARGET_GEM)
 	gemsManager.set_gem(target_gem)
@@ -69,29 +69,30 @@ func upsert_game_save():
 	if (should_update_save):
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, new_max['level_number'])
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, new_max['world_number'])
-
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%d' % [level_number], alchemizations)	
+	
+	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
+	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, alchemizations)	
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
 
 func _on_action_pressed(action):
 	if action == 'undo' and is_game_over:
 		is_game_over = false
-		self.level_complete_controls_h_box_container.hide()
-		self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
+		self.level_complete_controls_center_container.hide()
+		self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = false
 	
 	super(action)
 	
 
 func _on_level_complete_timer_timeout():
-	self.level_complete_controls_h_box_container.show()
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = false
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').grab_focus()
+	self.level_complete_controls_center_container.show()
+	self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = false
+	self.level_complete_controls_center_container.find_child('NextLevelButton').grab_focus()
 
 func _on_game_over_timer_timeout():
 	is_game_over = true
-	self.level_complete_controls_h_box_container.show()
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').disabled = true
-	self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
+	self.level_complete_controls_center_container.show()
+	self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = true
+	self.level_complete_controls_center_container.find_child('RestartButton').grab_focus()
 
 func game_over():
 	# Experiment with allowing user to hit undo.
@@ -108,7 +109,7 @@ func update_game_display():
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
-		text += "\nBest: " + str(best_score)
+		text += "Best: " + str(best_score)
 
 	self.game_details_value.text = text
 	

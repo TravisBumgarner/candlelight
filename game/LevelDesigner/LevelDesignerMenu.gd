@@ -2,6 +2,7 @@ extends Control
 
 @onready var save_buttons_container = $SavesPositioningContainer/VBoxContainer/SaveButtonsContainer
 @onready var level_buttons_container = $LevelsPositioningContainer/VBoxContainer/ScrollContainer/LevelButtonsContainer
+@onready var new_level_button = $LevelsPositioningContainer/VBoxContainer/NewLevelButton
 
 @onready var levels_positioning_container = $LevelsPositioningContainer
 @onready var saves_positioning_container = $SavesPositioningContainer
@@ -14,10 +15,11 @@ const level_designer_scene = preload("res://LevelDesigner/index.tscn")
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	check_for_levels()
+	new_level_button.grab_focus()
 
 func _on_level_button_pressed(level):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
-	GlobalState.puzzle_mode_level = level
+	GlobalState.puzzle_id = level  # This might be incorrect?
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_action_pressed(action):
@@ -29,6 +31,18 @@ func _on_action_pressed(action):
 func cleanup():
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 	get_tree().change_scene_to_packed(main_menu)
+
+
+func create_level_button(absolute_file_path: String, file_name: String):
+	var button = Button.new()
+	
+	button.text = file_name
+	button.name = absolute_file_path
+	button.theme = candlelight_theme
+	button.clip_contents = false
+	button.connect("pressed", Callable(self, "_on_level_designed_button_pressed").bind(absolute_file_path))
+	level_buttons_container.add_child(button)
+
 
 
 func check_for_levels():
@@ -53,12 +67,13 @@ func check_for_levels():
 			var config = ConfigFile.new()
 			config.load(absolute_file_path)
 			
-			var button = Button.new()
-			var text = "Level: " % [absolute_file_path]
-			button.text = text
-			
-			button.connect("pressed", Callable(self, "_on_level_designed_button_pressed").bind(absolute_file_path))
-			level_buttons_container.add_child(button)
+			#var button = Button.new()
+			#var text = "Level: " % [absolute_file_path]
+			#button.text = text
+			#
+			#button.connect("pressed", Callable(self, "_on_level_designed_button_pressed").bind(absolute_file_path))
+			#level_buttons_container.add_child(button)
+			create_level_button(absolute_file_path, file_name)
 
 		file_name = dir.get_next()
 	dir.list_dir_end()

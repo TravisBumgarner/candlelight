@@ -5,55 +5,18 @@ import shutil
 
 BASE_OUTPUT_PATH = 'puzzle_mode_levels'
 
-def prepare_ingestion_directory():
-    # Remove existing Levels files
-    ingestion_dir = './ingestion'
-    if os.path.exists(ingestion_dir):
-        for file in os.listdir(ingestion_dir):
-            if file.startswith('Levels'):
-                file_path = os.path.join(ingestion_dir, file)
-                os.remove(file_path)
-
-    # Move new files from Downloads
-    downloads_dir = os.path.expanduser('~/Downloads')
-    for file in os.listdir(downloads_dir):
-        if file.startswith('Levels'):
-            print(f"\tMoving {file} to ingestion directory...")
-            src = os.path.join(downloads_dir, file)
-            dst = os.path.join(ingestion_dir, file)
-            shutil.move(src, dst)
-
-
 def move_puzzle_mode_levels():
     """Move generated puzzle mode levels to game assets directory."""
     source_dir = './puzzle_mode_levels'
     dest_dir = '../game/assets/puzzle_mode_levels'
     
-    # Empty destination dir
+    # Remove destination directory if it exists
     if os.path.exists(dest_dir):
-        for file in os.listdir(dest_dir):
-            file_path = os.path.join(dest_dir, file)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+        shutil.rmtree(dest_dir)
 
-
-    # Create destination directory if it doesn't exist
-    os.makedirs(dest_dir, exist_ok=True)
-    
-    
-    # Move all files from source to destination
-    for file in os.listdir(source_dir):
-        src_path = os.path.join(source_dir, file)
-        dst_path = os.path.join(dest_dir, file)
-        
-        # Remove destination file if it exists
-        if os.path.exists(dst_path):
-            os.remove(dst_path)
-            
-        shutil.move(src_path, dst_path)
-        print(f"Moved {file} to game assets")
+    # Move the entire source directory to the destination
+    shutil.move(source_dir, dest_dir)
+    print(f"Moved {source_dir} to {dest_dir}")
 
 
 def format_metadata_to_cfg(level):
@@ -88,6 +51,7 @@ def validate_sequential_data(levels_data, worlds_data):
             current_level = 1
 
         if level_number != current_level:
+            print(f"Level {level['world_number']}_{level['level_number']} is not sequential. Expected level {current_level}, got {level_number}")
             return False
 
         current_level += 1
@@ -107,7 +71,8 @@ def read_and_sort_levels_and_worlds_data():
         with open(levels_path, 'r') as file:
             reader = csv.DictReader(file)
             levels_data = list(reader)
-            levels_data = sorted(levels_data, key=lambda x: (int(x['world_number']), int(x['level_number'])))
+            valid_levels_data = [level for level in levels_data if level['world_number'] != '' and level['level_number'] != '']
+            levels_data = sorted(valid_levels_data, key=lambda x: (int(x['world_number']), int(x['level_number'])))
 
     if os.path.isfile(worlds_path):
         with open(worlds_path, 'r') as file:
@@ -147,13 +112,14 @@ def map_csv_to_json_and_cfgs(levels_data, worlds_data):
         })
 
     for level in levels_data:
-        file_name = f'{level['unique_id']}.cfg'
+        unique_id = f"{level['world_number']}_{level['level_number']}"
+        file_name = f'{unique_id}.cfg'
 
         save_to_cfg(level, file_name)
-
         output[level['world_number']]['levels'].append({
+            'unique_id': unique_id,
             'level_number': int(level['level_number']),
-            'file_name': file_name,
+            'file_name': file_name
         })
 
     save_to_json(output)
@@ -173,7 +139,6 @@ def empty_output_dir():
 
 if __name__ == "__main__":
     print('Starting...')
-    prepare_ingestion_directory()
 
     print('Empty output directory...')
     empty_output_dir()
@@ -183,6 +148,9 @@ if __name__ == "__main__":
     print("Data read:")
     print(f"\tLevels: {len(levels_data)}")
     print(f"\tWorlds: {len(worlds_data)}")
+
+    if len(levels_data) == 0 or len(worlds_data) == 0:
+        raise Exception('No data found')
 
     is_data_sequential = validate_sequential_data(levels_data, worlds_data)
     if not is_data_sequential:

@@ -160,7 +160,10 @@ func _on_action_pressed(action):
 			full_queue.increment_selected_full_queue_index(-1)
 			
 		if action == "right":
-			full_queue.increment_selected_full_queue_index(1)		
+			full_queue.increment_selected_full_queue_index(1)
+			
+		if action == "undo":
+			self.full_queue.remove_from_queue()
 			
 		if action == 'select':
 			self.full_queue.append_to_queue(Shapes.SHAPES_DICT.keys()[selected_shape_index])
@@ -224,7 +227,6 @@ func _on_save_to_clipboard_button_pressed():
 		formatted_points += ("Vector2i(%d, %d), " % [point.x, point.y])
 	formatted_points += ']'
 	
-	print(formatted_points)
 	# Create the JSON string
 	var details = JSON.stringify({
 		"queue": full_queue.full_queue,

@@ -27,12 +27,13 @@ func create_level_button(file_name: String, world_number: int, level_number: int
 	button.disabled = disabled
 	button.name = file_name
 	button.theme = candlelight_theme
-	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(world_number, level_number))
+	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
+	button.connect("pressed", Callable(self, "_on_level_button_pressed").bind(puzzle_id))
 	level_buttons_container.add_child(button)
 
-func _on_level_button_pressed(world_number, level_number):
+func _on_level_button_pressed(puzzle_id):
 	GlobalState.game_mode = GlobalConsts.GAME_MODE.Puzzle
-	GlobalState.puzzle_mode_level = {"level_number": level_number, "world_number": world_number}
+	GlobalState.puzzle_id = puzzle_id
 	get_tree().change_scene_to_packed(game_scene)
 
 func _on_action_pressed(action):
@@ -64,14 +65,12 @@ func check_for_saves():
 			
 		var config = ConfigFile.new()
 		config.load(absolute_file_path)
-		var current_max_level_available = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1)
-		var levels_complete = current_max_level_available - 1
-		# Todo - this calculation doesn't account for multiple worlds		 
+		var currently_completed_levels = config.get_section_keys(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores).size()
 		var button = save_buttons_container.find_child('Save%sButton' % [save_slot])
 
 		var text = "Save %s\n" % [save_slot]
-		text += "%d Completed Level" % [levels_complete]
-		if levels_complete != 1:
+		text += "%d Completed Level" % [currently_completed_levels]
+		if currently_completed_levels != 1:
 			text += 's'
 		
 		button.text = text
@@ -106,9 +105,12 @@ func handle_save_press(save_slot: String):
 			else:
 				# Future worlds: Disable everything
 				disabled = true
+				
+			# ENABLE EVERYTHING
+			disabled = false
 						
-			
-			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, 'level%s' % [level_metadata['level_number']], -1)
+			var level_id = Utilities.create_puzzle_id(world_metadata["world_number"], level_metadata["level_number"])
+			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, level_id, -1)
 			create_level_button(level_metadata['file_name'], world_metadata['world_number'], level_metadata['level_number'], disabled, best_score)
 	# 0th child is always a label
 	level_buttons_container.get_child(1).grab_focus()
@@ -116,10 +118,10 @@ func handle_save_press(save_slot: String):
 	
 func create_world_label(world_name: String, world_number: int):
 	var label = Label.new()
-	label.text = "World %d: %s" % [world_number, world_name]
+	label.text = "World %d\n%s" % [world_number, world_name]
 	label.horizontal_alignment = 1 # center
+	label.add_theme_font_size_override("font_size", 24)
 	level_buttons_container.add_child(label)
-
 
 func _on_save_a_button_pressed():
 	handle_save_press('a')

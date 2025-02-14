@@ -13,7 +13,8 @@ extends Node2D
 @onready var resume_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ResumeButton
 @onready var game_details_control = $GameDetailsControl
 @onready var pause_menu_container = $PauseMenuContainer
-@onready var level_complete_controls_h_box_container = $LevelCompleteControllsCenterContainer/LevelCompleteControlsHBoxContainer
+@onready var level_complete_controls_center_container = $LevelCompleteControlsCenterContainer
+
 @onready var return_to_level_editor_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ReturnToLevelEditorButton
 @onready var level_designer = preload("res://LevelDesigner/index.tscn")
 
@@ -33,7 +34,7 @@ func create_game(
 		game_details_value,
 		game_over_timer,
 		instructions,
-		level_complete_controls_h_box_container,
+		level_complete_controls_center_container,
 		level_complete_timer,
 		pause_menu_container,
 		queue_control, 
@@ -46,7 +47,7 @@ func _ready():
 	# Hide overlapping UI Controls.
 	# Doing this programmaticaly makes it easier eveywhere.
 	instructions.hide()
-	level_complete_controls_h_box_container.hide()
+	level_complete_controls_center_container.hide()
 	
 	var game_modes = {
 		GlobalConsts.GAME_MODE.Tutorial: {
@@ -73,12 +74,13 @@ func _ready():
 			selected_game["class"],
 		)
 		
-	if GlobalState.puzzle_mode_level != null:
+	if GlobalState.puzzle_id != null:
 		# I don't think we can pass the level from the PuzzleGameMenu
 		# So I think this is the next best thing
-		game.level_number = GlobalState.puzzle_mode_level['level_number']
-		game.world_number = GlobalState.puzzle_mode_level['world_number']
-		GlobalState.puzzle_mode_level = null
+		var details = Utilities.parse_puzzle_id(GlobalState.puzzle_id)
+		game.level_number = details['level_number']
+		game.world_number = details['world_number']
+		GlobalState.puzzle_id = null
 	
 	var game_save_path = "user://game_saves/%s/%s.save" % [GlobalState.game_mode, GlobalState.save_slot]
 	if FileAccess.file_exists(game_save_path):

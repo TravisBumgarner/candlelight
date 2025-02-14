@@ -121,3 +121,18 @@ func is_less_than_world_level(pair_a: Dictionary, pair_b: Dictionary) -> bool:
 	
 	# If world numbers are the same, compare by level number
 	return pair_a["level_number"] < pair_b["level_number"]
+
+
+func parse_puzzle_id(level_string: String) -> Dictionary:
+	var parts = level_string.split("_")
+	if parts.size() != 2:
+		push_error("Invalid level string format: " + level_string)
+		return {}
+	
+	return {
+		"world_number": int(parts[0]),
+		"level_number": int(parts[1])
+	}
+
+func create_puzzle_id(world_number: int, level_number: int) -> String:
+	return "{0}_{1}".format([world_number, level_number])

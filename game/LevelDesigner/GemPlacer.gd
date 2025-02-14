@@ -26,8 +26,6 @@ func _draw_point(point):
 		tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	elif(placed_tile == GlobalConsts.SPRITE.EMPTY):
 		tile_style = GlobalConsts.SPRITE.GEM_BLUE_ACTIVE
-	#elif(placed_tile == GlobalConsts.SPRITE.LIGHT_INACTIVE):
-		#tile_style = GlobalConsts.SPRITE.DARK_ACTIVE
 	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.CURRENT_SHAPE, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
 	
 func load_points(points):
@@ -62,3 +60,4 @@ func place_on_board():
 		# There's something off here I don't fully understand.
 		tile_style = GlobalConsts.SPRITE.GEM_BLUE_INACTIVE
 	self.gem_tile_map.set_cell(GlobalConsts.CHALLENGE_GEM_LAYER.PLACED_SHAPES, self.current_position, GlobalConsts.GEMS_TILE_ID, tile_style)
+	self._draw_point(self.current_position)

@@ -30,12 +30,12 @@ func upsert_scores():
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Daily, GlobalState.save_slot, config)
 
 func _on_level_complete_timer_timeout():
-	self.level_complete_controls_h_box_container.show()
-	self.level_complete_controls_h_box_container.find_child('NextLevelButton').hide()
-	self.level_complete_controls_h_box_container.find_child('RestartButton').grab_focus()
+	self.level_complete_controls_center_container.show()
+	self.level_complete_controls_center_container.find_child('NextLevelButton').hide()
+	self.level_complete_controls_center_container.find_child('RestartButton').grab_focus()
 
 func new_game():
-	self.level_complete_controls_h_box_container.hide()
+	self.level_complete_controls_center_container.hide()
 	disable_player_interaction = false
 	var game_key = Utilities.generate_key_from_date()
 	
@@ -67,7 +67,7 @@ func update_game_display():
 	text += '\n'
 		
 	if best_score != -1:
-		text += "\nBest: " + str(best_score)
+		text += "Best: " + str(best_score)
 	
 	game_details_value.text = text
 	
