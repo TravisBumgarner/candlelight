@@ -133,8 +133,7 @@ def generate_html():
         valid_levels = [
             level
             for level in reader
-            if level["unique_id"] != ""
-            and level["world_number"] != ""
+            if level["world_number"] != ""
             and level["level_number"] != ""
         ]
 

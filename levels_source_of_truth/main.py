@@ -69,7 +69,7 @@ def validate_sequential_data(levels_data, worlds_data):
             current_level = 1
 
         if level_number != current_level:
-            print(f"Level {level['unique_id']} is not sequential. Expected level {current_level}, got {level_number}")
+            print(f"Level {level['world_number']}_{level['level_number']} is not sequential. Expected level {current_level}, got {level_number}")
             return False
 
         current_level += 1
@@ -89,7 +89,7 @@ def read_and_sort_levels_and_worlds_data():
         with open(levels_path, 'r') as file:
             reader = csv.DictReader(file)
             levels_data = list(reader)
-            valid_levels_data = [level for level in levels_data if level['unique_id'] != '' and level['world_number'] != '' and level['level_number'] != '']
+            valid_levels_data = [level for level in levels_data if level['world_number'] != '' and level['level_number'] != '']
             levels_data = sorted(valid_levels_data, key=lambda x: (int(x['world_number']), int(x['level_number'])))
 
     if os.path.isfile(worlds_path):
