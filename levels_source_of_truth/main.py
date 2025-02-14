@@ -10,31 +10,13 @@ def move_puzzle_mode_levels():
     source_dir = './puzzle_mode_levels'
     dest_dir = '../game/assets/puzzle_mode_levels'
     
-    # Empty destination dir
+    # Remove destination directory if it exists
     if os.path.exists(dest_dir):
-        for file in os.listdir(dest_dir):
-            file_path = os.path.join(dest_dir, file)
-            if os.path.isfile(file_path):
-                os.remove(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
+        shutil.rmtree(dest_dir)
 
-
-    # Create destination directory if it doesn't exist
-    os.makedirs(dest_dir, exist_ok=True)
-    
-    
-    # Move all files from source to destination
-    for file in os.listdir(source_dir):
-        src_path = os.path.join(source_dir, file)
-        dst_path = os.path.join(dest_dir, file)
-        
-        # Remove destination file if it exists
-        if os.path.exists(dst_path):
-            os.remove(dst_path)
-            
-        shutil.move(src_path, dst_path)
-        print(f"Moved {file} to game assets")
+    # Move the entire source directory to the destination
+    shutil.move(source_dir, dest_dir)
+    print(f"Moved {source_dir} to {dest_dir}")
 
 
 def format_metadata_to_cfg(level):
