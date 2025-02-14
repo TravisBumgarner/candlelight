@@ -6,3 +6,5 @@ dist/
 *.zip
 venv/
 .~lock*
+*.pyc
+__pycache__/
