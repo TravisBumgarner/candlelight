@@ -141,6 +141,15 @@ def generate_html():
             valid_levels, key=lambda x: (int(x["world_number"]), int(x["level_number"]))
         )
 
+        html += f"<h2>Total Levels: {len(levels)}</h2>"
+
+        html += "<h2>Levels Per World</h2>"
+        for world_number in worlds:
+            levels_per_world = [level for level in levels if level["world_number"] == world_number]
+            html += "<ul>"
+            html += f"<li>{worlds[world_number]} - {len(levels_per_world)}</li>"
+            html += "</ul>"
+
         current_world = None
         html += "<div class='levels-wrapper'>"  # Add wrapper for all levels
 

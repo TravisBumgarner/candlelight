@@ -125,6 +125,16 @@
                 "unique_id": "4_3",
                 "level_number": 3,
                 "file_name": "4_3.cfg"
+            },
+            {
+                "unique_id": "4_4",
+                "level_number": 4,
+                "file_name": "4_4.cfg"
+            },
+            {
+                "unique_id": "4_5",
+                "level_number": 5,
+                "file_name": "4_5.cfg"
             }
         ]
     },
@@ -167,6 +177,21 @@
                 "unique_id": "6_1",
                 "level_number": 1,
                 "file_name": "6_1.cfg"
+            },
+            {
+                "unique_id": "6_2",
+                "level_number": 2,
+                "file_name": "6_2.cfg"
+            },
+            {
+                "unique_id": "6_3",
+                "level_number": 3,
+                "file_name": "6_3.cfg"
+            },
+            {
+                "unique_id": "6_4",
+                "level_number": 4,
+                "file_name": "6_4.cfg"
             }
         ]
     },
@@ -183,6 +208,16 @@
                 "unique_id": "7_2",
                 "level_number": 2,
                 "file_name": "7_2.cfg"
+            },
+            {
+                "unique_id": "7_3",
+                "level_number": 3,
+                "file_name": "7_3.cfg"
+            },
+            {
+                "unique_id": "7_4",
+                "level_number": 4,
+                "file_name": "7_4.cfg"
             }
         ]
     },
@@ -194,6 +229,26 @@
                 "unique_id": "8_1",
                 "level_number": 1,
                 "file_name": "8_1.cfg"
+            },
+            {
+                "unique_id": "8_2",
+                "level_number": 2,
+                "file_name": "8_2.cfg"
+            },
+            {
+                "unique_id": "8_3",
+                "level_number": 3,
+                "file_name": "8_3.cfg"
+            },
+            {
+                "unique_id": "8_4",
+                "level_number": 4,
+                "file_name": "8_4.cfg"
+            },
+            {
+                "unique_id": "8_5",
+                "level_number": 5,
+                "file_name": "8_5.cfg"
             }
         ]
     },
@@ -230,6 +285,21 @@
                 "unique_id": "9_6",
                 "level_number": 6,
                 "file_name": "9_6.cfg"
+            },
+            {
+                "unique_id": "9_7",
+                "level_number": 7,
+                "file_name": "9_7.cfg"
+            },
+            {
+                "unique_id": "9_8",
+                "level_number": 8,
+                "file_name": "9_8.cfg"
+            },
+            {
+                "unique_id": "9_9",
+                "level_number": 9,
+                "file_name": "9_9.cfg"
             }
         ]
     }

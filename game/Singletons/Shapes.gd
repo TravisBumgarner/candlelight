@@ -1,10 +1,9 @@
 extends Node
 
 const upper_l_rot0 = [Vector2i(0,1), Vector2i(1,1), Vector2i(2,1)]
-const upper_l_rot1 = [Vector2i(0,2), Vector2i(1,1), Vector2i(2,0)]
-const upper_l_rot2 = [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
-const upper_l_rot3 = [Vector2i(0,0), Vector2i(1,1), Vector2i(2,2)]
-const upper_l = [upper_l_rot0, upper_l_rot1, upper_l_rot2, upper_l_rot3]
+const upper_l_rot1 = [Vector2i(1,0), Vector2i(1,1), Vector2i(1,2)]
+
+const upper_l = [upper_l_rot0, upper_l_rot1, upper_l_rot0, upper_l_rot1, ]
 
 const square_rot0 = [Vector2i(0,0), Vector2i(0,1), Vector2i(1,0), Vector2i(1,1)]
 const square = [square_rot0, square_rot0, square_rot0, square_rot0]
