@@ -67,37 +67,29 @@ func upsert_game_save(next_level):
 			"world_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
 		}
 
-		var should_update_save = Utilities.is_less_than_world_level(current_max, next_level)
+		var should_make_next_level_available = Utilities.is_less_than_world_level(current_max, next_level)
 		
-		if (should_update_save):
+		if (should_make_next_level_available):
 			config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, next_level['level_number'])
 			config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, next_level['world_number'])
+	 
+	var new_high_score = alchemizations < best_score
+	if new_high_score:
+		var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
+		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, alchemizations)	
 	
-	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
-	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, alchemizations)	
 	Utilities.write_game_save(GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot, config)
-
-func _on_action_pressed(action):
-	if action == 'undo' and is_game_over:
-		is_game_over = false
-		self.level_complete_controls_center_container.hide()
-		self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = false
 	
-	super(action)
-	
-
 func _on_level_complete_timer_timeout():
 	self.level_complete_controls_center_container.show()
-	self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = false
+	self.level_complete_controls_center_container.find_child('NextLevelButton').show()
 	self.level_complete_controls_center_container.find_child('NextLevelButton').grab_focus()
 
 func _on_game_over_timer_timeout():
 	is_game_over = true
 	self.level_complete_controls_center_container.show()
-	self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = true
+	self.level_complete_controls_center_container.find_child('NextLevelButton').hide()
 	self.level_complete_controls_center_container.find_child('RestartButton').grab_focus()
-
-
 
 func _on_game_complete_timer_timeout():
 	is_game_over = true
@@ -105,8 +97,7 @@ func _on_game_complete_timer_timeout():
 	self.game_complete_controls_center_container.find_child('MainMenuButton').grab_focus()
 
 func game_over():
-	# Experiment with allowing user to hit undo.
-	#self.disable_player_interaction = true
+	self.disable_player_interaction = true
 	SoundManager.play("nonmovement")
 	SoundManager.play("nonmovement")
 	game_over_timer.start(1)

@@ -110,6 +110,7 @@ func _on_pause_menu_container_visibility_changed():
 		return_to_level_editor_button.hide()
 
 func _on_restart_button_pressed():
+	print('restarting game')
 	self.game.new_game()
 	
 

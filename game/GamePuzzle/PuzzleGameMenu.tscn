@@ -113,7 +113,6 @@ text = "Levels
 horizontal_alignment = 1
 
 [node name="ScrollContainer" type="ScrollContainer" parent="LevelsPositioningContainer/VBoxContainer"]
-clip_contents = false
 custom_minimum_size = Vector2(400, 400)
 layout_mode = 2
 follow_focus = true

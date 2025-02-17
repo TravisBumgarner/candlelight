@@ -1,6 +1,5 @@
 extends Control
 
-@onready var name_input = $NewGameContainer/NewGameSubContainer/NameInput
 @onready var save_buttons_container = $SavesPositioningContainer/VBoxContainer/SaveButtonsContainer
 @onready var levels_positioning_container = $LevelsPositioningContainer
 @onready var saves_positioning_container = $SavesPositioningContainer
@@ -105,10 +104,7 @@ func handle_save_press(save_slot: String):
 			else:
 				# Future worlds: Disable everything
 				disabled = true
-				
-			# ENABLE EVERYTHING
-			disabled = false
-						
+
 			var level_id = Utilities.create_puzzle_id(world_metadata["world_number"], level_metadata["level_number"])
 			var best_score = config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, level_id, -1)
 			create_level_button(level_metadata['file_name'], world_metadata['world_number'], level_metadata['level_number'], disabled, best_score)

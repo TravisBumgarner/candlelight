@@ -83,7 +83,7 @@ func cleanup():
 func _on_action_pressed(action):
 	if disable_player_interaction and action != 'escape':
 		return
-	
+
 	var direction_map = {
 		"up": Vector2i.UP,
 		"down": Vector2i.DOWN,
