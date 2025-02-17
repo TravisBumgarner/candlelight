@@ -1,7 +1,7 @@
 {
 	"1": {
 		"world_number": 1,
-		"world_name": "Back to the Basics",
+		"world_name": "Warm Up",
 		"levels": [
 			{
 				"unique_id": "1_1",
@@ -22,7 +22,7 @@
 	},
 	"2": {
 		"world_number": 2,
-		"world_name": "Nothing but Squares",
+		"world_name": "And You Get A Square",
 		"levels": [
 			{
 				"unique_id": "2_1",
@@ -73,7 +73,7 @@
 	},
 	"3": {
 		"world_number": 3,
-		"world_name": "Caught ZZZing",
+		"world_name": "Nap Time",
 		"levels": [
 			{
 				"unique_id": "3_1",
@@ -109,7 +109,7 @@
 	},
 	"4": {
 		"world_number": 4,
-		"world_name": "Time for You",
+		"world_name": "You Time",
 		"levels": [
 			{
 				"unique_id": "4_1",
@@ -140,7 +140,7 @@
 	},
 	"5": {
 		"world_number": 5,
-		"world_name": "Slithering Snakes",
+		"world_name": "Snakes in this Game",
 		"levels": [
 			{
 				"unique_id": "5_1",
@@ -171,7 +171,7 @@
 	},
 	"6": {
 		"world_number": 6,
-		"world_name": "Dot your I's and T's",
+		"world_name": "Dot I's and cross T's",
 		"levels": [
 			{
 				"unique_id": "6_1",
@@ -254,7 +254,7 @@
 	},
 	"9": {
 		"world_number": 9,
-		"world_name": "Just Like, Really Hard",
+		"world_name": "This might take a While",
 		"levels": [
 			{
 				"unique_id": "9_1",
