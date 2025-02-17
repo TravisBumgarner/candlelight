@@ -11,9 +11,7 @@ func _play_music(music: AudioStream, volume = 0.0):
 	play()
 	
 func play_intro_music():
-	return
 	_play_music(intro_music)
 
 func play_game_music():
-	return
 	_play_music(gameplay_music)

@@ -8,7 +8,6 @@ import {
 } from '@mui/material'
 import React, { useState } from 'react'
 import { COLORS, SPACING } from 'theme'
-import { submitContactForm } from '../firebase'
 
 const ContactForm: React.FC = () => {
   const [success, setSuccess] = React.useState(false)
@@ -18,7 +17,7 @@ const ContactForm: React.FC = () => {
     name: '',
     email: '',
     message: '',
-    website: 'ideas-down-quickly'
+    website: 'candlelight'
   })
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,14 +28,20 @@ const ContactForm: React.FC = () => {
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
-    setIsSubmitting(true)
     e.preventDefault()
-    const response = (await submitContactForm(formData)) as any
-    if (response.data) {
+    setIsSubmitting(true)
+    const response = await fetch('https://contact-form.nfshost.com/contact', {
+      method: 'POST',
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    if (response.ok) {
       setSuccess(true)
       setFormData(prev => ({
         ...prev,
-...{
+        ...{
           name: '',
           email: '',
           message: ''
@@ -53,7 +58,16 @@ const ContactForm: React.FC = () => {
   }
 
   return (
-    <Container css={{ padding: SPACING.MEDIUM, width: '462px', maxWidth: '100%', backgroundColor: COLORS.NEUTRAL[800], marginTop: SPACING.MEDIUM }}>
+    <Container
+      css={{
+        borderRadius: '10px',
+        padding: SPACING.MEDIUM,
+        width: '462px',
+        maxWidth: '100%',
+        backgroundColor: COLORS.NEUTRAL[800],
+        marginTop: SPACING.MEDIUM
+      }}
+    >
       <Typography variant="h2" align="center" gutterBottom>
         Contact
       </Typography>
@@ -84,7 +98,13 @@ const ContactForm: React.FC = () => {
           rows={4}
           margin="normal"
         />
-        <Button disabled={isSubmitting} type="submit" variant="text" color="primary" fullWidth>
+        <Button
+          disabled={isSubmitting}
+          type="submit"
+          variant="text"
+          color="primary"
+          fullWidth
+        >
           Submit
         </Button>
       </form>
