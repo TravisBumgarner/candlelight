@@ -4,9 +4,10 @@ extends Node2D
 @onready var target_gem_control = $TargetGemControl
 @onready var queue_control = $QueueControl
 @onready var level_complete_timer = $LevelCompleteTimer
+@onready var game_complete_timer = $GameCompleteTimer
+@onready var game_complete_controls_center_container = $GameCompleteControlsCenterContainer
 @onready var game_over_timer = $GameOverTimer
 @onready var sounds = $Sounds
-
 @onready var game_details_label = $GameDetailsControl/GameDetailsTileMap/GameDetailsLabel
 @onready var game_details_value = $GameDetailsControl/GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
@@ -29,6 +30,8 @@ func create_game(
 	game = game_mode.new([
 		# ALPHABETICAL
 		board_tile_map, 
+		game_complete_controls_center_container,
+		game_complete_timer,
 		game_details_label, 
 		game_details_control,
 		game_details_value,
@@ -124,3 +127,8 @@ func _on_next_level_button_pressed():
 func _on_return_to_level_editor_button_pressed():
 	self.game.cleanup()
 	get_tree().change_scene_to_packed(level_designer)
+
+
+
+func _on_game_complete_timer_timeout():
+	pass # Replace with function body.

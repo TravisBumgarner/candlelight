@@ -25,7 +25,7 @@ func get_next_world_and_level_number(world_number, level_number):
 	# Find the current world data
 	var current_world = self.get_worlds_metadata().values().filter(func(x): return x["world_number"] == world_number)
 	if current_world.size() == 0:
-		return null  # Invalid world number
+		push_error("Invalid world number: %d" % world_number)
 	current_world = current_world[0]
 	
 	# Check if there's a next level in the same world

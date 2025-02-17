@@ -4,6 +4,8 @@ class_name BaseGame
 
 # _init params Alphabetical
 var board_tile_map: TileMap
+var game_complete_controls_center_container: CenterContainer
+var game_complete_timer: Timer
 var game_details_label: Label
 var game_details_value: RichTextLabel
 var game_details_control: Control
@@ -33,23 +35,41 @@ var disable_player_interaction = false
 func _init(args: Array):
 	# Alphabetical
 	MusicPlayer.play_game_music()
-	self.board_tile_map = args[0]
-	self.game_details_label = args[1]
-	self.game_details_control = args[2]
-	self.game_details_value = args[3]
-	self.game_over_timer = args [4]
-	self.instructions_container = args[5]
-	self.level_complete_controls_center_container = args[6]
-	self.level_complete_timer = args[7]
-	self.pause_menu_container = args[8]
-	self.queue_control = args[9]
-	self.sounds = args[10]
-	self.target_gem_control = args[11]
+	var counter = 0
+	self.board_tile_map = args[counter]
+	counter += 1
+	self.game_complete_controls_center_container = args[counter]
+	counter += 1
+	self.game_complete_timer = args[counter]
+	counter += 1
+	self.game_details_label = args[counter]
+	counter += 1
+	self.game_details_control = args[counter]
+	counter += 1
+	self.game_details_value = args[counter]
+	counter += 1
+	self.game_over_timer = args[counter]
+	counter += 1
+	self.instructions_container = args[counter]
+	counter += 1
+	self.level_complete_controls_center_container = args[counter]
+	counter += 1
+	self.level_complete_timer = args[counter]
+	counter += 1
+	self.pause_menu_container = args[counter]
+	counter += 1
+	self.queue_control = args[counter]
+	counter += 1
+	self.sounds = args[counter]
+	counter += 1
+	self.target_gem_control = args[counter]
+	counter += 1
 	# Alphabatical
 	
 	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
+	game_complete_timer.connect('timeout', _on_game_complete_timer_timeout)
 	game_over_timer.connect('timeout', _on_game_over_timer_timeout)
 
 func cleanup():
@@ -57,7 +77,8 @@ func cleanup():
 	SoundManager.disconnect("play_sound", sounds.play_sound)
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 	self.level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
-	#self.submit_score_button.disconnect('pressed', Callable(self, "_on_submit_pressed"))
+	self.game_complete_timer.disconnect('timeout', _on_game_complete_timer_timeout)
+	self.game_over_timer.disconnect('timeout', _on_game_over_timer_timeout)
 
 func _on_action_pressed(action):
 	if disable_player_interaction and action != 'escape':
@@ -113,6 +134,9 @@ func level_complete(_gems):
 	assert(false, "Must be implemented in the child class.")
 
 func _on_level_complete_timer_timeout():
+	assert(false, "Must be implemented in the child class.")
+
+func _on_game_complete_timer_timeout():
 	assert(false, "Must be implemented in the child class.")
 
 func _on_game_over_timer_timeout():

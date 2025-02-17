@@ -43,32 +43,35 @@ func load_game():
 	self.new_game()
 
 func level_complete(gems):
-	upsert_game_save()
 	disable_player_interaction = true
+	var next_level = PuzzleModeLevelManager.get_next_world_and_level_number(world_number, level_number)
 	
-	SoundManager.play("one_gem")
-
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
-	level_complete_timer.start(1)
 	
+	upsert_game_save(next_level)
+	if next_level != null:
+		SoundManager.play("one_gem")
+		level_complete_timer.start(1)
+	else:
+		SoundManager.play("two_gems")
+		game_complete_timer.start(1)
 
-func upsert_game_save():
+func upsert_game_save(next_level):
 	var config = ConfigFile.new()
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
 	
-	var new_max = PuzzleModeLevelManager.get_next_world_and_level_number(world_number, level_number)
+	if next_level != null:
+		var current_max = {
+			"level_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1),
+			"world_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
+		}
 
-	var current_max = {
-		"level_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, 1),
-		"world_number": config.get_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, 1)
-	}
-
-	var should_update_save = Utilities.is_less_than_world_level(current_max, new_max)
-	
-	if (should_update_save):
-		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, new_max['level_number'])
-		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, new_max['world_number'])
+		var should_update_save = Utilities.is_less_than_world_level(current_max, next_level)
+		
+		if (should_update_save):
+			config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, next_level['level_number'])
+			config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, next_level['world_number'])
 	
 	var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
 	config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, alchemizations)	
@@ -94,6 +97,13 @@ func _on_game_over_timer_timeout():
 	self.level_complete_controls_center_container.find_child('NextLevelButton').disabled = true
 	self.level_complete_controls_center_container.find_child('RestartButton').grab_focus()
 
+
+
+func _on_game_complete_timer_timeout():
+	is_game_over = true
+	self.game_complete_controls_center_container.show()
+	self.game_complete_controls_center_container.find_child('MainMenuButton').grab_focus()
+
 func game_over():
 	# Experiment with allowing user to hit undo.
 	#self.disable_player_interaction = true
@@ -104,8 +114,7 @@ func game_over():
 
 func update_game_display():
 	var text = "[center]"
-	text += "World " + str(world_number) + '\n'
-	text += "Level " + str(level_number) + '\n'
+	text += "Level " + str(world_number) + "_" + str(level_number) + '\n'
 	text += "Score: " + str(alchemizations)  + '\n'
 		
 	if best_score != -1:
