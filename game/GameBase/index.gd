@@ -110,7 +110,6 @@ func _on_pause_menu_container_visibility_changed():
 		return_to_level_editor_button.hide()
 
 func _on_restart_button_pressed():
-	print('restarting game')
 	self.game.new_game()
 	
 
@@ -128,8 +127,3 @@ func _on_next_level_button_pressed():
 func _on_return_to_level_editor_button_pressed():
 	self.game.cleanup()
 	get_tree().change_scene_to_packed(level_designer)
-
-
-
-func _on_game_complete_timer_timeout():
-	pass # Replace with function body.
