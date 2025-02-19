@@ -29,6 +29,10 @@ FreePlayModeHighScores="*res://Singletons/FreePlayModeHighScores.gd"
 PuzzleModeLevelManager="*res://Singletons/PuzzleModeLevelManager.gd"
 MusicPlayer="*res://Singletons/MusicPlayer.tscn"
 
+[debug]
+
+file_logging/enable_file_logging=true
+
 [display]
 
 window/size/viewport_height=608
