@@ -1,6 +1,6 @@
 "AppBuild"
 {
-	"AppID" "3157820" // your AppID
+	"AppID" "3159470" // your AppID
 	"Desc" "Candlelight with windows, mac, and linux" 
 
 	"ContentRoot" "..\content\" // root content folder, relative to location of this file
@@ -8,7 +8,7 @@
 
 	"Depots"
 	{
-		"3157822" // Windows
+		"3159472" // Windows
 		{
 			"FileMapping"
 			{
@@ -18,7 +18,7 @@
 			}
 		}
 
-		"3157821" // Mac
+		"3159473" // Mac
 		{
 			"FileMapping"
 			{
@@ -28,7 +28,7 @@
 			}
 		}
 
-		"3157823" // Linux
+		"3159474" // Linux
 		{
 			"FileMapping"
 			{

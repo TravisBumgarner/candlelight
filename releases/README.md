@@ -24,7 +24,8 @@ My version of above instructions
 1. Login with `login username password`
 1. Deploy Depots
     - Run one of following scripts from within Steam shell to deploy
-        - Game and Playtest `run_app_build ..\scripts\candlelight.vdf`
+        - Game `run_app_build ..\scripts\candlelight.vdf`
+        - Playtest `run_app_build ..\scripts\candlelight_playtest.vdf`
         - Demo `run_app_build ..\scripts\candlelight_demo.vdf`
     - Etc 
 1. Goto build page, set branch to default.

@@ -58,6 +58,7 @@ func level_complete(gems):
 		game_complete_timer.start(1)
 
 func upsert_game_save(next_level):
+	print(GlobalState.save_slot)
 	var config = ConfigFile.new()
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
 	
@@ -73,7 +74,7 @@ func upsert_game_save(next_level):
 			config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_LEVEL_NUMBER, next_level['level_number'])
 			config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.Metadata, GlobalConsts.PUZZLE_SAVE_METADATA.MAX_AVAILABLE_WORLD_NUMBER, next_level['world_number'])
 	 
-	var new_high_score = alchemizations < best_score
+	var new_high_score = alchemizations < best_score or best_score == -1
 	if new_high_score:
 		var puzzle_id = Utilities.create_puzzle_id(world_number, level_number)
 		config.set_value(GlobalConsts.GAME_SAVE_SECTIONS.PuzzleLevelScores, puzzle_id, alchemizations)	
