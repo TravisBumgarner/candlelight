@@ -58,7 +58,6 @@ func level_complete(gems):
 		game_complete_timer.start(1)
 
 func upsert_game_save(next_level):
-	print(GlobalState.save_slot)
 	var config = ConfigFile.new()
 	config.load('user://game_saves/%s/%s.save' % [GlobalConsts.GAME_MODE.Puzzle, GlobalState.save_slot])
 	
