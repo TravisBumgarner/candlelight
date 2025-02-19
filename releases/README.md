@@ -1,4 +1,9 @@
-# Readme
+# Web
+
+1. Export to web.
+1. Zip files
+
+# Steam
 
 A collection of notes for deploying to steam.
 
@@ -8,14 +13,9 @@ My version of above instructions
 
 1. Download an install [Steam SDK](https://partner.steamgames.com/downloads/list)
 1. Place it in `Programming/`
+1. Run `./setup.sh`
 1. Build executables with Godot
-    - `open /Users/travisbumgarner/Programming/steamworks\ sdk/tools/ContentBuilder/content/`
-    - Mac
-        - Extract `Candlelight.app` from `.dmg` and place in `./mac`
-    - Windows
-        - Extract `Candlelight.exe` to `./windows`
-    - Linux
-        - Extract `Candlelight.sh` and `Candlelight.x86_64` to `./linux`
+    - Mac: Extract `Candlelight.app` from `.dmg` and place in `./mac` and remove dmg.
 1. `cd ~/Programming/steamworks\ sdk/tools/ContentBuilder/builder_osx`
     1. First time only
         1. `chmod +x steamcmd`
@@ -25,6 +25,7 @@ My version of above instructions
 1. Deploy Depots
     - Run one of following scripts from within Steam shell to deploy
         - Game `run_app_build ..\scripts\candlelight.vdf`
+        - Playtest `run_app_build ..\scripts\candlelight_playtest.vdf`
         - Demo `run_app_build ..\scripts\candlelight_demo.vdf`
     - Etc 
 1. Goto build page, set branch to default.

@@ -56,17 +56,17 @@ func handle_save_press(save_slot: String):
 	
 
 func _on_save_a_button_pressed():
-	handle_save_press('a')
+	handle_save_press(GlobalConsts.GAME_SLOTS[0])
 
 
 func _on_save_b_button_pressed():
-	handle_save_press('b')
+	handle_save_press(GlobalConsts.GAME_SLOTS[1])
 
 
 func _on_save_c_button_pressed():
-	handle_save_press('c')
+	handle_save_press(GlobalConsts.GAME_SLOTS[2])
 
 
 func _on_save_d_button_pressed():
-	handle_save_press('d')
+	handle_save_press(GlobalConsts.GAME_SLOTS[3])
 

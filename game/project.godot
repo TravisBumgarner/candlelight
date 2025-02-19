@@ -13,6 +13,7 @@ config_version=5
 config/name="Candlelight"
 run/main_scene="res://entry_point.tscn"
 config/features=PackedStringArray("4.2", "GL Compatibility")
+boot_splash/image="res://assets/splash.png"
 config/icon="res://assets/icon.png"
 
 [autoload]
