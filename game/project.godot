@@ -28,6 +28,7 @@ KeyValueStore="*res://Singletons/KeyValueStore.gd"
 FreePlayModeHighScores="*res://Singletons/FreePlayModeHighScores.gd"
 PuzzleModeLevelManager="*res://Singletons/PuzzleModeLevelManager.gd"
 MusicPlayer="*res://Singletons/MusicPlayer.tscn"
+MouseVisibility="*res://Singletons/MouseVisibility.gd"
 
 [display]
 
