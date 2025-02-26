@@ -52,9 +52,11 @@ layout_mode = 2
 theme = ExtResource("3_aim3m")
 text = "Game Design, Art, Code, Sound By Travis Bumgarner"
 
-[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer/Travis"]
+[node name="LinkButton2" type="LinkButton" parent="CenterContainer/VBoxContainer/Travis"]
 layout_mode = 2
-uri = "https://departuremono.com/"
+theme = ExtResource("3_aim3m")
+text = "(Visit)"
+uri = "http://travisbumgarner.dev/"
 
 [node name="Ricky" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2

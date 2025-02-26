@@ -66,11 +66,12 @@ func _ready():
 	draw_selected_area()
 	
 func draw_selected_area():
-	for background_group in background_groups:
-		for background in background_group:
-			background.hide()
-	for background in background_groups[selected_editor_index]:
-		background.show()
+	pass
+	#for background_group in background_groups:
+		#for background in background_group:
+			#background.hide()
+	#for background in background_groups[selected_editor_index]:
+		#background.show()
 	
 func increment_selected_editor_index(increment):
 	var background_group_count = len(background_groups)

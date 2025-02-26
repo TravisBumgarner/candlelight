@@ -27,9 +27,10 @@ custom_minimum_size = Vector2(2.08165e-12, 2.08165e-12)
 layout_mode = 0
 offset_left = 688.0
 offset_right = 1118.0
-offset_bottom = 608.0
+offset_bottom = 607.0
 theme_override_constants/separation = 20
 alignment = 1
+metadata/_edit_lock_ = true
 
 [node name="Buttons" type="VBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -67,6 +68,7 @@ text = "Tutorial"
 [node name="LevelDesignerButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_jaf2s")
+disabled = true
 text = "Level Designer (Coming Soon)"
 
 [node name="CreditsButton" type="Button" parent="VBoxContainer/Buttons"]
@@ -86,7 +88,7 @@ text = "Exit
 "
 
 [node name="SharedLabel" type="Label" parent="VBoxContainer"]
-custom_minimum_size = Vector2(2.08165e-12, 75)
+custom_minimum_size = Vector2(2.08165e-12, 70)
 layout_mode = 2
 size_flags_vertical = 1
 size_flags_stretch_ratio = 0.0

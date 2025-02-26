@@ -5,13 +5,13 @@
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/sprites/gems.png" id="2_j04o7"]
 [ext_resource type="Texture2D" uid="uid://df3sdcq35idko" path="res://assets/backgrounds/background3.png" id="4_4mjd2"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="5_15nix"]
-[ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://assets/keyboard/letter_w.tres" id="6_qyv8p"]
-[ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://assets/keyboard/letter_a.tres" id="7_gbyaq"]
-[ext_resource type="Texture2D" uid="uid://cnedws03cbck2" path="res://assets/keyboard/letter_s.tres" id="8_1lrdm"]
-[ext_resource type="Texture2D" uid="uid://cq60c8757qldh" path="res://assets/keyboard/letter_d.tres" id="9_grto1"]
-[ext_resource type="Texture2D" uid="uid://bb1mn7ebyioek" path="res://assets/keyboard/letter_r.tres" id="10_d2d6v"]
-[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/letter_space.tres" id="11_sfckm"]
-[ext_resource type="Texture2D" uid="uid://dfvq0ya7jnos1" path="res://assets/keyboard/letter_z.tres" id="12_mcfvn"]
+[ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://assets/keyboard/keyboard_up.tres" id="6_qyv8p"]
+[ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://assets/keyboard/keyboard_left.tres" id="7_gbyaq"]
+[ext_resource type="Texture2D" uid="uid://cnedws03cbck2" path="res://assets/keyboard/keyboard_down.tres" id="8_1lrdm"]
+[ext_resource type="Texture2D" uid="uid://cq60c8757qldh" path="res://assets/keyboard/keyboard_right.tres" id="9_grto1"]
+[ext_resource type="Texture2D" uid="uid://bb1mn7ebyioek" path="res://assets/keyboard/keyboard_rotate.tres" id="10_d2d6v"]
+[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/keyboard_place.tres" id="11_sfckm"]
+[ext_resource type="Texture2D" uid="uid://dfvq0ya7jnos1" path="res://assets/keyboard/keyboard_undo.tres" id="12_mcfvn"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_i1jps"]
 texture = ExtResource("2_j04o7")
@@ -87,8 +87,10 @@ offset_left = 80.0
 offset_top = 96.0
 offset_right = 120.0
 offset_bottom = 136.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="ShapesControl"]
+modulate = Color(0.32549, 0.678431, 1, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2
@@ -120,6 +122,7 @@ offset_right = -312.0
 offset_bottom = 8.0
 
 [node name="Background" type="TextureRect" parent="FullQueueControl"]
+modulate = Color(0.32549, 0.678431, 1, 1)
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2
@@ -145,14 +148,6 @@ layer_0/tile_data = PackedInt32Array(-1, 262144, 0, 65535, 262144, 0, 131071, 26
 layer_1/name = "QUEUE"
 layer_1/tile_data = PackedInt32Array()
 
-[node name="Label" type="Label" parent="FullQueueControl/FullQueueTileMap"]
-offset_left = -32.0
-offset_top = -64.0
-offset_right = 224.0
-offset_bottom = -41.0
-text = "Full Queue"
-horizontal_alignment = 1
-
 [node name="TargetGemControl" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
@@ -160,8 +155,10 @@ offset_left = -64.0
 offset_top = -32.0
 offset_right = -24.0
 offset_bottom = 8.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="TargetGemControl"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2
@@ -195,8 +192,10 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="TestPlayControl"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2
@@ -220,6 +219,7 @@ offset_bottom = 305.0
 theme = ExtResource("5_15nix")
 text = "Test Play
 "
+metadata/_edit_use_anchors_ = true
 
 [node name="CopyToClipboardControl" type="Control" parent="."]
 layout_mode = 3
@@ -227,8 +227,10 @@ anchors_preset = 0
 offset_top = 127.0
 offset_right = 40.0
 offset_bottom = 167.0
+metadata/_edit_use_anchors_ = true
 
 [node name="Background" type="TextureRect" parent="CopyToClipboardControl"]
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = -0.2
@@ -252,6 +254,7 @@ offset_bottom = 316.0
 theme = ExtResource("5_15nix")
 text = "Copy to
  Clipboard"
+metadata/_edit_use_anchors_ = true
 
 [node name="PauseMenuContainer" type="Control" parent="."]
 visible = false

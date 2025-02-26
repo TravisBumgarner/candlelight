@@ -2,7 +2,14 @@ extends Node
 
 signal action_pressed(action)
 
+var last_input_type = "Unknown"  # Tracks the last input type
+
 func _input(event):
+	if event is InputEventKey:
+		GlobalState.last_input_type = "Keyboard"
+	elif event is InputEventJoypadButton or event is InputEventJoypadMotion:
+		GlobalState.last_input_type = "Controller"
+
 	if event.is_action_pressed("ui_up"):
 		emit_signal("action_pressed", "up")
 	elif event.is_action_pressed("ui_down"):
@@ -21,3 +28,4 @@ func _input(event):
 		emit_signal("action_pressed", "escape")
 	elif event.is_action_pressed("Toggle"):
 		emit_signal("action_pressed", "toggle")
+

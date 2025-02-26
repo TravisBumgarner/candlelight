@@ -24,14 +24,14 @@ class_name MainMenu
 @onready var level_designer_menu = load("res://LevelDesigner/LevelDesignerMenu.tscn")
 
 const HELPER_TEXT_DICT = {
-	"PuzzleModeButton": "Solve the puzzle with the fewest moves.",
-	"FreePlayGameButton": "Unwind and play at your own pace.",
-	"DailyGameButton": "Compete with friends to solve the daily challenge.",
-	"TutorialButton": "Master the game’s basics.",
-	"LevelDesignerButton": "Build your own levels.",
-	"CreditsButton": "Meet the creators behind the game.",
-	"ExitButton": "Thanks for playing! See you soon!"
-}
+  "PuzzleModeButton": "Solve puzzles using limited shapes.",
+  "FreePlayGameButton": "Unwind and play at your own pace.",
+  "DailyGameButton": "Solve the daily challenge with the fewest moves.",
+  "TutorialButton": "Master the game’s basics.",
+  "LevelDesignerButton": "Build your own levels.",
+  "CreditsButton": "Meet the creators behind the game.",
+  "ExitButton": "Thanks for playing! See you soon!"
+};
 
 func _ready():
 	MusicPlayer.play_intro_music()

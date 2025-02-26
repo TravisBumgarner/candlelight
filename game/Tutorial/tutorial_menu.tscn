@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://txb5ar0yw8go"]
+[gd_scene load_steps=6 format=3 uid="uid://txb5ar0yw8go"]
 
 [ext_resource type="Script" path="res://Tutorial/tutorial_menu.gd" id="1_6xgxm"]
-[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/letter_space.tres" id="3_xvrdp"]
-[ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://assets/keyboard/letter_esc.tres" id="4_wn5wi"]
+[ext_resource type="Texture2D" uid="uid://b5h5xjro1r2a6" path="res://assets/keyboard/controller_place.tres" id="3_kqj1p"]
+[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/keyboard_place.tres" id="4_sksil"]
 [ext_resource type="Texture2D" uid="uid://dfexdx88ofads" path="res://assets/backgrounds/background4.png" id="4_xbr1v"]
+[ext_resource type="Texture2D" uid="uid://crrnvbjoq335q" path="res://assets/keyboard/controller_esc.tres" id="5_kvnth"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -19,74 +20,137 @@ position = Vector2(352, 168)
 scale = Vector2(1.57037, 1.31207)
 texture = ExtResource("4_xbr1v")
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="DisplayInput" type="CenterContainer" parent="."]
+visible = false
 layout_mode = 2
 offset_right = 1152.0
 offset_bottom = 608.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="DisplayInput"]
 layout_mode = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="DisplayInput/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 72
+text = "Choose your Adventure:"
+horizontal_alignment = 1
+
+[node name="Controller" type="HBoxContainer" parent="DisplayInput/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Label" type="Label" parent="DisplayInput/VBoxContainer/Controller"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "Controller"
+horizontal_alignment = 1
+
+[node name="Controller" type="TextureRect" parent="DisplayInput/VBoxContainer/Controller"]
+layout_mode = 2
+texture = ExtResource("3_kqj1p")
+stretch_mode = 3
+
+[node name="Keyboard" type="HBoxContainer" parent="DisplayInput/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Label" type="Label" parent="DisplayInput/VBoxContainer/Keyboard"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 36
+text = "Keyboard"
+horizontal_alignment = 1
+
+[node name="Keyboard" type="TextureRect" parent="DisplayInput/VBoxContainer/Keyboard"]
+layout_mode = 2
+texture = ExtResource("4_sksil")
+stretch_mode = 3
+
+[node name="ReturnLater" type="HBoxContainer" parent="DisplayInput/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Label" type="Label" parent="DisplayInput/VBoxContainer/ReturnLater"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 24
+text = "(Press a button or key to switch anytime.)"
+horizontal_alignment = 1
+
+[node name="DisplayWelcome" type="CenterContainer" parent="."]
+layout_mode = 2
+offset_right = 1152.0
+offset_bottom = 608.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DisplayWelcome"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="DisplayWelcome/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 72
 text = "Welcome!"
 horizontal_alignment = 1
 
-[node name="SpaceToBegin" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="SpaceToBegin" type="HBoxContainer" parent="DisplayWelcome/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/SpaceToBegin"]
+[node name="Label" type="Label" parent="DisplayWelcome/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "Press"
 horizontal_alignment = 1
 
-[node name="LetterSpace" type="TextureRect" parent="CenterContainer/VBoxContainer/SpaceToBegin"]
+[node name="Select" type="TextureRect" parent="DisplayWelcome/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
-texture = ExtResource("3_xvrdp")
+texture = ExtResource("4_sksil")
 stretch_mode = 3
 
-[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/SpaceToBegin"]
+[node name="Label2" type="Label" parent="DisplayWelcome/VBoxContainer/SpaceToBegin"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "for the tutorial."
 
-[node name="EscToStart" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="EscToStart" type="HBoxContainer" parent="DisplayWelcome/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/EscToStart"]
+[node name="Label" type="Label" parent="DisplayWelcome/VBoxContainer/EscToStart"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "Or"
 horizontal_alignment = 1
 
-[node name="LetterSpace" type="TextureRect" parent="CenterContainer/VBoxContainer/EscToStart"]
+[node name="Escape" type="TextureRect" parent="DisplayWelcome/VBoxContainer/EscToStart"]
 layout_mode = 2
-texture = ExtResource("4_wn5wi")
+texture = ExtResource("5_kvnth")
 stretch_mode = 3
 
-[node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/EscToStart"]
+[node name="Label2" type="Label" parent="DisplayWelcome/VBoxContainer/EscToStart"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 36
 text = "to start playing."
 
-[node name="ReturnLater" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
+[node name="ReturnLater" type="HBoxContainer" parent="DisplayWelcome/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer/ReturnLater"]
+[node name="Label" type="Label" parent="DisplayWelcome/VBoxContainer/ReturnLater"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 24

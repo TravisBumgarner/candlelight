@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bcl6w6a2jotyl"]
+[gd_scene load_steps=30 format=3 uid="uid://bcl6w6a2jotyl"]
 
 [ext_resource type="Script" path="res://GameBase/index.gd" id="1_y6gwg"]
 [ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/backgrounds/gamescreen.png" id="2_sc2oy"]
@@ -10,14 +10,21 @@
 [ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_nldxa"]
 [ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_rxk82"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="10_24mwh"]
-[ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://assets/keyboard/letter_w.tres" id="11_wwvo0"]
-[ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://assets/keyboard/letter_a.tres" id="12_tbai0"]
-[ext_resource type="Texture2D" uid="uid://cnedws03cbck2" path="res://assets/keyboard/letter_s.tres" id="13_35u35"]
-[ext_resource type="Texture2D" uid="uid://cq60c8757qldh" path="res://assets/keyboard/letter_d.tres" id="14_uoqib"]
-[ext_resource type="Texture2D" uid="uid://bb1mn7ebyioek" path="res://assets/keyboard/letter_r.tres" id="15_tkgvx"]
-[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/letter_space.tres" id="16_3nray"]
-[ext_resource type="Texture2D" uid="uid://dfvq0ya7jnos1" path="res://assets/keyboard/letter_z.tres" id="17_7x7ev"]
-[ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://assets/keyboard/letter_esc.tres" id="18_170w1"]
+[ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://assets/keyboard/keyboard_up.tres" id="11_wwvo0"]
+[ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://assets/keyboard/keyboard_left.tres" id="12_tbai0"]
+[ext_resource type="Texture2D" uid="uid://cnedws03cbck2" path="res://assets/keyboard/keyboard_down.tres" id="13_35u35"]
+[ext_resource type="Texture2D" uid="uid://cq60c8757qldh" path="res://assets/keyboard/keyboard_right.tres" id="14_uoqib"]
+[ext_resource type="Texture2D" uid="uid://bb1mn7ebyioek" path="res://assets/keyboard/keyboard_rotate.tres" id="15_tkgvx"]
+[ext_resource type="Texture2D" uid="uid://brgyjbw0y2a18" path="res://assets/keyboard/keyboard_place.tres" id="16_3nray"]
+[ext_resource type="Texture2D" uid="uid://dfvq0ya7jnos1" path="res://assets/keyboard/keyboard_undo.tres" id="17_7x7ev"]
+[ext_resource type="Texture2D" uid="uid://c6bir8suabki0" path="res://assets/keyboard/keyboard_esc.tres" id="18_170w1"]
+[ext_resource type="Texture2D" uid="uid://pc8h4badf63k" path="res://assets/keyboard/controller_up.tres" id="19_myj6w"]
+[ext_resource type="Texture2D" uid="uid://beprcfncmf77j" path="res://assets/keyboard/controller_left.tres" id="20_bkvih"]
+[ext_resource type="Texture2D" uid="uid://k1n111t8362e" path="res://assets/keyboard/controller_down.tres" id="21_5lj32"]
+[ext_resource type="Texture2D" uid="uid://cbkmfcvhcwx4w" path="res://assets/keyboard/controller_right.tres" id="22_q0gww"]
+[ext_resource type="Texture2D" uid="uid://bvpehujfcsxw2" path="res://assets/keyboard/controller_rotate.tres" id="23_rydqo"]
+[ext_resource type="Texture2D" uid="uid://b5h5xjro1r2a6" path="res://assets/keyboard/controller_place.tres" id="24_chnea"]
+[ext_resource type="Texture2D" uid="uid://cgcewnw7ugasp" path="res://assets/keyboard/controller_undo.tres" id="25_s2epv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fcd4k"]
 texture = ExtResource("3_64dfn")
@@ -237,15 +244,6 @@ stream = ExtResource("7_nldxa")
 [node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
 stream = ExtResource("8_rxk82")
 
-[node name="SubmitScore" type="Button" parent="."]
-visible = false
-offset_left = 144.0
-offset_top = 592.0
-offset_right = 277.0
-offset_bottom = 623.0
-theme = ExtResource("10_24mwh")
-text = "Submit Score"
-
 [node name="Instructions" type="VBoxContainer" parent="."]
 offset_left = 64.0
 offset_top = 544.0
@@ -266,22 +264,22 @@ alignment = 1
 layout_mode = 2
 alignment = 1
 
-[node name="LetterW" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
+[node name="Up" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("11_wwvo0")
 stretch_mode = 3
 
-[node name="LetterA" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
+[node name="Left" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("12_tbai0")
 stretch_mode = 3
 
-[node name="LetterS" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
+[node name="Down" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("13_35u35")
 stretch_mode = 3
 
-[node name="LetterD" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
+[node name="Right" type="TextureRect" parent="Instructions/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("14_uoqib")
 stretch_mode = 3
@@ -292,7 +290,7 @@ theme_override_font_sizes/font_size = 36
 text = "Move"
 horizontal_alignment = 1
 
-[node name="LetterR" type="TextureRect" parent="Instructions/0_Move"]
+[node name="Rotate" type="TextureRect" parent="Instructions/0_Move"]
 layout_mode = 2
 texture = ExtResource("15_tkgvx")
 stretch_mode = 3
@@ -309,7 +307,7 @@ theme_override_font_sizes/font_size = 36
 text = "("
 horizontal_alignment = 1
 
-[node name="LetterEsc" type="TextureRect" parent="Instructions/0_Move"]
+[node name="Esc" type="TextureRect" parent="Instructions/0_Move"]
 layout_mode = 2
 texture = ExtResource("18_170w1")
 stretch_mode = 3
@@ -326,7 +324,7 @@ layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="LetterSpace" type="TextureRect" parent="Instructions/1_Place"]
+[node name="Place" type="TextureRect" parent="Instructions/1_Place"]
 layout_mode = 2
 texture = ExtResource("16_3nray")
 stretch_mode = 3
@@ -343,7 +341,7 @@ theme_override_font_sizes/font_size = 36
 text = "("
 horizontal_alignment = 1
 
-[node name="LetterEsc" type="TextureRect" parent="Instructions/1_Place"]
+[node name="Esc" type="TextureRect" parent="Instructions/1_Place"]
 layout_mode = 2
 texture = ExtResource("18_170w1")
 stretch_mode = 3
@@ -372,7 +370,7 @@ layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="LetterZ" type="TextureRect" parent="Instructions/3_Undo"]
+[node name="Undo" type="TextureRect" parent="Instructions/3_Undo"]
 layout_mode = 2
 texture = ExtResource("17_7x7ev")
 stretch_mode = 3
@@ -389,7 +387,7 @@ theme_override_font_sizes/font_size = 36
 text = "("
 horizontal_alignment = 1
 
-[node name="LetterEsc" type="TextureRect" parent="Instructions/3_Undo"]
+[node name="Esc" type="TextureRect" parent="Instructions/3_Undo"]
 layout_mode = 2
 texture = ExtResource("18_170w1")
 stretch_mode = 3
@@ -430,7 +428,7 @@ layout_mode = 2
 theme_override_constants/separation = 24
 alignment = 1
 
-[node name="LetterEsc" type="TextureRect" parent="Instructions/6_Done"]
+[node name="Esc" type="TextureRect" parent="Instructions/6_Done"]
 layout_mode = 2
 texture = ExtResource("18_170w1")
 stretch_mode = 3
@@ -595,99 +593,198 @@ text = "Main Menu"
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_83c7n")
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer"]
+[node name="Keyboard" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 20
 
-[node name="0_Move" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+[node name="0_Move" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard"]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="WASD" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move"]
+[node name="WASD" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move"]
 custom_minimum_size = Vector2(150, 2.08165e-12)
 layout_mode = 2
 alignment = 1
 
-[node name="Row1" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD"]
+[node name="Row1" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move/WASD"]
 layout_mode = 2
 alignment = 1
 
-[node name="LetterW" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row1"]
+[node name="Up" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move/WASD/Row1"]
 layout_mode = 2
 texture = ExtResource("11_wwvo0")
 stretch_mode = 3
 
-[node name="Row2" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD"]
+[node name="Row2" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move/WASD"]
 layout_mode = 2
 alignment = 1
 
-[node name="LetterA" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row2"]
+[node name="Left" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move/WASD/Row2"]
 layout_mode = 2
 texture = ExtResource("12_tbai0")
 stretch_mode = 3
 
-[node name="LetterS" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row2"]
+[node name="Down" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move/WASD/Row2"]
 layout_mode = 2
 texture = ExtResource("13_35u35")
 stretch_mode = 3
 
-[node name="LetterD" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move/WASD/Row2"]
+[node name="Right" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move/WASD/Row2"]
 layout_mode = 2
 texture = ExtResource("14_uoqib")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_Move"]
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_Move"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Move"
 horizontal_alignment = 1
 
-[node name="0_1_rotate" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+[node name="0_1_rotate" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard"]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="LetterR" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_1_rotate"]
+[node name="Rotate" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_1_rotate"]
 custom_minimum_size = Vector2(150, 2.08165e-12)
 layout_mode = 2
 texture = ExtResource("15_tkgvx")
 stretch_mode = 3
 
-[node name="Label2" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/0_1_rotate"]
+[node name="Label2" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/0_1_rotate"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Rotate"
 horizontal_alignment = 1
 
-[node name="1_Place" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+[node name="1_Place" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard"]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="LetterSpace" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/1_Place"]
+[node name="LetterSpace" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/1_Place"]
 custom_minimum_size = Vector2(150, 2.08165e-12)
 layout_mode = 2
 texture = ExtResource("16_3nray")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/1_Place"]
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/1_Place"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Place
 Select"
 horizontal_alignment = 1
 
-[node name="3_Undo" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2"]
+[node name="3_Undo" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard"]
 layout_mode = 2
 theme_override_constants/separation = 24
 
-[node name="LetterZ" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/3_Undo"]
+[node name="Select" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/3_Undo"]
 clip_contents = true
 custom_minimum_size = Vector2(150, 2.08165e-12)
 layout_mode = 2
 texture = ExtResource("17_7x7ev")
 stretch_mode = 3
 
-[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/VBoxContainer2/3_Undo"]
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard/3_Undo"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Undo "
+horizontal_alignment = 1
+
+[node name="Controller" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 20
+
+[node name="0_Move" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="WASD" type="VBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+alignment = 1
+
+[node name="Row1" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move/WASD"]
+layout_mode = 2
+alignment = 1
+
+[node name="Up" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move/WASD/Row1"]
+layout_mode = 2
+texture = ExtResource("19_myj6w")
+stretch_mode = 3
+
+[node name="Row2" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move/WASD"]
+layout_mode = 2
+alignment = 1
+
+[node name="Left" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move/WASD/Row2"]
+layout_mode = 2
+texture = ExtResource("20_bkvih")
+stretch_mode = 3
+
+[node name="Down" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move/WASD/Row2"]
+layout_mode = 2
+texture = ExtResource("21_5lj32")
+stretch_mode = 3
+
+[node name="Right" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move/WASD/Row2"]
+layout_mode = 2
+texture = ExtResource("22_q0gww")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_Move"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Move"
+horizontal_alignment = 1
+
+[node name="0_1_rotate" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="LetterR" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_1_rotate"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("23_rydqo")
+stretch_mode = 3
+
+[node name="Label2" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/0_1_rotate"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Rotate"
+horizontal_alignment = 1
+
+[node name="1_Place" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Select" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/1_Place"]
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("24_chnea")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/1_Place"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Place
+Select"
+horizontal_alignment = 1
+
+[node name="3_Undo" type="HBoxContainer" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="Undo" type="TextureRect" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/3_Undo"]
+clip_contents = true
+custom_minimum_size = Vector2(150, 2.08165e-12)
+layout_mode = 2
+texture = ExtResource("25_s2epv")
+stretch_mode = 3
+
+[node name="Label" type="Label" parent="PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller/3_Undo"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Undo "

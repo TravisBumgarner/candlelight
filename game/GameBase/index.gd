@@ -15,9 +15,52 @@ extends Node2D
 @onready var game_details_control = $GameDetailsControl
 @onready var pause_menu_container = $PauseMenuContainer
 @onready var level_complete_controls_center_container = $LevelCompleteControlsCenterContainer
+@onready var keyboard_controls = $PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Keyboard
+@onready var controller_controls = $PauseMenuContainer/PanelContainer/HBoxContainer/PanelContainer/Controller
 
 @onready var return_to_level_editor_button = $PauseMenuContainer/PanelContainer/HBoxContainer/ControlsContainer/ReturnToLevelEditorButton
 @onready var level_designer = preload("res://LevelDesigner/index.tscn")
+
+@onready var up = $"Instructions/0_Move/WASD/Row1/Up"
+@onready var left = $"Instructions/0_Move/WASD/Row1/Left"
+@onready var down = $"Instructions/0_Move/WASD/Row1/Down"
+@onready var right = $"Instructions/0_Move/WASD/Row1/Right"
+@onready var rotate = $"Instructions/0_Move/Rotate"
+@onready var place = $"Instructions/1_Place/Place"
+@onready var esc = $"Instructions/0_Move/Esc"
+@onready var undo = $"Instructions/3_Undo/Undo"
+@onready var esc2 = $"Instructions/1_Place/Esc"
+@onready var esc3 = $"Instructions/3_Undo/Esc"
+@onready var esc4 = $"Instructions/6_Done/Esc"
+
+
+func update_controller_and_keyboard_ui():
+	if GlobalState.last_input_type == "Keyboard":
+		# Keyboard texture assignments
+		up.texture = preload("res://assets/keyboard/keyboard_up.tres")
+		left.texture = preload("res://assets/keyboard/keyboard_left.tres")
+		down.texture = preload("res://assets/keyboard/keyboard_down.tres")
+		right.texture = preload("res://assets/keyboard/keyboard_right.tres")
+		rotate.texture = preload("res://assets/keyboard/keyboard_rotate.tres")
+		place.texture = preload("res://assets/keyboard/keyboard_place.tres")
+		esc.texture = preload("res://assets/keyboard/keyboard_esc.tres")
+		undo.texture = preload("res://assets/keyboard/keyboard_undo.tres")
+		esc2.texture = preload("res://assets/keyboard/keyboard_esc.tres")
+		esc3.texture = preload("res://assets/keyboard/keyboard_esc.tres")
+		esc4.texture = preload("res://assets/keyboard/keyboard_esc.tres")
+	else:
+		# Controller texture assignments (assuming controller textures are different)
+		up.texture = preload("res://assets/keyboard/controller_up.tres")
+		left.texture = preload("res://assets/keyboard/controller_left.tres")
+		down.texture = preload("res://assets/keyboard/controller_down.tres")
+		right.texture = preload("res://assets/keyboard/controller_right.tres")
+		rotate.texture = preload("res://assets/keyboard/controller_rotate.tres")
+		place.texture = preload("res://assets/keyboard/controller_place.tres")
+		esc.texture = preload("res://assets/keyboard/controller_esc.tres")
+		undo.texture = preload("res://assets/keyboard/controller_undo.tres")
+		esc2.texture = preload("res://assets/keyboard/controller_esc.tres")
+		esc3.texture = preload("res://assets/keyboard/controller_esc.tres")
+		esc4.texture = preload("res://assets/keyboard/controller_esc.tres")
 
 
 const main_menu_scene = preload("res://MainMenu/main_menu.tscn")
@@ -51,7 +94,7 @@ func _ready():
 	# Doing this programmaticaly makes it easier eveywhere.
 	instructions.hide()
 	level_complete_controls_center_container.hide()
-	
+	update_controller_and_keyboard_ui()
 	var game_modes = {
 		GlobalConsts.GAME_MODE.Tutorial: {
 			"class": TutorialMode,
@@ -90,7 +133,7 @@ func _ready():
 		game.load_game()
 	else:
 		game.new_game()
-	
+
 func _on_resume_button_pressed():
 	game.resume() # Cannot figure out how to use built in get_tree().pause
 	pause_menu_container.hide()
@@ -100,6 +143,16 @@ func _on_main_menu_button_pressed():
 	get_tree().change_scene_to_packed(self.main_menu_scene)
 
 func _on_pause_menu_container_visibility_changed():
+	print(GlobalState.last_input_type)
+	if GlobalState.last_input_type == "Keyboard":
+		controller_controls.hide()
+		keyboard_controls.show()
+	else:
+		controller_controls.show()
+		keyboard_controls.hide()
+		
+		
+	
 	# For some reason this line will error if PuzzleMenuContainer on _ready
 	if is_visible_in_tree():
 		resume_button.grab_focus()
