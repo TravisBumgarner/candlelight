@@ -2,6 +2,10 @@ extends Node2D
 
 class_name BaseGame
 
+@onready var escape = $DisplayWelcome/VBoxContainer/EscToStart/Escape
+@onready var select = $DisplayWelcome/VBoxContainer/SpaceToBegin/Select
+
+
 # _init params Alphabetical
 var board_tile_map: TileMap
 var game_complete_controls_center_container: CenterContainer
@@ -80,7 +84,7 @@ func cleanup():
 	self.game_complete_timer.disconnect('timeout', _on_game_complete_timer_timeout)
 	self.game_over_timer.disconnect('timeout', _on_game_over_timer_timeout)
 
-func _on_action_pressed(action):
+func _on_action_pressed(action):	
 	if disable_player_interaction and action != 'escape':
 		return
 

@@ -153,15 +153,15 @@ func update_instructions():
 	if instruction == INSTRUCTION['0_Move']:
 		var letters = []
 		if has_performed_action["up"]:
-			letters.append(self.instructions_container.find_child('LetterW'))
+			letters.append(self.instructions_container.find_child('Up'))
 		if has_performed_action["left"]:
-			letters.append(self.instructions_container.find_child('LetterA'))
+			letters.append(self.instructions_container.find_child('Left'))
 		if has_performed_action["down"]:
-			letters.append(self.instructions_container.find_child('LetterS'))
+			letters.append(self.instructions_container.find_child('Down'))
 		if has_performed_action["right"]:
-			letters.append(self.instructions_container.find_child('LetterD'))
+			letters.append(self.instructions_container.find_child('Right'))
 		if has_performed_action["rotate"]:
-			letters.append(self.instructions_container.find_child('LetterR'))
+			letters.append(self.instructions_container.find_child('Rotate'))
 		
 		for letter in letters:
 			letter.modulate = Color(1,1,1,0.2 )
