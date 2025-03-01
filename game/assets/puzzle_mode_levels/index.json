@@ -63,11 +63,6 @@
 				"unique_id": "2_8",
 				"level_number": 8,
 				"file_name": "2_8.cfg"
-			},
-			{
-				"unique_id": "2_9",
-				"level_number": 9,
-				"file_name": "2_9.cfg"
 			}
 		]
 	},
@@ -166,6 +161,11 @@
 				"unique_id": "5_5",
 				"level_number": 5,
 				"file_name": "5_5.cfg"
+			},
+			{
+				"unique_id": "5_6",
+				"level_number": 6,
+				"file_name": "5_6.cfg"
 			}
 		]
 	},

@@ -22,12 +22,11 @@ InputManager="*res://Singletons/InputManager.gd"
 GlobalConsts="*res://Singletons/GlobalConsts.gd"
 Utilities="*res://Singletons/Utilities.gd"
 Shapes="*res://Singletons/Shapes.gd"
-SoundManager="*res://Singletons/SoundManager.gd"
 GlobalState="*res://Singletons/GlobalState.gd"
 KeyValueStore="*res://Singletons/KeyValueStore.gd"
 FreePlayModeHighScores="*res://Singletons/FreePlayModeHighScores.gd"
 PuzzleModeLevelManager="*res://Singletons/PuzzleModeLevelManager.gd"
-MusicPlayer="*res://Singletons/MusicPlayer.tscn"
+AudioPlayer="*res://Singletons/AudioPlayer.tscn"
 MouseVisibility="*res://Singletons/MouseVisibility.gd"
 
 [display]

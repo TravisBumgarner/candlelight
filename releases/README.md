@@ -12,27 +12,24 @@
 
 ## Deploy
 
-1. Run `./setup.sh`
+### Deploy Setup
+
+1. Copy `*.vdf` to scripts dir.
+
+### Deploy
+
+1. Run `./1_setup.sh`
 1. Build executables with Godot
-    - Mac: Extract `Candlelight.app` from `.dmg` and place in `./mac` and remove dmg.
-1. `cd ~/Programming/steamworks\ sdk/tools/ContentBuilder/builder_osx`
-    1. First time only
-        1. `chmod +x steamcmd`
-        1. Copy `candlelight.vdf` and `candlelight_demo.vdf` to scripts dir.
-1. `bash ./steamcmd.sh`
-1. Login with `login username password`
-1. Deploy Depots
-    - Run one of following scripts from within Steam shell to deploy
-        - Game `run_app_build ..\scripts\candlelight.vdf`
-        - Playtest `run_app_build ..\scripts\candlelight_playtest.vdf`
-        - Demo `run_app_build ..\scripts\candlelight_demo.vdf`
-    - Etc 
+1. Prep for upload `./2_upload_prep.sh`
+1. Run one of following scripts to deploy to Steam Depots
+    - Game `run_app_build ..\scripts\candlelight.vdf`
+    - Playtest `run_app_build ..\scripts\candlelight_playtest.vdf`
+    - Demo `run_app_build ..\scripts\candlelight_demo.vdf` 
 1. Goto build page, set branch to default.
 1. Publish. 
     - Make sure all changes in Steam have been published. You'll see a big red banner if not. 
     - Make sure the correct Depots are attached to the correct Application. 
     - You'll also need to restart steam after making changes and uploading and such.
-
 
 Misc Notes
 - [Store Beta Mode](https://store.steampowered.com/app/3157820/Candlelight/)

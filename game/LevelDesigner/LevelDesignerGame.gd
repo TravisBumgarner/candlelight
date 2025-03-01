@@ -43,7 +43,7 @@ func level_complete(gems):
 	#upsert_game_save()
 	disable_player_interaction = true
 	
-	SoundManager.play("one_gem")
+	AudioPlayer.play_sound("one_gem")
 
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
@@ -86,8 +86,8 @@ func _on_game_over_timer_timeout():
 func game_over():
 	# Experiment with allowing user to hit undo.
 	#self.disable_player_interaction = true
-	SoundManager.play("nonmovement")
-	SoundManager.play("nonmovement")
+	AudioPlayer.play_sound("non_movement")
+	AudioPlayer.play_sound("non_movement")
 	game_over_timer.start(1)
 
 

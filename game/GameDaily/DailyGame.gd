@@ -8,7 +8,7 @@ func _init(args):
 
 func level_complete(gems):
 	disable_player_interaction = true
-	SoundManager.play("two_gems")	
+	AudioPlayer.play_sound("two_gems")	
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)
 	upsert_scores()

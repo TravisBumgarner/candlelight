@@ -1,14 +1,9 @@
-[gd_scene load_steps=30 format=3 uid="uid://bcl6w6a2jotyl"]
+[gd_scene load_steps=25 format=3 uid="uid://bcl6w6a2jotyl"]
 
 [ext_resource type="Script" path="res://GameBase/index.gd" id="1_y6gwg"]
 [ext_resource type="Texture2D" uid="uid://28oajk16a6v6" path="res://assets/backgrounds/gamescreen.png" id="2_sc2oy"]
 [ext_resource type="Texture2D" uid="uid://bv142d00uvou4" path="res://assets/sprites/gems.png" id="3_64dfn"]
 [ext_resource type="Texture2D" uid="uid://df3sdcq35idko" path="res://assets/backgrounds/background3.png" id="4_4nrn3"]
-[ext_resource type="Script" path="res://GameBase/Sounds.gd" id="4_g0rw6"]
-[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="5_unupw"]
-[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_wxg3l"]
-[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_nldxa"]
-[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_rxk82"]
 [ext_resource type="Theme" uid="uid://ckiied77ueyj" path="res://candlelight_theme.tres" id="10_24mwh"]
 [ext_resource type="Texture2D" uid="uid://bwb6qbxp5x718" path="res://assets/keyboard/keyboard_up.tres" id="11_wwvo0"]
 [ext_resource type="Texture2D" uid="uid://bpypmb6kajhjh" path="res://assets/keyboard/keyboard_left.tres" id="12_tbai0"]
@@ -228,21 +223,6 @@ one_shot = true
 
 [node name="GameOverTimer" type="Timer" parent="."]
 one_shot = true
-
-[node name="Sounds" type="Node" parent="."]
-script = ExtResource("4_g0rw6")
-
-[node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("5_unupw")
-
-[node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("6_wxg3l")
-
-[node name="movement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("7_nldxa")
-
-[node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
-stream = ExtResource("8_rxk82")
 
 [node name="Instructions" type="VBoxContainer" parent="."]
 offset_left = 64.0

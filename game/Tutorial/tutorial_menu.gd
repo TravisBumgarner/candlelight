@@ -14,7 +14,7 @@ var display = "display_input"
 
 func _ready():
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
-	MusicPlayer.play_intro_music()
+	AudioPlayer.play_music('intro')
 	display_input.show()
 	display_welcome.hide()
 
@@ -36,8 +36,8 @@ func _on_action_pressed(action):
 		match action:
 			"escape":
 				get_tree().change_scene_to_packed(main_menu)
-				KeyValueStore.save_data(KeyValueStore.StoreKey.HasSeenApprenticeship, 'true')
+				KeyValueStore.save_data(KeyValueStore.StoreKey.HasSeenApprenticeship, true)
 			"select":
 				GlobalState.game_mode = GlobalConsts.GAME_MODE.Tutorial
 				get_tree().change_scene_to_packed(game_scene)
-				KeyValueStore.save_data(KeyValueStore.StoreKey.HasSeenApprenticeship, 'true')
+				KeyValueStore.save_data(KeyValueStore.StoreKey.HasSeenApprenticeship, true)
