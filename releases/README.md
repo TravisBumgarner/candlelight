@@ -5,14 +5,13 @@
 
 # Steam
 
-A collection of notes for deploying to steam.
+## Setup
 
-How to use Steam STK [Link](https://discussions.unity.com/t/solved-uploading-my-game-to-steam-from-mac/754500/25)
-
-My version of above instructions
-
-1. Download an install [Steam SDK](https://partner.steamgames.com/downloads/list)
+1. Install [Steam SDK](https://partner.steamgames.com/downloads/list)
 1. Place it in `Programming/`
+
+## Deploy
+
 1. Run `./setup.sh`
 1. Build executables with Godot
     - Mac: Extract `Candlelight.app` from `.dmg` and place in `./mac` and remove dmg.
