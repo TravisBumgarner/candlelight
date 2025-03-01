@@ -29,7 +29,7 @@ const HELPER_TEXT_DICT = {
   "DailyGameButton": "Solve the daily challenge with the fewest moves.",
   "TutorialButton": "Master the game’s basics.",
   "LevelDesignerButton": "Build your own levels.",
-  "Settings": "Made game adjustments.",
+  "Settings": "Make game adjustments.",
   "CreditsButton": "Meet the creators behind the game.",
   "ExitButton": "Thanks for playing! See you soon!"
 };
