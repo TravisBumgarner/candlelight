@@ -18,9 +18,9 @@ func _ready():
 
 func create_level_button(file_name: String, world_number: int, level_number: int, disabled: bool, best_score: int):
 	var button = Button.new()
-	var text = "Level " + str(level_number) + '\n'
+	var text = "Level " + str(level_number)
 	if best_score > 0: # If undefined, Top Score is -1
-		text+= "Best: %d" % [best_score]
+		text+= " (Best: %d)" % [best_score]
 	
 	button.text = text
 	button.disabled = disabled

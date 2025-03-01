@@ -39,50 +39,43 @@ theme_override_constants/separation = 20
 [node name="PuzzleModeButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
 focus_neighbor_top = NodePath("../ExitButton")
-focus_next = NodePath("../FreePlayGameButton")
-focus_previous = NodePath("../ExitButton")
 theme = ExtResource("3_jaf2s")
 text = "Puzzles"
 
 [node name="FreePlayGameButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
-focus_next = NodePath("../PuzzleModeButton")
-focus_previous = NodePath("../DailyGameButton")
 theme = ExtResource("3_jaf2s")
 text = "Free Play"
 
 [node name="DailyGameButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
-focus_next = NodePath("../TutorialButton")
-focus_previous = NodePath("../FreePlayGameButton")
 theme = ExtResource("3_jaf2s")
 text = "Daily"
 
 [node name="TutorialButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
-focus_next = NodePath("../DailyGameButton")
-focus_previous = NodePath("../CreditsButton")
 theme = ExtResource("3_jaf2s")
 text = "Tutorial"
 
 [node name="LevelDesignerButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
 theme = ExtResource("3_jaf2s")
-disabled = true
 text = "Level Designer (Coming Soon)"
 
 [node name="CreditsButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
-focus_next = NodePath("../ExitButton")
-focus_previous = NodePath("../TutorialButton")
 theme = ExtResource("3_jaf2s")
 text = "Credits"
+
+[node name="Settings" type="Button" parent="VBoxContainer/Buttons"]
+layout_mode = 2
+theme = ExtResource("3_jaf2s")
+text = "Settings
+"
 
 [node name="ExitButton" type="Button" parent="VBoxContainer/Buttons"]
 layout_mode = 2
 focus_neighbor_bottom = NodePath("../PuzzleModeButton")
-focus_next = NodePath("../PuzzleModeButton")
-focus_previous = NodePath("../CreditsButton")
 theme = ExtResource("3_jaf2s")
 text = "Exit
 "

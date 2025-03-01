@@ -7,7 +7,6 @@ extends Node2D
 @onready var game_complete_timer = $GameCompleteTimer
 @onready var game_complete_controls_center_container = $GameCompleteControlsCenterContainer
 @onready var game_over_timer = $GameOverTimer
-@onready var sounds = $Sounds
 @onready var game_details_label = $GameDetailsControl/GameDetailsTileMap/GameDetailsLabel
 @onready var game_details_value = $GameDetailsControl/GameDetailsTileMap/Control/VBoxContainer/GameDetailsValue
 @onready var instructions = $Instructions
@@ -84,7 +83,6 @@ func create_game(
 		level_complete_timer,
 		pause_menu_container,
 		queue_control, 
-		sounds,
 		target_gem_control
 		# ALPHABETICAL
 	])

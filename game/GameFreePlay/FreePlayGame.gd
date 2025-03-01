@@ -62,9 +62,9 @@ func level_complete(gems):
 	var total_gems = gems.size()
 	
 	if total_gems == 1:
-		SoundManager.play("one_gem")
+		AudioPlayer.play_sound("one_gem")
 	if total_gems >= 2:
-		SoundManager.play("two_gems")
+		AudioPlayer.play_sound("two_gems")
 			
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)

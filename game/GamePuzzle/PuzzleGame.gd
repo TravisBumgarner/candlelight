@@ -51,10 +51,10 @@ func level_complete(gems):
 	
 	upsert_game_save(next_level)
 	if next_level != null:
-		SoundManager.play("one_gem")
+		AudioPlayer.play_sound("one_gem")
 		level_complete_timer.start(1)
 	else:
-		SoundManager.play("two_gems")
+		AudioPlayer.play_sound("two_gems")
 		game_complete_timer.start(1)
 
 func upsert_game_save(next_level):
@@ -98,8 +98,8 @@ func _on_game_complete_timer_timeout():
 
 func game_over():
 	self.disable_player_interaction = true
-	SoundManager.play("nonmovement")
-	SoundManager.play("nonmovement")
+	AudioPlayer.play_sound("non_movement")
+	AudioPlayer.play_sound("non_movement")
 	game_over_timer.start(1)
 
 

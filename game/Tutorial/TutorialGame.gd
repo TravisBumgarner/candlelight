@@ -55,10 +55,10 @@ func level_complete(gems):
 	disable_player_interaction = true
 	
 	if instruction == INSTRUCTION['4_Score']:
-		SoundManager.play("one_gem")	
+		AudioPlayer.play_sound("one_gem")	
 		
 	if instruction == INSTRUCTION['5_Queue']:
-		SoundManager.play("two_gems")	
+		AudioPlayer.play_sound("two_gems")	
 	
 	for gem in gems:
 		gemsManager.draw_gem_on_board(gem)

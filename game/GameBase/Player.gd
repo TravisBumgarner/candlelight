@@ -20,11 +20,11 @@ func move(direction):
 		return
 	
 	if can_move(direction):
-		SoundManager.play("movement")
+		AudioPlayer.play_sound("movement")
 		self.current_absolute_position += direction
 		self._draw()
 	else:
-		SoundManager.play("nonmovement")
+		AudioPlayer.play_sound("non_movement")
 		pass
 		
 
@@ -85,11 +85,11 @@ func rotate_right():
 		return
 		
 	if self.can_rotate():
-		SoundManager.play("movement")
+		AudioPlayer.play_sound("movement")
 		self.rotation_index = (self.rotation_index + 1) % Shapes.TOTAL_ROTATIONS
 		self._draw()
 	else:
-		SoundManager.play("nonmovement")
+		AudioPlayer.play_sound("non_movement")
 		pass
 
 func place_on_board():
