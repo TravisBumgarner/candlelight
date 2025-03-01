@@ -7,12 +7,10 @@ func clear_local_data():
 	KeyValueStore.clear()
 
 func _ready():
-	# Useful for debugging tutorial.
-	#clear_local_data()
+	KeyValueStore.load_or_initialize_config()
 	
 	var hasSeenApprenticeship = KeyValueStore.load_data(KeyValueStore.StoreKey.HasSeenApprenticeship)
-
-	var scene = main_menu if hasSeenApprenticeship == 'true' else tutorial_menu
+	var scene = main_menu if hasSeenApprenticeship == true else tutorial_menu
 	
 	# Use call_deferred to change the scene
 	call_deferred("_change_scene", scene)

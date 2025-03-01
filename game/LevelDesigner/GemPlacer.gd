@@ -11,11 +11,11 @@ func _init(_gem_tile_map):
 	
 func move(direction):
 	if can_move(direction):
-		SoundManager.play("movement")
+		AudioPlayer.play_sound("movement")
 		self.current_position += direction
 		self._draw_point(self.current_position)
 	else:
-		SoundManager.play("nonmovement")
+		AudioPlayer.play_sound("nonmovement")
 		pass
 		
 func _draw_point(point):

@@ -19,7 +19,6 @@ var game_over_timer: Timer
 var instructions_container: VBoxContainer
 var pause_menu_container
 var queue_control: Control
-var sounds: Node
 var target_gem_control: Control
 # end _init Params Alphabetical
 
@@ -38,7 +37,7 @@ var disable_player_interaction = false
 
 func _init(args: Array):
 	# Alphabetical
-	MusicPlayer.play_game_music()
+	AudioPlayer.play_music("gameplay")
 	var counter = 0
 	self.board_tile_map = args[counter]
 	counter += 1
@@ -64,13 +63,10 @@ func _init(args: Array):
 	counter += 1
 	self.queue_control = args[counter]
 	counter += 1
-	self.sounds = args[counter]
-	counter += 1
 	self.target_gem_control = args[counter]
 	counter += 1
 	# Alphabatical
 	
-	SoundManager.connect("play_sound", sounds.play_sound)
 	InputManager.connect("action_pressed", Callable(self, "_on_action_pressed"))
 	level_complete_timer.connect('timeout', _on_level_complete_timer_timeout)
 	game_complete_timer.connect('timeout', _on_game_complete_timer_timeout)
@@ -78,7 +74,6 @@ func _init(args: Array):
 
 func cleanup():
 	# Needs to be called when exiting scene or else Godot will hold reference for previous refs.
-	SoundManager.disconnect("play_sound", sounds.play_sound)
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 	self.level_complete_timer.disconnect('timeout', _on_level_complete_timer_timeout)
 	self.game_complete_timer.disconnect('timeout', _on_game_complete_timer_timeout)
@@ -101,7 +96,7 @@ func _on_action_pressed(action):
 	match action:
 		"undo":
 			if history.size() == 0:
-				SoundManager.play("nonmovement")
+				AudioPlayer.play_sound("non_movement")
 				return
 			self.undo()              
 		"rotate":
@@ -114,7 +109,7 @@ func _on_action_pressed(action):
 
 func handle_player_placement():
 	if not player.can_place():
-		SoundManager.play("nonmovement")
+		AudioPlayer.play_sound("non_movement")
 		return
 	
 	history.append(self.board_tile_map, player.shape_name)

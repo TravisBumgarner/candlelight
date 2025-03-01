@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://byb57lnuqcoe3"]
+
+[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="2_6i3hj"]
+[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="3_wplh8"]
+[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="4_uok7a"]
+[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="5_jm0x1"]
+
+[sub_resource type="GDScript" id="GDScript_0h40n"]
+script/source = "extends AudioStreamPlayer
+
+# Preload sound files
+const one_gem = preload(\"res://assets/sounds/1gem.wav\")
+const two_gems = preload(\"res://assets/sounds/2gems.wav\")
+const movement = preload(\"res://assets/sounds/movement.wav\")
+const non_movement = preload(\"res://assets/sounds/non_movement.wav\")
+
+# Play any sound or music, passing the stream and volume as arguments
+func play_sound(music: AudioStream, volume = 0.0):
+	if stream == music:
+		return
+	stream = music
+	volume_db = volume
+	play()
+
+
+# Play gem sound effects
+func play_gem_sound(gem_count: int):
+	if gem_count == 1:
+		play_sound(one_gem)
+	elif gem_count == 2:
+		play_sound(two_gems)
+
+# Play movement sound effects
+func play_movement(is_moving: bool):
+	if is_moving:
+		play_sound(movement)
+	else
+"
+
+[node name="SoundPlayer_tscn" type="Node2D"]
+script = SubResource("GDScript_0h40n")
+
+[node name="one_gem" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_6i3hj")
+
+[node name="two_gems" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_wplh8")
+
+[node name="movement" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_uok7a")
+
+[node name="nonmovement" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_jm0x1")

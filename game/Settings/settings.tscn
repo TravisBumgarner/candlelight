@@ -1,0 +1,94 @@
+[gd_scene load_steps=10 format=3 uid="uid://cihidxud5fnd2"]
+
+[ext_resource type="Script" path="res://Settings/index.gd" id="1_74nmk"]
+[ext_resource type="Texture2D" uid="uid://3lhc7mvsvfgn" path="res://assets/backgrounds/background2.png" id="2_vkc62"]
+[ext_resource type="PackedScene" uid="uid://cawpo7fepcph4" path="res://Components/Slider/slider.tscn" id="3_nfgpq"]
+[ext_resource type="AudioStream" uid="uid://bw1vvajpvxyy4" path="res://assets/sounds/1gem.wav" id="5_a0bsl"]
+[ext_resource type="AudioStream" uid="uid://d3vyfyqs54nhl" path="res://assets/sounds/2gems.wav" id="6_jc01j"]
+[ext_resource type="AudioStream" uid="uid://h8nd3pftkm7u" path="res://assets/sounds/movement.wav" id="7_pgyjc"]
+[ext_resource type="AudioStream" uid="uid://bo5ieqqml5ewe" path="res://assets/sounds/non_movement.wav" id="8_y7wng"]
+
+[sub_resource type="Theme" id="Theme_m5m8v"]
+
+[sub_resource type="GDScript" id="GDScript_y6cw2"]
+script/source = "extends Node
+
+func play_sound(sound_name):
+	var sound = get_node(sound_name)
+	if sound and sound is AudioStreamPlayer:
+		sound.bus = 'sfx'
+		sound.play()
+	else:
+		print(\"Sound node not found or is not an AudioStreamPlayer: \" + sound_name)
+"
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 1.0
+offset_right = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_74nmk")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+offset_right = 168.0
+offset_bottom = 264.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_vkc62")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 2
+offset_right = 1151.0
+offset_bottom = 608.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+custom_minimum_size = Vector2(300, 2.08165e-12)
+layout_mode = 2
+alignment = 1
+
+[node name="Credits" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_m5m8v")
+theme_override_font_sizes/font_size = 36
+text = "Settings
+"
+
+[node name="HBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="SFX" parent="CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_nfgpq")]
+layout_mode = 2
+focus_neighbor_top = NodePath("../Music")
+focus_previous = NodePath("../Music")
+focus_mode = 2
+bus_name = "SFX"
+label_name = "Sound Effects"
+
+[node name="Music" parent="CenterContainer/VBoxContainer/HBoxContainer" instance=ExtResource("3_nfgpq")]
+layout_mode = 2
+bus_name = "Music"
+label_name = "Music"
+
+[node name="Sounds" type="Node" parent="."]
+script = SubResource("GDScript_y6cw2")
+
+[node name="one_gem" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("5_a0bsl")
+
+[node name="two_gems" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("6_jc01j")
+
+[node name="movement" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("7_pgyjc")
+
+[node name="nonmovement" type="AudioStreamPlayer" parent="Sounds"]
+stream = ExtResource("8_y7wng")
