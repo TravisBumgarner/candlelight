@@ -143,7 +143,6 @@ func _on_main_menu_button_pressed():
 	get_tree().change_scene_to_packed(self.main_menu_scene)
 
 func _on_pause_menu_container_visibility_changed():
-	print(GlobalState.last_input_type)
 	if GlobalState.last_input_type == "Keyboard":
 		controller_controls.hide()
 		keyboard_controls.show()
