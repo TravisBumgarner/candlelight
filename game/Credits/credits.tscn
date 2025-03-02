@@ -36,6 +36,7 @@ offset_bottom = 608.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 alignment = 1
 
 [node name="Credits" type="Label" parent="CenterContainer/VBoxContainer"]
@@ -46,17 +47,20 @@ text = "Credits"
 
 [node name="Travis" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/Travis"]
 layout_mode = 2
 theme = ExtResource("3_aim3m")
 text = "Game Design, Art, Code, Sound By Travis Bumgarner"
 
-[node name="LinkButton2" type="LinkButton" parent="CenterContainer/VBoxContainer/Travis"]
+[node name="TravisButton" type="Button" parent="CenterContainer/VBoxContainer/Travis"]
 layout_mode = 2
+focus_neighbor_top = NodePath("../../Helena/Helena Button")
+focus_next = NodePath("../../Helena/Helena Button")
+focus_previous = NodePath("../../Helena/Helena Button")
 theme = ExtResource("3_aim3m")
-text = "(Visit)"
-uri = "http://travisbumgarner.dev/"
+text = "Visit"
 
 [node name="Ricky" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -66,20 +70,20 @@ layout_mode = 2
 theme = ExtResource("3_aim3m")
 text = "Music By Ricky Brandes"
 
-[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer/Ricky"]
-layout_mode = 2
-uri = "https://departuremono.com/"
-
 [node name="Helena" type="HBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/separation = 20
 
 [node name="Label2" type="Label" parent="CenterContainer/VBoxContainer/Helena"]
 layout_mode = 2
 theme = ExtResource("3_aim3m")
 text = "Font by Helena Zhang "
 
-[node name="LinkButton" type="LinkButton" parent="CenterContainer/VBoxContainer/Helena"]
+[node name="Helena Button" type="Button" parent="CenterContainer/VBoxContainer/Helena"]
 layout_mode = 2
+focus_neighbor_bottom = NodePath("../../Travis/TravisButton")
 theme = ExtResource("3_aim3m")
-text = "(Visit)"
-uri = "https://departuremono.com/"
+text = "Visit"
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Travis/TravisButton" to="." method="_on_travis_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/Helena/Helena Button" to="." method="_on_helena_button_pressed"]
