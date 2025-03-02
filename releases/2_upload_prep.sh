@@ -12,8 +12,8 @@ cd ~/Programming/steamworks\ sdk/tools/ContentBuilder/builder_osx
 chmod +x steamcmd.sh
 
 echo "Run one of"
-echo "    - Game `run_app_build ..\scripts\candlelight.vdf`"
-echo "    - Playtest `run_app_build ..\scripts\candlelight_playtest.vdf`"
-echo "    - Demo `run_app_build ..\scripts\candlelight_demo.vdf`" 
+echo "    - Game run_app_build ../scripts/candlelight.vdf"
+echo "    - Playtest run_app_build ../scripts/candlelight_playtest.vdf"
+echo "    - Demo run_app_build ../scripts/candlelight_demo.vdf"
 
 bash ./steamcmd.sh +login sillysideprojects
