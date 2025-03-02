@@ -23,4 +23,3 @@ func _on_action_pressed(action):
 func cleanup():
 	InputManager.disconnect("action_pressed", Callable(self, "_on_action_pressed"))
 	get_tree().change_scene_to_packed(main_menu)
-
