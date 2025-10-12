@@ -1,12 +1,11 @@
 import Button from "@/components/button";
 import { SPACING } from "@/constants/theme";
-import { useState } from "react";
+import { GameMode } from "@/types";
+import { useCallback, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-type GAME_MODE = "puzzles" | "freeplay" | "daily" | "tutorial";
-
 const gameModeDetailsLookup: Record<
-  GAME_MODE,
+  GameMode,
   { title: string; description: string }
 > = {
   puzzles: {
@@ -27,8 +26,18 @@ const gameModeDetailsLookup: Record<
   },
 };
 
-const SelectGameMode = () => {
-  const [pendingGame, setPendingGame] = useState<GAME_MODE | null>(null);
+const SelectGameMode = ({
+  handleModeSelectCallback,
+}: {
+  handleModeSelectCallback: (mode: GameMode) => void;
+}) => {
+  const [pendingGame, setPendingGame] = useState<GameMode | null>(null);
+
+  const handleModeSelect = useCallback(() => {
+    if (!pendingGame) return;
+
+    handleModeSelectCallback(pendingGame);
+  }, [pendingGame, handleModeSelectCallback]);
 
   return (
     <View style={styles.container}>
@@ -54,7 +63,12 @@ const SelectGameMode = () => {
             ? `${gameModeDetailsLookup[pendingGame].description}`
             : "Select a game mode to see details."}
         </Text>
-        <Button fullWidth onPress={() => alert("playing")} label="Play" />
+        <Button
+          disabled={!pendingGame}
+          fullWidth
+          onPress={handleModeSelect}
+          label="Play"
+        />
       </View>
     </View>
   );

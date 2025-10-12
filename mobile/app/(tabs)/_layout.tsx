@@ -23,7 +23,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="game"
+        name="tab-game"
         options={{
           title: "Game",
           tabBarIcon: ({ color }) => (
@@ -32,7 +32,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="settings"
+        name="tab-settings"
         options={{
           title: "Settings",
           tabBarIcon: ({ color }) => (
@@ -41,7 +41,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="credits"
+        name="tab-credits"
         options={{
           title: "Credits",
           tabBarIcon: ({ color }) => (

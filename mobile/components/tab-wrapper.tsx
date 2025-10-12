@@ -4,7 +4,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const backgrounds = {
   credits: require("@/assets/backgrounds/credits.png"),
   game: require("@/assets/backgrounds/game.png"),
-  homescreen: require("@/assets/backgrounds/homescreen.png"),
+  home: require("@/assets/backgrounds/home.png"),
   "select-game-save": require("@/assets/backgrounds/select-game-save.png"),
   settings: require("@/assets/backgrounds/settings.png"),
   splash: require("@/assets/backgrounds/splash.png"),

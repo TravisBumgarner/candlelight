@@ -5,17 +5,20 @@ interface PixelMenuButtonProps {
   label: string;
   onPress: () => void;
   fullWidth?: boolean;
+  disabled?: boolean;
 }
 
 export default function PixelMenuButton({
   label,
   onPress,
   fullWidth = false,
+  disabled = false,
 }: PixelMenuButtonProps) {
   return (
     <Pressable
       onPress={onPress}
       style={[styles.wrapper, fullWidth && styles.fullWidth]}
+      disabled={disabled}
     >
       <Text style={styles.text}>{label}</Text>
     </Pressable>
