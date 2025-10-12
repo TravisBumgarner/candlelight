@@ -4,6 +4,7 @@ import Text from "@/components/text";
 import { PuzzleGameDataSchema, PuzzleLevel } from "@/types";
 import { useState } from "react";
 import { View } from "react-native";
+import Board from "./board";
 
 const LevelSelect = ({
   setSelectedLevelId,
@@ -69,6 +70,7 @@ const Level = ({
         <Text variant="body1">Comments: {level.comments || "No comments"}</Text>
         <Text variant="body1">Queue Length: {level.queue.length}</Text>
         <Text variant="body1">Target Gems: {level.target_gem.length}</Text>
+        <Board />
       </View>
     );
   } catch (error) {
@@ -85,7 +87,7 @@ const Level = ({
   }
 };
 const GamePuzzle = () => {
-  const [selectedLevelId, setSelectedLevelId] = useState<string | null>(null);
+  const [selectedLevelId, setSelectedLevelId] = useState<string | null>("1_1");
 
   return (
     <View>
