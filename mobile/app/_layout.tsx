@@ -1,37 +1,37 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
-import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
-import { Text, useColorScheme } from "react-native";
-import "react-native-reanimated";
-
-import { useFonts } from "expo-font";
-
-export const unstable_settings = {
-  anchor: "(tabs)",
-};
+import { Drawer } from "expo-router/drawer";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [fontsLoaded] = useFonts({
-    DepartureMonoRegular: require("@/assets/fonts/DepartureMono-Regular.otf"),
-  });
-
-  if (!fontsLoaded) return <Text>Loading…</Text>;
-
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="modal"
-          options={{ presentation: "modal", title: "Modal" }}
-        />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <Drawer
+        screenOptions={{
+          headerShown: false,
+          drawerStyle: {
+            backgroundColor: "#f4f4f4",
+            width: 240,
+          },
+          drawerContentStyle: {
+            paddingTop: 50,
+          },
+          drawerActiveTintColor: "#e91e63",
+          drawerInactiveTintColor: "#666",
+          drawerActiveBackgroundColor: "#e8f4f8",
+          drawerInactiveBackgroundColor: "transparent",
+          drawerLabelStyle: {
+            fontSize: 16,
+            fontWeight: "bold",
+          },
+          drawerItemStyle: {
+            marginVertical: 5,
+            borderRadius: 10,
+          },
+        }}
+      >
+        <Drawer.Screen name="index" options={{ title: "Home" }} />
+        <Drawer.Screen name="settings" options={{ title: "Settings" }} />
+        <Drawer.Screen name="credits" options={{ title: "Credits" }} />
+      </Drawer>
+    </GestureHandlerRootView>
   );
 }

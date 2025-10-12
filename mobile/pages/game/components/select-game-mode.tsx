@@ -8,11 +8,11 @@ const gameModeDetailsLookup: Record<
   GameMode,
   { title: string; description: string }
 > = {
-  puzzles: {
-    title: "Puzzles",
+  puzzle: {
+    title: "Puzzle",
     description: "Solve puzzles using limited shapes.",
   },
-  freeplay: {
+  "free-play": {
     title: "Free Play",
     description: "Unwind and play at your own pace",
   },
@@ -41,22 +41,14 @@ const SelectGameMode = ({
 
   return (
     <View style={styles.container}>
-      <Button
-        fullWidth
-        label="Puzzles"
-        onPress={() => setPendingGame("puzzles")}
-      />
-      <Button
-        fullWidth
-        label="Free Play"
-        onPress={() => setPendingGame("freeplay")}
-      />
-      <Button fullWidth label="Daily" onPress={() => setPendingGame("daily")} />
-      <Button
-        fullWidth
-        label="Tutorial"
-        onPress={() => setPendingGame("tutorial")}
-      />
+      {(Object.keys(gameModeDetailsLookup) as GameMode[]).map((mode) => (
+        <Button
+          key={mode}
+          fullWidth
+          label={gameModeDetailsLookup[mode].title}
+          onPress={() => setPendingGame(mode)}
+        />
+      ))}
       <View style={styles.textContainer}>
         <Text style={styles.text}>
           {pendingGame

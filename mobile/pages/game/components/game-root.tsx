@@ -1,5 +1,5 @@
 import { GameMode } from "@/types";
-import { Button, View } from "react-native";
+import { View } from "react-native";
 import GameDaily from "./game-daily";
 import GameFreePlay from "./game-free-play";
 import GamePuzzle from "./game-puzzle";
@@ -26,12 +26,6 @@ const GamePicker = ({ selectedGame }: { selectedGame: GameMode }) => {
 const Game = ({ selectedGame }: { selectedGame: GameMode }) => {
   return (
     <View>
-      <Button
-        title="Main Menu"
-        onPress={() => {
-          /* Navigate to main menu */
-        }}
-      />
       <GamePicker selectedGame={selectedGame} />
     </View>
   );
