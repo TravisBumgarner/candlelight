@@ -4,9 +4,16 @@ import {
   default as PixelMenuButton,
 } from "@/components/button";
 import Text from "@/components/text";
-import { Coordinate, PuzzleGameDataSchema, Shape, TileType } from "@/types";
+import {
+  Coordinate,
+  PieceType,
+  PuzzleGameDataSchema,
+  Shape,
+  TileType,
+} from "@/types";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
+import { BOARD_HEIGHT, BOARD_WIDTH } from "./game.consts";
 import Grid from "./grid";
 import { SHAPES_DICT } from "./shapes";
 
@@ -119,7 +126,7 @@ const Board = ({
       <Text variant="body1" textAlign="center">
         Board History
       </Text>
-      <Grid items={allItems} width={10} height={10} />
+      <Grid items={allItems} width={BOARD_WIDTH} height={BOARD_HEIGHT} />
     </View>
   );
 };
@@ -132,8 +139,16 @@ const Level = ({
   clearLevel: () => void;
 }) => {
   const [history, setHistory] = useState<Shape[]>([]);
-  const [currentPiece, setCurrentPiece] = useState<Shape>([]);
-  const [queue, setQueue] = useState<Shape[]>([]);
+  const [currentPieceKey, setCurrentPieceKey] = useState<PieceType | null>(
+    null
+  );
+  const [currentPieceRotation, setCurrentPieceRotation] = useState(0);
+  const [currentPieceOffset, setCurrentPieceOffset] = useState<Coordinate>([
+    Math.floor(BOARD_HEIGHT / 2) - 1,
+    Math.floor(BOARD_WIDTH / 2) - 1,
+  ]);
+
+  const [queue, setQueue] = useState<PieceType[]>([]);
   const [target, setTarget] = useState<Shape>([]);
   const [metadata, setMetadata] = useState<{
     world_number: number;
@@ -146,8 +161,8 @@ const Level = ({
     const level = validatedData.levels[levelId];
 
     setHistory([]);
-    setCurrentPiece(SHAPES_DICT[level.queue[0]][0]);
-    setQueue(level.queue.slice(1).map((key) => SHAPES_DICT[key][0]));
+    setCurrentPieceKey(level.queue[0]);
+    setQueue(level.queue.slice(1));
     setTarget(level.target_gem);
     setMetadata({
       world_number: level.world_number,
@@ -158,46 +173,131 @@ const Level = ({
     });
   }, [levelId]);
 
+  const shapeInBounds = useCallback((shape: Shape) => {
+    return shape.every((coordinate) => {
+      const [y, x] = coordinate;
+      return y >= 0 && y < BOARD_HEIGHT && x >= 0 && x < BOARD_WIDTH;
+    });
+  }, []);
+
   const move = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
+      if (currentPieceKey === null) return;
+
       let movedPiece: Shape = [];
+
+      let offset: Coordinate = [0, 0];
       switch (direction) {
         case "up":
-          movedPiece = currentPiece.map(([y, x]) => [y - 1, x]);
+          offset = [-1, 0];
           break;
         case "down":
-          movedPiece = currentPiece.map(([y, x]) => [y + 1, x]);
+          offset = [1, 0];
           break;
         case "left":
-          movedPiece = currentPiece.map(([y, x]) => [y, x - 1]);
+          offset = [0, -1];
           break;
         case "right":
-          movedPiece = currentPiece.map(([y, x]) => [y, x + 1]);
+          offset = [0, 1];
           break;
       }
-
-      const isOutOfBounds = movedPiece.some(
-        ([y, x]) => y < 0 || y >= 10 || x < 0 || x >= 10
+      movedPiece = SHAPES_DICT[currentPieceKey][currentPieceRotation].map(
+        ([y, x]) => [
+          currentPieceOffset[0] + y + offset[0],
+          currentPieceOffset[1] + x + offset[1],
+        ]
       );
 
-      const overlapsHistory = movedPiece.some((coord) =>
-        history.some((histPiece) =>
-          histPiece.some(
-            (histCoord) =>
-              histCoord[0] === coord[0] && histCoord[1] === coord[1]
-          )
-        )
-      );
+      const isOutOfBounds = !shapeInBounds(movedPiece);
 
-      if (isOutOfBounds || overlapsHistory) {
+      if (isOutOfBounds) {
         alert("bad!");
         return;
       }
-
-      setCurrentPiece(movedPiece);
+      const newCurrentPieceOffset: Coordinate = [
+        currentPieceOffset[0] + offset[0],
+        currentPieceOffset[1] + offset[1],
+      ];
+      setCurrentPieceOffset(newCurrentPieceOffset);
     },
-    [currentPiece, history]
+    [currentPieceKey, shapeInBounds, currentPieceOffset, currentPieceRotation]
   );
+
+  const rotate = useCallback(() => {
+    if (currentPieceKey === null) return;
+
+    // Rotate around the first block in the shape
+    const tempRotationIndex = (currentPieceRotation + 1) % 4;
+    const shape = SHAPES_DICT[currentPieceKey][tempRotationIndex];
+    if (!shape) return;
+
+    // Check if the rotated shape is in bounds
+    const offsetShape = shape.map(
+      ([y, x]) =>
+        [y + currentPieceOffset[0], x + currentPieceOffset[1]] as Coordinate
+    );
+    if (!shapeInBounds(offsetShape)) {
+      alert("Can't rotate out of bounds!");
+      return;
+    }
+
+    setCurrentPieceRotation(tempRotationIndex);
+  }, [
+    currentPieceKey,
+    currentPieceRotation,
+    shapeInBounds,
+    currentPieceOffset,
+  ]);
+
+  const shapeKeyToVector = useCallback(
+    (key: PieceType, rotationIndex: number) => {
+      return SHAPES_DICT[key][rotationIndex];
+    },
+    []
+  );
+
+  const currentPiece: Shape = useMemo(() => {
+    if (currentPieceKey === null) return [];
+    return SHAPES_DICT[currentPieceKey][currentPieceRotation].map(([y, x]) => [
+      y + currentPieceOffset[0],
+      x + currentPieceOffset[1],
+    ]);
+  }, [currentPieceKey, currentPieceOffset, currentPieceRotation]);
+
+  const place = useCallback(() => {
+    if (currentPieceKey === null) return;
+
+    setHistory((prev) => [
+      ...prev,
+      SHAPES_DICT[currentPieceKey][currentPieceRotation].map(([y, x]) => [
+        y + currentPieceOffset[0],
+        x + currentPieceOffset[1],
+      ]),
+    ]);
+
+    if (queue.length === 0) {
+      alert("No more pieces in the queue!");
+      return;
+    }
+
+    const nextShapeKey = SHAPES_DICT[queue[0]];
+    if (!nextShapeKey) {
+      alert("Invalid shape key in queue!");
+      return;
+    }
+
+    setCurrentPieceKey(queue[0]);
+    setCurrentPieceRotation(0);
+    setQueue((prev) => prev.slice(1));
+    setCurrentPieceOffset([
+      Math.floor(BOARD_HEIGHT / 2) - 1,
+      Math.floor(BOARD_WIDTH / 2) - 1,
+    ]);
+  }, [currentPieceKey, currentPieceRotation, currentPieceOffset, queue]);
+
+  if (currentPieceKey === null) {
+    return <Text variant="body1">Loading...</Text>;
+  }
 
   return (
     <View>
@@ -209,9 +309,11 @@ const Level = ({
       <PixelMenuButton label="Left" onPress={() => move("left")} />
       <PixelMenuButton label="Right" onPress={() => move("right")} />
       <PixelMenuButton label="Down" onPress={() => move("down")} />
+      <PixelMenuButton label="Place" onPress={place} />
+      <PixelMenuButton label="Rotate" onPress={rotate} />
       <Board history={history} currentPiece={currentPiece} />
       <Target target={target} />
-      <Queue queue={queue} />
+      <Queue queue={queue.map((key) => shapeKeyToVector(key, 0))} />
     </View>
   );
 };
