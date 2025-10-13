@@ -32,9 +32,9 @@ const Board = ({ items, width, height }: BoardProps) => {
         case "wall":
           return "#fd0000"; // Dark gray
         case "white":
-          return "#fff"; // White
+          return "#00ff4c"; // White
         case "black":
-          return "#000"; // Black
+          return "#ffe600"; // Black
         case "empty":
           return "transparent";
         default:

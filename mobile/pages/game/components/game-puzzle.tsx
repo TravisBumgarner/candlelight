@@ -1,8 +1,11 @@
 import levelsData from "@/assets/react_native_levels.json";
-import Button from "@/components/button";
+import {
+  default as Button,
+  default as PixelMenuButton,
+} from "@/components/button";
 import Text from "@/components/text";
-import { Coordinate, PuzzleGameDataSchema, Shape } from "@/types";
-import { useEffect, useMemo, useState } from "react";
+import { Coordinate, PuzzleGameDataSchema, Shape, TileType } from "@/types";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { View } from "react-native";
 import Grid from "./grid";
 import { SHAPES_DICT } from "./shapes";
@@ -46,13 +49,23 @@ const Target = ({ target }: { target: Shape }) => {
 
 const Queue = ({ queue }: { queue: Shape[] }) => {
   const flatQueue = useMemo(() => {
-    let output: Coordinate[] = [];
+    const output: { coordinate: Coordinate; type: TileType }[] = [];
+
     let yOffset = 0;
+    let isFirst = true;
     for (const shape of queue) {
       for (const coordinate of shape) {
-        output.push([coordinate[0] + yOffset, coordinate[1]]);
+        const offsetCoordinate: Coordinate = [
+          coordinate[0] + yOffset,
+          coordinate[1],
+        ];
+        output.push({
+          coordinate: offsetCoordinate,
+          type: isFirst ? "white" : "black",
+        });
       }
       yOffset += 4;
+      isFirst = false;
     }
     return output;
   }, [queue]);
@@ -62,41 +75,51 @@ const Queue = ({ queue }: { queue: Shape[] }) => {
       <Text variant="body1" textAlign="center">
         Upcoming Pieces
       </Text>
-      <Grid
-        items={flatQueue.map((coordinate, index) => ({
-          coordinate,
-          type: "white",
-        }))}
-        width={4}
-        height={flatQueue.length}
-      />
+      <Grid items={flatQueue} width={4} height={flatQueue.length} />
     </View>
   );
 };
 
-const Board = ({ history }: { history: Shape[] }) => {
+const Board = ({
+  history,
+  currentPiece,
+}: {
+  history: Shape[];
+  currentPiece: Shape;
+}) => {
   const flatHistory = useMemo(() => {
     const allCoordinates: {
-      coordinate: [number, number];
-      type: "black" | "white";
+      coordinate: Coordinate;
+      type: TileType;
     }[] = [];
 
     history.forEach((shape, index) => {
       const tileType = index % 2 === 0 ? "black" : "white";
       shape.forEach((coordinate) => {
-        allCoordinates.push({ coordinate, type: tileType });
+        allCoordinates.push({
+          coordinate: coordinate,
+          type: tileType,
+        });
       });
     });
 
     return allCoordinates;
   }, [history]);
 
+  console.log("doot", currentPiece[0]);
+  const currentPieceTiles = currentPiece.map((coordinate) => ({
+    coordinate,
+    type: "gem" as const,
+  }));
+
+  const allItems = [...flatHistory, ...currentPieceTiles];
+
   return (
     <View>
       <Text variant="body1" textAlign="center">
         Board History
       </Text>
-      <Grid items={flatHistory} width={10} height={10} />
+      <Grid items={allItems} width={10} height={10} />
     </View>
   );
 };
@@ -109,9 +132,10 @@ const Level = ({
   clearLevel: () => void;
 }) => {
   const [history, setHistory] = useState<Shape[]>([]);
+  const [currentPiece, setCurrentPiece] = useState<Shape>([]);
   const [queue, setQueue] = useState<Shape[]>([]);
   const [target, setTarget] = useState<Shape>([]);
-  const [metadata, setMetdata] = useState<{
+  const [metadata, setMetadata] = useState<{
     world_number: number;
     level_number: number;
     world_name: string;
@@ -122,9 +146,10 @@ const Level = ({
     const level = validatedData.levels[levelId];
 
     setHistory([]);
-    setQueue(level.queue.map((key) => SHAPES_DICT[key][0]));
+    setCurrentPiece(SHAPES_DICT[level.queue[0]][0]);
+    setQueue(level.queue.slice(1).map((key) => SHAPES_DICT[key][0]));
     setTarget(level.target_gem);
-    setMetdata({
+    setMetadata({
       world_number: level.world_number,
       level_number: level.level_number,
       world_name:
@@ -133,13 +158,58 @@ const Level = ({
     });
   }, [levelId]);
 
+  const move = useCallback(
+    (direction: "up" | "down" | "left" | "right") => {
+      let movedPiece: Shape = [];
+      switch (direction) {
+        case "up":
+          movedPiece = currentPiece.map(([y, x]) => [y - 1, x]);
+          break;
+        case "down":
+          movedPiece = currentPiece.map(([y, x]) => [y + 1, x]);
+          break;
+        case "left":
+          movedPiece = currentPiece.map(([y, x]) => [y, x - 1]);
+          break;
+        case "right":
+          movedPiece = currentPiece.map(([y, x]) => [y, x + 1]);
+          break;
+      }
+
+      const isOutOfBounds = movedPiece.some(
+        ([y, x]) => y < 0 || y >= 10 || x < 0 || x >= 10
+      );
+
+      const overlapsHistory = movedPiece.some((coord) =>
+        history.some((histPiece) =>
+          histPiece.some(
+            (histCoord) =>
+              histCoord[0] === coord[0] && histCoord[1] === coord[1]
+          )
+        )
+      );
+
+      if (isOutOfBounds || overlapsHistory) {
+        alert("bad!");
+        return;
+      }
+
+      setCurrentPiece(movedPiece);
+    },
+    [currentPiece, history]
+  );
+
   return (
     <View>
       <Button label="Back to Level Select" onPress={clearLevel} />
       <Text variant="header1" textAlign="center">
         Level {metadata?.level_number} - World {metadata?.world_number}
       </Text>
-      <Board history={history} />
+      <PixelMenuButton label="Up" onPress={() => move("up")} />
+      <PixelMenuButton label="Left" onPress={() => move("left")} />
+      <PixelMenuButton label="Right" onPress={() => move("right")} />
+      <PixelMenuButton label="Down" onPress={() => move("down")} />
+      <Board history={history} currentPiece={currentPiece} />
       <Target target={target} />
       <Queue queue={queue} />
     </View>
