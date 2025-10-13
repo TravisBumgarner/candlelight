@@ -2,6 +2,8 @@ import { z } from "zod";
 
 export type GameMode = "puzzle" | "free-play" | "daily" | "tutorial";
 
+export type TileType = "empty" | "gem" | "wall" | "white" | "black";
+
 export const PieceTypeSchema = z.enum([
   "upper_l",
   "lower_z",
@@ -39,3 +41,7 @@ export const PuzzleGameDataSchema = z.object({
 });
 
 export type PuzzleGameData = z.infer<typeof PuzzleGameDataSchema>;
+
+export type Coordinate = [number, number];
+
+export type Shape = Coordinate[];

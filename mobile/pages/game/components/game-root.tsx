@@ -1,5 +1,5 @@
 import { GameMode } from "@/types";
-import { View } from "react-native";
+import { ScrollView, View } from "react-native";
 import GameDaily from "./game-daily";
 import GameFreePlay from "./game-free-play";
 import GamePuzzle from "./game-puzzle";
@@ -25,9 +25,11 @@ const GamePicker = ({ selectedGame }: { selectedGame: GameMode }) => {
 
 const Game = ({ selectedGame }: { selectedGame: GameMode }) => {
   return (
-    <View>
-      <GamePicker selectedGame={selectedGame} />
-    </View>
+    <ScrollView>
+      <View>
+        <GamePicker selectedGame={selectedGame} />
+      </View>
+    </ScrollView>
   );
 };
 
