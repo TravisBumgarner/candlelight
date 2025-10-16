@@ -1,6 +1,6 @@
 import TabWrapper from "@/components/tab-wrapper";
-import Game from "@/pages/game/components/game-root";
 import SelectGameMode from "@/pages/game/components/select-game-mode";
+import Game from "@/pages/game/game-root";
 import { GameMode } from "@/types";
 import { useFocusEffect } from "@react-navigation/native";
 import { useCallback, useState } from "react";
