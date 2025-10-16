@@ -29,7 +29,7 @@ def parse_godot_vector2i_array(vector_string):
     # Find all Vector2i patterns
     pattern = r"Vector2i\((\d+),\s*(\d+)\)"
     matches = re.findall(pattern, vector_string)
-    return [[int(x), int(y)] for x, y in matches]
+    return [{"x": int(x), "y": int(y)} for x, y in matches]
 
 
 def parse_queue_array(queue_string):

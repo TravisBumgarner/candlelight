@@ -1,42 +1,57 @@
-import { Coordinate, TileType } from "@/types";
+import { GamePiece, Board as TBoard, TILE_STYLES } from "@/types";
 import { StyleSheet, View } from "react-native";
 import { CELL_SIZE } from "./game.consts";
 
 interface BoardProps {
-  items: { coordinate: Coordinate; type: TileType }[];
+  items: TBoard;
   width: number;
   height: number;
+  currentGamePiece?: GamePiece;
 }
 
-const Board = ({ items, width, height }: BoardProps) => {
+const Grid = ({ currentGamePiece, items, width, height }: BoardProps) => {
   const totalCellsPerRow = width + 2; // Adding border cells (-1 to width inclusive)
   const gridWidth = CELL_SIZE * totalCellsPerRow; // Exact grid width
   const gridHeight = CELL_SIZE * (height + 2); // Height with borders
 
-  const getTileColor = (row: number, col: number) => {
+  const getTileColor = ({
+    col,
+    row,
+    width,
+    height,
+  }: {
+    col: number;
+    row: number;
+    width: number;
+    height: number;
+  }) => {
     // Check if it's a border cell
     const isBorder =
       row === -1 || row === height || col === -1 || col === width;
     if (isBorder) return "#ec2929";
 
-    // Find if this coordinate exists in the items array
-    const item = items.find(
-      ({ coordinate }) => coordinate[0] === row && coordinate[1] === col
-    );
+    // Find if this coordinate exists in the board
+    const tile = items[`${col}_${row}`];
 
-    if (item) {
+    if (tile) {
       // Color based on the tile type
-      switch (item.type) {
-        case "gem":
+      switch (tile.type) {
+        case TILE_STYLES.DARK_ACTIVE:
           return "#0080ff";
-        case "wall":
+        case TILE_STYLES.DARK_INACTIVE:
           return "#fd0000"; // Dark gray
-        case "white":
-          return "#00ff4c"; // White
-        case "black":
-          return "#ffe600"; // Black
-        case "empty":
-          return "transparent";
+        case TILE_STYLES.LIGHT_ACTIVE:
+          return "#00ff4c"; // Light green
+        case TILE_STYLES.LIGHT_INACTIVE:
+          return "#ffe600"; // Light yellow
+        case TILE_STYLES.GEM_BLUE_ACTIVE:
+          return "#00ffff"; // Cyan for active gem
+        case TILE_STYLES.GEM_BLUE_INACTIVE:
+          return "#0000ff"; // Blue for inactive gem
+        case TILE_STYLES.MID_BORDER:
+          return "#a0a0a0"; // Medium gray for mid border
+
+        case TILE_STYLES.EMPTY:
         default:
           return "transparent";
       }
@@ -59,7 +74,12 @@ const Board = ({ items, width, height }: BoardProps) => {
               {
                 width: CELL_SIZE,
                 height: CELL_SIZE,
-                backgroundColor: getTileColor(row, col),
+                backgroundColor: getTileColor({
+                  col,
+                  row,
+                  width,
+                  height,
+                }),
               },
             ]}
           />
@@ -96,4 +116,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Board;
+export default Grid;

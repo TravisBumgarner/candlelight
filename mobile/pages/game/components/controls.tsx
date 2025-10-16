@@ -1,64 +1,60 @@
 import { default as PixelMenuButton } from "@/components/button";
-import { Coordinate, PieceType, Shape } from "@/types";
+import { Coordinate, GamePiece, PieceType, Shape } from "@/types";
 import { useCallback } from "react";
 import { BOARD_HEIGHT, BOARD_WIDTH } from "./game.consts";
 import { SHAPES_DICT } from "./shapes";
 
 const Controls = ({
-  currentPieceKey,
-  currentPieceRotation,
-  currentPieceOffset,
-  setCurrentPieceKey,
-  setCurrentPieceRotation,
-  setCurrentPieceOffset,
+  currentGamePiece,
+  updateGamePiece,
   setHistory,
   queue,
   setQueue,
+  handlePlaceCallback,
 }: {
-  currentPieceKey: PieceType;
-  currentPieceRotation: number;
-  currentPieceOffset: Coordinate;
-  setCurrentPieceKey: (key: PieceType | null) => void;
-  setCurrentPieceRotation: (rotation: number) => void;
-  setCurrentPieceOffset: (offset: Coordinate) => void;
+  updateGamePiece: (piece: GamePiece) => void;
+  currentGamePiece: GamePiece;
   setHistory: (history: (prev: Shape[]) => Shape[]) => void;
   queue: PieceType[];
   setQueue: (queue: (prev: PieceType[]) => PieceType[]) => void;
+  handlePlaceCallback: ({
+    nextGamePiece,
+  }: {
+    nextGamePiece: GamePiece;
+  }) => void;
 }) => {
   const shapeInBounds = useCallback((shape: Shape) => {
     return shape.every((coordinate) => {
-      const [y, x] = coordinate;
+      const { x, y } = coordinate;
       return y >= 0 && y < BOARD_HEIGHT && x >= 0 && x < BOARD_WIDTH;
     });
   }, []);
 
   const move = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
-      if (currentPieceKey === null) return;
-
       let movedPiece: Shape = [];
 
-      let offset: Coordinate = [0, 0];
+      let offset: Coordinate = { x: 0, y: 0 };
       switch (direction) {
         case "up":
-          offset = [-1, 0];
+          offset = { x: -1, y: 0 };
           break;
         case "down":
-          offset = [1, 0];
+          offset = { x: 1, y: 0 };
           break;
         case "left":
-          offset = [0, -1];
+          offset = { x: 0, y: -1 };
           break;
         case "right":
-          offset = [0, 1];
+          offset = { x: 0, y: 1 };
           break;
       }
-      movedPiece = SHAPES_DICT[currentPieceKey][currentPieceRotation].map(
-        ([y, x]) => [
-          currentPieceOffset[0] + y + offset[0],
-          currentPieceOffset[1] + x + offset[1],
-        ]
-      );
+      movedPiece = SHAPES_DICT[currentGamePiece.type][
+        currentGamePiece.rotation
+      ].map(({ y, x }) => ({
+        x: currentGamePiece.offset.x + x + offset.x,
+        y: currentGamePiece.offset.y + y + offset.y,
+      }));
 
       const isOutOfBounds = !shapeInBounds(movedPiece);
 
@@ -66,57 +62,49 @@ const Controls = ({
         alert("bad!");
         return;
       }
-      const newCurrentPieceOffset: Coordinate = [
-        currentPieceOffset[0] + offset[0],
-        currentPieceOffset[1] + offset[1],
-      ];
-      setCurrentPieceOffset(newCurrentPieceOffset);
+      const newGamePiece: GamePiece = {
+        ...currentGamePiece,
+        offset: {
+          x: currentGamePiece.offset.x + offset.x,
+          y: currentGamePiece.offset.y + offset.y,
+        },
+      };
+      updateGamePiece(newGamePiece);
     },
-    [
-      currentPieceKey,
-      shapeInBounds,
-      currentPieceOffset,
-      currentPieceRotation,
-      setCurrentPieceOffset,
-    ]
+    [currentGamePiece, updateGamePiece, shapeInBounds]
   );
 
   const rotate = useCallback(() => {
-    if (currentPieceKey === null) return;
-
     // Rotate around the first block in the shape
-    const tempRotationIndex = (currentPieceRotation + 1) % 4;
-    const shape = SHAPES_DICT[currentPieceKey][tempRotationIndex];
+    const tempRotationIndex = (currentGamePiece.rotation + 1) % 4;
+    const shape = SHAPES_DICT[currentGamePiece.type][tempRotationIndex];
     if (!shape) return;
 
     // Check if the rotated shape is in bounds
-    const offsetShape = shape.map(
-      ([y, x]) =>
-        [y + currentPieceOffset[0], x + currentPieceOffset[1]] as Coordinate
-    );
+    const offsetShape = shape.map(({ y, x }) => ({
+      y: y + currentGamePiece.offset.y,
+      x: x + currentGamePiece.offset.x,
+    }));
     if (!shapeInBounds(offsetShape)) {
       alert("Can't rotate out of bounds!");
       return;
     }
 
-    setCurrentPieceRotation(tempRotationIndex);
-  }, [
-    currentPieceKey,
-    currentPieceRotation,
-    shapeInBounds,
-    currentPieceOffset,
-    setCurrentPieceRotation,
-  ]);
+    updateGamePiece({
+      ...currentGamePiece,
+      rotation: tempRotationIndex,
+    });
+  }, [shapeInBounds, currentGamePiece, updateGamePiece]);
 
   const place = useCallback(() => {
-    if (currentPieceKey === null) return;
-
     setHistory((prev) => [
       ...prev,
-      SHAPES_DICT[currentPieceKey][currentPieceRotation].map(([y, x]) => [
-        y + currentPieceOffset[0],
-        x + currentPieceOffset[1],
-      ]),
+      SHAPES_DICT[currentGamePiece.type][currentGamePiece.rotation].map(
+        ({ y, x }) => ({
+          y: y + currentGamePiece.offset.y,
+          x: x + currentGamePiece.offset.x,
+        })
+      ),
     ]);
 
     if (queue.length === 0) {
@@ -130,24 +118,17 @@ const Controls = ({
       return;
     }
 
-    setCurrentPieceKey(queue[0]);
-    setCurrentPieceRotation(0);
+    const nextGamePiece = {
+      type: queue[0],
+      rotation: 0,
+      offset: {
+        y: Math.floor(BOARD_HEIGHT / 2) - 1,
+        x: Math.floor(BOARD_WIDTH / 2) - 1,
+      },
+    } as GamePiece;
     setQueue((prev) => prev.slice(1));
-    setCurrentPieceOffset([
-      Math.floor(BOARD_HEIGHT / 2) - 1,
-      Math.floor(BOARD_WIDTH / 2) - 1,
-    ]);
-  }, [
-    currentPieceKey,
-    currentPieceRotation,
-    currentPieceOffset,
-    queue,
-    setHistory,
-    setCurrentPieceKey,
-    setCurrentPieceRotation,
-    setQueue,
-    setCurrentPieceOffset,
-  ]);
+    handlePlaceCallback({ nextGamePiece });
+  }, [queue, setHistory, setQueue, handlePlaceCallback, currentGamePiece]);
 
   return (
     <>

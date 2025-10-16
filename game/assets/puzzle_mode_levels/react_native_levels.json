@@ -3,54 +3,116 @@
     {
       "world_number": 1,
       "world_name": "Warm Up",
-      "level_numbers": [1, 2, 3]
+      "level_numbers": [
+        1,
+        2,
+        3
+      ]
     },
     {
       "world_number": 2,
       "world_name": "And You Get A Square",
-      "level_numbers": [1, 2, 3, 4, 5, 6, 7]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ]
     },
     {
       "world_number": 3,
       "world_name": "Nap Time",
-      "level_numbers": [1, 2, 3, 4, 5, 6]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "world_number": 4,
       "world_name": "You Time",
-      "level_numbers": [1, 2, 3, 4, 5]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     },
     {
       "world_number": 5,
       "world_name": "Snakes in this Game",
-      "level_numbers": [1, 2, 3, 4, 5, 6]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ]
     },
     {
       "world_number": 6,
       "world_name": "Dot I's and cross T's",
-      "level_numbers": [1, 2, 3, 4]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4
+      ]
     },
     {
       "world_number": 7,
       "world_name": "Take the W",
-      "level_numbers": [1, 2, 3, 4, 5]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     },
     {
       "world_number": 8,
       "world_name": "The Kitchen Sink",
-      "level_numbers": [1, 2, 3, 4, 5]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
     },
     {
       "world_number": 9,
       "world_name": "This might take a While",
-      "level_numbers": [1, 2, 3, 4, 5, 6, 7, 8, 9]
+      "level_numbers": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ]
     }
   ],
   "levels": {
     "1_1": {
       "world_number": 1,
       "level_number": 1,
-      "queue": ["upper_l", "upper_l"],
+      "queue": [
+        "upper_l",
+        "upper_l"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -63,7 +125,10 @@
     "1_2": {
       "world_number": 1,
       "level_number": 2,
-      "queue": ["lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -88,7 +153,10 @@
     "1_3": {
       "world_number": 1,
       "level_number": 3,
-      "queue": ["upper_l", "upper_l"],
+      "queue": [
+        "upper_l",
+        "upper_l"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -147,7 +215,14 @@
     "2_2": {
       "world_number": 2,
       "level_number": 2,
-      "queue": ["square", "square", "square", "square", "square", "square"],
+      "queue": [
+        "square",
+        "square",
+        "square",
+        "square",
+        "square",
+        "square"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -291,7 +366,12 @@
     "2_5": {
       "world_number": 2,
       "level_number": 5,
-      "queue": ["square", "square", "square", "square"],
+      "queue": [
+        "square",
+        "square",
+        "square",
+        "square"
+      ],
       "target_gem": [
         {
           "x": 3,
@@ -328,7 +408,14 @@
     "2_6": {
       "world_number": 2,
       "level_number": 6,
-      "queue": ["square", "square", "square", "square", "square", "square"],
+      "queue": [
+        "square",
+        "square",
+        "square",
+        "square",
+        "square",
+        "square"
+      ],
       "target_gem": [
         {
           "x": 3,
@@ -429,7 +516,11 @@
     "3_1": {
       "world_number": 3,
       "level_number": 1,
-      "queue": ["lower_z", "lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -454,7 +545,12 @@
     "3_2": {
       "world_number": 3,
       "level_number": 2,
-      "queue": ["lower_z", "lower_z", "lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -483,7 +579,13 @@
     "3_3": {
       "world_number": 3,
       "level_number": 3,
-      "queue": ["lower_z", "lower_z", "lower_z", "lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -524,7 +626,12 @@
     "3_4": {
       "world_number": 3,
       "level_number": 4,
-      "queue": ["lower_z", "lower_z", "lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -557,7 +664,13 @@
     "3_5": {
       "world_number": 3,
       "level_number": 5,
-      "queue": ["lower_z", "lower_z", "lower_z", "lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -582,7 +695,12 @@
     "3_6": {
       "world_number": 3,
       "level_number": 6,
-      "queue": ["lower_z", "lower_z", "lower_z", "lower_z"],
+      "queue": [
+        "lower_z",
+        "lower_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -611,7 +729,14 @@
     "4_1": {
       "world_number": 4,
       "level_number": 1,
-      "queue": ["u", "u", "u", "u", "u", "u"],
+      "queue": [
+        "u",
+        "u",
+        "u",
+        "u",
+        "u",
+        "u"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -652,7 +777,12 @@
     "4_2": {
       "world_number": 4,
       "level_number": 2,
-      "queue": ["u", "u", "u", "u"],
+      "queue": [
+        "u",
+        "u",
+        "u",
+        "u"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -681,7 +811,12 @@
     "4_3": {
       "world_number": 4,
       "level_number": 3,
-      "queue": ["u", "u", "u", "u"],
+      "queue": [
+        "u",
+        "u",
+        "u",
+        "u"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -726,7 +861,12 @@
     "4_4": {
       "world_number": 4,
       "level_number": 4,
-      "queue": ["u", "u", "u", "u"],
+      "queue": [
+        "u",
+        "u",
+        "u",
+        "u"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -767,7 +907,14 @@
     "4_5": {
       "world_number": 4,
       "level_number": 5,
-      "queue": ["u", "u", "u", "u", "u", "u"],
+      "queue": [
+        "u",
+        "u",
+        "u",
+        "u",
+        "u",
+        "u"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -820,7 +967,12 @@
     "5_1": {
       "world_number": 5,
       "level_number": 1,
-      "queue": ["upper_z", "upper_z", "upper_z", "upper_z"],
+      "queue": [
+        "upper_z",
+        "upper_z",
+        "upper_z",
+        "upper_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -853,7 +1005,12 @@
     "5_2": {
       "world_number": 5,
       "level_number": 2,
-      "queue": ["upper_z", "upper_z", "upper_z", "upper_z"],
+      "queue": [
+        "upper_z",
+        "upper_z",
+        "upper_z",
+        "upper_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -894,7 +1051,12 @@
     "5_3": {
       "world_number": 5,
       "level_number": 3,
-      "queue": ["upper_z", "upper_z", "upper_z", "upper_z"],
+      "queue": [
+        "upper_z",
+        "upper_z",
+        "upper_z",
+        "upper_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -939,7 +1101,12 @@
     "5_4": {
       "world_number": 5,
       "level_number": 4,
-      "queue": ["upper_z", "upper_z", "upper_z", "upper_z"],
+      "queue": [
+        "upper_z",
+        "upper_z",
+        "upper_z",
+        "upper_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -968,7 +1135,12 @@
     "5_5": {
       "world_number": 5,
       "level_number": 5,
-      "queue": ["upper_z", "upper_z", "upper_z", "upper_z"],
+      "queue": [
+        "upper_z",
+        "upper_z",
+        "upper_z",
+        "upper_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1009,7 +1181,12 @@
     "5_6": {
       "world_number": 5,
       "level_number": 6,
-      "queue": ["upper_z", "upper_z", "upper_z", "upper_z"],
+      "queue": [
+        "upper_z",
+        "upper_z",
+        "upper_z",
+        "upper_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1038,7 +1215,12 @@
     "6_1": {
       "world_number": 6,
       "level_number": 1,
-      "queue": ["upper_l", "t", "upper_l", "t"],
+      "queue": [
+        "upper_l",
+        "t",
+        "upper_l",
+        "t"
+      ],
       "target_gem": [
         {
           "x": 2,
@@ -1067,7 +1249,12 @@
     "6_2": {
       "world_number": 6,
       "level_number": 2,
-      "queue": ["t", "upper_l", "t", "upper_l"],
+      "queue": [
+        "t",
+        "upper_l",
+        "t",
+        "upper_l"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1096,7 +1283,12 @@
     "6_3": {
       "world_number": 6,
       "level_number": 3,
-      "queue": ["upper_l", "upper_l", "t", "t"],
+      "queue": [
+        "upper_l",
+        "upper_l",
+        "t",
+        "t"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1129,7 +1321,12 @@
     "6_4": {
       "world_number": 6,
       "level_number": 4,
-      "queue": ["upper_l", "upper_l", "t", "t"],
+      "queue": [
+        "upper_l",
+        "upper_l",
+        "t",
+        "t"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1166,7 +1363,11 @@
     "7_1": {
       "world_number": 7,
       "level_number": 1,
-      "queue": ["w", "w", "w"],
+      "queue": [
+        "w",
+        "w",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1191,7 +1392,12 @@
     "7_2": {
       "world_number": 7,
       "level_number": 2,
-      "queue": ["w", "w", "w", "w"],
+      "queue": [
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1232,7 +1438,12 @@
     "7_3": {
       "world_number": 7,
       "level_number": 3,
-      "queue": ["w", "w", "w", "w"],
+      "queue": [
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1277,7 +1488,12 @@
     "7_4": {
       "world_number": 7,
       "level_number": 4,
-      "queue": ["w", "w", "w", "w"],
+      "queue": [
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1310,7 +1526,15 @@
     "7_5": {
       "world_number": 7,
       "level_number": 5,
-      "queue": ["w", "w", "w", "w", "w", "w", "w"],
+      "queue": [
+        "w",
+        "w",
+        "w",
+        "w",
+        "w",
+        "w",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 2,
@@ -1371,7 +1595,12 @@
     "8_1": {
       "world_number": 8,
       "level_number": 1,
-      "queue": ["u", "lower_z", "upper_z", "w"],
+      "queue": [
+        "u",
+        "lower_z",
+        "upper_z",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1408,7 +1637,14 @@
     "8_2": {
       "world_number": 8,
       "level_number": 2,
-      "queue": ["square", "square", "lower_z", "lower_z", "w", "w"],
+      "queue": [
+        "square",
+        "square",
+        "lower_z",
+        "lower_z",
+        "w",
+        "w"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1445,7 +1681,14 @@
     "8_3": {
       "world_number": 8,
       "level_number": 3,
-      "queue": ["w", "w", "upper_z", "upper_z", "lower_z", "lower_z"],
+      "queue": [
+        "w",
+        "w",
+        "upper_z",
+        "upper_z",
+        "lower_z",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1486,7 +1729,12 @@
     "8_4": {
       "world_number": 8,
       "level_number": 4,
-      "queue": ["upper_l", "square", "u", "lower_z"],
+      "queue": [
+        "upper_l",
+        "square",
+        "u",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1519,7 +1767,12 @@
     "8_5": {
       "world_number": 8,
       "level_number": 5,
-      "queue": ["upper_l", "square", "u", "lower_z"],
+      "queue": [
+        "upper_l",
+        "square",
+        "u",
+        "lower_z"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -1614,7 +1867,14 @@
     "9_2": {
       "world_number": 9,
       "level_number": 2,
-      "queue": ["u", "u", "u", "u", "u", "u"],
+      "queue": [
+        "u",
+        "u",
+        "u",
+        "u",
+        "u",
+        "u"
+      ],
       "target_gem": [
         {
           "x": 1,
@@ -1671,7 +1931,16 @@
     "9_3": {
       "world_number": 9,
       "level_number": 3,
-      "queue": ["t", "t", "t", "t", "t", "t", "t", "t"],
+      "queue": [
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t"
+      ],
       "target_gem": [
         {
           "x": 0,
@@ -2017,7 +2286,17 @@
     "9_8": {
       "world_number": 9,
       "level_number": 8,
-      "queue": ["t", "t", "t", "t", "t", "t", "t", "t", "t"],
+      "queue": [
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t",
+        "t"
+      ],
       "target_gem": [
         {
           "x": 1,

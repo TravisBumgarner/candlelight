@@ -1,50 +1,37 @@
 import Text from "@/components/text";
-import { Coordinate, Shape, TileType } from "@/types";
+import { GamePiece, Shape, Board as TBoard } from "@/types";
 import { useMemo } from "react";
 import { View } from "react-native";
 import { BOARD_HEIGHT, BOARD_WIDTH } from "./game.consts";
 import Grid from "./grid";
+import { SHAPES_DICT } from "./shapes";
 
 const Board = ({
-  history,
-  currentPiece,
+  board,
+  currentGamePiece,
 }: {
-  history: Shape[];
-  currentPiece: Shape;
+  board: TBoard;
+  currentGamePiece: GamePiece;
 }) => {
-  const flatHistory = useMemo(() => {
-    const allCoordinates: {
-      coordinate: Coordinate;
-      type: TileType;
-    }[] = [];
+  const currentShape: Shape = useMemo(() => {
+    return SHAPES_DICT[currentGamePiece.type][currentGamePiece.rotation].map(
+      ({ x, y }) => ({
+        x: x + currentGamePiece.offset.x,
+        y: y + currentGamePiece.offset.y,
+      })
+    );
+  }, [currentGamePiece]);
 
-    history.forEach((shape, index) => {
-      const tileType = index % 2 === 0 ? "black" : "white";
-      shape.forEach((coordinate) => {
-        allCoordinates.push({
-          coordinate: coordinate,
-          type: tileType,
-        });
-      });
-    });
-
-    return allCoordinates;
-  }, [history]);
-
-  console.log("doot", currentPiece[0]);
-  const currentPieceTiles = currentPiece.map((coordinate) => ({
-    coordinate,
-    type: "gem" as const,
-  }));
-
-  const allItems = [...flatHistory, ...currentPieceTiles];
+  const mergedBoard: TBoard = useMemo(() => {
+    return { ...board, currentShape };
+  }, [board, currentShape]);
 
   return (
     <View>
       <Text variant="body1" textAlign="center">
         Board History
       </Text>
-      <Grid items={allItems} width={BOARD_WIDTH} height={BOARD_HEIGHT} />
+      <Grid items={mergedBoard} width={BOARD_WIDTH} height={BOARD_HEIGHT} />
     </View>
   );
 };
