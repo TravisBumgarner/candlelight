@@ -1,8 +1,16 @@
 import { default as PixelMenuButton } from "@/components/button";
 import { Coordinate, GamePiece, PieceType, Shape } from "@/types";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
+import {
+  GestureResponderEvent,
+  PanResponder,
+  PanResponderGestureState,
+  View,
+} from "react-native";
 import { BOARD_HEIGHT, BOARD_WIDTH } from "./game.consts";
 import { SHAPES_DICT } from "./shapes";
+
+const THRESHOLD = 20;
 
 const Controls = ({
   currentGamePiece,
@@ -12,7 +20,9 @@ const Controls = ({
   queue,
   setQueue,
   handlePlaceCallback,
+  children,
 }: {
+  children: React.ReactNode;
   updateGamePiece: (piece: GamePiece) => void;
   currentGamePiece: GamePiece;
   history: GamePiece[];
@@ -39,46 +49,68 @@ const Controls = ({
 
   const move = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
-      let movedPiece: Shape = [];
-
-      let offset: Coordinate = { x: 0, y: 0 };
+      const delta: Coordinate = { x: 0, y: 0 };
       switch (direction) {
         case "up":
-          offset = { x: -1, y: 0 };
+          delta.y = -1;
           break;
         case "down":
-          offset = { x: 1, y: 0 };
+          delta.y = 1;
           break;
         case "left":
-          offset = { x: 0, y: -1 };
+          delta.x = -1;
           break;
         case "right":
-          offset = { x: 0, y: 1 };
+          delta.x = 1;
           break;
       }
-      movedPiece = SHAPES_DICT[currentGamePiece.type][
+
+      // compute new offset once
+      const newOffset = {
+        x: currentGamePiece.offset.x + delta.x,
+        y: currentGamePiece.offset.y + delta.y,
+      };
+
+      // build moved shape using that new offset
+      const movedShape: Shape = SHAPES_DICT[currentGamePiece.type][
         currentGamePiece.rotation
-      ].map(({ y, x }) => ({
-        x: currentGamePiece.offset.x + x + offset.x,
-        y: currentGamePiece.offset.y + y + offset.y,
+      ].map(({ x, y }) => ({
+        x: x + newOffset.x,
+        y: y + newOffset.y,
       }));
 
-      const isOutOfBounds = !shapeInBounds(movedPiece);
-
-      if (isOutOfBounds) {
+      if (!shapeInBounds(movedShape)) {
         alert("bad!");
         return;
       }
-      const newGamePiece: GamePiece = {
+
+      updateGamePiece({
         ...currentGamePiece,
-        offset: {
-          x: currentGamePiece.offset.x + offset.x,
-          y: currentGamePiece.offset.y + offset.y,
-        },
-      };
-      updateGamePiece(newGamePiece);
+        offset: newOffset,
+      });
     },
     [currentGamePiece, updateGamePiece, shapeInBounds]
+  );
+
+  const responder = useMemo(
+    () =>
+      PanResponder.create({
+        onStartShouldSetPanResponder: () => true,
+        onPanResponderRelease: (
+          _: GestureResponderEvent,
+          gesture: PanResponderGestureState
+        ) => {
+          const { dx, dy } = gesture;
+          if (Math.abs(dx) > Math.abs(dy)) {
+            if (dx > THRESHOLD) move("right");
+            else if (dx < -THRESHOLD) move("left");
+          } else {
+            if (dy > THRESHOLD) move("down");
+            else if (dy < -THRESHOLD) move("up");
+          }
+        },
+      }),
+    [move]
   );
 
   const rotate = useCallback(() => {
@@ -137,15 +169,20 @@ const Controls = ({
   ]);
 
   return (
-    <>
-      <PixelMenuButton label="Up" onPress={() => move("up")} />
-      <PixelMenuButton label="Left" onPress={() => move("left")} />
-      <PixelMenuButton label="Right" onPress={() => move("right")} />
-      <PixelMenuButton label="Down" onPress={() => move("down")} />
-      <PixelMenuButton label="Place" onPress={place} />
-      <PixelMenuButton label="Rotate" onPress={rotate} />
-      <PixelMenuButton disabled label="Undo" onPress={undo} />
-    </>
+    <View {...responder.panHandlers}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <PixelMenuButton label="Place" onPress={place} />
+        <PixelMenuButton label="Rotate" onPress={rotate} />
+        <PixelMenuButton disabled label="Undo" onPress={undo} />
+      </View>
+      {children}
+    </View>
   );
 };
 

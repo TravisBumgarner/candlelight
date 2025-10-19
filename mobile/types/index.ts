@@ -72,4 +72,4 @@ export type BoardKey = `${number}_${number}`;
 
 export type Board = Record<BoardKey, Tile>;
 
-export const createBoardKey = ({ x, y }: Coordinate) => `${y}_${x}` as BoardKey;
+export const createBoardKey = ({ x, y }: Coordinate) => `${x}_${y}` as BoardKey;

@@ -1,5 +1,4 @@
 import levelsData from "@/assets/react_native_levels.json";
-import { default as Button } from "@/components/button";
 import Text from "@/components/text";
 import {
   Coordinate,
@@ -53,8 +52,14 @@ const Level = ({
   const [board, setBoard] = useState<TBoard>(makeBoard());
 
   const updateGamePiece = useCallback((newPiece: GamePiece) => {
+    console.log("updateGamePiece called in parent with:", newPiece);
     setGamePiece(newPiece);
+    console.log("setGamePiece called");
   }, []);
+
+  useEffect(() => {
+    console.log("currentGamePiece state changed to:", currentGamePiece?.offset);
+  }, [currentGamePiece]);
 
   const handlePlaceCallback = useCallback(
     ({ nextGamePiece }: { nextGamePiece: GamePiece }) => {
@@ -79,7 +84,7 @@ const Level = ({
         type: currentGamePiece.type,
         offset: currentGamePiece.offset,
         rotation: currentGamePiece.rotation,
-        color: TILE_STYLES.DARK_ACTIVE,
+        color: TILE_STYLES.DARK_INACTIVE,
       });
 
       const newBoard: TBoard = {
@@ -124,22 +129,28 @@ const Level = ({
 
   return (
     <View>
-      <Button label="Back to Level Select" onPress={clearLevel} />
       <Text variant="header1" textAlign="center">
         Level {metadata?.level_number} - World {metadata?.world_number}
       </Text>
-      <Controls
-        handlePlaceCallback={handlePlaceCallback}
-        queue={queue}
-        setQueue={setQueue}
-        updateGamePiece={updateGamePiece}
-        currentGamePiece={currentGamePiece}
-        setHistory={setHistory}
-        history={history}
-      />
-      <Board currentGamePiece={currentGamePiece} board={board} />
-      <Target target={targetGem} />
-      <Queue queue={queue} />
+      <View style={{ flexDirection: "row", justifyContent: "space-around" }}>
+        <View>
+          <Target target={targetGem} />
+          <Queue queue={queue} />
+        </View>
+        <View>
+          <Controls
+            handlePlaceCallback={handlePlaceCallback}
+            queue={queue}
+            setQueue={setQueue}
+            updateGamePiece={updateGamePiece}
+            currentGamePiece={currentGamePiece}
+            setHistory={setHistory}
+            history={history}
+          >
+            <Board currentGamePiece={currentGamePiece} board={board} />
+          </Controls>
+        </View>
+      </View>
     </View>
   );
 };

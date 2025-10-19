@@ -1,9 +1,9 @@
-import Text from "@/components/text";
 import {
   BoardKey,
   createBoardKey,
   GamePiece,
   Board as TBoard,
+  TILE_STYLES,
   TileStyle,
 } from "@/types";
 import { useMemo } from "react";
@@ -26,7 +26,7 @@ const Board = ({
         const offsetY = y + currentGamePiece.offset.y;
         const key = createBoardKey({ x: offsetX, y: offsetY });
         acc[key] = {
-          type: "LIGHT_ACTIVE" as TileStyle,
+          type: TILE_STYLES.DARK_ACTIVE,
           coordinate: { x: offsetX, y: offsetY },
         };
         return acc;
@@ -40,9 +40,6 @@ const Board = ({
 
   return (
     <View>
-      <Text variant="body1" textAlign="center">
-        Board
-      </Text>
       <Grid
         items={{ ...board, ...currentShapeBoard }}
         width={BOARD_WIDTH}

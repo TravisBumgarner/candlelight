@@ -1,4 +1,3 @@
-import Text from "@/components/text";
 import { Board, PieceType, TILE_STYLES } from "@/types";
 import { useMemo } from "react";
 import { View } from "react-native";
@@ -8,15 +7,15 @@ import Grid from "./grid";
 const Queue = ({ queue }: { queue: PieceType[] }) => {
   const flatQueue = useMemo(() => {
     const output: Board = {};
-
-    let yOffset = 0;
+    console.log("Building flatQueue with queue:", queue);
+    let yOffset = 1;
     let isFirst = true;
     for (const shapeKey of queue) {
       const board = flattenGamePieceToBoard({
         type: shapeKey,
-        offset: { x: 0, y: yOffset },
+        offset: { x: 1, y: yOffset },
         rotation: 0,
-        color: isFirst ? TILE_STYLES.DARK_INACTIVE : TILE_STYLES.LIGHT_INACTIVE,
+        color: isFirst ? TILE_STYLES.DARK_ACTIVE : TILE_STYLES.DARK_INACTIVE,
       });
       yOffset += 4;
       isFirst = false;
@@ -26,12 +25,11 @@ const Queue = ({ queue }: { queue: PieceType[] }) => {
     return output;
   }, [queue]);
 
+  console.log(flatQueue);
+
   return (
     <View>
-      <Text variant="body1" textAlign="center">
-        Upcoming Pieces
-      </Text>
-      <Grid items={flatQueue} width={4} height={18} />
+      <Grid items={flatQueue} width={5} height={13} />
     </View>
   );
 };
