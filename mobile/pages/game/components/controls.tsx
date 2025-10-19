@@ -7,6 +7,7 @@ import { SHAPES_DICT } from "./shapes";
 const Controls = ({
   currentGamePiece,
   updateGamePiece,
+  history,
   setHistory,
   queue,
   setQueue,
@@ -14,9 +15,10 @@ const Controls = ({
 }: {
   updateGamePiece: (piece: GamePiece) => void;
   currentGamePiece: GamePiece;
-  setHistory: (history: (prev: Shape[]) => Shape[]) => void;
+  history: GamePiece[];
+  setHistory: (history: GamePiece[]) => void;
   queue: PieceType[];
-  setQueue: (queue: (prev: PieceType[]) => PieceType[]) => void;
+  setQueue: (queue: ((prev: PieceType[]) => PieceType[]) | PieceType[]) => void;
   handlePlaceCallback: ({
     nextGamePiece,
   }: {
@@ -29,6 +31,11 @@ const Controls = ({
       return y >= 0 && y < BOARD_HEIGHT && x >= 0 && x < BOARD_WIDTH;
     });
   }, []);
+
+  const undo = useCallback(() => {
+    // const newHistory = [...history];
+    // const newQueue = [...queue];
+  }, [setHistory, history]);
 
   const move = useCallback(
     (direction: "up" | "down" | "left" | "right") => {
@@ -97,15 +104,7 @@ const Controls = ({
   }, [shapeInBounds, currentGamePiece, updateGamePiece]);
 
   const place = useCallback(() => {
-    setHistory((prev) => [
-      ...prev,
-      SHAPES_DICT[currentGamePiece.type][currentGamePiece.rotation].map(
-        ({ y, x }) => ({
-          y: y + currentGamePiece.offset.y,
-          x: x + currentGamePiece.offset.x,
-        })
-      ),
-    ]);
+    setHistory([...history, currentGamePiece]);
 
     if (queue.length === 0) {
       alert("No more pieces in the queue!");
@@ -128,7 +127,14 @@ const Controls = ({
     } as GamePiece;
     setQueue((prev) => prev.slice(1));
     handlePlaceCallback({ nextGamePiece });
-  }, [queue, setHistory, setQueue, handlePlaceCallback, currentGamePiece]);
+  }, [
+    queue,
+    setHistory,
+    setQueue,
+    handlePlaceCallback,
+    currentGamePiece,
+    history,
+  ]);
 
   return (
     <>
@@ -138,7 +144,7 @@ const Controls = ({
       <PixelMenuButton label="Down" onPress={() => move("down")} />
       <PixelMenuButton label="Place" onPress={place} />
       <PixelMenuButton label="Rotate" onPress={rotate} />
-      <PixelMenuButton disabled label="Undo" onPress={() => {}} />
+      <PixelMenuButton disabled label="Undo" onPress={undo} />
     </>
   );
 };

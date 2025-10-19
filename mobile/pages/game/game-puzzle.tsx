@@ -2,11 +2,11 @@ import levelsData from "@/assets/react_native_levels.json";
 import { default as Button } from "@/components/button";
 import Text from "@/components/text";
 import {
+  Coordinate,
   createBoardKey,
   GamePiece,
   PieceType,
   PuzzleGameDataSchema,
-  Shape,
   Board as TBoard,
   Tile,
   TILE_STYLES,
@@ -19,7 +19,7 @@ import { BOARD_HEIGHT, BOARD_WIDTH } from "./components/game.consts";
 import LevelSelect from "./components/level-select";
 import Queue from "./components/queue";
 import Target from "./components/target";
-import { findGemsAndShapes, flattenShapeToBoard } from "./utils";
+import { findGemsAndShapes, flattenGamePieceToBoard } from "./utils";
 
 const makeBoard = () => {
   const board: Record<string, Tile> = {};
@@ -41,10 +41,10 @@ const Level = ({
   levelId: string;
   clearLevel: () => void;
 }) => {
-  const [history, setHistory] = useState<Shape[]>([]);
+  const [history, setHistory] = useState<GamePiece[]>([]);
   const [currentGamePiece, setGamePiece] = useState<GamePiece | null>(null);
   const [queue, setQueue] = useState<PieceType[]>([]);
-  const [targetGem, setTarget] = useState<Shape>([]);
+  const [targetGem, setTarget] = useState<Coordinate[]>([]);
   const [metadata, setMetadata] = useState<{
     world_number: number;
     level_number: number;
@@ -58,6 +58,11 @@ const Level = ({
 
   const handlePlaceCallback = useCallback(
     ({ nextGamePiece }: { nextGamePiece: GamePiece }) => {
+      if (!targetGem) {
+        alert("no target gem");
+        return;
+      }
+
       findGemsAndShapes({
         width: BOARD_WIDTH,
         height: BOARD_HEIGHT,
@@ -70,10 +75,10 @@ const Level = ({
         return;
       }
 
-      const flattenedShape = flattenShapeToBoard({
-        key: currentGamePiece.type,
+      const flattenedShape = flattenGamePieceToBoard({
+        type: currentGamePiece.type,
         offset: currentGamePiece.offset,
-        rotationIndex: currentGamePiece.rotation,
+        rotation: currentGamePiece.rotation,
         color: TILE_STYLES.DARK_ACTIVE,
       });
 
@@ -130,6 +135,7 @@ const Level = ({
         updateGamePiece={updateGamePiece}
         currentGamePiece={currentGamePiece}
         setHistory={setHistory}
+        history={history}
       />
       <Board currentGamePiece={currentGamePiece} board={board} />
       <Target target={targetGem} />

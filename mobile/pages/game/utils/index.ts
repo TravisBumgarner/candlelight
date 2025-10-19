@@ -2,7 +2,7 @@ import {
   Board,
   Coordinate,
   createBoardKey,
-  PieceType,
+  GamePiece,
   Shape,
   TILE_STYLES,
   TileStyle,
@@ -170,18 +170,15 @@ export function findGemsAndShapes({
   };
 }
 
-export const flattenShapeToBoard = ({
-  key,
-  rotationIndex,
+export const flattenGamePieceToBoard = ({
+  type,
+  rotation,
   offset,
   color,
-}: {
-  key: PieceType;
-  rotationIndex: number;
-  offset: Coordinate;
+}: GamePiece & {
   color: TileStyle;
 }): Board => {
-  return SHAPES_DICT[key][rotationIndex].reduce((acc, { x, y }) => {
+  return SHAPES_DICT[type][rotation].reduce((acc, { x, y }) => {
     const offsetX = x + offset.x;
     const offsetY = y + offset.y;
     const boardKey = createBoardKey({ x: offsetX, y: offsetY });

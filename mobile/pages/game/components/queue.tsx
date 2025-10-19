@@ -2,7 +2,7 @@ import Text from "@/components/text";
 import { Board, PieceType, TILE_STYLES } from "@/types";
 import { useMemo } from "react";
 import { View } from "react-native";
-import { flattenShapeToBoard } from "../utils";
+import { flattenGamePieceToBoard } from "../utils";
 import Grid from "./grid";
 
 const Queue = ({ queue }: { queue: PieceType[] }) => {
@@ -12,10 +12,10 @@ const Queue = ({ queue }: { queue: PieceType[] }) => {
     let yOffset = 0;
     let isFirst = true;
     for (const shapeKey of queue) {
-      const board = flattenShapeToBoard({
-        key: shapeKey,
+      const board = flattenGamePieceToBoard({
+        type: shapeKey,
         offset: { x: 0, y: yOffset },
-        rotationIndex: 0,
+        rotation: 0,
         color: isFirst ? TILE_STYLES.DARK_INACTIVE : TILE_STYLES.LIGHT_INACTIVE,
       });
       yOffset += 4;
