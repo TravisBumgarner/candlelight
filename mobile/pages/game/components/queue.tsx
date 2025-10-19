@@ -16,7 +16,7 @@ const Queue = ({ queue }: { queue: PieceType[] }) => {
         key: shapeKey,
         offset: { x: 0, y: yOffset },
         rotationIndex: 0,
-        color: isFirst ? TILE_STYLES.DARK_ACTIVE : TILE_STYLES.LIGHT_ACTIVE,
+        color: isFirst ? TILE_STYLES.DARK_INACTIVE : TILE_STYLES.LIGHT_INACTIVE,
       });
       yOffset += 4;
       isFirst = false;

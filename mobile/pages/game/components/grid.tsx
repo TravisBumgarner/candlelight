@@ -2,6 +2,15 @@ import { Board as TBoard, TILE_STYLES } from "@/types";
 import { StyleSheet, View } from "react-native";
 import { CELL_SIZE } from "./game.consts";
 
+const COLORS = {
+  DARK_INACTIVE: "#2c3b40",
+  DARK_ACTIVE: "#536f78",
+  LIGHT_INACTIVE: "#e3e7e0",
+  LIGHT_ACTIVE: "#8c8e8a",
+  MID_BORDER: "#73868c",
+  GEM_BLUE_ACTIVE: "#32c6fa",
+};
+
 interface BoardProps {
   items: TBoard;
   width: number;
@@ -36,19 +45,19 @@ const Grid = ({ items, width, height }: BoardProps) => {
       // Color based on the tile type
       switch (tile.type) {
         case TILE_STYLES.DARK_ACTIVE:
-          return "#0080ff";
+          return COLORS.DARK_ACTIVE;
         case TILE_STYLES.DARK_INACTIVE:
-          return "#fd0000"; // Dark gray
+          return COLORS.DARK_INACTIVE;
         case TILE_STYLES.LIGHT_ACTIVE:
-          return "#00ff4c"; // Light green
+          return COLORS.LIGHT_ACTIVE;
         case TILE_STYLES.LIGHT_INACTIVE:
-          return "#ffe600"; // Light yellow
+          return COLORS.LIGHT_INACTIVE;
         case TILE_STYLES.GEM_BLUE_ACTIVE:
-          return "#00ffff"; // Cyan for active gem
-        case TILE_STYLES.GEM_BLUE_INACTIVE:
-          return "#0000ff"; // Blue for inactive gem
+          return COLORS.GEM_BLUE_ACTIVE;
+        // case TILE_STYLES.GEM_BLUE_INACTIVE:
+        //   return COLORS.GEM_BLUE_INACTIVE;
         case TILE_STYLES.MID_BORDER:
-          return "#a0a0a0"; // Medium gray for mid border
+          return COLORS.MID_BORDER;
 
         case TILE_STYLES.EMPTY:
         default:
