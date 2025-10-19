@@ -50,7 +50,7 @@
     "1_1": {
       "world_number": 1,
       "level_number": 1,
-      "queue": ["upper_l", "upper_l"],
+      "queue": ["upper_l", "upper_l", "upper_l", "upper_l", "upper_l"],
       "target_gem": [
         {
           "x": 0,

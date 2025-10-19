@@ -6,7 +6,7 @@ const Target = ({ target }: { target: Shape }) => {
   const items = useMemo(() => {
     return target.reduce((acc, coordinate) => {
       const boardKey = createBoardKey(coordinate);
-      acc[boardKey] = { type: TILE_STYLES.GEM_BLUE_ACTIVE, coordinate };
+      acc[boardKey] = { style: TILE_STYLES.GEM_BLUE_ACTIVE, coordinate };
       return acc;
     }, {} as Board);
   }, [target]);

@@ -26,7 +26,7 @@ const Grid = ({ items, width, height }: BoardProps & { scale?: number }) => {
           row === -1 || row === height || col === -1 || col === width;
         const type = isBorder
           ? TILE_STYLES.MID_BORDER
-          : items[`${col}_${row}`]?.type;
+          : items[`${col}_${row}`]?.style;
 
         cells.push(<Tile key={key} type={type} size={scaledCellSize} />);
       }

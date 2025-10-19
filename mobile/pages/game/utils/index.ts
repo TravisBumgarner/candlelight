@@ -10,6 +10,7 @@ import {
 import { SHAPES_DICT } from "../components/shapes";
 
 function isTargetGem(shape: Coordinate[], targetGem: Coordinate[]): boolean {
+  console.log("istarget", shape, targetGem);
   if (shape.length !== targetGem.length) return false;
 
   const existingShapeAtOrigin = moveCellsToOrigin(shape);
@@ -57,7 +58,7 @@ function flood_fill({
     // Skip if already visited or color doesn't match
     if (
       visited[x][y] ||
-      board[createBoardKey({ x, y })]?.type !== targetTileStyle
+      board[createBoardKey({ x, y })]?.style !== targetTileStyle
     )
       continue;
 
@@ -111,7 +112,7 @@ function _find_shapes({
 
   for (let x = 0; x < width; x++) {
     for (let y = 0; y < height; y++) {
-      const tileStyle = board[createBoardKey({ x, y })]?.type;
+      const tileStyle = board[createBoardKey({ x, y })]?.style;
       if (tileStyle === targetTileStyle && !visited[x][y]) {
         const shape: Shape = [];
         flood_fill({
@@ -146,27 +147,32 @@ export function findGemsAndShapes({
 }) {
   const gems: Shape[] = [];
 
-  const visited: boolean[][] = Array.from({ length: width }, () =>
-    Array(height).fill(false)
-  );
+  // Search for shapes made of placed tiles (not empty or active pieces)
+  const placedTileStyles = [TILE_STYLES.LIGHT_INACTIVE];
 
-  const shapes = _find_shapes({
-    width,
-    height,
-    targetTileStyle: TILE_STYLES.GEM_BLUE_ACTIVE,
-    board,
-    visited,
-  });
+  for (const tileStyle of placedTileStyles) {
+    const visited: boolean[][] = Array.from({ length: width }, () =>
+      Array(height).fill(false)
+    );
 
-  for (const shape of shapes) {
-    if (isTargetGem(shape, targetGem)) {
-      gems.push(shape);
+    const shapes = _find_shapes({
+      width,
+      height,
+      targetTileStyle: tileStyle,
+      board,
+      visited,
+    });
+
+    for (const shape of shapes) {
+      if (isTargetGem(shape, targetGem)) {
+        gems.push(shape);
+      }
     }
   }
 
   return {
     gems,
-    shapes,
+    shapes: [], // You might want to return all shapes found if needed
   };
 }
 
@@ -174,9 +180,9 @@ export const flattenGamePieceToBoard = ({
   type,
   rotation,
   offset,
-  color,
+  style,
 }: GamePiece & {
-  color: TileStyle;
+  style: TileStyle;
 }): Board => {
   return SHAPES_DICT[type][rotation].reduce((acc, { x, y }) => {
     const offsetX = x + offset.x;
@@ -184,7 +190,7 @@ export const flattenGamePieceToBoard = ({
     const boardKey = createBoardKey({ x: offsetX, y: offsetY });
 
     acc[boardKey] = {
-      type: color,
+      style,
       coordinate: { x: offsetX, y: offsetY },
     };
 

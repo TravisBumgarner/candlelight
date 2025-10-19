@@ -57,7 +57,7 @@ export type Coordinate = { x: number; y: number };
 
 export type Tile = {
   coordinate: Coordinate;
-  type: TileStyle;
+  style: TileStyle;
 };
 
 export type Shape = Coordinate[];

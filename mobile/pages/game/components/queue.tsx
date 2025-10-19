@@ -7,7 +7,7 @@ import Grid from "./grid";
 const Queue = ({ queue }: { queue: PieceType[] }) => {
   const flatQueue = useMemo(() => {
     const output: Board = {};
-    console.log("Building flatQueue with queue:", queue);
+
     let yOffset = 1;
     let isFirst = true;
     for (const shapeKey of queue) {
@@ -15,7 +15,7 @@ const Queue = ({ queue }: { queue: PieceType[] }) => {
         type: shapeKey,
         offset: { x: 1, y: yOffset },
         rotation: 0,
-        color: isFirst ? TILE_STYLES.DARK_ACTIVE : TILE_STYLES.DARK_INACTIVE,
+        style: isFirst ? TILE_STYLES.DARK_ACTIVE : TILE_STYLES.DARK_INACTIVE,
       });
       yOffset += 4;
       isFirst = false;
@@ -24,8 +24,6 @@ const Queue = ({ queue }: { queue: PieceType[] }) => {
     }
     return output;
   }, [queue]);
-
-  console.log(flatQueue);
 
   return (
     <View>

@@ -1,16 +1,39 @@
 import {
-  BoardKey,
+  Coordinate,
   createBoardKey,
   GamePiece,
   Board as TBoard,
   TILE_STYLES,
-  TileStyle,
 } from "@/types";
 import { useMemo } from "react";
 import { View } from "react-native";
 import { BOARD_HEIGHT, BOARD_WIDTH } from "./game.consts";
 import Grid from "./grid";
 import { SHAPES_DICT } from "./shapes";
+
+const getInverseStyle = ({
+  board,
+  coordinate,
+}: {
+  board: TBoard;
+  coordinate: Coordinate;
+}) => {
+  const tile = board[createBoardKey(coordinate)];
+
+  if (tile.style === TILE_STYLES.EMPTY) {
+    return TILE_STYLES.DARK_ACTIVE;
+  }
+
+  if (tile.style === TILE_STYLES.DARK_INACTIVE) {
+    return TILE_STYLES.LIGHT_ACTIVE;
+  }
+
+  if (tile.style === TILE_STYLES.LIGHT_INACTIVE) {
+    return TILE_STYLES.DARK_ACTIVE;
+  }
+
+  throw new Error("aww heck");
+};
 
 const Board = ({
   board,
@@ -26,18 +49,15 @@ const Board = ({
         const offsetY = y + currentGamePiece.offset.y;
         const key = createBoardKey({ x: offsetX, y: offsetY });
         acc[key] = {
-          type:
-            board[key].type === TILE_STYLES.EMPTY
-              ? TILE_STYLES.DARK_ACTIVE
-              : TILE_STYLES.LIGHT_ACTIVE,
+          style: getInverseStyle({
+            board,
+            coordinate: { x: offsetX, y: offsetY },
+          }),
           coordinate: { x: offsetX, y: offsetY },
         };
         return acc;
       },
-      {} as Record<
-        BoardKey,
-        { type: TileStyle; coordinate: { x: number; y: number } }
-      >
+      {} as TBoard
     );
   }, [currentGamePiece, board]);
 

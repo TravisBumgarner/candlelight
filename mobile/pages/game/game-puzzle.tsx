@@ -17,8 +17,33 @@ import Controls from "./components/controls";
 import { BOARD_HEIGHT, BOARD_WIDTH } from "./components/game.consts";
 import LevelSelect from "./components/level-select";
 import Queue from "./components/queue";
+import { SHAPES_DICT } from "./components/shapes";
 import Target from "./components/target";
 import { findGemsAndShapes, flattenGamePieceToBoard } from "./utils";
+
+const getPlacementTileStyle = ({
+  board,
+  coordinate,
+}: {
+  board: TBoard;
+  coordinate: Coordinate;
+}) => {
+  const tile = board[createBoardKey(coordinate)];
+
+  if (tile.style === TILE_STYLES.EMPTY) {
+    return TILE_STYLES.DARK_INACTIVE;
+  }
+
+  if (tile.style === TILE_STYLES.DARK_INACTIVE) {
+    return TILE_STYLES.LIGHT_INACTIVE;
+  }
+
+  if (tile.style === TILE_STYLES.LIGHT_INACTIVE) {
+    return TILE_STYLES.DARK_INACTIVE;
+  }
+
+  throw new Error("aww heck");
+};
 
 const makeBoard = () => {
   const board: Record<string, Tile> = {};
@@ -26,13 +51,14 @@ const makeBoard = () => {
   for (let y = 0; y < BOARD_HEIGHT; y++) {
     for (let x = 0; x < BOARD_WIDTH; x++) {
       const key = createBoardKey({ x, y });
-      board[key] = { type: TILE_STYLES.EMPTY, coordinate: { y, x } };
+      board[key] = { style: TILE_STYLES.EMPTY, coordinate: { y, x } };
     }
   }
 
   return board;
 };
 
+// TODO - might be worth separating level out such that we know various bits exist like queue.
 const Level = ({
   levelId,
   clearLevel,
@@ -52,52 +78,86 @@ const Level = ({
   const [board, setBoard] = useState<TBoard>(makeBoard());
 
   const updateGamePiece = useCallback((newPiece: GamePiece) => {
-    console.log("updateGamePiece called in parent with:", newPiece);
     setGamePiece(newPiece);
-    console.log("setGamePiece called");
   }, []);
 
-  useEffect(() => {
-    console.log("currentGamePiece state changed to:", currentGamePiece?.offset);
-  }, [currentGamePiece]);
+  const handlePlaceCallback = useCallback(() => {
+    if (!targetGem || !currentGamePiece) {
+      alert("no target gem");
+      return;
+    }
 
-  const handlePlaceCallback = useCallback(
-    ({ nextGamePiece }: { nextGamePiece: GamePiece }) => {
-      if (!targetGem) {
-        alert("no target gem");
-        return;
-      }
+    setHistory([...history, currentGamePiece]);
 
-      findGemsAndShapes({
-        width: BOARD_WIDTH,
-        height: BOARD_HEIGHT,
-        board: board,
-        targetGem,
-      });
+    // This could probably be done in one pass to get the actual tile color.
+    // But for now, flatten first, then assign color.
+    const rawBoard = flattenGamePieceToBoard({
+      type: currentGamePiece.type,
+      offset: currentGamePiece.offset,
+      rotation: currentGamePiece.rotation,
+      style: TILE_STYLES.DARK_INACTIVE,
+    });
 
-      if (!currentGamePiece) {
-        alert("No current game piece!");
-        return;
-      }
-
-      const flattenedShape = flattenGamePieceToBoard({
-        type: currentGamePiece.type,
-        offset: currentGamePiece.offset,
-        rotation: currentGamePiece.rotation,
-        color: TILE_STYLES.DARK_INACTIVE,
-      });
-
-      const newBoard: TBoard = {
-        ...board,
-        ...flattenedShape,
+    const flattenedShape = Object.keys(rawBoard).reduce((acc, key) => {
+      const tile = rawBoard[key as keyof typeof rawBoard];
+      (acc as any)[key] = {
+        ...tile,
+        style: getPlacementTileStyle({
+          board,
+          coordinate: tile.coordinate,
+        }),
       };
-      // console.log("New Board after placement:", newBoard);
-      setBoard(newBoard);
-      setGamePiece(nextGamePiece);
-      setQueue((prev) => prev.slice(1));
-    },
-    [targetGem, board, currentGamePiece]
-  );
+      return acc;
+    }, {} as TBoard);
+
+    const newBoard: TBoard = {
+      ...board,
+      ...flattenedShape,
+    };
+
+    const result = findGemsAndShapes({
+      width: BOARD_WIDTH,
+      height: BOARD_HEIGHT,
+      board: newBoard,
+      targetGem,
+    });
+
+    if (result.gems.length > 0) {
+      alert(`level complete! gems found: ${result.gems.length}`);
+      // todo track best score
+      // todo next level.
+      return;
+    }
+
+    if (queue.length === 0) {
+      alert("No more pieces in the queue!");
+      return;
+    }
+
+    const nextShapeKey = SHAPES_DICT[queue[0]];
+    if (!nextShapeKey) {
+      alert("Invalid shape key in queue!");
+      return;
+    }
+
+    if (!currentGamePiece) {
+      alert("No current game piece!");
+      return;
+    }
+
+    const nextGamePiece = {
+      type: queue[0],
+      rotation: 0,
+      offset: {
+        y: Math.floor(BOARD_HEIGHT / 2) - 1,
+        x: Math.floor(BOARD_WIDTH / 2) - 1,
+      },
+    } as GamePiece;
+
+    setBoard(newBoard);
+    setQueue((prev) => prev.slice(1));
+    setGamePiece(nextGamePiece);
+  }, [targetGem, board, currentGamePiece, queue, history]);
 
   useEffect(() => {
     const validatedData = PuzzleGameDataSchema.parse(levelsData);
@@ -156,7 +216,7 @@ const Level = ({
 };
 
 const GamePuzzle = () => {
-  const [selectedLevelId, setSelectedLevelId] = useState<string | null>("5_2");
+  const [selectedLevelId, setSelectedLevelId] = useState<string | null>("1_1");
 
   return (
     <View>

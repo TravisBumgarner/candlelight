@@ -29,11 +29,7 @@ const Controls = ({
   setHistory: (history: GamePiece[]) => void;
   queue: PieceType[];
   setQueue: (queue: ((prev: PieceType[]) => PieceType[]) | PieceType[]) => void;
-  handlePlaceCallback: ({
-    nextGamePiece,
-  }: {
-    nextGamePiece: GamePiece;
-  }) => void;
+  handlePlaceCallback: () => void;
 }) => {
   const shapeInBounds = useCallback((shape: Shape) => {
     return shape.every((coordinate) => {
@@ -136,37 +132,8 @@ const Controls = ({
   }, [shapeInBounds, currentGamePiece, updateGamePiece]);
 
   const place = useCallback(() => {
-    setHistory([...history, currentGamePiece]);
-
-    if (queue.length === 0) {
-      alert("No more pieces in the queue!");
-      return;
-    }
-
-    const nextShapeKey = SHAPES_DICT[queue[0]];
-    if (!nextShapeKey) {
-      alert("Invalid shape key in queue!");
-      return;
-    }
-
-    const nextGamePiece = {
-      type: queue[0],
-      rotation: 0,
-      offset: {
-        y: Math.floor(BOARD_HEIGHT / 2) - 1,
-        x: Math.floor(BOARD_WIDTH / 2) - 1,
-      },
-    } as GamePiece;
-    setQueue((prev) => prev.slice(1));
-    handlePlaceCallback({ nextGamePiece });
-  }, [
-    queue,
-    setHistory,
-    setQueue,
-    handlePlaceCallback,
-    currentGamePiece,
-    history,
-  ]);
+    handlePlaceCallback();
+  }, [handlePlaceCallback]);
 
   return (
     <View {...responder.panHandlers}>
