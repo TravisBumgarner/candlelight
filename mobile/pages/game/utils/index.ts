@@ -170,17 +170,27 @@ export function findGemsAndShapes({
   };
 }
 
-export const shapeKeyToVector = ({
+export const flattenShapeToBoard = ({
   key,
   rotationIndex,
   offset,
+  color,
 }: {
   key: PieceType;
   rotationIndex: number;
   offset: Coordinate;
-}) => {
-  return SHAPES_DICT[key][rotationIndex].map(({ x, y }) => ({
-    x: x + offset.x,
-    y: y + offset.y,
-  }));
+  color: TileStyle;
+}): Board => {
+  return SHAPES_DICT[key][rotationIndex].reduce((acc, { x, y }) => {
+    const offsetX = x + offset.x;
+    const offsetY = y + offset.y;
+    const boardKey = createBoardKey({ x: offsetX, y: offsetY });
+
+    acc[boardKey] = {
+      type: color,
+      coordinate: { x: offsetX, y: offsetY },
+    };
+
+    return acc;
+  }, {} as Board);
 };

@@ -138,6 +138,7 @@ const Controls = ({
       <PixelMenuButton label="Down" onPress={() => move("down")} />
       <PixelMenuButton label="Place" onPress={place} />
       <PixelMenuButton label="Rotate" onPress={rotate} />
+      <PixelMenuButton disabled label="Undo" onPress={() => {}} />
     </>
   );
 };

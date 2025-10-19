@@ -19,7 +19,7 @@ import { BOARD_HEIGHT, BOARD_WIDTH } from "./components/game.consts";
 import LevelSelect from "./components/level-select";
 import Queue from "./components/queue";
 import Target from "./components/target";
-import { findGemsAndShapes } from "./utils";
+import { findGemsAndShapes, flattenShapeToBoard } from "./utils";
 
 const makeBoard = () => {
   const board: Record<string, Tile> = {};
@@ -64,8 +64,29 @@ const Level = ({
         board: board,
         targetGem,
       });
+
+      if (!currentGamePiece) {
+        alert("No current game piece!");
+        return;
+      }
+
+      const flattenedShape = flattenShapeToBoard({
+        key: currentGamePiece.type,
+        offset: currentGamePiece.offset,
+        rotationIndex: currentGamePiece.rotation,
+        color: TILE_STYLES.DARK_ACTIVE,
+      });
+
+      const newBoard: TBoard = {
+        ...board,
+        ...flattenedShape,
+      };
+      // console.log("New Board after placement:", newBoard);
+      setBoard(newBoard);
+      setGamePiece(nextGamePiece);
+      setQueue((prev) => prev.slice(1));
     },
-    [targetGem, board]
+    [targetGem, board, currentGamePiece]
   );
 
   useEffect(() => {

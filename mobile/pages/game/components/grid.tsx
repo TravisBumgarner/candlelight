@@ -1,4 +1,4 @@
-import { GamePiece, Board as TBoard, TILE_STYLES } from "@/types";
+import { Board as TBoard, TILE_STYLES } from "@/types";
 import { StyleSheet, View } from "react-native";
 import { CELL_SIZE } from "./game.consts";
 
@@ -6,10 +6,9 @@ interface BoardProps {
   items: TBoard;
   width: number;
   height: number;
-  currentGamePiece?: GamePiece;
 }
 
-const Grid = ({ currentGamePiece, items, width, height }: BoardProps) => {
+const Grid = ({ items, width, height }: BoardProps) => {
   const totalCellsPerRow = width + 2; // Adding border cells (-1 to width inclusive)
   const gridWidth = CELL_SIZE * totalCellsPerRow; // Exact grid width
   const gridHeight = CELL_SIZE * (height + 2); // Height with borders

@@ -1,8 +1,8 @@
 import Text from "@/components/text";
-import { Board, createBoardKey, PieceType, TILE_STYLES } from "@/types";
+import { Board, PieceType, TILE_STYLES } from "@/types";
 import { useMemo } from "react";
 import { View } from "react-native";
-import { shapeKeyToVector } from "../utils";
+import { flattenShapeToBoard } from "../utils";
 import Grid from "./grid";
 
 const Queue = ({ queue }: { queue: PieceType[] }) => {
@@ -12,20 +12,16 @@ const Queue = ({ queue }: { queue: PieceType[] }) => {
     let yOffset = 0;
     let isFirst = true;
     for (const shapeKey of queue) {
-      const vector = shapeKeyToVector({
+      const board = flattenShapeToBoard({
         key: shapeKey,
         offset: { x: 0, y: yOffset },
         rotationIndex: 0,
+        color: isFirst ? TILE_STYLES.DARK_ACTIVE : TILE_STYLES.LIGHT_ACTIVE,
       });
       yOffset += 4;
-
-      for (const coordinate of vector) {
-        const boardKey = createBoardKey(coordinate);
-        output[boardKey] = { type: TILE_STYLES.DARK_ACTIVE, coordinate };
-      }
-      if (!isFirst) yOffset += 4; // Add spacing between pieces
-
       isFirst = false;
+
+      Object.assign(output, board);
     }
     return output;
   }, [queue]);

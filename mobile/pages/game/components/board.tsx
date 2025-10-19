@@ -1,5 +1,11 @@
 import Text from "@/components/text";
-import { GamePiece, Shape, Board as TBoard } from "@/types";
+import {
+  BoardKey,
+  createBoardKey,
+  GamePiece,
+  Board as TBoard,
+  TileStyle,
+} from "@/types";
 import { useMemo } from "react";
 import { View } from "react-native";
 import { BOARD_HEIGHT, BOARD_WIDTH } from "./game.consts";
@@ -13,25 +19,35 @@ const Board = ({
   board: TBoard;
   currentGamePiece: GamePiece;
 }) => {
-  const currentShape: Shape = useMemo(() => {
-    return SHAPES_DICT[currentGamePiece.type][currentGamePiece.rotation].map(
-      ({ x, y }) => ({
-        x: x + currentGamePiece.offset.x,
-        y: y + currentGamePiece.offset.y,
-      })
+  const currentShapeBoard = useMemo(() => {
+    return SHAPES_DICT[currentGamePiece.type][currentGamePiece.rotation].reduce(
+      (acc, { x, y }) => {
+        const offsetX = x + currentGamePiece.offset.x;
+        const offsetY = y + currentGamePiece.offset.y;
+        const key = createBoardKey({ x: offsetX, y: offsetY });
+        acc[key] = {
+          type: "LIGHT_ACTIVE" as TileStyle,
+          coordinate: { x: offsetX, y: offsetY },
+        };
+        return acc;
+      },
+      {} as Record<
+        BoardKey,
+        { type: TileStyle; coordinate: { x: number; y: number } }
+      >
     );
   }, [currentGamePiece]);
-
-  const mergedBoard: TBoard = useMemo(() => {
-    return { ...board, currentShape };
-  }, [board, currentShape]);
 
   return (
     <View>
       <Text variant="body1" textAlign="center">
-        Board History
+        Board
       </Text>
-      <Grid items={mergedBoard} width={BOARD_WIDTH} height={BOARD_HEIGHT} />
+      <Grid
+        items={{ ...board, ...currentShapeBoard }}
+        width={BOARD_WIDTH}
+        height={BOARD_HEIGHT}
+      />
     </View>
   );
 };
