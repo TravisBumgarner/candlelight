@@ -26,7 +26,10 @@ const Board = ({
         const offsetY = y + currentGamePiece.offset.y;
         const key = createBoardKey({ x: offsetX, y: offsetY });
         acc[key] = {
-          type: TILE_STYLES.DARK_ACTIVE,
+          type:
+            board[key].type === TILE_STYLES.EMPTY
+              ? TILE_STYLES.DARK_ACTIVE
+              : TILE_STYLES.LIGHT_ACTIVE,
           coordinate: { x: offsetX, y: offsetY },
         };
         return acc;
@@ -36,7 +39,7 @@ const Board = ({
         { type: TileStyle; coordinate: { x: number; y: number } }
       >
     );
-  }, [currentGamePiece]);
+  }, [currentGamePiece, board]);
 
   return (
     <View>
