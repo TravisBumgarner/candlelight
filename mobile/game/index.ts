@@ -60,3 +60,6 @@ export {
   getShapeRotation,
   getShapeRotations,
 } from './shapes';
+
+// Engine (re-export all engine functions)
+export * from './engine';
