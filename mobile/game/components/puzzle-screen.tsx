@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { View, StyleSheet, Text, Pressable, Modal } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
 import { useGameGestures } from '@/hooks/use-game-gestures';
+import { playSound } from '@/services/audio';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
 import { QueueDisplay } from './queue-display';
@@ -215,6 +216,13 @@ export function PuzzleScreen({
     initializeLevel();
   }, [initializeLevel]);
 
+  // Play completion sound
+  useEffect(() => {
+    if (isLevelComplete) {
+      playSound('one_gem');
+    }
+  }, [isLevelComplete]);
+
   // Save progress on level complete
   useEffect(() => {
     if (isLevelComplete) {
@@ -239,24 +247,28 @@ export function PuzzleScreen({
     }
   }, [isLevelComplete, alchemizations, worldNumber, levelNumber, savedBestScore]);
 
-  // Action handlers
+  // Action handlers with audio feedback
   const handleMove = useCallback(
     (direction: Direction) => {
-      movePlayer(direction);
+      const success = movePlayer(direction);
+      playSound(success ? 'movement' : 'non_movement');
     },
     [movePlayer]
   );
 
   const handleRotate = useCallback(() => {
-    rotatePlayer();
+    const success = rotatePlayer();
+    playSound(success ? 'movement' : 'non_movement');
   }, [rotatePlayer]);
 
   const handlePlace = useCallback(() => {
-    placeShape();
+    const success = placeShape();
+    if (success) playSound('movement');
   }, [placeShape]);
 
   const handleUndo = useCallback(() => {
-    undo();
+    const success = undo();
+    playSound(success ? 'movement' : 'non_movement');
   }, [undo]);
 
   const handlePause = useCallback(() => {

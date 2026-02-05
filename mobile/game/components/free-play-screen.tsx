@@ -7,6 +7,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { View, StyleSheet, Text, Pressable, Modal } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
 import { useGameGestures } from '@/hooks/use-game-gestures';
+import { playSound } from '@/services/audio';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
 import { QueueDisplay } from './queue-display';
@@ -136,6 +137,13 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
     slotRef.current = slot;
   }, [slot, initGame]);
 
+  // Play completion sound
+  useEffect(() => {
+    if (isLevelComplete) {
+      playSound('one_gem');
+    }
+  }, [isLevelComplete]);
+
   // Auto-save after level complete
   const handleNextLevel = useCallback(async () => {
     const currentLevel = level;
@@ -157,24 +165,28 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
     }
   }, [level, alchemizations, board, targetGem, player, queue, nextLevel]);
 
-  // Action handlers
+  // Action handlers with audio feedback
   const handleMove = useCallback(
     (direction: Direction) => {
-      movePlayer(direction);
+      const success = movePlayer(direction);
+      playSound(success ? 'movement' : 'non_movement');
     },
     [movePlayer]
   );
 
   const handleRotate = useCallback(() => {
-    rotatePlayer();
+    const success = rotatePlayer();
+    playSound(success ? 'movement' : 'non_movement');
   }, [rotatePlayer]);
 
   const handlePlace = useCallback(() => {
-    placeShape();
+    const success = placeShape();
+    if (success) playSound('movement');
   }, [placeShape]);
 
   const handleUndo = useCallback(() => {
-    undo();
+    const success = undo();
+    playSound(success ? 'movement' : 'non_movement');
   }, [undo]);
 
   const handlePause = useCallback(() => {
