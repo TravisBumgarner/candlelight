@@ -3,8 +3,8 @@
  */
 
 import React, { useMemo } from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { VISIBLE_QUEUE_SIZE } from '../constants';
+import { View, StyleSheet, Text, useWindowDimensions } from 'react-native';
+import { VISIBLE_QUEUE_SIZE, GRID } from '../constants';
 import { getShapeRotation } from '../shapes';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import type { ShapeName, Point } from '../types';
@@ -123,6 +123,44 @@ export function QueueDisplay({
   );
 }
 
+/**
+ * Horizontal queue display for above-board layout.
+ * Same width as game board with fixed height.
+ */
+export function HorizontalQueueDisplay({
+  queue,
+  cellSize = 8,
+  showLabel = false,
+}: QueueDisplayProps) {
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
+  const visibleQueue = queue.slice(0, VISIBLE_QUEUE_SIZE);
+
+  // Calculate width to match board (same logic as game-board.tsx)
+  const horizontalPadding = 40;
+  const availableWidth = screenWidth - horizontalPadding;
+  const verticalPadding = 280;
+  const availableHeight = screenHeight - verticalPadding;
+  const maxBoardSize = Math.min(availableWidth, availableHeight);
+  const boardCellSize = Math.floor(maxBoardSize / GRID.WIDTH);
+  const boardWidth = boardCellSize * GRID.WIDTH;
+
+  return (
+    <View style={[styles.horizontalContainer, { width: boardWidth }]}>
+      {showLabel && <Text style={styles.horizontalLabel}>NEXT</Text>}
+      <View style={styles.horizontalQueueContainer}>
+        {visibleQueue.map((shapeName, index) => (
+          <QueueShape
+            key={`${shapeName}-${index}`}
+            shapeName={shapeName}
+            isNext={index === 0}
+            cellSize={cellSize}
+          />
+        ))}
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -155,6 +193,30 @@ const styles = StyleSheet.create({
   },
   emptySlot: {
     opacity: 0.3,
+  },
+  // Horizontal layout styles
+  horizontalContainer: {
+    minHeight: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
+    borderWidth: 2,
+    borderColor: GAME_COLORS.BOARD_BORDER,
+  },
+  horizontalLabel: {
+    fontFamily: 'DepartureMonoRegular',
+    fontSize: FONT_SIZES.SMALL.INT,
+    color: GAME_COLORS.TEXT_SECONDARY,
+    marginRight: SPACING.SMALL.INT,
+  },
+  horizontalQueueContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: SPACING.SMALL.INT,
+    paddingVertical: SPACING.TINY.INT,
   },
 });
 

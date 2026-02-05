@@ -169,12 +169,14 @@ export interface GameSettings {
   musicVolume: number;
   sfxVolume: number;
   hasSeenTutorial: boolean;
+  leftHanded: boolean;
 }
 
 const DEFAULT_SETTINGS: GameSettings = {
   musicVolume: 0.5,
   sfxVolume: 0.5,
   hasSeenTutorial: false,
+  leftHanded: false,
 };
 
 /**

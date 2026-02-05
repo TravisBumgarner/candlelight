@@ -1,52 +1,37 @@
 import { Tabs } from "expo-router";
 import React from "react";
 
-import { IconSymbol } from "@/components/icon-symbol";
-import { Colors } from "@/constants/theme";
-import { useColorScheme } from "react-native";
-
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
     <Tabs
       initialRouteName="index"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: false,
+        tabBarStyle: { display: "none" },
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          href: null, // 👈 hides the tab, keeps the route valid
+          href: null,
         }}
       />
       <Tabs.Screen
         name="game"
         options={{
-          title: "Game",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="gamepad" color={color} />
-          ),
+          href: null,
         }}
       />
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="settings" color={color} />
-          ),
+          href: null,
         }}
       />
       <Tabs.Screen
         name="credits"
         options={{
-          title: "Credits",
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="infoOutline" color={color} />
-          ),
+          href: null,
         }}
       />
     </Tabs>

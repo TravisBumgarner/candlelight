@@ -1,6 +1,8 @@
 import { useState, useCallback } from "react";
 import TabWrapper from "@/components/tab-wrapper";
 import SelectGameMode from "@/tabs/game/components/select-game-mode";
+import SettingsScreen from "@/components/settings-screen";
+import CreditsScreen from "@/components/credits-screen";
 import {
   TutorialScreen,
   FreePlayScreen,
@@ -13,7 +15,7 @@ import {
 import { ScrollView, View, StyleSheet } from "react-native";
 import type { FreePlaySlot } from "@/game/modes/free-play";
 
-type GameMode = "puzzles" | "freeplay" | "daily" | "tutorial";
+type MenuAction = "puzzles" | "freeplay" | "daily" | "tutorial" | "settings" | "credits";
 type Screen =
   | "menu"
   | "tutorial"
@@ -22,7 +24,9 @@ type Screen =
   | "daily"
   | "puzzle-world-select"
   | "puzzle-level-select"
-  | "puzzle-game";
+  | "puzzle-game"
+  | "settings"
+  | "credits";
 
 const Game = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>("menu");
@@ -30,8 +34,8 @@ const Game = () => {
   const [puzzleWorld, setPuzzleWorld] = useState<number | null>(null);
   const [puzzleLevel, setPuzzleLevel] = useState<number | null>(null);
 
-  const handleSelectMode = useCallback((mode: GameMode) => {
-    switch (mode) {
+  const handleSelectMode = useCallback((action: MenuAction) => {
+    switch (action) {
       case "tutorial":
         setCurrentScreen("tutorial");
         break;
@@ -43,6 +47,12 @@ const Game = () => {
         break;
       case "puzzles":
         setCurrentScreen("puzzle-world-select");
+        break;
+      case "settings":
+        setCurrentScreen("settings");
+        break;
+      case "credits":
+        setCurrentScreen("credits");
         break;
     }
   }, []);
@@ -166,6 +176,22 @@ const Game = () => {
           onNextLevel={handlePuzzleNextLevel}
           onExit={handlePuzzleBackToLevels}
         />
+      </View>
+    );
+  }
+
+  if (currentScreen === "settings") {
+    return (
+      <View style={styles.fullScreen}>
+        <SettingsScreen onBack={handleReturnToMenu} />
+      </View>
+    );
+  }
+
+  if (currentScreen === "credits") {
+    return (
+      <View style={styles.fullScreen}>
+        <CreditsScreen onBack={handleReturnToMenu} />
       </View>
     );
   }

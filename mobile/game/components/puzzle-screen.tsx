@@ -3,16 +3,20 @@
  * Fixed queue levels with game over on queue exhaustion.
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet, Text, Pressable, Modal } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
-import { useGameGestures } from '@/hooks/use-game-gestures';
 import { playSound } from '@/services/audio';
+import { getPlayerOverlay } from '../engine';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
-import { QueueDisplay } from './queue-display';
+import { HorizontalQueueDisplay } from './queue-display';
 import { GameHUD } from './game-hud';
-import { GameControls } from './game-controls';
+import { GameInfoPanel } from './game-info-panel';
+import { GameControlsPad } from './game-controls-pad';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
+import SettingsScreen from '@/components/settings-screen';
+import { PauseMenu } from './pause-menu';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import {
   getLevelData,
@@ -20,7 +24,7 @@ import {
   createPuzzleId,
   updateProgressAfterComplete,
 } from '../modes/puzzle';
-import { loadPuzzleProgress, savePuzzleProgress } from '@/services/storage';
+import { loadPuzzleProgress, savePuzzleProgress, loadSettings } from '@/services/storage';
 import type { Direction } from '../types';
 
 interface PuzzleScreenProps {
@@ -28,40 +32,6 @@ interface PuzzleScreenProps {
   levelNumber: number;
   onNextLevel: (worldNumber: number, levelNumber: number) => void;
   onExit: () => void;
-}
-
-/**
- * Pause menu overlay.
- */
-function PauseMenuOverlay({
-  visible,
-  onResume,
-  onRestart,
-  onExit,
-}: {
-  visible: boolean;
-  onResume: () => void;
-  onRestart: () => void;
-  onExit: () => void;
-}) {
-  return (
-    <Modal visible={visible} transparent animationType="fade">
-      <View style={styles.modalOverlay}>
-        <View style={styles.menuContainer}>
-          <Text style={styles.menuTitle}>PAUSED</Text>
-          <Pressable style={styles.menuButton} onPress={onResume}>
-            <Text style={styles.menuButtonText}>Resume</Text>
-          </Pressable>
-          <Pressable style={styles.menuButton} onPress={onRestart}>
-            <Text style={styles.menuButtonText}>Restart</Text>
-          </Pressable>
-          <Pressable style={styles.menuButton} onPress={onExit}>
-            <Text style={styles.menuButtonText}>Exit</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-  );
 }
 
 /**
@@ -169,7 +139,6 @@ export function PuzzleScreen({
     isLevelComplete,
     isGameOver,
     isPaused,
-    getPlayerCells,
     movePlayer,
     rotatePlayer,
     placeShape,
@@ -183,11 +152,17 @@ export function PuzzleScreen({
   const [isLoading, setIsLoading] = useState(true);
   const [isNewBest, setIsNewBest] = useState(false);
   const [savedBestScore, setSavedBestScore] = useState<number | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [leftHanded, setLeftHanded] = useState(false);
 
   // Initialize puzzle level
   const initializeLevel = useCallback(async () => {
     setIsLoading(true);
     setIsNewBest(false);
+
+    // Load settings
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
 
     const levelData = getLevelData(worldNumber, levelNumber);
     if (!levelData) {
@@ -256,15 +231,15 @@ export function PuzzleScreen({
     [movePlayer]
   );
 
-  const handleRotate = useCallback(() => {
-    const success = rotatePlayer();
-    playSound(success ? 'movement' : 'non_movement');
-  }, [rotatePlayer]);
-
   const handlePlace = useCallback(() => {
     const success = placeShape();
     if (success) playSound('movement');
   }, [placeShape]);
+
+  const handleRotate = useCallback(() => {
+    const success = rotatePlayer();
+    playSound(success ? 'movement' : 'non_movement');
+  }, [rotatePlayer]);
 
   const handleUndo = useCallback(() => {
     const success = undo();
@@ -278,6 +253,17 @@ export function PuzzleScreen({
   const handleResume = useCallback(() => {
     resume();
   }, [resume]);
+
+  const handleOpenSettings = useCallback(() => {
+    setShowSettings(true);
+  }, []);
+
+  const handleCloseSettings = useCallback(async () => {
+    setShowSettings(false);
+    // Reload settings in case handedness changed
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
+  }, []);
 
   const handleRestart = useCallback(() => {
     resume();
@@ -296,14 +282,12 @@ export function PuzzleScreen({
     onExit();
   }, [reset, onExit]);
 
-  // Gesture handlers
-  const gestureHandlers = useGameGestures({
-    onMove: handleMove,
-    onPlace: handlePlace,
-    onRotate: handleRotate,
-  });
+  // Compute player cells from destructured state to ensure React tracks dependencies
+  const playerCells = useMemo(() => {
+    if (!player) return [];
+    return getPlayerOverlay(player, board);
+  }, [player, board]);
 
-  const playerCells = getPlayerCells();
   const isInteractionDisabled = isLevelComplete || isGameOver || isPaused;
   const nextLevel = getNextLevel(worldNumber, levelNumber);
 
@@ -316,49 +300,41 @@ export function PuzzleScreen({
   }
 
   return (
-    <View style={styles.container}>
-      {/* HUD */}
-      <GameHUD
-        mode="puzzle"
-        worldNumber={worldNumber}
-        levelNumber={levelNumber}
-        score={alchemizations}
-        bestScore={savedBestScore}
-      />
+    <SafeAreaWrapper>
+      {/* Menu button */}
+      <GameHUD onMenu={handlePause} />
 
-      {/* Main game area */}
-      <View style={styles.gameArea}>
-        {/* Target gem panel */}
-        <View style={styles.sidePanel}>
-          <TargetGem gem={targetGem} />
-        </View>
+      {/* Queue */}
+      {queue && <HorizontalQueueDisplay queue={queue.queue} />}
 
-        {/* Game board with gesture handling */}
-        <View
-          style={styles.boardContainer}
-          onTouchStart={gestureHandlers.onTouchStart}
-          onTouchEnd={gestureHandlers.onTouchEnd}
-        >
-          <GameBoard
-            board={board}
-            playerCells={playerCells}
-            disabled={isInteractionDisabled}
-          />
-        </View>
-
-        {/* Queue panel */}
-        <View style={styles.sidePanel}>
-          {queue && <QueueDisplay queue={queue.queue} />}
-        </View>
+      {/* Game board */}
+      <View style={styles.boardContainer}>
+        <GameBoard
+          board={board}
+          playerCells={playerCells}
+          disabled={isInteractionDisabled}
+        />
       </View>
 
-      {/* Controls */}
-      <GameControls
+      {/* Controls with info panel */}
+      <GameControlsPad
+        onMove={handleMove}
         onRotate={handleRotate}
+        onPlace={handlePlace}
         onUndo={handleUndo}
-        onPause={handlePause}
         disabled={isInteractionDisabled}
-      />
+        leftHanded={leftHanded}
+      >
+        <GameInfoPanel
+          mode="puzzle"
+          worldNumber={worldNumber}
+          levelNumber={levelNumber}
+          score={alchemizations}
+          bestScore={savedBestScore}
+        >
+          {targetGem.length > 0 && <TargetGem gem={targetGem} cellSize={8} showLabel={false} />}
+        </GameInfoPanel>
+      </GameControlsPad>
 
       {/* Level complete overlay */}
       <LevelCompleteOverlay
@@ -383,12 +359,18 @@ export function PuzzleScreen({
 
       {/* Pause menu */}
       <PauseMenuOverlay
-        visible={isPaused}
+        visible={isPaused && !showSettings}
         onResume={handleResume}
         onRestart={handleRestart}
+        onSettings={handleOpenSettings}
         onExit={handleExit}
       />
-    </View>
+
+      {/* Settings modal */}
+      <Modal visible={showSettings} animationType="slide">
+        <SettingsScreen onBack={handleCloseSettings} />
+      </Modal>
+    </SafeAreaWrapper>
   );
 }
 
@@ -407,18 +389,6 @@ const styles = StyleSheet.create({
     fontFamily: 'DepartureMonoRegular',
     fontSize: FONT_SIZES.LARGE.INT,
     color: GAME_COLORS.TEXT_PRIMARY,
-  },
-  gameArea: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: SPACING.SMALL.INT,
-  },
-  sidePanel: {
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   boardContainer: {
     flex: 1,

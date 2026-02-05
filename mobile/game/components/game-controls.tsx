@@ -8,7 +8,6 @@ import { View, StyleSheet, Pressable, Text } from 'react-native';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 
 interface GameControlsProps {
-  onRotate: () => void;
   onUndo: () => void;
   onPause: () => void;
   disabled?: boolean;
@@ -55,7 +54,6 @@ function ControlButton({
  * GameControls provides action buttons for the game.
  */
 export function GameControls({
-  onRotate,
   onUndo,
   onPause,
   disabled = false,
@@ -67,15 +65,6 @@ export function GameControls({
           label="UNDO"
           onPress={onUndo}
           disabled={disabled}
-        />
-      </View>
-
-      <View style={styles.centerControls}>
-        <ControlButton
-          label="ROTATE"
-          onPress={onRotate}
-          disabled={disabled}
-          variant="primary"
         />
       </View>
 
@@ -101,10 +90,6 @@ const styles = StyleSheet.create({
   leftControls: {
     flex: 1,
     alignItems: 'flex-start',
-  },
-  centerControls: {
-    flex: 1,
-    alignItems: 'center',
   },
   rightControls: {
     flex: 1,

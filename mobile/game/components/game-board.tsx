@@ -77,12 +77,19 @@ const Cell = React.memo(function Cell({
  * GameBoard component.
  */
 export function GameBoard({ board, playerCells = [], disabled = false }: GameBoardProps) {
-  const { width: screenWidth } = useWindowDimensions();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
-  // Calculate cell size based on available width (with some padding)
-  const boardPadding = 20;
-  const availableWidth = screenWidth - boardPadding * 2;
-  const cellSize = Math.floor(availableWidth / GRID.WIDTH);
+  // Calculate cell size based on available space
+  const horizontalPadding = 40;
+  const availableWidth = screenWidth - horizontalPadding;
+
+  // Leave room for HUD, target gem, queue, and controls
+  const verticalPadding = 280;
+  const availableHeight = screenHeight - verticalPadding;
+
+  // Use the smaller dimension to ensure board fits
+  const maxBoardSize = Math.min(availableWidth, availableHeight);
+  const cellSize = Math.floor(maxBoardSize / GRID.WIDTH);
   const boardSize = cellSize * GRID.WIDTH;
 
   // Create a lookup map for player cells for O(1) access

@@ -3,7 +3,7 @@
  * Integrates all game components and manages the game loop.
  */
 
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,51 +12,22 @@ import {
   Modal,
 } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
-import { useGameGestures } from '@/hooks/use-game-gestures';
+import { getPlayerOverlay } from '../engine';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
-import { QueueDisplay } from './queue-display';
+import { HorizontalQueueDisplay } from './queue-display';
 import { GameHUD } from './game-hud';
-import { GameControls } from './game-controls';
+import { GameInfoPanel } from './game-info-panel';
+import { GameControlsPad } from './game-controls-pad';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
+import SettingsScreen from '@/components/settings-screen';
+import { PauseMenu } from './pause-menu';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
+import { loadSettings } from '@/services/storage';
 import type { Direction, GameMode } from '../types';
 
 interface GameScreenProps {
   onExit: () => void;
-}
-
-/**
- * Pause menu overlay.
- */
-function PauseMenu({
-  visible,
-  onResume,
-  onRestart,
-  onExit,
-}: {
-  visible: boolean;
-  onResume: () => void;
-  onRestart: () => void;
-  onExit: () => void;
-}) {
-  return (
-    <Modal visible={visible} transparent animationType="fade">
-      <View style={styles.modalOverlay}>
-        <View style={styles.menuContainer}>
-          <Text style={styles.menuTitle}>PAUSED</Text>
-          <Pressable style={styles.menuButton} onPress={onResume}>
-            <Text style={styles.menuButtonText}>Resume</Text>
-          </Pressable>
-          <Pressable style={styles.menuButton} onPress={onRestart}>
-            <Text style={styles.menuButtonText}>Restart</Text>
-          </Pressable>
-          <Pressable style={styles.menuButton} onPress={onExit}>
-            <Text style={styles.menuButtonText}>Exit</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-  );
 }
 
 /**
@@ -148,7 +119,6 @@ export function GameScreen({ onExit }: GameScreenProps) {
     isInteractionDisabled,
     isLevelComplete,
     isGameOver,
-    getPlayerCells,
     movePlayer,
     rotatePlayer,
     placeShape,
@@ -160,29 +130,40 @@ export function GameScreen({ onExit }: GameScreenProps) {
     reset,
   } = useGameStore();
 
+  const [showSettings, setShowSettings] = useState(false);
+  const [leftHanded, setLeftHanded] = useState(false);
+
+  // Load settings on mount
+  useEffect(() => {
+    const init = async () => {
+      const settings = await loadSettings();
+      setLeftHanded(settings.leftHanded);
+    };
+    init();
+  }, []);
+
   // Handle exit
   const handleExit = useCallback(() => {
     reset();
     onExit();
   }, [reset, onExit]);
 
-  // Gesture handlers
-  const gestureCallbacks = {
-    onMove: (direction: Direction) => {
-      movePlayer(direction);
-    },
-    onPlace: () => {
-      placeShape();
-    },
-    onRotate: () => {
-      rotatePlayer();
-    },
-  };
+  const handleOpenSettings = useCallback(() => {
+    setShowSettings(true);
+  }, []);
 
-  const gestureHandlers = useGameGestures(gestureCallbacks);
+  const handleCloseSettings = useCallback(async () => {
+    setShowSettings(false);
+    // Reload settings in case handedness changed
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
+  }, []);
 
-  // Get player overlay cells
-  const playerCells = getPlayerCells();
+  // Compute player cells from destructured state to ensure React tracks dependencies
+  const playerCells = useMemo(() => {
+    if (!player) return [];
+    return getPlayerOverlay(player, board);
+  }, [player, board]);
 
   // Don't render if no mode set
   if (!mode) {
@@ -197,61 +178,59 @@ export function GameScreen({ onExit }: GameScreenProps) {
   const showQueue = mode !== 'tutorial' || level >= 6;
 
   return (
-    <View style={styles.container}>
-      {/* HUD */}
-      <GameHUD
-        mode={mode}
-        level={level}
-        worldNumber={worldNumber}
-        levelNumber={level}
-        score={alchemizations}
-        bestScore={bestScore}
-      />
+    <SafeAreaWrapper>
+      {/* Menu button */}
+      <GameHUD onMenu={pause} />
 
-      {/* Main game area */}
-      <View style={styles.gameArea}>
-        {/* Side panels */}
-        <View style={styles.sidePanel}>
-          {showTargetGem && <TargetGem gem={targetGem} />}
-        </View>
+      {/* Queue */}
+      {showQueue && queue && <HorizontalQueueDisplay queue={queue.queue} />}
 
-        {/* Game board with gesture handling */}
-        <View
-          style={styles.boardContainer}
-          onTouchStart={gestureHandlers.onTouchStart}
-          onTouchEnd={gestureHandlers.onTouchEnd}
-        >
-          <GameBoard
-            board={board}
-            playerCells={playerCells}
-            disabled={isInteractionDisabled}
-          />
-        </View>
-
-        {/* Queue panel */}
-        <View style={styles.sidePanel}>
-          {showQueue && queue && <QueueDisplay queue={queue.queue} />}
-        </View>
+      {/* Game board */}
+      <View style={styles.boardContainer}>
+        <GameBoard
+          board={board}
+          playerCells={playerCells}
+          disabled={isInteractionDisabled}
+        />
       </View>
 
-      {/* Controls */}
-      <GameControls
-        onRotate={rotatePlayer}
+      {/* Controls with info panel */}
+      <GameControlsPad
+        onMove={(direction) => movePlayer(direction)}
+        onRotate={() => rotatePlayer()}
+        onPlace={() => placeShape()}
         onUndo={undo}
-        onPause={pause}
         disabled={isInteractionDisabled}
-      />
+        leftHanded={leftHanded}
+      >
+        <GameInfoPanel
+          mode={mode}
+          level={level}
+          worldNumber={worldNumber}
+          levelNumber={level}
+          score={alchemizations}
+          bestScore={bestScore}
+        >
+          {showTargetGem && <TargetGem gem={targetGem} cellSize={8} showLabel={false} />}
+        </GameInfoPanel>
+      </GameControlsPad>
 
       {/* Pause Menu */}
       <PauseMenu
-        visible={isPaused}
+        visible={isPaused && !showSettings}
         onResume={resume}
         onRestart={() => {
           resume();
           restartLevel();
         }}
+        onSettings={handleOpenSettings}
         onExit={handleExit}
       />
+
+      {/* Settings modal */}
+      <Modal visible={showSettings} animationType="slide">
+        <SettingsScreen onBack={handleCloseSettings} />
+      </Modal>
 
       {/* Level Complete */}
       <LevelCompleteOverlay
@@ -269,7 +248,7 @@ export function GameScreen({ onExit }: GameScreenProps) {
         onRestart={restartLevel}
         onExit={handleExit}
       />
-    </View>
+    </SafeAreaWrapper>
   );
 }
 
@@ -277,18 +256,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#0a1015',
-  },
-  gameArea: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: SPACING.SMALL.INT,
-  },
-  sidePanel: {
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   boardContainer: {
     flex: 1,
@@ -300,41 +267,6 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.MEDIUM.INT,
     color: GAME_COLORS.TEXT_PRIMARY,
     textAlign: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menuContainer: {
-    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
-    borderWidth: 2,
-    borderColor: GAME_COLORS.BOARD_BORDER,
-    padding: SPACING.LARGE.INT,
-    borderRadius: 8,
-    minWidth: 200,
-    alignItems: 'center',
-  },
-  menuTitle: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.LARGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    marginBottom: SPACING.MEDIUM.INT,
-  },
-  menuButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    marginVertical: SPACING.TINY.INT,
-    minWidth: 150,
-    alignItems: 'center',
-  },
-  menuButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
   },
   scoreDisplay: {
     fontFamily: 'DepartureMonoRegular',

@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import TabWrapper from "@/components/tab-wrapper";
 import { StyleSheet, Text, View, Pressable, Linking } from "react-native";
 import { GAME_COLORS, FONT_SIZES, SPACING } from "@/constants/theme";
 
@@ -30,44 +29,51 @@ const CreditLink = ({ role, name, url }: CreditLinkProps) => {
   );
 };
 
-const Credits = () => {
+interface CreditsScreenProps {
+  onBack: () => void;
+}
+
+const CreditsScreen = ({ onBack }: CreditsScreenProps) => {
   return (
-    <TabWrapper background="credits">
-      <View style={styles.container}>
-        <Text style={styles.title}>CREDITS</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>CREDITS</Text>
 
-        <View style={styles.creditsContainer}>
-          <CreditLink
-            role="Game Design, Art, Code, Sound"
-            name="Travis Bumgarner"
-            url="https://travisbumgarner.dev/"
-          />
+      <View style={styles.creditsContainer}>
+        <CreditLink
+          role="Game Design, Art, Code, Sound"
+          name="Travis Bumgarner"
+          url="https://travisbumgarner.dev/"
+        />
 
-          <CreditLink
-            role="Music"
-            name="Ricky Brandes"
-            url="https://rickybrandes.com/"
-          />
+        <CreditLink
+          role="Music"
+          name="Ricky Brandes"
+          url="https://rickybrandes.com/"
+        />
 
-          <CreditLink
-            role="Font"
-            name="Helena Zhang"
-            url="https://departuremono.com/"
-          />
-        </View>
-
-        <View style={styles.footer}>
-          <Text style={styles.footerText}>Candlelight</Text>
-          <Text style={styles.versionText}>Mobile Version</Text>
-        </View>
+        <CreditLink
+          role="Font"
+          name="Helena Zhang"
+          url="https://departuremono.com/"
+        />
       </View>
-    </TabWrapper>
+
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Candlelight</Text>
+        <Text style={styles.versionText}>Mobile Version</Text>
+      </View>
+
+      <Pressable style={styles.backButton} onPress={onBack}>
+        <Text style={styles.backButtonText}>Back</Text>
+      </Pressable>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#0a1015",
     padding: SPACING.LARGE.INT,
     justifyContent: "center",
   },
@@ -125,6 +131,19 @@ const styles = StyleSheet.create({
     color: GAME_COLORS.TEXT_SECONDARY,
     marginTop: SPACING.TINY.INT,
   },
+  backButton: {
+    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
+    paddingVertical: SPACING.MEDIUM.INT,
+    paddingHorizontal: SPACING.LARGE.INT,
+    borderRadius: 4,
+    alignSelf: "center",
+    marginTop: SPACING.XLARGE.INT,
+  },
+  backButtonText: {
+    fontFamily: "DepartureMonoRegular",
+    fontSize: FONT_SIZES.MEDIUM.INT,
+    color: GAME_COLORS.TEXT_PRIMARY,
+  },
 });
 
-export default Credits;
+export default CreditsScreen;

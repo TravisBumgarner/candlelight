@@ -11,6 +11,7 @@ import {
   ActivityIndicator,
   Alert,
 } from 'react-native';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import {
   FREE_PLAY_SLOTS,
@@ -157,7 +158,7 @@ export function FreePlayMenu({ onSelectSlot, onBack }: FreePlayMenuProps) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaWrapper style={styles.container}>
       <Text style={styles.title}>FREE PLAY</Text>
       <Text style={styles.subtitle}>Select a save slot</Text>
 
@@ -177,7 +178,7 @@ export function FreePlayMenu({ onSelectSlot, onBack }: FreePlayMenuProps) {
       <Pressable style={styles.backButton} onPress={onBack}>
         <Text style={styles.backButtonText}>Back</Text>
       </Pressable>
-    </View>
+    </SafeAreaWrapper>
   );
 }
 

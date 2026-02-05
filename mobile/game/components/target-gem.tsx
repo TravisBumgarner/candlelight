@@ -23,6 +23,7 @@ export function TargetGem({ gem, cellSize = 12, showLabel = true }: TargetGemPro
 
   // Get centered gem cells
   const centeredCells = useMemo(() => {
+    if (!gem || gem.length === 0) return [];
     return getCenteredGemCells(gem);
   }, [gem]);
 

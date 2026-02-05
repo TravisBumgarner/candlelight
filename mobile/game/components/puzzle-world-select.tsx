@@ -11,6 +11,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import { getWorldsMetadata, type PuzzleProgress } from '../modes/puzzle';
 import { loadPuzzleProgress } from '@/services/storage';
@@ -114,7 +115,7 @@ export function PuzzleWorldSelect({ onSelectWorld, onBack }: PuzzleWorldSelectPr
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaWrapper style={styles.container}>
       <Text style={styles.title}>PUZZLE MODE</Text>
       <Text style={styles.subtitle}>Select a world</Text>
 
@@ -139,7 +140,7 @@ export function PuzzleWorldSelect({ onSelectWorld, onBack }: PuzzleWorldSelectPr
       <Pressable style={styles.backButton} onPress={onBack}>
         <Text style={styles.backButtonText}>Back</Text>
       </Pressable>
-    </View>
+    </SafeAreaWrapper>
   );
 }
 
