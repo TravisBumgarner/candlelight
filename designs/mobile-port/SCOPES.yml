@@ -349,7 +349,7 @@ tasks:
       - Game can continue indefinitely
     depends_on: [15]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 19
     github_issue: 105
@@ -365,7 +365,7 @@ tasks:
       - Save persists across app restarts
     depends_on: [18]
     effort: 3
-    status: scoped
+    status: completed
 
   - id: 20
     github_issue: 106
@@ -380,7 +380,7 @@ tasks:
       - Pause menu navigation works
     depends_on: [19]
     effort: 2
-    status: scoped
+    status: completed
 
   # Milestone 6: Daily Mode
   - id: 21
