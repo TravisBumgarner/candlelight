@@ -1,0 +1,554 @@
+project: Candlelight Mobile Port
+repo: travisbumgarner/candlelight
+design_file: designs/mobile-port/DESIGN.md
+scoping_date: 2026-02-04
+
+milestones:
+  - number: 1
+    title: "1. Core Types and Constants"
+    description: Foundation work - TypeScript types, game constants, and shape definitions
+    branch:
+      working: 87-core-types-and-constants
+      base: main
+
+  - number: 2
+    title: "2. Game Engine Core"
+    description: Core game logic - board, player, gems manager, queue, and history
+    branch:
+      working: 90-game-engine-core
+      base: main
+
+  - number: 3
+    title: "3. Game UI and Touch Controls"
+    description: Game board rendering, HUD, and touch-based input handling
+    branch:
+      working: 96-game-ui-and-touch-controls
+      base: main
+
+  - number: 4
+    title: "4. Tutorial Mode"
+    description: First playable mode with progressive instruction stages
+    branch:
+      working: 102-tutorial-mode
+      base: main
+
+  - number: 5
+    title: "5. Free Play Mode"
+    description: Infinite play mode with level progression and save/load
+    branch:
+      working: 104-free-play-mode
+      base: main
+
+  - number: 6
+    title: "6. Daily Mode"
+    description: Date-seeded daily challenge with best score tracking
+    branch:
+      working: 107-daily-mode
+      base: main
+
+  - number: 7
+    title: "7. Puzzle Mode"
+    description: Campaign mode with world/level selection and progression
+    branch:
+      working: 110-puzzle-mode
+      base: main
+
+  - number: 8
+    title: "8. Settings and Credits"
+    description: Complete settings screen with audio controls and credits screen
+    branch:
+      working: 114-settings-and-credits
+      base: main
+
+  - number: 9
+    title: "9. Audio System"
+    description: Background music and sound effects
+    branch:
+      working: 116-audio-system
+      base: main
+
+tasks:
+  # Milestone 1: Core Types and Constants
+  - id: 1
+    github_issue: 87
+    milestone: 1
+    title: Define core TypeScript types for game entities
+    description: |
+      Create foundational TypeScript types (Point, ShapeName, CellState, Board, Shape,
+      GameMode, PlayerState, HistoryRecord, QueueState, GameState) in mobile/game/types.ts
+    acceptance_criteria:
+      - All types defined with proper JSDoc comments
+      - Types exported for use in other modules
+      - Types match data structures from desktop GlobalConsts.gd
+    depends_on: []
+    effort: 1
+    status: completed
+
+  - id: 2
+    github_issue: 88
+    milestone: 1
+    title: Define game constants matching desktop implementation
+    description: |
+      Port game constants from Godot's GlobalConsts.gd to TypeScript in mobile/game/constants.ts
+      Including GRID dimensions, starting position, layer indices, and enums
+    acceptance_criteria:
+      - All constants from GlobalConsts.gd ported
+      - Constants properly typed
+      - Constants exported for use in other modules
+    depends_on: [1]
+    effort: 1
+    status: completed
+
+  - id: 3
+    github_issue: 89
+    milestone: 1
+    title: Define shape definitions with rotations
+    description: |
+      Port 7 Tetris-like shape definitions from Shapes.gd with 4 rotations each
+      in mobile/game/shapes.ts
+    acceptance_criteria:
+      - All 7 shapes defined with 4 rotations each
+      - Coordinates match desktop exactly
+      - SHAPES dictionary and SHAPE_NAMES array exported
+    depends_on: [1]
+    effort: 2
+    status: completed
+
+  # Milestone 2: Game Engine Core
+  - id: 4
+    github_issue: 90
+    milestone: 2
+    title: Implement utility functions for game logic
+    description: |
+      Port utility functions from Utilities.gd for cell validation, neighbor finding,
+      coordinate normalization, and seeded random operations
+    acceptance_criteria:
+      - All utility functions implemented
+      - Functions are pure where possible
+      - Seeded RNG functions work consistently
+    depends_on: [2]
+    effort: 2
+    status: scoped
+
+  - id: 5
+    github_issue: 91
+    milestone: 2
+    title: Implement Board state management
+    description: |
+      Implement Board module managing 13x13 grid state with cell operations,
+      cloning, and serialization
+    acceptance_criteria:
+      - Board initialization creates correct size grid
+      - Cell state operations work correctly
+      - Board cloning creates independent copy
+      - Serialization/deserialization preserves state
+    depends_on: [2]
+    effort: 2
+    status: scoped
+
+  - id: 6
+    github_issue: 92
+    milestone: 2
+    title: Implement Player state and movement logic
+    description: |
+      Implement Player module for position, rotation, movement validation,
+      and placement with color toggling
+    acceptance_criteria:
+      - Player initialization at correct starting position
+      - Movement validation respects boundaries
+      - Rotation validation respects boundaries
+      - Placement correctly toggles cell states
+    depends_on: [3, 5]
+    effort: 2
+    status: scoped
+
+  - id: 7
+    github_issue: 93
+    milestone: 2
+    title: Implement Queue management for shape distribution
+    description: |
+      Implement Queue module for shape sequence management with seeded random,
+      undo support, and fixed queue mode for puzzles
+    acceptance_criteria:
+      - Queue fills to visible size automatically
+      - Seeded random produces consistent sequences
+      - Undo correctly restores shape to front
+      - Queue state can be serialized/deserialized
+    depends_on: [3, 4]
+    effort: 2
+    status: scoped
+
+  - id: 8
+    github_issue: 94
+    milestone: 2
+    title: Implement History for undo functionality
+    description: |
+      Implement History module tracking move history with board snapshots
+      for undo system
+    acceptance_criteria:
+      - History correctly stores board snapshots
+      - Pop returns and removes last record
+      - History can be serialized/deserialized
+      - Clear removes all records
+    depends_on: [5]
+    effort: 1
+    status: scoped
+
+  - id: 9
+    github_issue: 95
+    milestone: 2
+    title: Implement GemsManager for gem generation and matching
+    description: |
+      Implement GemsManager for target gem generation (procedural and seeded)
+      and flood-fill based gem matching
+    acceptance_criteria:
+      - Gem generation creates valid connected shapes
+      - Free play gem size progression matches desktop
+      - Daily mode produces same gem for same date
+      - Flood-fill correctly finds connected regions
+      - Gem matching correctly identifies matches
+    depends_on: [4, 5]
+    effort: 3
+    status: scoped
+
+  # Milestone 3: Game UI and Touch Controls
+  - id: 10
+    github_issue: 96
+    milestone: 3
+    title: Implement GameBoard component for board rendering
+    description: |
+      Create GameBoard component rendering 13x13 grid with cell states
+      and player shape overlay
+    acceptance_criteria:
+      - Grid renders 13x13 cells correctly
+      - Cell colors match game states
+      - Player shape overlays with correct highlighting
+      - Responsive to screen width
+    depends_on: [5, 6]
+    effort: 3
+    status: scoped
+
+  - id: 11
+    github_issue: 97
+    milestone: 3
+    title: Implement TargetGem component for target display
+    description: |
+      Create TargetGem component displaying target gem pattern centered
+      in 6x6 display area
+    acceptance_criteria:
+      - Gem displays in correct positions
+      - Gem is visually centered in display area
+      - Uses consistent cell styling with game board
+    depends_on: [9]
+    effort: 2
+    status: scoped
+
+  - id: 12
+    github_issue: 98
+    milestone: 3
+    title: Implement QueueDisplay component for upcoming shapes
+    description: |
+      Create QueueDisplay showing 3 upcoming shapes with next highlighted
+    acceptance_criteria:
+      - Shows up to 3 queued shapes
+      - Next shape visually distinct (highlighted)
+      - Shapes render in correct positions
+      - Handles queue with fewer than 3 shapes
+    depends_on: [7]
+    effort: 2
+    status: scoped
+
+  - id: 13
+    github_issue: 99
+    milestone: 3
+    title: Implement GameHUD component for score and level info
+    description: |
+      Create GameHUD displaying mode-specific information (level, score, best)
+    acceptance_criteria:
+      - Displays correct information per game mode
+      - Uses game font (Departure Mono)
+      - Best score only shows when available
+    depends_on: [2]
+    effort: 1
+    status: scoped
+
+  - id: 14
+    github_issue: 100
+    milestone: 3
+    title: Implement touch controls for game input
+    description: |
+      Implement swipe gestures and action buttons for mobile game input
+    acceptance_criteria:
+      - Swipe gestures detected for 4 directions
+      - Tap detected for placement
+      - Action buttons functional
+      - Controls feel responsive
+    depends_on: []
+    effort: 3
+    status: scoped
+
+  - id: 15
+    github_issue: 101
+    milestone: 3
+    title: Implement GameScreen container with game loop integration
+    description: |
+      Create main GameScreen integrating all components with Zustand game store
+      and game loop
+    acceptance_criteria:
+      - All game components render correctly
+      - Input flows through to state updates
+      - Level complete detected and handled
+      - Pause menu shows/hides correctly
+    depends_on: [10, 11, 12, 13, 14]
+    effort: 3
+    status: scoped
+
+  # Milestone 4: Tutorial Mode
+  - id: 16
+    github_issue: 102
+    milestone: 4
+    title: Implement Tutorial mode game logic
+    description: |
+      Implement Tutorial mode with 6 progressive stages teaching game mechanics
+    acceptance_criteria:
+      - All 6 stages implemented
+      - Actions restricted until appropriate stage
+      - Stage progression works correctly
+      - Instructions display for each stage
+      - UI elements show/hide per stage
+    depends_on: [15]
+    effort: 3
+    status: scoped
+
+  - id: 17
+    github_issue: 103
+    milestone: 4
+    title: Wire up Tutorial mode to game tab navigation
+    description: |
+      Connect Tutorial to game tab with navigation and first-time user handling
+    acceptance_criteria:
+      - Tutorial accessible from mode selection
+      - Tutorial game initializes correctly
+      - Tutorial completion returns to mode selection
+      - First-time flag stored (optional)
+    depends_on: [16]
+    effort: 2
+    status: scoped
+
+  # Milestone 5: Free Play Mode
+  - id: 18
+    github_issue: 104
+    milestone: 5
+    title: Implement Free Play mode game logic
+    description: |
+      Implement infinite Free Play mode with level progression and gem size scaling
+    acceptance_criteria:
+      - Level progression works correctly
+      - Gem size increases per level mapping
+      - Board clears on level complete
+      - Game can continue indefinitely
+    depends_on: [15]
+    effort: 2
+    status: scoped
+
+  - id: 19
+    github_issue: 105
+    milestone: 5
+    title: Implement Free Play save/load and save slot selection
+    description: |
+      Implement persistence for Free Play with 4 save slots and auto-save
+    acceptance_criteria:
+      - Save slot selection UI works
+      - New game clears slot and starts fresh
+      - Continue loads saved state correctly
+      - Auto-save triggers on level complete
+      - Save persists across app restarts
+    depends_on: [18]
+    effort: 3
+    status: scoped
+
+  - id: 20
+    github_issue: 106
+    milestone: 5
+    title: Wire up Free Play mode to game tab navigation
+    description: |
+      Connect Free Play to game tab with save slot selection flow
+    acceptance_criteria:
+      - Free Play accessible from mode selection
+      - Save slot selection works
+      - Game initializes with correct slot data
+      - Pause menu navigation works
+    depends_on: [19]
+    effort: 2
+    status: scoped
+
+  # Milestone 6: Daily Mode
+  - id: 21
+    github_issue: 107
+    milestone: 6
+    title: Implement Daily mode game logic
+    description: |
+      Implement date-seeded Daily mode with consistent worldwide puzzle
+    acceptance_criteria:
+      - Same puzzle generated for same date
+      - Different puzzle each day
+      - Best score tracked per day
+      - Replay available after completion
+    depends_on: [15]
+    effort: 2
+    status: scoped
+
+  - id: 22
+    github_issue: 108
+    milestone: 6
+    title: Implement Daily mode score persistence
+    description: |
+      Implement best score persistence per date for Daily mode
+    acceptance_criteria:
+      - Best scores persist across app restarts
+      - Only saves if score is better
+      - Historical scores preserved
+      - UI shows best score when available
+    depends_on: [21]
+    effort: 2
+    status: scoped
+
+  - id: 23
+    github_issue: 109
+    milestone: 6
+    title: Wire up Daily mode to game tab navigation
+    description: |
+      Connect Daily mode to game tab with restart option
+    acceptance_criteria:
+      - Daily accessible from mode selection
+      - Game initializes with today's puzzle
+      - Completion screen shows score and best
+      - Restart replays same daily puzzle
+    depends_on: [22]
+    effort: 1
+    status: scoped
+
+  # Milestone 7: Puzzle Mode
+  - id: 24
+    github_issue: 110
+    milestone: 7
+    title: Convert and bundle puzzle level data for mobile
+    description: |
+      Convert 52 puzzle levels from Godot .cfg to JSON format
+    acceptance_criteria:
+      - All 52 levels converted to JSON
+      - World metadata preserved
+      - Level data matches desktop exactly
+      - Data bundled with app
+    depends_on: []
+    effort: 2
+    status: scoped
+
+  - id: 25
+    github_issue: 111
+    milestone: 7
+    title: Implement Puzzle mode game logic
+    description: |
+      Implement Puzzle mode with fixed queues, game over on empty queue
+    acceptance_criteria:
+      - Levels load correctly from data
+      - Queue is fixed (no auto-fill)
+      - Game over triggers when queue exhausted
+      - Best score tracked per level
+      - Level unlock progression works
+    depends_on: [15, 24]
+    effort: 3
+    status: scoped
+
+  - id: 26
+    github_issue: 112
+    milestone: 7
+    title: Implement Puzzle mode world and level selection UI
+    description: |
+      Create world and level selection screens with progression tracking
+    acceptance_criteria:
+      - World select shows all 9 worlds
+      - Level select shows levels for world
+      - Locked state displayed correctly
+      - Best scores shown when available
+      - Progression persists
+    depends_on: [24]
+    effort: 3
+    status: scoped
+
+  - id: 27
+    github_issue: 113
+    milestone: 7
+    title: Wire up Puzzle mode to game tab navigation
+    description: |
+      Connect Puzzle mode with full navigation flow
+    acceptance_criteria:
+      - Puzzle accessible from mode selection
+      - Navigation through slot -> world -> level works
+      - Game loads correct level data
+      - Completion unlocks and offers next level
+      - Game over allows restart
+    depends_on: [25, 26]
+    effort: 2
+    status: scoped
+
+  # Milestone 8: Settings and Credits
+  - id: 28
+    github_issue: 114
+    milestone: 8
+    title: Implement Settings screen with audio controls
+    description: |
+      Create Settings screen with music and SFX volume sliders
+    acceptance_criteria:
+      - Music volume slider functional
+      - SFX volume slider functional
+      - Settings persist across app restarts
+      - Sliders styled to match game
+    depends_on: []
+    effort: 2
+    status: scoped
+
+  - id: 29
+    github_issue: 115
+    milestone: 8
+    title: Implement Credits screen
+    description: |
+      Create Credits screen with creator links
+    acceptance_criteria:
+      - Credits display correctly
+      - Links open in browser
+      - Styling matches game aesthetic
+    depends_on: []
+    effort: 1
+    status: scoped
+
+  # Milestone 9: Audio System
+  - id: 30
+    github_issue: 116
+    milestone: 9
+    title: Set up audio system with expo-av
+    description: |
+      Set up audio playback for music and sound effects using expo-av
+    acceptance_criteria:
+      - Music plays and loops
+      - Sound effects play on demand
+      - Volume controls work
+      - Audio stops when app backgrounds
+    depends_on: []
+    effort: 3
+    status: scoped
+
+  - id: 31
+    github_issue: 117
+    milestone: 9
+    title: Integrate audio with game events
+    description: |
+      Connect audio system to game events for appropriate sound triggers
+    acceptance_criteria:
+      - All movement sounds trigger correctly
+      - Gem match sounds trigger correctly
+      - Music starts/stops appropriately
+      - No audio glitches or overlapping sounds
+    depends_on: [30, 15]
+    effort: 2
+    status: scoped
