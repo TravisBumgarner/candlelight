@@ -506,7 +506,7 @@ tasks:
       - Sliders styled to match game
     depends_on: []
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 29
     github_issue: 115
@@ -520,7 +520,7 @@ tasks:
       - Styling matches game aesthetic
     depends_on: []
     effort: 1
-    status: scoped
+    status: completed
 
   # Milestone 9: Audio System
   - id: 30
