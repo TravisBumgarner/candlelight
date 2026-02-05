@@ -3,16 +3,20 @@
  * Infinite play mode with level progression and auto-save.
  */
 
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, Text, Pressable, Modal } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
-import { useGameGestures } from '@/hooks/use-game-gestures';
 import { playSound } from '@/services/audio';
+import { getPlayerOverlay } from '../engine';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
-import { QueueDisplay } from './queue-display';
+import { HorizontalQueueDisplay } from './queue-display';
 import { GameHUD } from './game-hud';
-import { GameControls } from './game-controls';
+import { GameInfoPanel } from './game-info-panel';
+import { GameControlsPad } from './game-controls-pad';
+import { PauseMenu } from './pause-menu';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
+import SettingsScreen from '@/components/settings-screen';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import {
   shouldAutoSave,
@@ -22,6 +26,7 @@ import {
 import {
   saveFreePlayGame,
   loadFreePlayGame,
+  loadSettings,
 } from '@/services/storage';
 import type { Direction } from '../types';
 
@@ -30,34 +35,6 @@ interface FreePlayScreenProps {
   onExit: () => void;
 }
 
-/**
- * Pause menu overlay.
- */
-function PauseMenuOverlay({
-  visible,
-  onResume,
-  onExit,
-}: {
-  visible: boolean;
-  onResume: () => void;
-  onExit: () => void;
-}) {
-  return (
-    <Modal visible={visible} transparent animationType="fade">
-      <View style={styles.modalOverlay}>
-        <View style={styles.menuContainer}>
-          <Text style={styles.menuTitle}>PAUSED</Text>
-          <Pressable style={styles.menuButton} onPress={onResume}>
-            <Text style={styles.menuButtonText}>Resume</Text>
-          </Pressable>
-          <Pressable style={styles.menuButton} onPress={onExit}>
-            <Text style={styles.menuButtonText}>Exit</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-  );
-}
 
 /**
  * Level complete overlay.
@@ -96,7 +73,6 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
     alchemizations,
     isLevelComplete,
     isPaused,
-    getPlayerCells,
     movePlayer,
     rotatePlayer,
     placeShape,
@@ -109,12 +85,19 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
   } = useGameStore();
 
   const [isLoading, setIsLoading] = useState(true);
+  const [showSettings, setShowSettings] = useState(false);
+  const [leftHanded, setLeftHanded] = useState(false);
   const slotRef = useRef(slot);
 
   // Load or initialize game
   useEffect(() => {
     const loadGame = async () => {
       setIsLoading(true);
+
+      // Load settings
+      const settings = await loadSettings();
+      setLeftHanded(settings.leftHanded);
+
       const savedData = await loadFreePlayGame(slot);
 
       if (savedData) {
@@ -174,15 +157,15 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
     [movePlayer]
   );
 
-  const handleRotate = useCallback(() => {
-    const success = rotatePlayer();
-    playSound(success ? 'movement' : 'non_movement');
-  }, [rotatePlayer]);
-
   const handlePlace = useCallback(() => {
     const success = placeShape();
     if (success) playSound('movement');
   }, [placeShape]);
+
+  const handleRotate = useCallback(() => {
+    const success = rotatePlayer();
+    playSound(success ? 'movement' : 'non_movement');
+  }, [rotatePlayer]);
 
   const handleUndo = useCallback(() => {
     const success = undo();
@@ -197,19 +180,28 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
     resume();
   }, [resume]);
 
+  const handleOpenSettings = useCallback(() => {
+    setShowSettings(true);
+  }, []);
+
+  const handleCloseSettings = useCallback(async () => {
+    setShowSettings(false);
+    // Reload settings in case handedness changed
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
+  }, []);
+
   const handleExit = useCallback(() => {
     reset();
     onExit();
   }, [reset, onExit]);
 
-  // Gesture handlers
-  const gestureHandlers = useGameGestures({
-    onMove: handleMove,
-    onPlace: handlePlace,
-    onRotate: handleRotate,
-  });
+  // Compute player cells from destructured state to ensure React tracks dependencies
+  const playerCells = useMemo(() => {
+    if (!player) return [];
+    return getPlayerOverlay(player, board);
+  }, [player, board]);
 
-  const playerCells = getPlayerCells();
   const isInteractionDisabled = isLevelComplete || isPaused;
 
   if (isLoading) {
@@ -221,43 +213,35 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
   }
 
   return (
-    <View style={styles.container}>
-      {/* HUD */}
-      <GameHUD mode="freeplay" level={level} score={alchemizations} />
+    <SafeAreaWrapper>
+      {/* Menu button */}
+      <GameHUD onMenu={handlePause} />
 
-      {/* Main game area */}
-      <View style={styles.gameArea}>
-        {/* Target gem panel */}
-        <View style={styles.sidePanel}>
-          <TargetGem gem={targetGem} />
-        </View>
+      {/* Queue */}
+      {queue && <HorizontalQueueDisplay queue={queue.queue} />}
 
-        {/* Game board with gesture handling */}
-        <View
-          style={styles.boardContainer}
-          onTouchStart={gestureHandlers.onTouchStart}
-          onTouchEnd={gestureHandlers.onTouchEnd}
-        >
-          <GameBoard
-            board={board}
-            playerCells={playerCells}
-            disabled={isInteractionDisabled}
-          />
-        </View>
-
-        {/* Queue panel */}
-        <View style={styles.sidePanel}>
-          {queue && <QueueDisplay queue={queue.queue} />}
-        </View>
+      {/* Game board */}
+      <View style={styles.boardContainer}>
+        <GameBoard
+          board={board}
+          playerCells={playerCells}
+          disabled={isInteractionDisabled}
+        />
       </View>
 
-      {/* Controls */}
-      <GameControls
+      {/* Controls with info panel */}
+      <GameControlsPad
+        onMove={handleMove}
         onRotate={handleRotate}
+        onPlace={handlePlace}
         onUndo={handleUndo}
-        onPause={handlePause}
         disabled={isInteractionDisabled}
-      />
+        leftHanded={leftHanded}
+      >
+        <GameInfoPanel mode="freeplay" level={level}>
+          {targetGem.length > 0 && <TargetGem gem={targetGem} cellSize={8} showLabel={false} />}
+        </GameInfoPanel>
+      </GameControlsPad>
 
       {/* Level complete overlay */}
       <LevelCompleteOverlay
@@ -267,12 +251,18 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
       />
 
       {/* Pause menu */}
-      <PauseMenuOverlay
-        visible={isPaused}
+      <PauseMenu
+        visible={isPaused && !showSettings}
         onResume={handleResume}
+        onSettings={handleOpenSettings}
         onExit={handleExit}
       />
-    </View>
+
+      {/* Settings modal */}
+      <Modal visible={showSettings} animationType="slide">
+        <SettingsScreen onBack={handleCloseSettings} />
+      </Modal>
+    </SafeAreaWrapper>
   );
 }
 
@@ -292,58 +282,10 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.LARGE.INT,
     color: GAME_COLORS.TEXT_PRIMARY,
   },
-  gameArea: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: SPACING.SMALL.INT,
-  },
-  sidePanel: {
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   boardContainer: {
-    flex: 1,
+    marginVertical: SPACING.MEDIUM.INT,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menuContainer: {
-    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
-    borderWidth: 2,
-    borderColor: GAME_COLORS.BOARD_BORDER,
-    padding: SPACING.LARGE.INT,
-    borderRadius: 8,
-    minWidth: 250,
-    alignItems: 'center',
-  },
-  menuTitle: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.LARGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    marginBottom: SPACING.MEDIUM.INT,
-    textAlign: 'center',
-  },
-  menuButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    marginVertical: SPACING.TINY.INT,
-    minWidth: 150,
-    alignItems: 'center',
-  },
-  menuButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
   },
   levelCompleteOverlay: {
     position: 'absolute',

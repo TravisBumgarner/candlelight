@@ -11,6 +11,7 @@ import {
   ScrollView,
   ActivityIndicator,
 } from 'react-native';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import {
   getWorldData,
@@ -116,7 +117,7 @@ export function PuzzleLevelSelect({
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaWrapper style={styles.container}>
       <Text style={styles.title}>WORLD {worldNumber}</Text>
       <Text style={styles.worldName}>{world.worldName}</Text>
 
@@ -141,7 +142,7 @@ export function PuzzleLevelSelect({
       <Pressable style={styles.backButton} onPress={onBack}>
         <Text style={styles.backButtonText}>Back</Text>
       </Pressable>
-    </View>
+    </SafeAreaWrapper>
   );
 }
 

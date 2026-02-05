@@ -1,99 +1,52 @@
 /**
- * GameHUD component for displaying score and level info.
+ * GameHUD component - just the menu button at top right.
  */
 
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
-import type { GameMode } from '../types';
 
 interface GameHUDProps {
-  mode: GameMode;
-  level?: number;
-  worldNumber?: number;
-  levelNumber?: number;
-  score: number;
-  bestScore?: number | null;
+  onMenu?: () => void;
 }
 
 /**
- * GameHUD displays mode-specific game information.
+ * GameHUD displays the menu button at the top right.
  */
-export function GameHUD({
-  mode,
-  level,
-  worldNumber,
-  levelNumber,
-  score,
-  bestScore,
-}: GameHUDProps) {
-  // Tutorial mode has no HUD
-  if (mode === 'tutorial') {
-    return null;
-  }
+export function GameHUD({ onMenu }: GameHUDProps) {
+  if (!onMenu) return null;
 
-  const renderContent = () => {
-    switch (mode) {
-      case 'freeplay':
-        return (
-          <>
-            <Text style={styles.levelText}>Level {level}</Text>
-          </>
-        );
-
-      case 'daily':
-        return (
-          <>
-            <Text style={styles.scoreText}>Score: {score}</Text>
-            {bestScore !== null && bestScore !== undefined && (
-              <Text style={styles.bestText}>Best: {bestScore}</Text>
-            )}
-          </>
-        );
-
-      case 'puzzle':
-        return (
-          <>
-            <Text style={styles.levelText}>
-              Level {worldNumber}_{levelNumber}
-            </Text>
-            <Text style={styles.scoreText}>Score: {score}</Text>
-            {bestScore !== null && bestScore !== undefined && bestScore !== -1 && (
-              <Text style={styles.bestText}>Best: {bestScore}</Text>
-            )}
-          </>
-        );
-
-      default:
-        return null;
-    }
-  };
-
-  return <View style={styles.container}>{renderContent()}</View>;
+  return (
+    <View style={styles.container}>
+      <View style={styles.flex} />
+      <Pressable style={styles.menuButton} onPress={onMenu}>
+        <Text style={styles.menuIcon}>☰</Text>
+      </Pressable>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
     alignItems: 'center',
-    padding: SPACING.SMALL.INT,
+    paddingHorizontal: SPACING.SMALL.INT,
+    paddingVertical: SPACING.SMALL.INT,
   },
-  levelText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    width: 44,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
+    borderRadius: 8,
+  },
+  menuIcon: {
+    fontSize: FONT_SIZES.LARGE.INT,
     color: GAME_COLORS.TEXT_PRIMARY,
-    textAlign: 'center',
-  },
-  scoreText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    textAlign: 'center',
-  },
-  bestText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.SMALL.INT,
-    color: GAME_COLORS.TEXT_SECONDARY,
-    textAlign: 'center',
   },
 });
 

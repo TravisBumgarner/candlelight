@@ -3,7 +3,7 @@
  * Extends the base game with tutorial-specific logic and UI.
  */
 
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import {
   View,
   StyleSheet,
@@ -12,13 +12,18 @@ import {
   Modal,
 } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
-import { useGameGestures } from '@/hooks/use-game-gestures';
 import { playSound } from '@/services/audio';
+import { getPlayerOverlay } from '../engine';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
-import { QueueDisplay } from './queue-display';
-import { GameControls } from './game-controls';
+import { HorizontalQueueDisplay } from './queue-display';
+import { GameHUD } from './game-hud';
+import { GameInfoPanel } from './game-info-panel';
+import { GameControlsPad } from './game-controls-pad';
 import { TutorialInstructions } from './tutorial-instructions';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
+import SettingsScreen from '@/components/settings-screen';
+import { PauseMenu } from './pause-menu';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import { TUTORIAL_STAGES } from '../constants';
 import {
@@ -31,6 +36,7 @@ import {
   type TutorialState,
 } from '../modes/tutorial';
 import { findShapes } from '../engine';
+import { loadSettings } from '@/services/storage';
 import type { Direction, Action } from '../types';
 
 interface TutorialScreenProps {
@@ -94,7 +100,6 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
     queue,
     targetGem,
     isLevelComplete,
-    getPlayerCells,
     movePlayer,
     rotatePlayer,
     placeShape,
@@ -110,10 +115,18 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
   );
   const [showStageComplete, setShowStageComplete] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [leftHanded, setLeftHanded] = useState(false);
 
   // Initialize tutorial game
   useEffect(() => {
-    initGame('tutorial', { level: 1 });
+    const init = async () => {
+      const settings = await loadSettings();
+      setLeftHanded(settings.leftHanded);
+      initGame('tutorial', { level: 1 });
+    };
+    init();
   }, [initGame]);
 
   // Handle stage transitions
@@ -173,13 +186,6 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
     [tutorialState.stage, movePlayer, handleAction]
   );
 
-  const handleRotate = useCallback(() => {
-    if (!isActionAvailable('rotate', tutorialState.stage)) return;
-    const success = rotatePlayer();
-    playSound(success ? 'movement' : 'non_movement');
-    handleAction('rotate', success);
-  }, [tutorialState.stage, rotatePlayer, handleAction]);
-
   const handlePlace = useCallback(() => {
     if (!isActionAvailable('select', tutorialState.stage)) return;
     const success = placeShape();
@@ -187,12 +193,38 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
     handleAction('select', success);
   }, [tutorialState.stage, placeShape, handleAction]);
 
+  const handleRotate = useCallback(() => {
+    if (!isActionAvailable('rotate', tutorialState.stage)) return;
+    const success = rotatePlayer();
+    playSound(success ? 'movement' : 'non_movement');
+    handleAction('rotate', success);
+  }, [tutorialState.stage, rotatePlayer, handleAction]);
+
   const handleUndo = useCallback(() => {
     if (!isActionAvailable('undo', tutorialState.stage)) return;
     const success = undo();
     playSound(success ? 'movement' : 'non_movement');
     handleAction('undo', success);
   }, [tutorialState.stage, undo, handleAction]);
+
+  const handlePause = useCallback(() => {
+    setIsPaused(true);
+  }, []);
+
+  const handleResume = useCallback(() => {
+    setIsPaused(false);
+  }, []);
+
+  const handleOpenSettings = useCallback(() => {
+    setShowSettings(true);
+  }, []);
+
+  const handleCloseSettings = useCallback(async () => {
+    setShowSettings(false);
+    // Reload settings in case handedness changed
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
+  }, []);
 
   const handleExit = useCallback(() => {
     reset();
@@ -204,62 +236,56 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
     onComplete();
   }, [reset, onComplete]);
 
-  // Gesture handlers
-  const gestureHandlers = useGameGestures({
-    onMove: handleMove,
-    onPlace: handlePlace,
-    onRotate: handleRotate,
-  });
-
   // Get visibility for current stage
   const visibility = getVisibility(tutorialState.stage);
-  const playerCells = getPlayerCells();
+
+  // Compute player cells from destructured state to ensure React tracks dependencies
+  const playerCells = useMemo(() => {
+    if (!player) return [];
+    return getPlayerOverlay(player, board);
+  }, [player, board]);
+
   const isInteractionDisabled =
-    isLevelComplete || tutorialState.isComplete || isProcessing;
+    isLevelComplete || tutorialState.isComplete || isProcessing || isPaused;
 
   return (
-    <View style={styles.container}>
+    <SafeAreaWrapper>
+      {/* Menu button */}
+      <GameHUD onMenu={handlePause} />
+
       {/* Tutorial Instructions */}
       <TutorialInstructions
         stage={tutorialState.stage}
         performedActions={tutorialState.performedActions}
       />
 
-      {/* Main game area */}
-      <View style={styles.gameArea}>
-        {/* Side panels */}
-        <View style={styles.sidePanel}>
-          {visibility.showTargetGem && <TargetGem gem={targetGem} />}
-        </View>
+      {/* Queue */}
+      {visibility.showQueue && queue && (
+        <HorizontalQueueDisplay queue={queue.queue} />
+      )}
 
-        {/* Game board with gesture handling */}
-        <View
-          style={styles.boardContainer}
-          onTouchStart={gestureHandlers.onTouchStart}
-          onTouchEnd={gestureHandlers.onTouchEnd}
-        >
-          <GameBoard
-            board={board}
-            playerCells={playerCells}
-            disabled={isInteractionDisabled}
-          />
-        </View>
-
-        {/* Queue panel */}
-        <View style={styles.sidePanel}>
-          {visibility.showQueue && queue && (
-            <QueueDisplay queue={queue.queue} />
-          )}
-        </View>
+      {/* Game board */}
+      <View style={styles.boardContainer}>
+        <GameBoard
+          board={board}
+          playerCells={playerCells}
+          disabled={isInteractionDisabled}
+        />
       </View>
 
-      {/* Controls */}
-      <GameControls
+      {/* Controls with info panel */}
+      <GameControlsPad
+        onMove={handleMove}
         onRotate={handleRotate}
+        onPlace={handlePlace}
         onUndo={handleUndo}
-        onPause={handleExit}
         disabled={isInteractionDisabled}
-      />
+        leftHanded={leftHanded}
+      >
+        <GameInfoPanel mode="tutorial">
+          {visibility.showTargetGem && <TargetGem gem={targetGem} cellSize={8} showLabel={false} />}
+        </GameInfoPanel>
+      </GameControlsPad>
 
       {/* Stage complete flash */}
       <StageCompleteOverlay
@@ -267,12 +293,25 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
         stageName={`Stage ${tutorialState.stage}`}
       />
 
+      {/* Pause menu */}
+      <PauseMenu
+        visible={isPaused && !showSettings}
+        onResume={handleResume}
+        onSettings={handleOpenSettings}
+        onExit={handleExit}
+      />
+
+      {/* Settings modal */}
+      <Modal visible={showSettings} animationType="slide">
+        <SettingsScreen onBack={handleCloseSettings} />
+      </Modal>
+
       {/* Tutorial complete */}
       <TutorialCompleteOverlay
         visible={tutorialState.isComplete}
         onContinue={handleComplete}
       />
-    </View>
+    </SafeAreaWrapper>
   );
 }
 
@@ -281,65 +320,10 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#0a1015',
   },
-  gameArea: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: SPACING.SMALL.INT,
-  },
-  sidePanel: {
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   boardContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menuContainer: {
-    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
-    borderWidth: 2,
-    borderColor: GAME_COLORS.BOARD_BORDER,
-    padding: SPACING.LARGE.INT,
-    borderRadius: 8,
-    minWidth: 250,
-    alignItems: 'center',
-  },
-  menuTitle: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.LARGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    marginBottom: SPACING.MEDIUM.INT,
-    textAlign: 'center',
-  },
-  completeText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_SECONDARY,
-    marginBottom: SPACING.MEDIUM.INT,
-    textAlign: 'center',
-  },
-  menuButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    marginVertical: SPACING.TINY.INT,
-    minWidth: 150,
-    alignItems: 'center',
-  },
-  menuButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
   },
   stageCompleteOverlay: {
     position: 'absolute',

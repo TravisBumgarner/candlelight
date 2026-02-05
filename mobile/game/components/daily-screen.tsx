@@ -3,16 +3,20 @@
  * Date-seeded daily challenge with best score tracking.
  */
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { View, StyleSheet, Text, Pressable, Modal } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
-import { useGameGestures } from '@/hooks/use-game-gestures';
 import { playSound } from '@/services/audio';
+import { getPlayerOverlay } from '../engine';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
-import { QueueDisplay } from './queue-display';
+import { HorizontalQueueDisplay } from './queue-display';
 import { GameHUD } from './game-hud';
-import { GameControls } from './game-controls';
+import { GameInfoPanel } from './game-info-panel';
+import { GameControlsPad } from './game-controls-pad';
+import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
+import SettingsScreen from '@/components/settings-screen';
+import { PauseMenu } from './pause-menu';
 import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
 import {
   getTodayDateKey,
@@ -20,40 +24,11 @@ import {
   getTodayTargetGem,
   isNewBestScore,
 } from '../modes/daily';
-import { getDailyBestScore, saveDailyScore } from '@/services/storage';
+import { getDailyBestScore, saveDailyScore, loadSettings } from '@/services/storage';
 import type { Direction } from '../types';
 
 interface DailyScreenProps {
   onExit: () => void;
-}
-
-/**
- * Pause menu overlay.
- */
-function PauseMenuOverlay({
-  visible,
-  onResume,
-  onExit,
-}: {
-  visible: boolean;
-  onResume: () => void;
-  onExit: () => void;
-}) {
-  return (
-    <Modal visible={visible} transparent animationType="fade">
-      <View style={styles.modalOverlay}>
-        <View style={styles.menuContainer}>
-          <Text style={styles.menuTitle}>PAUSED</Text>
-          <Pressable style={styles.menuButton} onPress={onResume}>
-            <Text style={styles.menuButtonText}>Resume</Text>
-          </Pressable>
-          <Pressable style={styles.menuButton} onPress={onExit}>
-            <Text style={styles.menuButtonText}>Exit</Text>
-          </Pressable>
-        </View>
-      </View>
-    </Modal>
-  );
 }
 
 /**
@@ -109,7 +84,6 @@ export function DailyScreen({ onExit }: DailyScreenProps) {
     bestScore,
     isLevelComplete,
     isPaused,
-    getPlayerCells,
     movePlayer,
     rotatePlayer,
     placeShape,
@@ -123,11 +97,17 @@ export function DailyScreen({ onExit }: DailyScreenProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isNewBest, setIsNewBest] = useState(false);
   const [savedBestScore, setSavedBestScore] = useState<number | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [leftHanded, setLeftHanded] = useState(false);
 
   // Initialize daily game
   const initializeGame = useCallback(async () => {
     setIsLoading(true);
     setIsNewBest(false);
+
+    // Load settings
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
 
     const dateKey = getTodayDateKey();
     const storedBest = await getDailyBestScore(dateKey);
@@ -206,6 +186,17 @@ export function DailyScreen({ onExit }: DailyScreenProps) {
     resume();
   }, [resume]);
 
+  const handleOpenSettings = useCallback(() => {
+    setShowSettings(true);
+  }, []);
+
+  const handleCloseSettings = useCallback(async () => {
+    setShowSettings(false);
+    // Reload settings in case handedness changed
+    const settings = await loadSettings();
+    setLeftHanded(settings.leftHanded);
+  }, []);
+
   const handleRestart = useCallback(() => {
     initializeGame();
   }, [initializeGame]);
@@ -215,66 +206,54 @@ export function DailyScreen({ onExit }: DailyScreenProps) {
     onExit();
   }, [reset, onExit]);
 
-  // Gesture handlers
-  const gestureHandlers = useGameGestures({
-    onMove: handleMove,
-    onPlace: handlePlace,
-    onRotate: handleRotate,
-  });
+  // Compute player cells from destructured state
+  const playerCells = useMemo(() => {
+    if (!player) return [];
+    return getPlayerOverlay(player, board);
+  }, [player, board]);
 
-  const playerCells = getPlayerCells();
   const isInteractionDisabled = isLevelComplete || isPaused;
 
   if (isLoading) {
     return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Loading...</Text>
-      </View>
+      <SafeAreaWrapper>
+        <View style={styles.loadingContainer}>
+          <Text style={styles.loadingText}>Loading...</Text>
+        </View>
+      </SafeAreaWrapper>
     );
   }
 
   return (
-    <View style={styles.container}>
-      {/* HUD */}
-      <GameHUD
-        mode="daily"
-        score={alchemizations}
-        bestScore={savedBestScore}
-      />
+    <SafeAreaWrapper>
+      {/* Menu button */}
+      <GameHUD onMenu={handlePause} />
 
-      {/* Main game area */}
-      <View style={styles.gameArea}>
-        {/* Target gem panel */}
-        <View style={styles.sidePanel}>
-          <TargetGem gem={targetGem} />
-        </View>
+      {/* Queue */}
+      {queue && <HorizontalQueueDisplay queue={queue.queue} />}
 
-        {/* Game board with gesture handling */}
-        <View
-          style={styles.boardContainer}
-          onTouchStart={gestureHandlers.onTouchStart}
-          onTouchEnd={gestureHandlers.onTouchEnd}
-        >
-          <GameBoard
-            board={board}
-            playerCells={playerCells}
-            disabled={isInteractionDisabled}
-          />
-        </View>
-
-        {/* Queue panel */}
-        <View style={styles.sidePanel}>
-          {queue && <QueueDisplay queue={queue.queue} />}
-        </View>
+      {/* Game board */}
+      <View style={styles.boardContainer}>
+        <GameBoard
+          board={board}
+          playerCells={playerCells}
+          disabled={isInteractionDisabled}
+        />
       </View>
 
-      {/* Controls */}
-      <GameControls
+      {/* Controls with info panel */}
+      <GameControlsPad
+        onMove={handleMove}
         onRotate={handleRotate}
+        onPlace={handlePlace}
         onUndo={handleUndo}
-        onPause={handlePause}
         disabled={isInteractionDisabled}
-      />
+        leftHanded={leftHanded}
+      >
+        <GameInfoPanel mode="daily" score={alchemizations} bestScore={savedBestScore}>
+          {targetGem.length > 0 && <TargetGem gem={targetGem} cellSize={8} showLabel={false} />}
+        </GameInfoPanel>
+      </GameControlsPad>
 
       {/* Daily complete overlay */}
       <DailyCompleteOverlay
@@ -287,23 +266,24 @@ export function DailyScreen({ onExit }: DailyScreenProps) {
       />
 
       {/* Pause menu */}
-      <PauseMenuOverlay
-        visible={isPaused}
+      <PauseMenu
+        visible={isPaused && !showSettings}
         onResume={handleResume}
+        onSettings={handleOpenSettings}
         onExit={handleExit}
       />
-    </View>
+
+      {/* Settings modal */}
+      <Modal visible={showSettings} animationType="slide">
+        <SettingsScreen onBack={handleCloseSettings} />
+      </Modal>
+    </SafeAreaWrapper>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#0a1015',
-  },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#0a1015',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -312,58 +292,10 @@ const styles = StyleSheet.create({
     fontSize: FONT_SIZES.LARGE.INT,
     color: GAME_COLORS.TEXT_PRIMARY,
   },
-  gameArea: {
-    flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: SPACING.SMALL.INT,
-  },
-  sidePanel: {
-    width: 80,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   boardContainer: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menuContainer: {
-    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
-    borderWidth: 2,
-    borderColor: GAME_COLORS.BOARD_BORDER,
-    padding: SPACING.LARGE.INT,
-    borderRadius: 8,
-    minWidth: 250,
-    alignItems: 'center',
-  },
-  menuTitle: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.LARGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    marginBottom: SPACING.MEDIUM.INT,
-    textAlign: 'center',
-  },
-  menuButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    marginVertical: SPACING.TINY.INT,
-    minWidth: 150,
-    alignItems: 'center',
-  },
-  menuButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
   },
   completeOverlay: {
     position: 'absolute',

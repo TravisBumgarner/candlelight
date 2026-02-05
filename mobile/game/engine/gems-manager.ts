@@ -290,8 +290,17 @@ export function getCenterOffset(shape: Shape): Point {
 
 /**
  * Get gem cells with offset applied for centered display.
+ * First normalizes the shape to (0,0), then centers it in the display area.
  */
 export function getCenteredGemCells(shape: Shape): Point[] {
+  if (shape.length === 0) return [];
+
+  const bounds = getShapeBounds(shape);
   const offset = getCenterOffset(shape);
-  return shape.map((p) => ({ x: p.x + offset.x, y: p.y + offset.y }));
+
+  // Normalize to (0,0) first, then apply centering offset
+  return shape.map((p) => ({
+    x: p.x - bounds.minX + offset.x,
+    y: p.y - bounds.minY + offset.y,
+  }));
 }
