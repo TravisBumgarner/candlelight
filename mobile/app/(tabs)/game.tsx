@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import TabWrapper from "@/components/tab-wrapper";
 import SelectGameMode from "@/tabs/game/components/select-game-mode";
-import { TutorialScreen, FreePlayScreen, FreePlayMenu } from "@/game/components";
+import { TutorialScreen, FreePlayScreen, FreePlayMenu, DailyScreen } from "@/game/components";
 import { ScrollView, View, StyleSheet } from "react-native";
 import type { FreePlaySlot } from "@/game/modes/free-play";
 
@@ -21,7 +21,6 @@ const Game = () => {
         setCurrentScreen("freeplay-menu");
         break;
       case "daily":
-        // TODO: Implement in milestone 6
         setCurrentScreen("daily");
         break;
       case "puzzles":
@@ -76,6 +75,14 @@ const Game = () => {
           slot={freePlaySlot}
           onExit={handleFreePlayExit}
         />
+      </View>
+    );
+  }
+
+  if (currentScreen === "daily") {
+    return (
+      <View style={styles.fullScreen}>
+        <DailyScreen onExit={handleReturnToMenu} />
       </View>
     );
   }
