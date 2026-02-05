@@ -128,7 +128,7 @@ tasks:
       - Seeded RNG functions work consistently
     depends_on: [2]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 5
     github_issue: 91
@@ -144,7 +144,7 @@ tasks:
       - Serialization/deserialization preserves state
     depends_on: [2]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 6
     github_issue: 92
@@ -160,7 +160,7 @@ tasks:
       - Placement correctly toggles cell states
     depends_on: [3, 5]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 7
     github_issue: 93
@@ -176,7 +176,7 @@ tasks:
       - Queue state can be serialized/deserialized
     depends_on: [3, 4]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 8
     github_issue: 94
@@ -192,7 +192,7 @@ tasks:
       - Clear removes all records
     depends_on: [5]
     effort: 1
-    status: scoped
+    status: completed
 
   - id: 9
     github_issue: 95
@@ -209,7 +209,7 @@ tasks:
       - Gem matching correctly identifies matches
     depends_on: [4, 5]
     effort: 3
-    status: scoped
+    status: completed
 
   # Milestone 3: Game UI and Touch Controls
   - id: 10
