@@ -3,6 +3,7 @@ import TabWrapper from "@/components/tab-wrapper";
 import { StyleSheet, Text, View } from "react-native";
 import Slider from "@react-native-community/slider";
 import { loadSettings, saveSettings, type GameSettings } from "@/services/storage";
+import { updateAudioVolumes, playSound } from "@/services/audio";
 import { GAME_COLORS, FONT_SIZES, SPACING } from "@/constants/theme";
 
 const Settings = () => {
@@ -25,6 +26,7 @@ const Settings = () => {
     const newSettings = { ...settings, musicVolume: value };
     setSettings(newSettings);
     await saveSettings({ musicVolume: value });
+    await updateAudioVolumes(value, settings.sfxVolume);
   }, [settings]);
 
   const handleSfxVolumeChange = useCallback(async (value: number) => {
@@ -32,7 +34,13 @@ const Settings = () => {
     const newSettings = { ...settings, sfxVolume: value };
     setSettings(newSettings);
     await saveSettings({ sfxVolume: value });
+    await updateAudioVolumes(settings.musicVolume, value);
   }, [settings]);
+
+  // Play test sound when SFX slider stops moving
+  const handleSfxSlidingComplete = useCallback(() => {
+    playSound('movement');
+  }, []);
 
   if (isLoading || !settings) {
     return (
@@ -80,6 +88,7 @@ const Settings = () => {
                 maximumValue={1}
                 value={settings.sfxVolume}
                 onValueChange={handleSfxVolumeChange}
+                onSlidingComplete={handleSfxSlidingComplete}
                 minimumTrackTintColor={GAME_COLORS.BUTTON_HIGHLIGHT}
                 maximumTrackTintColor={GAME_COLORS.BOARD_BORDER}
                 thumbTintColor={GAME_COLORS.TEXT_PRIMARY}
@@ -91,9 +100,6 @@ const Settings = () => {
           </View>
         </View>
 
-        <Text style={styles.noteText}>
-          Audio will be available in a future update
-        </Text>
       </View>
     </TabWrapper>
   );
@@ -153,13 +159,6 @@ const styles = StyleSheet.create({
     color: GAME_COLORS.TEXT_SECONDARY,
     width: 50,
     textAlign: "right",
-  },
-  noteText: {
-    fontFamily: "DepartureMonoRegular",
-    fontSize: FONT_SIZES.SMALL.INT,
-    color: GAME_COLORS.TEXT_SECONDARY,
-    textAlign: "center",
-    marginTop: SPACING.XLARGE.INT,
   },
 });
 

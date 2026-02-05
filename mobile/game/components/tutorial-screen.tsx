@@ -13,6 +13,7 @@ import {
 } from 'react-native';
 import { useGameStore } from '@/stores/game-store';
 import { useGameGestures } from '@/hooks/use-game-gestures';
+import { playSound } from '@/services/audio';
 import { GameBoard } from './game-board';
 import { TargetGem } from './target-gem';
 import { QueueDisplay } from './queue-display';
@@ -119,6 +120,7 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
   useEffect(() => {
     if (isLevelComplete && !isProcessing) {
       setIsProcessing(true);
+      playSound('one_gem');
 
       // Brief delay then advance stage
       setTimeout(() => {
@@ -160,11 +162,12 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
     [tutorialState, board]
   );
 
-  // Wrapped action handlers with availability checks
+  // Wrapped action handlers with availability checks and audio
   const handleMove = useCallback(
     (direction: Direction) => {
       if (!isActionAvailable(direction, tutorialState.stage)) return;
       const success = movePlayer(direction);
+      playSound(success ? 'movement' : 'non_movement');
       handleAction(direction, success);
     },
     [tutorialState.stage, movePlayer, handleAction]
@@ -173,18 +176,21 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
   const handleRotate = useCallback(() => {
     if (!isActionAvailable('rotate', tutorialState.stage)) return;
     const success = rotatePlayer();
+    playSound(success ? 'movement' : 'non_movement');
     handleAction('rotate', success);
   }, [tutorialState.stage, rotatePlayer, handleAction]);
 
   const handlePlace = useCallback(() => {
     if (!isActionAvailable('select', tutorialState.stage)) return;
     const success = placeShape();
+    if (success) playSound('movement');
     handleAction('select', success);
   }, [tutorialState.stage, placeShape, handleAction]);
 
   const handleUndo = useCallback(() => {
     if (!isActionAvailable('undo', tutorialState.stage)) return;
     const success = undo();
+    playSound(success ? 'movement' : 'non_movement');
     handleAction('undo', success);
   }, [tutorialState.stage, undo, handleAction]);
 
