@@ -9,7 +9,7 @@ import { useGameStore } from '@/stores/game-store';
 import { BaseGameScreen } from './base-game-screen';
 import { TargetGem } from './target-gem';
 import { GameInfoPanel } from './game-info-panel';
-import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
+import { FONT_SIZES, SPACING, SHARED_STYLES } from '@/constants/theme';
 import {
   shouldAutoSave,
   type FreePlaySlot,
@@ -135,31 +135,20 @@ export function FreePlayScreen({ slot, onExit }: FreePlayScreenProps) {
 
 const styles = StyleSheet.create({
   levelCompleteOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...SHARED_STYLES.completeOverlay,
     backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   levelCompleteText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.HUGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
+    ...SHARED_STYLES.titleText,
     marginBottom: SPACING.LARGE.INT,
   },
   continueButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
+    ...SHARED_STYLES.actionButton,
     paddingVertical: SPACING.MEDIUM.INT,
-    paddingHorizontal: SPACING.XLARGE.INT,
-    borderRadius: 4,
   },
   continueButtonText: {
-    fontFamily: 'DepartureMonoRegular',
+    ...SHARED_STYLES.buttonText,
     fontSize: FONT_SIZES.LARGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
   },
 });
 

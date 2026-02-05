@@ -10,7 +10,7 @@ import { BaseGameScreen } from './base-game-screen';
 import { TargetGem } from './target-gem';
 import { GameInfoPanel } from './game-info-panel';
 import { TutorialInstructions } from './tutorial-instructions';
-import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
+import { GAME_COLORS, FONT_SIZES, SPACING, SHARED_STYLES } from '@/constants/theme';
 import { TUTORIAL_STAGES } from '../constants';
 import {
   createTutorialState,
@@ -251,21 +251,8 @@ export function TutorialScreen({ onComplete, onExit }: TutorialScreenProps) {
 }
 
 const styles = StyleSheet.create({
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  menuContainer: {
-    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
-    borderWidth: 2,
-    borderColor: GAME_COLORS.BOARD_BORDER,
-    padding: SPACING.LARGE.INT,
-    borderRadius: 8,
-    minWidth: 250,
-    alignItems: 'center',
-  },
+  modalOverlay: SHARED_STYLES.modalOverlay,
+  menuContainer: SHARED_STYLES.menuContainer,
   menuTitle: {
     fontFamily: 'DepartureMonoRegular',
     fontSize: FONT_SIZES.LARGE.INT,
@@ -280,33 +267,14 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.LARGE.INT,
     textAlign: 'center',
   },
-  menuButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    minWidth: 150,
-    alignItems: 'center',
-  },
-  menuButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-  },
+  menuButton: SHARED_STYLES.actionButton,
+  menuButtonText: SHARED_STYLES.buttonText,
   stageCompleteOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
+    ...SHARED_STYLES.completeOverlay,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   stageCompleteText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.HUGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
+    ...SHARED_STYLES.titleText,
   },
 });
 

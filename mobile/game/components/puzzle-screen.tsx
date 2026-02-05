@@ -9,7 +9,7 @@ import { useGameStore } from '@/stores/game-store';
 import { BaseGameScreen } from './base-game-screen';
 import { TargetGem } from './target-gem';
 import { GameInfoPanel } from './game-info-panel';
-import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
+import { GAME_COLORS, FONT_SIZES, SPACING, SHARED_STYLES } from '@/constants/theme';
 import {
   getLevelData,
   getNextLevel,
@@ -256,20 +256,9 @@ export function PuzzleScreen({
 }
 
 const styles = StyleSheet.create({
-  completeOverlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, 0.85)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  completeOverlay: SHARED_STYLES.completeOverlay,
   completeTitle: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.HUGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
+    ...SHARED_STYLES.titleText,
     marginBottom: SPACING.SMALL.INT,
   },
   levelText: {
@@ -311,19 +300,8 @@ const styles = StyleSheet.create({
   buttonColumn: {
     gap: SPACING.SMALL.INT,
   },
-  actionButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.XLARGE.INT,
-    borderRadius: 4,
-    minWidth: 150,
-    alignItems: 'center',
-  },
-  actionButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-  },
+  actionButton: SHARED_STYLES.actionButton,
+  actionButtonText: SHARED_STYLES.buttonText,
 });
 
 export default PuzzleScreen;

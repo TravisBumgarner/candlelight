@@ -9,10 +9,10 @@ import {
   Text,
   Pressable,
   ScrollView,
-  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaWrapper } from '@/components/safe-area-wrapper';
-import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
+import { LoadingScreen } from '@/components/loading-screen';
+import { GAME_COLORS, FONT_SIZES, SPACING, SHARED_STYLES } from '@/constants/theme';
 import {
   getWorldData,
   isLevelUnlocked,
@@ -109,11 +109,7 @@ export function PuzzleLevelSelect({
   );
 
   if (isLoading || !world) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color={GAME_COLORS.TEXT_PRIMARY} />
-      </View>
-    );
+    return <LoadingScreen />;
   }
 
   return (
@@ -148,21 +144,10 @@ export function PuzzleLevelSelect({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#0a1015',
-    padding: SPACING.LARGE.INT,
-  },
-  loadingContainer: {
-    flex: 1,
-    backgroundColor: '#0a1015',
-    justifyContent: 'center',
-    alignItems: 'center',
+    ...SHARED_STYLES.screenContainer,
   },
   title: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.HUGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    textAlign: 'center',
+    ...SHARED_STYLES.titleText,
     marginBottom: SPACING.TINY.INT,
   },
   worldName: {
@@ -221,18 +206,10 @@ const styles = StyleSheet.create({
     right: 4,
   },
   backButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.XLARGE.INT,
-    borderRadius: 4,
-    alignSelf: 'center',
+    ...SHARED_STYLES.backButton,
     marginTop: SPACING.MEDIUM.INT,
   },
-  backButtonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-  },
+  backButtonText: SHARED_STYLES.buttonText,
 });
 
 export default PuzzleLevelSelect;
