@@ -9,7 +9,7 @@ export { GameHUD } from './game-hud';
 export { GameInfoPanel } from './game-info-panel';
 export { GameControlsPad } from './game-controls-pad';
 export { PauseMenu } from './pause-menu';
-export { GameScreen } from './game-screen';
+export { BaseGameScreen } from './base-game-screen';
 export { TutorialInstructions } from './tutorial-instructions';
 export { TutorialScreen } from './tutorial-screen';
 export { FreePlayScreen } from './free-play-screen';
