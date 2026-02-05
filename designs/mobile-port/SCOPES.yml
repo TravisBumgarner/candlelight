@@ -396,7 +396,7 @@ tasks:
       - Replay available after completion
     depends_on: [15]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 22
     github_issue: 108
@@ -411,7 +411,7 @@ tasks:
       - UI shows best score when available
     depends_on: [21]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 23
     github_issue: 109
@@ -426,7 +426,7 @@ tasks:
       - Restart replays same daily puzzle
     depends_on: [22]
     effort: 1
-    status: scoped
+    status: completed
 
   # Milestone 7: Puzzle Mode
   - id: 24

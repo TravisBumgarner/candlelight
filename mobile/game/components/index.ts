@@ -12,3 +12,4 @@ export { TutorialInstructions } from './tutorial-instructions';
 export { TutorialScreen } from './tutorial-screen';
 export { FreePlayScreen } from './free-play-screen';
 export { FreePlayMenu } from './free-play-menu';
+export { DailyScreen } from './daily-screen';
