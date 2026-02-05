@@ -63,3 +63,28 @@ export const SPACING = {
     INT: 128,
   },
 } as const;
+
+/**
+ * Game-specific colors for the board and pieces.
+ */
+export const GAME_COLORS = {
+  // Cell states
+  CELL_EMPTY: 'transparent',
+  CELL_DARK: '#2a4858',
+  CELL_DARK_ACTIVE: '#4a7890',
+  CELL_LIGHT: '#a8d4e6',
+  CELL_LIGHT_ACTIVE: '#d4eef8',
+  // Gem display
+  GEM_COLOR: '#a8d4e6',
+  // Board
+  BOARD_BACKGROUND: '#1a2830',
+  BOARD_BORDER: '#3a5868',
+  // Queue
+  QUEUE_INACTIVE: '#2a4858',
+  QUEUE_ACTIVE: '#4a7890',
+  // UI
+  TEXT_PRIMARY: '#FFFFFF',
+  TEXT_SECONDARY: '#a0b0b8',
+  BUTTON_PRIMARY: '#3B7EA0',
+  BUTTON_HIGHLIGHT: '#5bc1f4',
+} as const;
