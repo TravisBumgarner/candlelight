@@ -318,7 +318,7 @@ tasks:
       - UI elements show/hide per stage
     depends_on: [15]
     effort: 3
-    status: scoped
+    status: completed
 
   - id: 17
     github_issue: 103
@@ -333,7 +333,7 @@ tasks:
       - First-time flag stored (optional)
     depends_on: [16]
     effort: 2
-    status: scoped
+    status: completed
 
   # Milestone 5: Free Play Mode
   - id: 18

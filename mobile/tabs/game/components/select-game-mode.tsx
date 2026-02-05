@@ -27,8 +27,18 @@ const gameModeDetailsLookup: Record<
   },
 };
 
-const SelectGameMode = () => {
+interface SelectGameModeProps {
+  onSelectMode: (mode: GAME_MODE) => void;
+}
+
+const SelectGameMode = ({ onSelectMode }: SelectGameModeProps) => {
   const [pendingGame, setPendingGame] = useState<GAME_MODE | null>(null);
+
+  const handlePlay = () => {
+    if (pendingGame) {
+      onSelectMode(pendingGame);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -54,7 +64,11 @@ const SelectGameMode = () => {
             ? `${gameModeDetailsLookup[pendingGame].description}`
             : "Select a game mode to see details."}
         </Text>
-        <Button fullWidth onPress={() => alert("playing")} label="Play" />
+        <Button
+          fullWidth
+          onPress={handlePlay}
+          label="Play"
+        />
       </View>
     </View>
   );
