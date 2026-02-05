@@ -205,3 +205,45 @@ export async function saveSettings(
   const updated = { ...current, ...settings };
   await AsyncStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(updated));
 }
+
+// Puzzle mode progress storage
+
+import type { PuzzleProgress } from '@/game/modes/puzzle';
+import { createInitialProgress } from '@/game/modes/puzzle';
+
+/**
+ * Load puzzle mode progress.
+ */
+export async function loadPuzzleProgress(): Promise<PuzzleProgress> {
+  const json = await AsyncStorage.getItem(STORAGE_KEYS.PUZZLE_PROGRESS);
+  if (!json) return createInitialProgress();
+
+  try {
+    const saved = JSON.parse(json);
+    return {
+      ...createInitialProgress(),
+      ...saved,
+    };
+  } catch {
+    return createInitialProgress();
+  }
+}
+
+/**
+ * Save puzzle mode progress.
+ */
+export async function savePuzzleProgress(
+  progress: PuzzleProgress
+): Promise<void> {
+  await AsyncStorage.setItem(STORAGE_KEYS.PUZZLE_PROGRESS, JSON.stringify(progress));
+}
+
+/**
+ * Get the best score for a specific puzzle level.
+ */
+export async function getPuzzleLevelBestScore(
+  puzzleId: string
+): Promise<number | null> {
+  const progress = await loadPuzzleProgress();
+  return progress.levelScores[puzzleId] ?? null;
+}

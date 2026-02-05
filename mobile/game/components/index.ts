@@ -13,3 +13,6 @@ export { TutorialScreen } from './tutorial-screen';
 export { FreePlayScreen } from './free-play-screen';
 export { FreePlayMenu } from './free-play-menu';
 export { DailyScreen } from './daily-screen';
+export { PuzzleWorldSelect } from './puzzle-world-select';
+export { PuzzleLevelSelect } from './puzzle-level-select';
+export { PuzzleScreen } from './puzzle-screen';
