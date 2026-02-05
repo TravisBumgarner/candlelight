@@ -226,7 +226,7 @@ tasks:
       - Responsive to screen width
     depends_on: [5, 6]
     effort: 3
-    status: scoped
+    status: completed
 
   - id: 11
     github_issue: 97
@@ -241,7 +241,7 @@ tasks:
       - Uses consistent cell styling with game board
     depends_on: [9]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 12
     github_issue: 98
@@ -256,7 +256,7 @@ tasks:
       - Handles queue with fewer than 3 shapes
     depends_on: [7]
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 13
     github_issue: 99
@@ -270,7 +270,7 @@ tasks:
       - Best score only shows when available
     depends_on: [2]
     effort: 1
-    status: scoped
+    status: completed
 
   - id: 14
     github_issue: 100
@@ -285,7 +285,7 @@ tasks:
       - Controls feel responsive
     depends_on: []
     effort: 3
-    status: scoped
+    status: completed
 
   - id: 15
     github_issue: 101
@@ -301,7 +301,7 @@ tasks:
       - Pause menu shows/hides correctly
     depends_on: [10, 11, 12, 13, 14]
     effort: 3
-    status: scoped
+    status: completed
 
   # Milestone 4: Tutorial Mode
   - id: 16
