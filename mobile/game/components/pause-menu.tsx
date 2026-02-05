@@ -4,7 +4,7 @@
 
 import React from 'react';
 import { View, StyleSheet, Text, Pressable, Modal } from 'react-native';
-import { GAME_COLORS, FONT_SIZES, SPACING } from '@/constants/theme';
+import { GAME_COLORS, FONT_SIZES, SPACING, SHARED_STYLES } from '@/constants/theme';
 
 interface PauseMenuProps {
   visible: boolean;
@@ -47,20 +47,8 @@ export function PauseMenu({
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  container: {
-    backgroundColor: GAME_COLORS.BOARD_BACKGROUND,
-    borderWidth: 2,
-    borderColor: GAME_COLORS.BOARD_BORDER,
-    padding: SPACING.LARGE.INT,
-    borderRadius: 8,
-    minWidth: 250,
-  },
+  overlay: SHARED_STYLES.modalOverlay,
+  container: SHARED_STYLES.menuContainer,
   title: {
     fontFamily: 'DepartureMonoRegular',
     fontSize: FONT_SIZES.LARGE.INT,
@@ -68,19 +56,8 @@ const styles = StyleSheet.create({
     marginBottom: SPACING.MEDIUM.INT,
     textAlign: 'center',
   },
-  button: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.SMALL.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    marginVertical: SPACING.TINY.INT
-  },
-  buttonText: {
-    fontFamily: 'DepartureMonoRegular',
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    textAlign: 'center',
-  },
+  button: SHARED_STYLES.menuButton,
+  buttonText: SHARED_STYLES.buttonText,
 });
 
 export default PauseMenu;

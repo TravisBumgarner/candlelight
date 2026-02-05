@@ -3,9 +3,9 @@
  * Used in pause menus and main menu.
  */
 
-import { StyleSheet, Text, View, Pressable } from "react-native";
-import { SettingsContent } from "./settings-content";
-import { GAME_COLORS, FONT_SIZES, SPACING } from "@/constants/theme";
+import { StyleSheet, Text, View, Pressable } from 'react-native';
+import { SettingsContent } from './settings-content';
+import { GAME_COLORS, SPACING, SHARED_STYLES } from '@/constants/theme';
 
 interface SettingsScreenProps {
   onBack: () => void;
@@ -28,32 +28,21 @@ const SettingsScreen = ({ onBack }: SettingsScreenProps) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#0a1015",
+    backgroundColor: GAME_COLORS.SCREEN_BACKGROUND,
     padding: SPACING.LARGE.INT,
-    justifyContent: "center",
+    justifyContent: 'center',
   },
   title: {
-    fontFamily: "DepartureMonoRegular",
-    fontSize: FONT_SIZES.HUGE.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-    textAlign: "center",
+    ...SHARED_STYLES.titleText,
     marginBottom: SPACING.MEDIUM.INT,
   },
   backButton: {
-    backgroundColor: GAME_COLORS.BUTTON_PRIMARY,
-    paddingVertical: SPACING.MEDIUM.INT,
-    paddingHorizontal: SPACING.LARGE.INT,
-    borderRadius: 4,
-    alignSelf: "center",
+    ...SHARED_STYLES.backButton,
     marginTop: SPACING.SMALL.INT,
     width: '100%',
+    paddingVertical: SPACING.MEDIUM.INT,
   },
-  backButtonText: {
-    textAlign: 'center',
-    fontFamily: "DepartureMonoRegular",
-    fontSize: FONT_SIZES.MEDIUM.INT,
-    color: GAME_COLORS.TEXT_PRIMARY,
-  },
+  backButtonText: SHARED_STYLES.buttonText,
 });
 
 export default SettingsScreen;
