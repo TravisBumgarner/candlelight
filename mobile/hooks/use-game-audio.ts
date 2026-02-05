@@ -14,6 +14,7 @@ import type { Direction } from '@/game/types';
 export function useGameAudio() {
   const {
     movePlayer: storeMovePlayer,
+    rotatePlayer: storeRotatePlayer,
     placeShape: storePlaceShape,
     undo: storeUndo,
     pause: storePause,
@@ -55,6 +56,17 @@ export function useGameAudio() {
     [storeMovePlayer]
   );
 
+  // Rotate with sound
+  const rotatePlayer = useCallback(() => {
+    const success = storeRotatePlayer();
+    if (success) {
+      playSound('movement');
+    } else {
+      playSound('non_movement');
+    }
+    return success;
+  }, [storeRotatePlayer]);
+
   // Place with sound
   const placeShape = useCallback(() => {
     const success = storePlaceShape();
@@ -89,6 +101,7 @@ export function useGameAudio() {
 
   return {
     movePlayer,
+    rotatePlayer,
     placeShape,
     undo,
     pause,

@@ -358,7 +358,7 @@ export function PuzzleScreen({
       />
 
       {/* Pause menu */}
-      <PauseMenuOverlay
+      <PauseMenu
         visible={isPaused && !showSettings}
         onResume={handleResume}
         onRestart={handleRestart}
