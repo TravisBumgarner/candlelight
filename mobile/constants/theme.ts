@@ -56,6 +56,9 @@ export const SPACING = {
   LARGE: {
     INT: 36,
   },
+  XLARGE: {
+    INT: 40,
+  },
   HUGE: {
     INT: 48,
   },

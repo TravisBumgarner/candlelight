@@ -10,3 +10,5 @@ export { GameControls } from './game-controls';
 export { GameScreen } from './game-screen';
 export { TutorialInstructions } from './tutorial-instructions';
 export { TutorialScreen } from './tutorial-screen';
+export { FreePlayScreen } from './free-play-screen';
+export { FreePlayMenu } from './free-play-menu';

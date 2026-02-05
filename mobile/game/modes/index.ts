@@ -3,3 +3,4 @@
  */
 
 export * from './tutorial';
+export * from './free-play';
