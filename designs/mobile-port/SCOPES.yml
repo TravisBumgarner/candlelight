@@ -442,7 +442,7 @@ tasks:
       - Data bundled with app
     depends_on: []
     effort: 2
-    status: scoped
+    status: completed
 
   - id: 25
     github_issue: 111
@@ -458,7 +458,7 @@ tasks:
       - Level unlock progression works
     depends_on: [15, 24]
     effort: 3
-    status: scoped
+    status: completed
 
   - id: 26
     github_issue: 112
@@ -474,7 +474,7 @@ tasks:
       - Progression persists
     depends_on: [24]
     effort: 3
-    status: scoped
+    status: completed
 
   - id: 27
     github_issue: 113
@@ -490,7 +490,7 @@ tasks:
       - Game over allows restart
     depends_on: [25, 26]
     effort: 2
-    status: scoped
+    status: completed
 
   # Milestone 8: Settings and Credits
   - id: 28

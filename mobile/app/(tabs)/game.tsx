@@ -1,16 +1,34 @@
 import { useState, useCallback } from "react";
 import TabWrapper from "@/components/tab-wrapper";
 import SelectGameMode from "@/tabs/game/components/select-game-mode";
-import { TutorialScreen, FreePlayScreen, FreePlayMenu, DailyScreen } from "@/game/components";
+import {
+  TutorialScreen,
+  FreePlayScreen,
+  FreePlayMenu,
+  DailyScreen,
+  PuzzleWorldSelect,
+  PuzzleLevelSelect,
+  PuzzleScreen,
+} from "@/game/components";
 import { ScrollView, View, StyleSheet } from "react-native";
 import type { FreePlaySlot } from "@/game/modes/free-play";
 
 type GameMode = "puzzles" | "freeplay" | "daily" | "tutorial";
-type Screen = "menu" | "tutorial" | "freeplay-menu" | "freeplay-game" | "daily" | "puzzle";
+type Screen =
+  | "menu"
+  | "tutorial"
+  | "freeplay-menu"
+  | "freeplay-game"
+  | "daily"
+  | "puzzle-world-select"
+  | "puzzle-level-select"
+  | "puzzle-game";
 
 const Game = () => {
   const [currentScreen, setCurrentScreen] = useState<Screen>("menu");
   const [freePlaySlot, setFreePlaySlot] = useState<FreePlaySlot | null>(null);
+  const [puzzleWorld, setPuzzleWorld] = useState<number | null>(null);
+  const [puzzleLevel, setPuzzleLevel] = useState<number | null>(null);
 
   const handleSelectMode = useCallback((mode: GameMode) => {
     switch (mode) {
@@ -24,8 +42,7 @@ const Game = () => {
         setCurrentScreen("daily");
         break;
       case "puzzles":
-        // TODO: Implement in milestone 7
-        setCurrentScreen("puzzle");
+        setCurrentScreen("puzzle-world-select");
         break;
     }
   }, []);
@@ -33,6 +50,8 @@ const Game = () => {
   const handleReturnToMenu = useCallback(() => {
     setCurrentScreen("menu");
     setFreePlaySlot(null);
+    setPuzzleWorld(null);
+    setPuzzleLevel(null);
   }, []);
 
   const handleFreePlaySlotSelect = useCallback((slot: FreePlaySlot, _isNewGame: boolean) => {
@@ -43,6 +62,33 @@ const Game = () => {
   const handleFreePlayExit = useCallback(() => {
     setCurrentScreen("freeplay-menu");
     setFreePlaySlot(null);
+  }, []);
+
+  // Puzzle mode handlers
+  const handlePuzzleWorldSelect = useCallback((worldNumber: number) => {
+    setPuzzleWorld(worldNumber);
+    setCurrentScreen("puzzle-level-select");
+  }, []);
+
+  const handlePuzzleLevelSelect = useCallback((levelNumber: number) => {
+    setPuzzleLevel(levelNumber);
+    setCurrentScreen("puzzle-game");
+  }, []);
+
+  const handlePuzzleBackToWorlds = useCallback(() => {
+    setPuzzleWorld(null);
+    setCurrentScreen("puzzle-world-select");
+  }, []);
+
+  const handlePuzzleBackToLevels = useCallback(() => {
+    setPuzzleLevel(null);
+    setCurrentScreen("puzzle-level-select");
+  }, []);
+
+  const handlePuzzleNextLevel = useCallback((worldNumber: number, levelNumber: number) => {
+    setPuzzleWorld(worldNumber);
+    setPuzzleLevel(levelNumber);
+    // Screen stays on puzzle-game, but the level changes
   }, []);
 
   // Render based on current screen
@@ -83,6 +129,43 @@ const Game = () => {
     return (
       <View style={styles.fullScreen}>
         <DailyScreen onExit={handleReturnToMenu} />
+      </View>
+    );
+  }
+
+  if (currentScreen === "puzzle-world-select") {
+    return (
+      <View style={styles.fullScreen}>
+        <PuzzleWorldSelect
+          onSelectWorld={handlePuzzleWorldSelect}
+          onBack={handleReturnToMenu}
+        />
+      </View>
+    );
+  }
+
+  if (currentScreen === "puzzle-level-select" && puzzleWorld !== null) {
+    return (
+      <View style={styles.fullScreen}>
+        <PuzzleLevelSelect
+          worldNumber={puzzleWorld}
+          onSelectLevel={handlePuzzleLevelSelect}
+          onBack={handlePuzzleBackToWorlds}
+        />
+      </View>
+    );
+  }
+
+  if (currentScreen === "puzzle-game" && puzzleWorld !== null && puzzleLevel !== null) {
+    return (
+      <View style={styles.fullScreen}>
+        <PuzzleScreen
+          key={`${puzzleWorld}_${puzzleLevel}`}
+          worldNumber={puzzleWorld}
+          levelNumber={puzzleLevel}
+          onNextLevel={handlePuzzleNextLevel}
+          onExit={handlePuzzleBackToLevels}
+        />
       </View>
     );
   }
